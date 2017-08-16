@@ -43,6 +43,10 @@ object YaFFBEDB extends JSApp {
           }.sortBy(_.name)
         }.fold(e => List(MateriaIndex(e.toString, 0, Nil, 0, None, Nil)), identity)
     }
+    val espers: Observable[Map[String,Int]] = Http.get(Observable.just("json/esper/index.json")).map {
+      case Response(r, _, _, _, _) =>
+        decode[Map[String,Int]](r).fold(e => Map.empty, identity)
+    }
 
     def maybeId(id: String): Option[String] =
       if (id.startsWith("--")) None else Some(id)
@@ -332,13 +336,10 @@ object YaFFBEDB extends JSApp {
       }
     }
 
-    val appContent = for {
-      _ <- equips
-      _ <- idx
-      _ <- materia
-    } yield {
-      List(
+    OutWatch.render("#content",
+      div(
         select(children <-- idx, inputString --> unitIdSink),
+        div(hidden <-- unitId.map(_.isEmpty).startWith(true),
         p(child <-- unitDescription.orElse(Observable.just(""))),
         h3("Equipment"),
         table(
@@ -359,6 +360,14 @@ object YaFFBEDB extends JSApp {
         table(
           children <-- abilitySlots,
         ),
+        h3("Esper"),
+        div(id := "esper-container",
+          select(children <-- espers.map { es =>
+            val names = es.keys.toList.sorted
+            option(value := EMPTY, "-- Select Esper --") ::
+              names.map(n => option(value := es(n), n))
+          })
+        ),
         h3("Abilities & Spells"),
         table(cls := "skills-active",
           tr(th("Rarity"), th("Level"), th("Name"),
@@ -372,11 +381,7 @@ object YaFFBEDB extends JSApp {
           tr(th("Name"),
             th("Description")), children <-- equippedSkills),
         meta(name := "validation-sink-placeholder", content <-- rhandValidator.combineLatest(lhandValidator, equipsValidator).map(_ => "")),
-      )
-    }
-    OutWatch.render("#content",
-      div(
-        children <-- appContent.startWith(List(p("Loading, please wait")))
+        )
       )
     )
   }
