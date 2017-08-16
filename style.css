@@ -1,0 +1,33 @@
+div#content { max-width: 48em; margin: 0 auto; }
+body { font-family: sans-serif; }
+table { width: 100%; border-collapse: collapse; }
+table.skills-equip,
+table.skills-active,
+table.skills-trait { width: calc(100% - 32px); margin: 16px; }
+table.skills-equip tr,
+table.skills-trait tr,
+table.skills-active tr { border: solid thin; }
+select {
+  height: calc(2.25rem + 2px);
+  font-size: 1rem;
+}
+select.equip-slot {
+  width: 100%;
+}
+option {
+  min-height: 1.2em;
+  padding: 0px 2px 1px;
+  line-height: 1.25;
+  font-size: 1rem;
+}
+td.unit-trait-rarity { width: 5%; }
+td.unit-trait-level { width: 5%; }
+td.unit-trait-name { width: 20%; }
+td.unit-trait-desc { width: 70%; }
+td.unit-skill-rarity { width: 5%; }
+td.unit-skill-level { width: 5%; }
+td.unit-skill-name { width: 20%; }
+td.unit-skill-desc { width: 65%; }
+td.unit-skill-cost { width: 5%; }
+td { padding: 8px; }
+th { padding: 8px; }
