@@ -85,27 +85,42 @@
     "id": "403040500", 
     "skill_names": []
   }, 
-  "Switch Hitter": {
-    "skills": null, 
-    "effects_raw": [], 
-    "slot_id": 1, 
+  "Magical Scrunchie": {
+    "skills": [
+      910386
+    ], 
+    "effects_raw": [
+      [
+        1, 
+        3, 
+        32, 
+        [
+          5
+        ]
+      ]
+    ], 
+    "slot_id": 5, 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 35, 
+      "ATK": 0, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
+      "SPR": 5, 
+      "DEF": 5
     }, 
-    "effects": [], 
-    "type_id": 13, 
-    "compid": 474, 
-    "id": "315021300", 
-    "skill_names": []
+    "effects": [
+      "Recover MP (5%) per turn"
+    ], 
+    "type_id": 60, 
+    "compid": 90103, 
+    "id": "1100000100", 
+    "skill_names": [
+      "Auto-Refresh"
+    ]
   }, 
   "Drakesclaw Rod": {
     "skills": null, 
@@ -256,6 +271,49 @@
     "compid": 295, 
     "id": "407000900", 
     "skill_names": []
+  }, 
+  "Microphone Stand": {
+    "skills": [
+      910385
+    ], 
+    "effects_raw": [
+      [
+        1, 
+        3, 
+        1, 
+        [
+          0, 
+          0, 
+          0, 
+          0, 
+          0, 
+          20, 
+          0
+        ]
+      ]
+    ], 
+    "slot_id": 1, 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 16, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 72, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "effects": [
+      "Increase MP by 20%"
+    ], 
+    "type_id": 9, 
+    "compid": 90102, 
+    "id": "1100000099", 
+    "skill_names": [
+      "MP +20%"
+    ]
   }, 
   "Genji Shield": {
     "skills": null, 
@@ -540,6 +598,28 @@
     "type_id": 53, 
     "compid": 541, 
     "id": "408002000", 
+    "skill_names": []
+  }, 
+  "Switch Hitter": {
+    "skills": null, 
+    "effects_raw": [], 
+    "slot_id": 1, 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 35, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "effects": [], 
+    "type_id": 13, 
+    "compid": 474, 
+    "id": "315021300", 
     "skill_names": []
   }, 
   "Raikiri": {
@@ -1057,6 +1137,52 @@
     "id": "310001600", 
     "skill_names": []
   }, 
+  "Malboro's Eye": {
+    "skills": [
+      910340
+    ], 
+    "effects_raw": [
+      [
+        2, 
+        2, 
+        7, 
+        [
+          50, 
+          0, 
+          50, 
+          50, 
+          0, 
+          0, 
+          0, 
+          50, 
+          1, 
+          3
+        ]
+      ]
+    ], 
+    "slot_id": 5, 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "effects": [
+      "Increase resistance to Poison, Sleep, Silence and Petrify by 50% for all allies for 3 turns"
+    ], 
+    "type_id": 60, 
+    "compid": 90098, 
+    "id": "1100000094", 
+    "skill_names": [
+      "Malboro's Eye"
+    ]
+  }, 
   "Sun Barrette": {
     "skills": [
       100070, 
@@ -1408,30 +1534,6 @@
     "type_id": 60, 
     "compid": 223, 
     "id": "409002400", 
-    "skill_names": []
-  }, 
-  "Dandelga": {
-    "skills": null, 
-    "effects_raw": [], 
-    "slot_id": 1, 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 130, 
-      "element_inflict": [
-        "Fire"
-      ], 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "effects": [], 
-    "type_id": 3, 
-    "compid": 433, 
-    "id": "303002100", 
     "skill_names": []
   }, 
   "Fina's Insignia": {
@@ -2349,48 +2451,29 @@
     "id": "1100000053", 
     "skill_names": []
   }, 
-  "Whitebrim": {
-    "skills": [
-      203240
-    ], 
-    "effects_raw": [
-      [
-        0, 
-        3, 
-        1, 
-        [
-          0, 
-          0, 
-          0, 
-          0, 
-          0, 
-          15, 
-          0
-        ]
-      ]
-    ], 
-    "slot_id": 3, 
+  "Dandelga": {
+    "skills": null, 
+    "effects_raw": [], 
+    "slot_id": 1, 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 18, 
-      "element_inflict": null, 
+      "ATK": 130, 
+      "element_inflict": [
+        "Fire"
+      ], 
       "MP": 0, 
       "MAG": 0, 
-      "SPR": 15, 
-      "DEF": 15
+      "SPR": 0, 
+      "DEF": 0
     }, 
-    "effects": [
-      "Increase MP by 15%"
-    ], 
-    "type_id": 40, 
-    "compid": 468, 
-    "id": "403041600", 
-    "skill_names": [
-      "MP + 15%"
-    ]
+    "effects": [], 
+    "type_id": 3, 
+    "compid": 433, 
+    "id": "303002100", 
+    "skill_names": []
   }, 
   "Javelin": {
     "skills": null, 
@@ -6894,7 +6977,7 @@
       "DEF": 28
     }, 
     "effects": [
-      "Dodge 2 attacks for 3 turns to self"
+      "Dodge 2 physical attacks for 3 turns to self"
     ], 
     "type_id": 50, 
     "compid": 155, 
@@ -7377,43 +7460,6 @@
     "id": "302003000", 
     "skill_names": []
   }, 
-  "Angel Ring": {
-    "skills": [
-      100730
-    ], 
-    "effects_raw": [
-      [
-        1, 
-        3, 
-        35, 
-        [
-          10121
-        ]
-      ]
-    ], 
-    "slot_id": 5, 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 3, 
-      "DEF": 3
-    }, 
-    "effects": [
-      "Gain Regen (Auto) (10121) at the start of a battle"
-    ], 
-    "type_id": 60, 
-    "compid": 243, 
-    "id": "409004400", 
-    "skill_names": [
-      "Auto-Regen"
-    ]
-  }, 
   "Battle Hoop": {
     "skills": [
       910188
@@ -7599,27 +7645,42 @@
     "id": "304001100", 
     "skill_names": []
   }, 
-  "Ras Algethi": {
-    "skills": null, 
-    "effects_raw": [], 
-    "slot_id": 1, 
+  "Angel Ring": {
+    "skills": [
+      100730
+    ], 
+    "effects_raw": [
+      [
+        1, 
+        3, 
+        35, 
+        [
+          10121
+        ]
+      ]
+    ], 
+    "slot_id": 5, 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 52, 
+      "ATK": 0, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
+      "SPR": 3, 
+      "DEF": 3
     }, 
-    "effects": [], 
-    "type_id": 14, 
-    "compid": 360, 
-    "id": "313001600", 
-    "skill_names": []
+    "effects": [
+      "Gain Regen (Auto) (10121) at the start of a battle"
+    ], 
+    "type_id": 60, 
+    "compid": 243, 
+    "id": "409004400", 
+    "skill_names": [
+      "Auto-Regen"
+    ]
   }, 
   "Short Bow": {
     "skills": [
@@ -11200,54 +11261,47 @@
       "Beast Killer"
     ]
   }, 
-  "Malboro Tentacle": {
+  "Whitebrim": {
     "skills": [
-      910337
+      203240
     ], 
     "effects_raw": [
       [
-        1, 
+        0, 
         3, 
-        11, 
-        [
-          4, 
-          0, 
-          50
-        ]
-      ], 
-      [
         1, 
-        3, 
-        11, 
         [
-          11, 
           0, 
-          50
+          0, 
+          0, 
+          0, 
+          0, 
+          15, 
+          0
         ]
       ]
     ], 
-    "slot_id": 1, 
+    "slot_id": 3, 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 20, 
+      "ATK": 18, 
       "element_inflict": null, 
       "MP": 0, 
-      "MAG": 118, 
-      "SPR": 0, 
-      "DEF": 0
+      "MAG": 0, 
+      "SPR": 15, 
+      "DEF": 15
     }, 
     "effects": [
-      "Increase magic damage against Demons by 50%", 
-      "Increase magic damage against Plantoids by 50%"
+      "Increase MP by 15%"
     ], 
-    "type_id": 12, 
-    "compid": 90093, 
-    "id": "1100000085", 
+    "type_id": 40, 
+    "compid": 468, 
+    "id": "403041600", 
     "skill_names": [
-      "Malboros Curse"
+      "MP + 15%"
     ]
   }, 
   "Radiant Egg": {
@@ -12406,10 +12460,10 @@
       "DEF": 0
     }, 
     "effects": [
-      "Increase ATK by 40% 3 turns when HP drops below 30%", 
-      "Increase DEF by 40% 3 turns when HP drops below 30%", 
-      "Increase MAG by 40% 3 turns when HP drops below 30%", 
-      "Increase SPR by 40% 3 turns when HP drops below 30%"
+      "Increase ATK by 40% for 3 turns when HP drops below 30%", 
+      "Increase DEF by 40% for 3 turns when HP drops below 30%", 
+      "Increase MAG by 40% for 3 turns when HP drops below 30%", 
+      "Increase SPR by 40% for 3 turns when HP drops below 30%"
     ], 
     "type_id": 4, 
     "compid": 710, 
@@ -13485,6 +13539,56 @@
     "compid": 102, 
     "id": "316000100", 
     "skill_names": []
+  }, 
+  "Malboro's Tentacle": {
+    "skills": [
+      910337
+    ], 
+    "effects_raw": [
+      [
+        1, 
+        3, 
+        11, 
+        [
+          4, 
+          0, 
+          50
+        ]
+      ], 
+      [
+        1, 
+        3, 
+        11, 
+        [
+          11, 
+          0, 
+          50
+        ]
+      ]
+    ], 
+    "slot_id": 1, 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 20, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 118, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "effects": [
+      "Increase magic damage against Demons by 50%", 
+      "Increase magic damage against Plantoids by 50%"
+    ], 
+    "type_id": 12, 
+    "compid": 90093, 
+    "id": "1100000085", 
+    "skill_names": [
+      "Malboro's Curse"
+    ]
   }, 
   "Silver Armlet": {
     "skills": null, 
@@ -17177,6 +17281,28 @@
       "MP + 15%"
     ]
   }, 
+  "Ras Algethi": {
+    "skills": null, 
+    "effects_raw": [], 
+    "slot_id": 1, 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 52, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "effects": [], 
+    "type_id": 14, 
+    "compid": 360, 
+    "id": "313001600", 
+    "skill_names": []
+  }, 
   "Onion Armor": {
     "skills": [
       211720
@@ -18501,52 +18627,6 @@
     "compid": 272, 
     "id": "305001000", 
     "skill_names": []
-  }, 
-  "Marlboro eye": {
-    "skills": [
-      910340
-    ], 
-    "effects_raw": [
-      [
-        2, 
-        2, 
-        7, 
-        [
-          50, 
-          0, 
-          50, 
-          50, 
-          0, 
-          0, 
-          0, 
-          50, 
-          1, 
-          3
-        ]
-      ]
-    ], 
-    "slot_id": 5, 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "effects": [
-      "Increase resistance to Poison, Sleep and Silence by 50% for all allies for 3 turns"
-    ], 
-    "type_id": 60, 
-    "compid": 90098, 
-    "id": "1100000094", 
-    "skill_names": [
-      "Marlboro eye"
-    ]
   }, 
   "Rod": {
     "skills": null, 
@@ -20175,6 +20255,51 @@
     "compid": 562, 
     "id": "407002000", 
     "skill_names": []
+  }, 
+  "Fashionable Dancewear": {
+    "skills": [
+      910384
+    ], 
+    "effects_raw": [
+      [
+        1, 
+        3, 
+        1, 
+        [
+          0, 
+          0, 
+          0, 
+          0, 
+          20, 
+          0, 
+          0
+        ]
+      ]
+    ], 
+    "slot_id": 4, 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": {
+        "Paralyze": 100
+      }, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 28, 
+      "DEF": 28
+    }, 
+    "effects": [
+      "Increase HP by 20%"
+    ], 
+    "type_id": 50, 
+    "compid": 90101, 
+    "id": "1100000098", 
+    "skill_names": [
+      "HP +20%"
+    ]
   }, 
   "Antecedent's Attire": {
     "skills": [
