@@ -80,9 +80,9 @@ case class EquipStats(
   }
 }
 case class EquipIndexData(
-  id: Int, slotId: Int, skills: Option[List[Int]], tpe: Int, skilleffects: List[SkillEffect], effects: Option[List[String]], skillnames: Option[List[String]], stats: EquipStats)
+  id: Int, slotId: Int, skills: Option[List[Int]], tpe: Int, skilleffects: List[SkillEffect], effects: Option[List[String]], skillEffects: Map[String,List[String]], stats: EquipStats)
 case class EquipIndex(
-  name: String, id: Int, slotId: Int, skills: List[Int], tpe: Int, skilleffects: List[SkillEffect], effects: List[String], skillnames: List[String], stats: EquipStats) {
+  name: String, id: Int, slotId: Int, skills: List[Int], tpe: Int, skilleffects: List[SkillEffect], effects: List[String], skillEffects: Map[String,List[String]], stats: EquipStats) {
   def describeEffects = {
     SkillEffect.collateEffects(skilleffects).toString
   }

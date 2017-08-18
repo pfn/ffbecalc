@@ -53,14 +53,13 @@ for x in equip.keys():
       cid = equipdex[name]["compid"]
       equipdex["%s (%s)" % (name, cid)] = equipdex[name]
       del equipdex[name]
-  skillns = []
+  skillns = {}
   eff = []
   effr = []
   if "skills" in equip[x] and equip[x]["skills"] is not None:
     for skillid in equip[x]["skills"]:
-      eff += skills[str(skillid)]["effects"]
       effr += skills[str(skillid)]["effects_raw"]
-      skillns += [(skills[str(skillid)]["name"])]
+      skillns[(skills[str(skillid)]["name"])] = skills[str(skillid)]["effects"]
   equipdex[name2] = {
     "id": x,
     "compid": compid,
@@ -68,9 +67,8 @@ for x in equip.keys():
     "slot_id": equip[x]["slot_id"],
     "stats": equip[x]["stats"],
     "skills": equip[x]["skills"],
-    "effects": eff,
     "effects_raw": effr,
-    "skill_names": skillns
+    "skill_effects": skillns
   }
   equipnames.add(name)
   json.dump(equip[x], file("json/equip/%s.json" % x, "w"))

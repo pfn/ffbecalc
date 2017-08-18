@@ -5,7 +5,6 @@ import io.circe._
 import io.circe.parser._
 import java.io.File
 import java.io.FilenameFilter
-import java.util.Base64
 import java.nio.ByteBuffer
 import scala.io.Source
 import java.nio.channels.FileChannel
@@ -38,7 +37,7 @@ object Pickler {
           m.toList.map { case (k,v) =>
             EquipIndex(k, v.id, v.slotId, v.skills.getOrElse(Nil),
               v.tpe, v.skilleffects, v.effects.getOrElse(Nil),
-              v.skillnames.getOrElse(Nil), v.stats)
+              v.skillEffects, v.stats)
           }.sortBy(_.name)
         }.fold(e => sys.error("equips " + e), identity)
       })
@@ -60,7 +59,7 @@ object Pickler {
         }.fold(e => sys.error("materias: " + e), identity)
       })
     pickle[Map[String,Int],Map[String,Int]](
-      esperpath / "index.json", picklepath / "esper" / "index.json", 
+      esperpath / "index.json", picklepath / "esper" / "index.pickle", 
         _.fold(_ => Map.empty, identity))
     (unitpath * jsonFilter).foreach { f =>
       val n = f.getName
@@ -80,6 +79,7 @@ object Pickler {
       pickle[EsperData,EsperData](f, picklepath / "esper" / out,
         _.fold(e => sys.error("esper data: " + e), identity))
     }
+    println(unpickle[List[EquipIndex]](picklepath / "equip" / "index.pickle"))
   }
 
   val jsonFilter: String => Boolean = {
@@ -94,17 +94,18 @@ object Pickler {
     while (buf.remaining > 0)
       fc.read(buf)
     buf.flip()
-    Unpickle[A].fromBytes(Base64.getDecoder.decode(buf))
+    Unpickle[A].fromBytes(buf)
   }
   def pickle[A : Decoder,B : Pickler](source: File, out: File,
     encoder: Either[Error,A] => B): Unit = {
     out.getParentFile.mkdirs()
     val eindex = Source.fromFile(source).getLines.mkString
 
-    val e = Base64.getEncoder.encode(Pickle.intoBytes(encoder(decode[A](eindex))))
+    val e = Pickle.intoBytes(encoder(decode[A](eindex)))
     val fc = FileChannel.open(out.toPath,
       StandardOpenOption.CREATE, StandardOpenOption.WRITE)
-    fc.write(e)
+    while (e.remaining > 0)
+      fc.write(e)
     fc.close()
   }
 }

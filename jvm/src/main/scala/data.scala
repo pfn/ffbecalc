@@ -123,7 +123,7 @@ object DataDecoders {
       "type_id",
       "effects_raw",
       "effects",
-      "skill_names",
+      "skill_effects",
       "stats"
     )(EquipIndexData.apply)
   implicit val decodeSkillInfo: Decoder[SkillInfo] =

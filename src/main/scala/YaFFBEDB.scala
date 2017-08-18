@@ -1,31 +1,23 @@
 package yaffbedb
 
 import scala.scalajs.js.JSApp
+
 import outwatch.dom._
-import outwatch.http.Http
 import rxscalajs.Observable
-import rxscalajs.dom.Response
 import boopickle.Default._
 
 object YaFFBEDB extends JSApp {
-  def unpickle[A : Pickler](source: String): A = {
-    Unpickle[A].fromBytes(
-      java.nio.ByteBuffer.wrap(java.util.Base64.getDecoder.decode(source)))
-  }
   val EMPTY = "--empty--"
   def main(): Unit = {
-    val idx = Http.get(Observable.just("pickle/unit/index.pickle")).map {
-      case Response(r, _, _, _, _) =>
-        List(option(value := EMPTY, "-- Select a unit --")) ++
-          unpickle[List[UnitIndex]](r).map { u =>
-            val rarity = ("\u2605" * u.min) + ("\u2606" * (u.max - u.min))
-            option(value := u.id, s"${u.name}: $rarity")
-          }
+    val idx = Data.get[List[UnitIndex]]("pickle/unit/index.pickle").map { us =>
+      List(option(value := EMPTY, "-- Select a unit --")) ++
+        us.map { u =>
+          val rarity = ("\u2605" * u.min) + ("\u2606" * (u.max - u.min))
+          option(value := u.id, s"${u.name}: $rarity")
+        }
     }
 
-    val equips = Http.get(Observable.just("pickle/equip/index.pickle")).map {
-      case Response(r, _, _, _, _) => unpickle[List[EquipIndex]](r)
-    }
+    val equips = Data.get[List[EquipIndex]]("pickle/equip/index.pickle")
 
     val equipsObserver = {
       val start = scalajs.js.Date.now()
@@ -37,12 +29,8 @@ object YaFFBEDB extends JSApp {
         }
     }
 
-    val materia = Http.get(Observable.just("pickle/materia/index.pickle")).map {
-      case Response(r, _, _, _, _) => unpickle[List[MateriaIndex]](r)
-    }
-    val espers = Http.get(Observable.just("pickle/esper/index.pickle")).map {
-      case Response(r, _, _, _, _) => unpickle[Map[String,Int]](r)
-    }
+    val materia = Data.get[List[MateriaIndex]]("pickle/materia/index.pickle")
+    val espers = Data.get[Map[String,Int]]("pickle/esper/index.pickle")
 
     def maybeId(id: String): Option[String] =
       if (id.startsWith("--")) None else Some(id)
@@ -51,16 +39,13 @@ object YaFFBEDB extends JSApp {
 
     val unitInfo: Observable[Option[UnitData]] = unitId.flatMap(id => 
       id.fold(Observable.just(Option.empty[UnitData])) { id_ =>
-      Http.get(Observable.just(s"pickle/unit/$id_.pickle")).map {
-        case Response(r, _, _, _, _) => Some(unpickle[UnitData](r))
-      }})
+        Data.get[UnitData](s"pickle/unit/$id_.pickle").map(Some.apply)
+      })
 
     val unitSkills  = unitInfo.flatMap { u =>
       Observable.combineLatest(u.fold(
         List.empty[Observable[(UnitSkill, SkillInfo)]])(_.skills.map { s =>
-        Http.get(Observable.just(s"pickle/skill/${s.id}.pickle")).map {
-          case Response(r, _, _, _, _) => s -> unpickle[SkillInfo](r)
-        }
+        Data.get[SkillInfo](s"pickle/skill/${s.id}.pickle").map { s -> _ }
       }))
     }
 
@@ -68,9 +53,7 @@ object YaFFBEDB extends JSApp {
     val esperId = esperSink.map(maybeId)
     val esper: Observable[Option[EsperData]] = esperId.flatMap { e =>
       e.fold(Observable.just(Option.empty[EsperData])) { eid =>
-        Http.get(Observable.just(s"pickle/esper/${eid}.pickle")).map {
-          case Response(r, _, _, _, _) => Some(unpickle[EsperData](r))
-        }
+        Data.get[EsperData](s"pickle/esper/${eid}.pickle").map(Some.apply)
       }
     }
 
@@ -148,7 +131,9 @@ object YaFFBEDB extends JSApp {
     def passivesFromMat(equip: List[Option[MateriaIndex]]) =
       equip.flatMap(_.fold(List.empty[SkillEffect])(_.skilleffects))
     def skillsFromEq(equip: List[Option[EquipIndex]]) =
-      equip.flatMap(_.fold(List.empty[(String,String)])(e => List(e.skillnames.mkString("\n") -> e.effects.mkString("\n"))))
+      equip.flatMap(_.fold(List.empty[(String,String)])(e =>
+        e.skillEffects.toList.map { case (k,v) => k -> v.mkString("\n") }
+      ))
     def skillsFromMat(equip: List[Option[MateriaIndex]]) =
       equip.flatMap(_.fold(List.empty[(String,String)])(m => List(m.name -> m.effects.mkString("\n"))))
 
@@ -392,5 +377,20 @@ object YaFFBEDB extends JSApp {
         meta(name := "validation-sink-placeholder", content <-- rhandValidator.combineLatest(lhandValidator, equipsValidator).map(_ => "")),
       )
     )
+  }
+}
+
+object Data {
+  import java.nio.ByteBuffer
+  import scala.scalajs.js.typedarray.{TypedArrayBuffer,ArrayBuffer}
+  import org.scalajs.dom.ext.Ajax
+  import scala.concurrent.ExecutionContext.Implicits.global
+  def get[A : Pickler](url: String): Observable[A] = {
+    Observable.from(Ajax.get(
+      url = url,
+      responseType = "arraybuffer",
+      headers = Map("Content-Type" -> "application/octet-stream")
+    ).map(r => Unpickle[A].fromBytes(
+      TypedArrayBuffer.wrap(r.response.asInstanceOf[ArrayBuffer]))))
   }
 }
