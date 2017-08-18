@@ -5,47 +5,43 @@ import outwatch.dom._
 import outwatch.http.Http
 import rxscalajs.Observable
 import rxscalajs.dom.Response
-import io.circe.parser._
-
-import UnitDecoders._
+import boopickle.Default._
 
 object YaFFBEDB extends JSApp {
+  def unpickle[A : Pickler](source: String): A = {
+    Unpickle[A].fromBytes(
+      java.nio.ByteBuffer.wrap(java.util.Base64.getDecoder.decode(source)))
+  }
   val EMPTY = "--empty--"
   def main(): Unit = {
-    val idx = Http.get(Observable.just("json/unit/index.json")).map {
+    val idx = Http.get(Observable.just("pickle/unit/index.pickle")).map {
       case Response(r, _, _, _, _) =>
-        decode[Map[String,UnitIndexData]](r).right.map { m =>
-          List(option(value := EMPTY, "-- Select a unit --")) ++
-          m.toList.map { case (k,v) =>
-            UnitIndex(k, v.min, v.max, v.id)
-          }.sortBy(_.name).filter(u => u.max > 3).map { u =>
+        List(option(value := EMPTY, "-- Select a unit --")) ++
+          unpickle[List[UnitIndex]](r).map { u =>
             val rarity = ("\u2605" * u.min) + ("\u2606" * (u.max - u.min))
             option(value := u.id, s"${u.name}: $rarity")
           }
-        }.fold(_ => Nil, identity)
     }
 
-    val equips = Http.get(Observable.just("json/equip/index.json")).map {
-      case Response(r, _, _, _, _) =>
-        decode[Map[String,EquipIndexData]](r).right.map { m =>
-          m.toList.map { case (k,v) =>
-            EquipIndex(k, v.id, v.slotId, v.skills.getOrElse(Nil), v.tpe, v.skilleffects, v.effects.getOrElse(Nil), v.skillnames.getOrElse(Nil), v.stats)
-          }.sortBy(_.name)
-        }.fold(_ => Nil, identity)
+    val equips = Http.get(Observable.just("pickle/equip/index.pickle")).map {
+      case Response(r, _, _, _, _) => unpickle[List[EquipIndex]](r)
     }
 
-    val materia = Http.get(Observable.just("json/materia/index.json")).map {
-      case Response(r, _, _, _, _) =>
-        decode[Map[String,MateriaIndexData]](r).right.map { m =>
-          m.toList.map { case (k,v) =>
-            MateriaIndex(k, util.Try(v.id.toInt).toOption.getOrElse(0),
-              v.effects.getOrElse(Nil), v.rarity, v.magicType, v.skilleffects)
-          }.sortBy(_.name)
-        }.fold(e => List(MateriaIndex(e.toString, 0, Nil, 0, None, Nil)), identity)
+    val equipsObserver = {
+      val start = scalajs.js.Date.now()
+      val first = p(start.toString)
+      Observable.just(List(first)) ++
+        equips.map { _ =>
+          val now = scalajs.js.Date.now()
+          List(first, p(now.toString), p((now - start).toString))
+        }
     }
-    val espers: Observable[Map[String,Int]] = Http.get(Observable.just("json/esper/index.json")).map {
-      case Response(r, _, _, _, _) =>
-        decode[Map[String,Int]](r).fold(e => Map.empty, identity)
+
+    val materia = Http.get(Observable.just("pickle/materia/index.pickle")).map {
+      case Response(r, _, _, _, _) => unpickle[List[MateriaIndex]](r)
+    }
+    val espers = Http.get(Observable.just("pickle/esper/index.pickle")).map {
+      case Response(r, _, _, _, _) => unpickle[Map[String,Int]](r)
     }
 
     def maybeId(id: String): Option[String] =
@@ -55,22 +51,27 @@ object YaFFBEDB extends JSApp {
 
     val unitInfo: Observable[Option[UnitData]] = unitId.flatMap(id => 
       id.fold(Observable.just(Option.empty[UnitData])) { id_ =>
-      Http.get(Observable.just(s"json/unit/$id_.json")).flatMap {
-        case Response(r, _, _, _, _) =>
-          decode[UnitData](r).fold(
-            _ => Observable.just(None),
-            d => Observable.just(Some(d)))
+      Http.get(Observable.just(s"pickle/unit/$id_.pickle")).map {
+        case Response(r, _, _, _, _) => Some(unpickle[UnitData](r))
       }})
 
     val unitSkills  = unitInfo.flatMap { u =>
       Observable.combineLatest(u.fold(
         List.empty[Observable[(UnitSkill, SkillInfo)]])(_.skills.map { s =>
-        Http.get(Observable.just(s"json/skill/${s.id}.json")).flatMap {
-          case Response(r, _, _, _, _) =>
-            decode[SkillInfo](r).fold(_ => Observable.empty,
-              i => Observable.just(s -> i))
+        Http.get(Observable.just(s"pickle/skill/${s.id}.pickle")).map {
+          case Response(r, _, _, _, _) => s -> unpickle[SkillInfo](r)
         }
       }))
+    }
+
+    val esperSink = createStringHandler()
+    val esperId = esperSink.map(maybeId)
+    val esper: Observable[Option[EsperData]] = esperId.flatMap { e =>
+      e.fold(Observable.just(Option.empty[EsperData])) { eid =>
+        Http.get(Observable.just(s"pickle/esper/${eid}.pickle")).map {
+          case Response(r, _, _, _, _) => Some(unpickle[EsperData](r))
+        }
+      }
     }
 
     def prependNone(idOb: Observable[String]): Observable[Option[String]] =
@@ -281,7 +282,7 @@ object YaFFBEDB extends JSApp {
 
     val unitDescription = unitInfo.map { i =>
       i.fold("")(_.entries.values.toList.sortBy(
-        _.rarity).lastOption.fold("Unknown")(_.strings.description))
+        _.rarity).lastOption.fold("Unknown")(_.strings.description.getOrElse("Unknown")))
     }
 
     val unitPresenceCheck: (Option[UnitData],EquipIndex) => Boolean = (u, e) =>
@@ -338,8 +339,10 @@ object YaFFBEDB extends JSApp {
 
     OutWatch.render("#content",
       div(
+        p("Loading equips...", children <-- equipsObserver),
         select(children <-- idx, inputString --> unitIdSink),
         div(hidden <-- unitId.map(_.isEmpty).startWith(true),
+        div(id := "unit-info", "Stats go here"),
         p(child <-- unitDescription.orElse(Observable.just(""))),
         h3("Equipment"),
         table(
@@ -366,7 +369,10 @@ object YaFFBEDB extends JSApp {
             val names = es.keys.toList.sorted
             option(value := EMPTY, "-- Select Esper --") ::
               names.map(n => option(value := es(n), n))
-          })
+          }, inputString --> esperSink),
+          span(hidden <-- esper.startWith(None).map(_.isEmpty), " ",
+            span(child <-- esper.map(_.fold(""){_.entries(1).stats.hp.max + "HP"}))
+          )
         ),
         h3("Abilities & Spells"),
         table(cls := "skills-active",
@@ -376,12 +382,14 @@ object YaFFBEDB extends JSApp {
         table(cls := "skills-trait",
           tr(th("Rarity"), th("Level"), th("Name"),
             th("Description")), children <-- unitTraits),
-        h3("Equipped"),
-        table(cls := "skills-equip",
-          tr(th("Name"),
-            th("Description")), children <-- equippedSkills),
+        div(hidden <-- equippedSkills.map(_.isEmpty),
+          h3("Equipped"),
+          table(cls := "skills-equip",
+            tr(th("Name"),
+              th("Description")), children <-- equippedSkills),
+          ),
+        ),
         meta(name := "validation-sink-placeholder", content <-- rhandValidator.combineLatest(lhandValidator, equipsValidator).map(_ => "")),
-        )
       )
     )
   }

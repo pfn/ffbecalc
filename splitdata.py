@@ -2,6 +2,7 @@
 
 import json
 import os
+import itertools
 
 units   = json.load(file("units.json"))
 equip   = json.load(file("equipment.json"))
@@ -21,6 +22,9 @@ def mkdir(name):
   if not os.access(name, os.X_OK):
     os.makedirs(name)
 
+def hasLB(x):
+  return "limitburst_id" in x and x["limitburst_id"] is not None
+
 mkdir("json/unit")
 mkdir("json/equip")
 mkdir("json/enhance")
@@ -30,13 +34,14 @@ mkdir("json/skill")
 mkdir("json/materia")
 
 for x in units.keys():
-  if units[x]["is_summonable"]:
-    unitdex[units[x]['name']] = {
-      "id": x,
-      "min": units[x]["rarity_min"],
-      "max": units[x]["rarity_max"]
-    }
-    json.dump(units[x], file("json/unit/%s.json" % x, "w"))
+  if units[x]["name"] != "<na>" and units[x]["job"] is not None:
+    if all(itertools.imap(hasLB, units[x]["entries"].values())):
+      unitdex[units[x]['name']] = {
+        "id": x,
+        "min": units[x]["rarity_min"],
+        "max": units[x]["rarity_max"]
+      }
+      json.dump(units[x], file("json/unit/%s.json" % x, "w"))
 
 for x in equip.keys():
   name = equip[x]["name"]
@@ -104,9 +109,7 @@ for x in skills.keys():
 
 for x in espers.keys():
   if "names" in espers[x]:
-    esperdex[espers[x]['names'][0]] = {
-      "id": x,
-    }
+    esperdex[espers[x]['names'][0]] = x
     json.dump(espers[x], file("json/esper/%s.json" % x, "w"))
   
 json.dump(unitdex,    file("json/unit/index.json",    "w"), indent=2)

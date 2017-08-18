@@ -1,4 +1,5 @@
-div#content { max-width: 48em; margin: 0 auto; }
+div#unit-info { position: fixed; left: 0; top: 0; margin: 16px; width: 25% }
+div#content { max-width: 48em; margin: 0 25%; }
 div#esper-container { margin: 16px; }
 body { font-family: sans-serif; }
 table { width: 100%; border-collapse: collapse; }

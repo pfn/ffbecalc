@@ -1,22 +1,27 @@
+lazy val shared = crossProject.crossType(CrossType.Pure).in(file("shared"))
+lazy val sharedJS = shared.js
+lazy val jvm = project.in(file("jvm")).settings(
+  libraryDependencies ++=
+    "io.circe" %% "circe-core" % "0.8.0" ::
+    "io.circe" %% "circe-parser" % "0.8.0" ::
+    "io.suzaku" %% "boopickle" % "1.2.6" ::
+    Nil
+).dependsOn(sharedJS)
+
+lazy val root = project.in(file(".")).dependsOn(sharedJS)
 enablePlugins(ScalaJSPlugin)
 enablePlugins(WorkbenchPlugin)
 enablePlugins(ScalaJSBundlerPlugin)
 
 name := "yaffbedb"
 
-scalaVersion := "2.12.3"
+scalaVersion in Global := "2.12.3"
 
 //scalaJSUseMainModuleInitializer := true
 
-libraryDependencies += "io.circe" %%% "circe-core" % "0.8.0"
-libraryDependencies += "io.circe" %%% "circe-parser" % "0.8.0"
 libraryDependencies += "io.github.outwatch" %%% "outwatch" % "0.10.1"
+libraryDependencies += "io.suzaku" %%% "boopickle" % "1.2.6"
 
-refreshBrowsers <<= refreshBrowsers triggeredBy (webpack in fastOptJS in Compile)
+refreshBrowsers :=
+  (refreshBrowsers triggeredBy (webpack in fastOptJS in Compile)).value
 
-lazy val shared = project.in("shared").settings(
-)
-lazy val jvm = project.in("jvm").settings(
-libraryDependencies += "io.circe" %%% "circe-core" % "0.8.0",
-libraryDependencies += "io.circe" %%% "circe-parser" % "0.8.0"
-)
