@@ -1,8 +1,18 @@
-div#unit-info { position: fixed; left: 0; top: 0; margin: 16px; width: 25% }
-div#content { max-width: 48em; margin: 0 25%; }
+div#unit-info {
+  position: fixed;
+  left: 0;
+  top: 0;
+  margin: 16px;
+  min-width: 20em;
+  width: 25%;
+}
+div#content { max-width: 48em; margin: 0 30%; }
 div#esper-container { margin: 16px; }
 body { font-family: sans-serif; }
-table { width: 100%; border-collapse: collapse; }
+table {
+  width: calc(100% - 32px);
+  border-collapse: collapse;
+}
 table.skills-equip,
 table.skills-active,
 table.skills-trait { width: calc(100% - 32px); margin: 16px; }
@@ -21,6 +31,15 @@ option {
   padding: 0px 2px 1px;
   line-height: 1.25;
   font-size: 1rem;
+}
+td.unit-stat-name {
+  width: 25%;
+  font-size: smaller;
+}
+td.unit-stat-data {
+  width: auto;
+  text-align: right;
+  font-size: smaller;
 }
 td.unit-trait-rarity { width: 5%; }
 td.unit-trait-level { width: 5%; }

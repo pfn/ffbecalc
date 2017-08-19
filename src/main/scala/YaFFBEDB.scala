@@ -18,17 +18,6 @@ object YaFFBEDB extends JSApp {
     }
 
     val equips = Data.get[List[EquipIndex]]("pickle/equip/index.pickle")
-
-    val equipsObserver = {
-      val start = scalajs.js.Date.now()
-      val first = p(start.toString)
-      Observable.just(List(first)) ++
-        equips.map { _ =>
-          val now = scalajs.js.Date.now()
-          List(first, p(now.toString), p((now - start).toString))
-        }
-    }
-
     val materia = Data.get[List[MateriaIndex]]("pickle/materia/index.pickle")
     val espers = Data.get[Map[String,Int]]("pickle/esper/index.pickle")
 
@@ -324,10 +313,13 @@ object YaFFBEDB extends JSApp {
 
     OutWatch.render("#content",
       div(
-        p("Loading equips...", children <-- equipsObserver),
-        select(children <-- idx, inputString --> unitIdSink),
+        div(id := "unit-info",
+          select(children <-- idx, inputString --> unitIdSink),
+          div(hidden <-- unitId.map(_.isEmpty).startWith(true),
+            components.unitStats(unitEntry),
+          )
+        ),
         div(hidden <-- unitId.map(_.isEmpty).startWith(true),
-        div(id := "unit-info", "Stats go here"),
         p(child <-- unitDescription.orElse(Observable.just(""))),
         h3("Equipment"),
         table(
