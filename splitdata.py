@@ -41,6 +41,7 @@ for x in units.keys():
         "min": units[x]["rarity_min"],
         "max": units[x]["rarity_max"]
       }
+      units[x]["id"] = x
       json.dump(units[x], file("json/unit/%s.json" % x, "w"))
 
 for x in equip.keys():
@@ -54,11 +55,22 @@ for x in equip.keys():
       equipdex["%s (%s)" % (name, cid)] = equipdex[name]
       del equipdex[name]
   skillns = {}
+  skillr = []
   eff = []
   effr = []
+  reqs = []
+  if "requirements" in equip[x]:
+    reqs = equip[x]["requirements"]
   if "skills" in equip[x] and equip[x]["skills"] is not None:
     for skillid in equip[x]["skills"]:
-      effr += skills[str(skillid)]["effects_raw"]
+      restriction = None
+      if "active" not in skills[str(skillid)] or not skills[str(skillid)]["active"]:
+        if "unit_restriction" in skills[str(skillid)]:
+          restriction = skills[str(skillid)]["unit_restriction"]
+        effr += [{
+          "unit_restriction": restriction,
+          "effects": skills[str(skillid)]["effects_raw"]
+        }]
       skillns[(skills[str(skillid)]["name"])] = skills[str(skillid)]["effects"]
   equipdex[name2] = {
     "id": x,
@@ -67,6 +79,8 @@ for x in equip.keys():
     "slot_id": equip[x]["slot_id"],
     "stats": equip[x]["stats"],
     "skills": equip[x]["skills"],
+    "skill_restriction": skillr,
+    "reqs": reqs,
     "effects_raw": effr,
     "skill_effects": skillns
   }
@@ -85,7 +99,14 @@ for x in materia.keys():
     for skillid in materia[x]["skills"]:
       skid = str(skillid)
       eff += skills[skid]["effects"]
-      effr += skills[skid]["effects_raw"]
+      if "active" not in skills[str(skillid)] or not skills[str(skillid)]["active"]:
+        restriction = None
+        if "unit_restriction" in skills[str(skid)]:
+          restriction = skills[str(skid)]["unit_restriction"]
+        effr += [{
+          "unit_restriction": restriction,
+          "effects": skills[skid]["effects_raw"]
+        }]
       skillns += [skills[skid]["name"]]
       dex["rarity"] = skills[skid]["rarity"]
       if "magic_type" in skills[skid]:

@@ -3,16 +3,25 @@ import io.circe._
 
 object DataDecoders {
   implicit val decodeSkillEffects: Decoder[List[SkillEffect]] = new Decoder[List[SkillEffect]] {
+    def array(a: ACursor): Stream[ACursor] =
+      a #:: array(a.right).takeWhile(_.succeeded)
     def apply(c: HCursor): Decoder.Result[List[SkillEffect]] = {
       val self = c.downArray
-      def array(a: ACursor): Stream[ACursor] = a #:: array(a.right)
-      val effects = array(self).takeWhile(_.succeeded).map(a =>
-        decodeEffect(a.downArray)).collect { case Right(x) => x }.filterNot(
-          _ == UnknownSkillEffect).toList
+      val effects = array(self).map(decodeSkillEffect).toList.flatten
       Right(effects)
     }
 
-    def decodeEffect(c: ACursor): Decoder.Result[SkillEffect] = {
+    def decodeSkillEffect(c: ACursor): List[SkillEffect] = {
+      val restrict = c.downField("unit_restriction").as[Option[List[Int]]].fold(
+        e => Nil, _.toList.flatten)
+      array(c.downField("effects").downArray).map(a =>
+        decodeEffect(restrict, a.downArray)).collect {
+          case Right(x) => x
+        }.filterNot(
+          _ == UnknownSkillEffect).toList
+    }
+
+    def decodeEffect(restrict: List[Int], c: ACursor): Decoder.Result[SkillEffect] = {
       for {
         x <- c.first.as[Int]
         y <- c.right.as[Int]
@@ -24,7 +33,7 @@ object DataDecoders {
           y <- a.values
           z <- y.headOption
         } yield z.isString).getOrElse(false)
-        SkillEffect(x, y, z, 
+        SkillEffect(restrict, x, y, z, 
           if (isString) Nil else a.as[List[Int]].fold(_ => Nil, identity))
       }
     }
@@ -115,8 +124,21 @@ object DataDecoders {
     "element_resist", "status_resist", "status_inflict", "element_inflict"
   )(EquipStats.apply)
 
+  implicit val decodeEquipReq: Decoder[EquipReq] = new Decoder[EquipReq] {
+    def apply(c: HCursor): Decoder.Result[EquipReq] = {
+      for {
+        x <- c.downArray.as[String]
+        y <- c.downArray.right.as[Int]
+      } yield {
+        x match {
+          case "UNIT_ID" => UnitEquipReq(y)
+          case "SEX" => SexEquipReq(y)
+        }
+      }
+    }
+  }
   implicit val decodeEquipIndexData: Decoder[EquipIndexData] =
-    Decoder.forProduct8(
+    Decoder.forProduct9(
       "id",
       "slot_id",
       "skills",
@@ -124,7 +146,8 @@ object DataDecoders {
       "effects_raw",
       "effects",
       "skill_effects",
-      "stats"
+      "stats",
+      "reqs"
     )(EquipIndexData.apply)
   implicit val decodeSkillInfo: Decoder[SkillInfo] =
     Decoder.forProduct7(
@@ -158,8 +181,8 @@ object DataDecoders {
       "status_resist",
       "strings")(UnitEntry.apply)
   implicit val decodeUnitData: Decoder[UnitData] =
-    Decoder.forProduct6(
-      "name", "job", "sex", "equip", "entries", "skills")(UnitData.apply)
+    Decoder.forProduct7(
+      "name", "id", "job", "sex", "equip", "entries", "skills")(UnitData.apply)
   implicit val decodeEsperStatRange: Decoder[EsperStatRange] = new Decoder[EsperStatRange] {
     def apply(c: HCursor): Decoder.Result[EsperStatRange] = {
       for {

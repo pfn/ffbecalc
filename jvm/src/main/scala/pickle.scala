@@ -37,7 +37,7 @@ object Pickler {
           m.toList.map { case (k,v) =>
             EquipIndex(k, v.id, v.slotId, v.skills.getOrElse(Nil),
               v.tpe, v.skilleffects, v.effects.getOrElse(Nil),
-              v.skillEffects, v.stats)
+              v.skillEffects, v.stats, v.req)
           }.sortBy(_.name)
         }.fold(e => sys.error("equips " + e), identity)
       })

@@ -136,7 +136,7 @@ object YaFFBEDB extends JSApp {
     }}
     val allPassives = unitInfo.combineLatest(unitPassives, equipped).map {
       case ((info, passives,all@(((_, _, _, _),(_, _)),(_,_,_,_)))) =>
-      info -> SkillEffect.collateEffects(passivesFromAll(all) ++ passives)
+      info -> SkillEffect.collateEffects(info.get, passivesFromAll(all) ++ passives) // FIXME
     }
 
     val equipSkills: Observable[List[(String,String)]] = equipped.map {
@@ -262,11 +262,11 @@ object YaFFBEDB extends JSApp {
     val unitPresenceCheck: (Option[UnitData],EquipIndex) => Boolean = (u, e) =>
       u.nonEmpty
 
-    def materiaOption(e: Option[UnitEntry]): Observable[List[VNode]] =
+    def materiaOption(u: Option[UnitData], e: Option[UnitEntry]): Observable[List[VNode]] =
       materia.map { m =>
         List(option(value := EMPTY, "Empty")) ++
           m.filter(mi => e.exists(_.canEquip(mi))).map { mi =>
-            val mid = mi.describeEffects
+            val mid = mi.describeEffects(u.get) // FIXME
             val mids = if (mid.trim.isEmpty) ""
             else s"\u27a1 $mid"
             option(value := mi.id, s"${mi.name} $mids")
@@ -279,35 +279,35 @@ object YaFFBEDB extends JSApp {
       List(option(value := EMPTY, "Empty")) ++
         es.filter(e => slots(e.slotId) && passives.canEquip(e.tpe, u)).map { e =>
           option(value := e.id,
-            s"${e.name} \u27a1 ${e.stats} ${e.describeEffects}")
+            s"${e.name} \u27a1 ${e.stats} ${e.describeEffects(u.get)}") // FIXME
         }
     }
 
-    val abilitySlots = unitEntry.map { e =>
+    val abilitySlots = unitInfo.combineLatest(unitEntry).map { case(u, e) =>
       val slots = e.fold(0)(_.abilitySlots)
 
       if (slots == 0) {
         Nil
       } else if (slots == 1) {
-        List(tr(td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", value <-- rhandValidator, children <-- materiaOption(e), inputString --> ability1Sink))))
+        List(tr(td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", value <-- rhandValidator, children <-- materiaOption(u, e), inputString --> ability1Sink))))
       } else if (slots == 2) {
-        List(tr(td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(e), inputString --> ability1Sink)),
-          td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- materiaOption(e), inputString --> ability2Sink))))
+        List(tr(td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(u, e), inputString --> ability1Sink)),
+          td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- materiaOption(u, e), inputString --> ability2Sink))))
       } else if (slots == 3) {
         List(
           tr(
-            td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(e), inputString --> ability1Sink)),
-            td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- materiaOption(e), inputString --> ability2Sink))),
+            td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(u, e), inputString --> ability1Sink)),
+            td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- materiaOption(u, e), inputString --> ability2Sink))),
           tr(
-            td(label(forLabel := "u-ability3", "Ability 3"), select(id := "u-ability3", cls := "equip-slot", children <-- materiaOption(e), inputString --> ability3Sink))))
+            td(label(forLabel := "u-ability3", "Ability 3"), select(id := "u-ability3", cls := "equip-slot", children <-- materiaOption(u, e), inputString --> ability3Sink))))
       } else {
         List(
           tr(
-            td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(e), inputString --> ability1Sink)),
-            td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- materiaOption(e), inputString --> ability2Sink))),
+            td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(u, e), inputString --> ability1Sink)),
+            td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- materiaOption(u, e), inputString --> ability2Sink))),
           tr(
-            td(label(forLabel := "u-ability3", "Ability 3"), select(id := "u-ability3", cls := "equip-slot", children <-- materiaOption(e), inputString --> ability3Sink)),
-            td(label(forLabel := "u-ability4", "Ability 4"), select(id := "u-ability4", cls := "equip-slot", children <-- materiaOption(e), inputString --> ability4Sink))))
+            td(label(forLabel := "u-ability3", "Ability 3"), select(id := "u-ability3", cls := "equip-slot", children <-- materiaOption(u, e), inputString --> ability3Sink)),
+            td(label(forLabel := "u-ability4", "Ability 4"), select(id := "u-ability4", cls := "equip-slot", children <-- materiaOption(u, e), inputString --> ability4Sink))))
       }
     }
 

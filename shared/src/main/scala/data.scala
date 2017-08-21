@@ -28,6 +28,7 @@ case class UnitEntry(
 }
 case class UnitData(
   name: String,
+  id: Int,
   job: String,
   sex: String,
   equip: List[Int],
@@ -60,8 +61,8 @@ case class SkillInfo(
   effects: List[String])
 case class MateriaIndexData(id: String, effects: Option[List[String]], rarity: Int, magicType: Option[String], skilleffects: List[SkillEffect])
 case class MateriaIndex(name: String, id: Int, effects: List[String], rarity: Int, magicType: Option[String], skilleffects: List[SkillEffect]) {
-  def describeEffects = {
-    SkillEffect.collateEffects(skilleffects).toString
+  def describeEffects(unit: UnitData) = {
+    SkillEffect.collateEffects(unit, skilleffects).toString
   }
 }
 case class EquipStats(
@@ -79,20 +80,36 @@ case class EquipStats(
     (if (mp != 0) List(s"MP+${mp}") else Nil)).mkString(" ")
   }
 }
+sealed trait EquipReq {
+  def canEquip(unit: UnitData): Boolean
+}
+case class SexEquipReq(sex: Int) extends EquipReq {
+  def canEquip(unit: UnitData) = unit.sex == sex
+}
+case class UnitEquipReq(id: Int) extends EquipReq {
+  def canEquip(unit: UnitData) = unit.id == id
+}
 case class EquipIndexData(
-  id: Int, slotId: Int, skills: Option[List[Int]], tpe: Int, skilleffects: List[SkillEffect], effects: Option[List[String]], skillEffects: Map[String,List[String]], stats: EquipStats)
+  id: Int, slotId: Int, skills: Option[List[Int]], tpe: Int, skilleffects: List[SkillEffect], effects: Option[List[String]], skillEffects: Map[String,List[String]], stats: EquipStats, req: Option[EquipReq])
 case class EquipIndex(
-  name: String, id: Int, slotId: Int, skills: List[Int], tpe: Int, skilleffects: List[SkillEffect], effects: List[String], skillEffects: Map[String,List[String]], stats: EquipStats) {
-  def describeEffects = {
-    SkillEffect.collateEffects(skilleffects).toString
+  name: String, id: Int, slotId: Int, skills: List[Int], tpe: Int, skilleffects: List[SkillEffect], effects: List[String], skillEffects: Map[String,List[String]], stats: EquipStats, req: Option[EquipReq]) {
+  def describeEffects(unit: UnitData) = {
+    SkillEffect.collateEffects(unit, skilleffects).toString
   }
 }
 case class MagicAffinity(white: Int, black: Int, green: Int, blue: Int)
 case class StatRange(min: Int, max: Int, pots: Int) {
   def maxpots = max + pots
 }
-sealed trait SkillEffect
+sealed trait SkillEffect {
+  def restrictions: Set[Int]
+  def canUse(unit: UnitData) = restrictions.isEmpty || restrictions(unit.id)
+}
+sealed trait NoRestrictions {
+  def restrictions = Set.empty[Int]
+}
 object SkillEffect {
+  val SEX = Map(1 -> "Male", 2 -> "Female")
   val TRIBE = Vector(
     0,
     "Beast",
@@ -148,24 +165,30 @@ object SkillEffect {
   )
 
 
-  def apply(x: Int, y: Int, z: Int, xs: List[Int]): SkillEffect = {
+  def apply(restrict: List[Int], x: Int, y: Int, z: Int, xs: List[Int]): SkillEffect = {
     (x, y, z) match {
-      case (0 | 1, 3, 3)     => PassiveElementResist.decode(xs)
-      case (0 | 1, 3, 2)     => PassiveStatusResist.decode(xs)
-      case (0 | 1, 3, 10004) => PassiveWeapEleStatEffect.decode(xs)
+      case (0 | 1, 3, 1)     => PassiveStatEffect.decode(restrict.toSet, xs)
+      case (0 | 1, 3, 2)     => PassiveStatusResist.decode(restrict.toSet, xs)
+      case (0 | 1, 3, 3)     => PassiveElementResist.decode(restrict.toSet, xs)
       case (0 | 1, 3, 5)     => PassiveEquipEffect.decode(xs)
+      case (0 | 1, 3, 10004) => PassiveWeapEleStatEffect.decode(xs)
       case (0 | 1, 3, 6)     => PassiveEquipStatEffect.decode(xs)
-      case (0 | 1, 3, 1)     => PassiveStatEffect.decode(xs)
       case (0 | 1, 3, 11)    => PassiveKillerEffect.decode(xs)
       case (0 | 1, 3, 21)    => PassiveEvoMagEffect.decode(xs)
       case (0 | 1, 3, 22)    => PassiveDodgeEffect.decode(xs)
       case (0 | 1, 3, 54)    => PassiveDodgeEffect.decode(xs)
       case (0 | 1, 3, 17)    => PassiveJumpEffect.decode(xs)
       case (0 | 1, 3, 14)    => PassiveDualWieldEffect.decode(xs)
+      case (0 | 1, 3, 13)    => PassiveDoublehandEffect.decode(xs)
+      case (0 | 1, 3, 25)    => PassiveCamouflageEffect.decode(restrict.toSet, xs)
+      case (0 | 1, 3, 32)    => PassiveRefreshEffect.decode(restrict.toSet, xs)
+      case (0 | 1, 3, 31)    => PassiveLimitBurstRateEffect.decode(xs)
+      case (0 | 1, 3, 33)    => PassiveLimitBurstFillEffect.decode(xs)
       case _ => UnknownSkillEffect
     }
   }
 
+  // not yet collated camo, refresh, lb rate, lb fill
   case class CollatedEffect(
     elementResists: PassiveElementResist,
     statusResists: PassiveStatusResist,
@@ -177,6 +200,11 @@ object SkillEffect {
     evomag: Int,
     dodge: PassiveDodgeEffect,
     jump: Int,
+    lbrate: Int,
+    lbfill: Int,
+    refresh: Int,
+    camouflage: Int,
+    dh: Int,
     dw: PassiveDualWieldEffect) {
 
     def canDualWield(weapon: Int) = dw.all || dw.weapons(weapon)
@@ -199,8 +227,8 @@ object SkillEffect {
   }
   object CollatedEffect {
     def apply(): CollatedEffect = CollatedEffect(
-      PassiveElementResist(0, 0, 0, 0, 0, 0, 0, 0),
-      PassiveStatusResist(0, 0, 0, 0, 0, 0, 0, 0),
+      PassiveElementResist(Set.empty, 0, 0, 0, 0, 0, 0, 0, 0),
+      PassiveStatusResist(Set.empty, 0, 0, 0, 0, 0, 0, 0, 0),
       PassiveStatEffect.zero,
       Map.empty,
       Map.empty,
@@ -209,58 +237,71 @@ object SkillEffect {
       0,
       PassiveDodgeEffect(0, 0),
       0,
+      0,
+      0,
+      0,
+      0,
+      0,
       PassiveDualWieldEffect(Set.empty, false))
   }
 
-  def collateEffects(xs: List[SkillEffect]) = {
-    xs.foldLeft(CollatedEffect()) { (a, eff) => eff match {
-        case e@PassiveElementResist(_, _, _, _, _, _, _, _) =>
-          a.copy(elementResists = a.elementResists + e)
-        case e@PassiveStatusResist(_,_,_,_,_,_,_,_) =>
-          a.copy(statusResists = a.statusResists + e)
-        case e@PassiveStatEffect(_,_,_,_,_,_) =>
-          a.copy(stats = a.stats + e)
-        case e@PassiveWeapEleStatEffect(_,_,_,_,_,_,_) =>
-          val eff = a.weapEleStats.getOrElse(e.element, PassiveStatEffect.zero)
-          a.copy(weapEleStats = a.weapEleStats + ((e.element, eff + e.asPassiveStatEffect)))
-        case e@PassiveEquipStatEffect(_,_,_,_,_,_,_) =>
-          val eff = a.equipStats.getOrElse(e.cond, PassiveStatEffect.zero)
-          a.copy(equipStats = a.equipStats +
-            ((e.cond, eff + e.asPassiveStatEffect)))
-        case PassiveKillerEffect(tribe, phys, mag) =>
-          val (p,m) = a.killers.getOrElse(tribe, (0,0))
-          a.copy(killers = a.killers + ((tribe, (p + phys, m + mag)))) 
-        case PassiveEvoMagEffect(evomag) =>
-          a.copy(evomag = a.evomag + evomag)
-        case PassiveEquipEffect(equip) =>
-          a.copy(equips = a.equips + equip)
-        case PassiveDodgeEffect(p, m) =>
-          a.copy(dodge = PassiveDodgeEffect(p + a.dodge.phys, m + a.dodge.mag))
-        case PassiveJumpEffect(j) =>
-          a.copy(jump = a.jump + j)
-        case PassiveDualWieldEffect(weaps, all) =>
-          a.copy(dw = PassiveDualWieldEffect(a.dw.weapons ++ weaps, all || a.dw.all))
-        case _ => a
-      }
-    }
+  def collateEffects(unit: UnitData, xs: List[SkillEffect]) = {
+    xs.filter(_.canUse(unit)).foldLeft(CollatedEffect()) { (a, eff) => eff match {
+      case e@PassiveElementResist(_,_, _, _, _, _, _, _, _) =>
+        a.copy(elementResists = a.elementResists + e)
+      case e@PassiveStatusResist(_,_,_,_,_,_,_,_,_) =>
+        a.copy(statusResists = a.statusResists + e)
+      case e@PassiveStatEffect(_,_,_,_,_,_,_) =>
+        a.copy(stats = a.stats + e)
+      case e@PassiveWeapEleStatEffect(_,_,_,_,_,_,_) =>
+        val eff = a.weapEleStats.getOrElse(e.element, PassiveStatEffect.zero)
+        a.copy(weapEleStats = a.weapEleStats + ((e.element, eff + e.asPassiveStatEffect)))
+      case e@PassiveEquipStatEffect(_,_,_,_,_,_,_) =>
+        val eff = a.equipStats.getOrElse(e.cond, PassiveStatEffect.zero)
+        a.copy(equipStats = a.equipStats +
+          ((e.cond, eff + e.asPassiveStatEffect)))
+      case PassiveKillerEffect(tribe, phys, mag) =>
+        val (p,m) = a.killers.getOrElse(tribe, (0,0))
+        a.copy(killers = a.killers + ((tribe, (p + phys, m + mag)))) 
+      case PassiveEvoMagEffect(evomag) =>
+        a.copy(evomag = a.evomag + evomag)
+      case PassiveEquipEffect(equip) =>
+        a.copy(equips = a.equips + equip)
+      case PassiveDodgeEffect(p, m) =>
+        a.copy(dodge = PassiveDodgeEffect(p + a.dodge.phys, m + a.dodge.mag))
+      case PassiveJumpEffect(j) =>
+        a.copy(jump = a.jump + j)
+      case PassiveLimitBurstFillEffect(mod) => a.copy(lbfill = a.lbfill + mod)
+      case PassiveLimitBurstRateEffect(mod) => a.copy(lbrate = a.lbrate + mod)
+      case PassiveCamouflageEffect(_, mod) => a.copy(camouflage = a.camouflage + mod)
+      case PassiveRefreshEffect(_, mod) => a.copy(refresh = a.refresh + mod)
+      case PassiveDoublehandEffect(dh) =>
+        a.copy(dh = a.dh + dh)
+      case PassiveDualWieldEffect(weaps, all) =>
+        a.copy(dw = PassiveDualWieldEffect(a.dw.weapons ++ weaps, all || a.dw.all))
+      case _ => a
+    }}
   }
 }
-case object UnknownSkillEffect extends SkillEffect
+case object UnknownSkillEffect extends SkillEffect {
+  override def restrictions = Set.empty
+}
 object PassiveElementResist {
-  def decode(xs: List[Int]): SkillEffect = xs match {
+  def decode(restrict: Set[Int], xs: List[Int]): SkillEffect = xs match {
     case List(a, b, c, d, e, f, g, h) =>
-      PassiveElementResist(a, b, c, d, e, f, g, h)
+      PassiveElementResist(restrict, a, b, c, d, e, f, g, h)
     case _ => UnknownSkillEffect
   }
 }
 object PassiveStatusResist {
-  def decode(xs: List[Int]): SkillEffect = xs match {
+  def decode(restrict: Set[Int], xs: List[Int]): SkillEffect = xs match {
     case List(a, b, c, d, e, f, g, h) =>
-      PassiveStatusResist(a, b, c, d, e, f, g, h)
+      PassiveStatusResist(restrict, a, b, c, d, e, f, g, h)
     case _ => UnknownSkillEffect
   }
 }
 case class PassiveElementResist(
+  restrictions: Set[Int],
   fire: Int,
   ice: Int,
   lightning: Int,
@@ -271,11 +312,12 @@ case class PassiveElementResist(
   dark: Int
 ) extends SkillEffect {
   def +(o: PassiveElementResist) =
-    PassiveElementResist(fire + o.fire, ice + o.ice, lightning + o.lightning,
+    PassiveElementResist(restrictions.intersect(o.restrictions), fire + o.fire, ice + o.ice, lightning + o.lightning,
       water + o.water, wind + o.wind, earth + o.earth,
       light + o.light, dark + o.dark)
 }
 case class PassiveStatusResist(
+  restrictions: Set[Int],
   poison: Int,
   blind: Int,
   sleep: Int,
@@ -286,6 +328,7 @@ case class PassiveStatusResist(
   petrify: Int
 ) extends SkillEffect {
   def +(o: PassiveStatusResist) = PassiveStatusResist(
+    restrictions.intersect(o.restrictions),
     poison + o.poison,
     blind + o.blind,
     sleep + o.sleep,
@@ -309,22 +352,28 @@ case class PassiveWeapEleStatEffect(
   atk:  Int,
   defs: Int,
   mag:  Int,
-  spr:  Int) extends SkillEffect {
-  def asPassiveStatEffect = PassiveStatEffect(hp, mp, atk, defs, mag, spr)
+  spr:  Int) extends SkillEffect with NoRestrictions {
+  def asPassiveStatEffect =
+    PassiveStatEffect(Set.empty, hp, mp, atk, defs, mag, spr)
 }
 object PassiveEquipEffect {
   def decode(xs: List[Int]): SkillEffect = xs match {
-    case List(a) =>
-      PassiveEquipEffect(a)
+    case List(a) => PassiveEquipEffect(a)
     case _ => UnknownSkillEffect
   }
 }
-case class PassiveEquipEffect(equip: Int) extends SkillEffect
+case class PassiveEquipEffect(equip: Int) extends SkillEffect with NoRestrictions
 object PassiveEquipStatEffect {
   def decode(xs: List[Int]): SkillEffect = xs match {
     case List(a, b, c, d, e) =>
       PassiveEquipStatEffect(a, 0, 0, b, c, d, e)
     case _ => UnknownSkillEffect
+  }
+}
+case class PassiveDoublehandEffect(dh: Int) extends SkillEffect with NoRestrictions
+object PassiveDoublehandEffect {
+  def decode(xs: List[Int]): SkillEffect = xs match {
+    case List(a) => PassiveDoublehandEffect(a)
   }
 }
 case class PassiveEquipStatEffect(
@@ -335,25 +384,28 @@ case class PassiveEquipStatEffect(
   mag:  Int,
   defs: Int,
   spr:  Int) extends SkillEffect {
-  def asPassiveStatEffect = PassiveStatEffect(hp, mp, atk, defs, mag, spr)
+  def restrictions = Set.empty
+  def asPassiveStatEffect =
+    PassiveStatEffect(Set.empty, hp, mp, atk, defs, mag, spr)
 }
 object PassiveStatEffect {
-  def decode(xs: List[Int]): SkillEffect = xs match {
+  def decode(restrict: Set[Int], xs: List[Int]): SkillEffect = xs match {
     case List(a, b, c, d, e, f, g) =>
-      PassiveStatEffect(e, f, a, b, c, d)
+      PassiveStatEffect(restrict, e, f, a, b, c, d)
     case _ => UnknownSkillEffect
   }
 
-  def zero = PassiveStatEffect(0, 0, 0, 0, 0, 0)
+  def zero = PassiveStatEffect(Set.empty, 0, 0, 0, 0, 0, 0)
 }
 case class PassiveStatEffect(
+  restrict: Set[Int],
   hp:   Int,
   mp:   Int,
   atk:  Int,
   defs: Int,
   mag:  Int,
-  spr:  Int) extends SkillEffect {
-  def +(o: PassiveStatEffect) = PassiveStatEffect(hp + o.hp, mp + o.mp,
+  spr:  Int) extends SkillEffect with NoRestrictions {
+  def +(o: PassiveStatEffect) = PassiveStatEffect(restrict.intersect(o.restrict), hp + o.hp, mp + o.mp,
     atk + o.atk, defs + o.defs, mag + o.mag, spr + o.spr)
   override def toString = {
     ((if (atk != 0) List(s"ATK+$atk%") else Nil) ++
@@ -372,7 +424,7 @@ object PassiveKillerEffect {
   }
 }
 case class PassiveKillerEffect(tribe: Int, phys: Int, mag: Int)
-extends SkillEffect
+extends SkillEffect with NoRestrictions
 object PassiveEvoMagEffect {
   def decode(xs: List[Int]): SkillEffect = xs match {
     case List(a) =>
@@ -380,7 +432,7 @@ object PassiveEvoMagEffect {
     case _ => UnknownSkillEffect
   }
 }
-case class PassiveEvoMagEffect(evomag: Int) extends SkillEffect
+case class PassiveEvoMagEffect(evomag: Int) extends SkillEffect with NoRestrictions
 object PassiveDodgeEffect {
   def decode(xs: List[Int]): SkillEffect = xs match {
     case List(a) => PassiveDodgeEffect(a, 0)
@@ -388,20 +440,48 @@ object PassiveDodgeEffect {
     case _ => UnknownSkillEffect
   }
 }
-case class PassiveDodgeEffect(phys: Int, mag: Int) extends SkillEffect
+case class PassiveDodgeEffect(phys: Int, mag: Int) extends SkillEffect with NoRestrictions
+object PassiveCamouflageEffect {
+  def decode(restrict: Set[Int], xs: List[Int]): SkillEffect = xs match {
+    case List(a) => PassiveCamouflageEffect(restrict, a)
+    case _ => UnknownSkillEffect
+  }
+}
+case class PassiveCamouflageEffect(restrictions: Set[Int], camo: Int) extends SkillEffect
+object PassiveRefreshEffect {
+  def decode(restrict: Set[Int], xs: List[Int]): SkillEffect = xs match {
+    case List(a) => PassiveRefreshEffect(restrict, a)
+    case _ => UnknownSkillEffect
+  }
+}
+case class PassiveRefreshEffect(restrictions: Set[Int], refresh: Int) extends SkillEffect
 object PassiveJumpEffect {
   def decode(xs: List[Int]): SkillEffect = xs match {
     case List(a) => PassiveJumpEffect(a)
     case _ => UnknownSkillEffect
   }
 }
-case class PassiveJumpEffect(mod: Int) extends SkillEffect
+case class PassiveJumpEffect(mod: Int) extends SkillEffect with NoRestrictions
+object PassiveLimitBurstRateEffect {
+  def decode(xs: List[Int]): SkillEffect = xs match {
+    case List(a) => PassiveLimitBurstRateEffect(a)
+    case _ => UnknownSkillEffect
+  }
+}
+object PassiveLimitBurstFillEffect {
+  def decode(xs: List[Int]): SkillEffect = xs match {
+    case List(a) => PassiveLimitBurstFillEffect(a)
+    case _ => UnknownSkillEffect
+  }
+}
+case class PassiveLimitBurstFillEffect(mod: Int) extends SkillEffect with NoRestrictions
+case class PassiveLimitBurstRateEffect(mod: Int) extends SkillEffect with NoRestrictions
 object PassiveDualWieldEffect {
   def decode(xs: List[Int]): SkillEffect =
     if (xs.isEmpty) PassiveDualWieldEffect(Set.empty, true)
     else PassiveDualWieldEffect(xs.toSet, false)
 }
-case class PassiveDualWieldEffect(weapons: Set[Int], all: Boolean) extends SkillEffect
+case class PassiveDualWieldEffect(weapons: Set[Int], all: Boolean) extends SkillEffect with NoRestrictions
 
 case class StatInfo(hp: StatRange,
   mp: StatRange,
