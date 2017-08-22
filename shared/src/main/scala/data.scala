@@ -61,7 +61,7 @@ case class SkillInfo(
   effects: List[String])
 case class MateriaIndexData(id: String, effects: Option[List[String]], rarity: Int, magicType: Option[String], skilleffects: List[SkillEffect])
 case class MateriaIndex(name: String, id: Int, effects: List[String], rarity: Int, magicType: Option[String], skilleffects: List[SkillEffect]) {
-  def describeEffects(unit: UnitData) = {
+  def describeEffects(unit: Option[UnitData]) = {
     SkillEffect.collateEffects(unit, skilleffects).toString
   }
 }
@@ -79,6 +79,9 @@ case class EquipStats(
     (if (hp != 0) List(s"HP+${hp}") else Nil) ++
     (if (mp != 0) List(s"MP+${mp}") else Nil)).mkString(" ")
   }
+
+  def elementResist = elementResists.fold(ElementResist.zero)(_.asElementResist)
+  def ailmentResist = statusResists.fold(AilmentResist.zero)(_.asAilmentResist)
 }
 sealed trait EquipReq {
   def canEquip(unit: UnitData): Boolean
@@ -93,9 +96,12 @@ case class EquipIndexData(
   id: Int, slotId: Int, skills: Option[List[Int]], tpe: Int, skilleffects: List[SkillEffect], effects: Option[List[String]], skillEffects: Map[String,List[String]], stats: EquipStats, req: Option[EquipReq])
 case class EquipIndex(
   name: String, id: Int, slotId: Int, skills: List[Int], tpe: Int, skilleffects: List[SkillEffect], effects: List[String], skillEffects: Map[String,List[String]], stats: EquipStats, req: Option[EquipReq]) {
-  def describeEffects(unit: UnitData) = {
+  def describeEffects(unit: Option[UnitData]) = {
     SkillEffect.collateEffects(unit, skilleffects).toString
   }
+
+  def canEquip(unit: Option[UnitData]) =
+    unit.fold(true)(u => req.forall(_.canEquip(u)))
 }
 case class MagicAffinity(white: Int, black: Int, green: Int, blue: Int)
 case class StatRange(min: Int, max: Int, pots: Int) {
@@ -245,8 +251,8 @@ object SkillEffect {
       PassiveDualWieldEffect(Set.empty, false))
   }
 
-  def collateEffects(unit: UnitData, xs: List[SkillEffect]) = {
-    xs.filter(_.canUse(unit)).foldLeft(CollatedEffect()) { (a, eff) => eff match {
+  def collateEffects(unit: Option[UnitData], xs: List[SkillEffect]) = {
+    xs.filter(e => unit.forall(e.canUse)).foldLeft(CollatedEffect()) { (a, eff) => eff match {
       case e@PassiveElementResist(_,_, _, _, _, _, _, _, _) =>
         a.copy(elementResists = a.elementResists + e)
       case e@PassiveStatusResist(_,_,_,_,_,_,_,_,_) =>
@@ -315,6 +321,7 @@ case class PassiveElementResist(
     PassiveElementResist(restrictions.intersect(o.restrictions), fire + o.fire, ice + o.ice, lightning + o.lightning,
       water + o.water, wind + o.wind, earth + o.earth,
       light + o.light, dark + o.dark)
+  def asElementResist = ElementResist(fire, ice, lightning, water, wind, earth, light, dark)
 }
 case class PassiveStatusResist(
   restrictions: Set[Int],
@@ -337,6 +344,7 @@ case class PassiveStatusResist(
     confusion + o.confusion,
     disease + o.disease,
     petrify + o.petrify)
+  def asAilmentResist = AilmentResist(poison, blind, sleep, silence, paralysis, confusion, disease, petrify)
 }
 object PassiveWeapEleStatEffect {
   def decode(xs: List[Int]): SkillEffect = xs match {
@@ -516,7 +524,12 @@ case class AilmentResist(
   paralysis: Int,
   confusion: Int,
   disease: Int,
-  petrify: Int)
+  petrify: Int) {
+  def +(o: AilmentResist) = AilmentResist(poison + o.poison, blind + o.blind, sleep + o.sleep, silence + o.silence, paralysis + o.paralysis, confusion + o.confusion, disease + o.disease, petrify + o.petrify)
+}
+object AilmentResist {
+  def zero = AilmentResist(0, 0, 0, 0, 0, 0, 0, 0)
+}
 case class EquipElementResist(
   fire: Option[Int],
   ice: Option[Int],
@@ -543,4 +556,10 @@ case class ElementResist(
   wind: Int,
   earth: Int,
   light: Int,
-  dark: Int)
+  dark: Int) {
+  def +(o: ElementResist) = ElementResist(fire + o.fire, ice + o.ice, lightning + o.lightning, water + o.water, wind + o.wind, earth + o.earth, light + o.light, dark + o.dark)
+
+}
+object ElementResist {
+  def zero = ElementResist(0, 0, 0, 0, 0, 0, 0, 0)
+}

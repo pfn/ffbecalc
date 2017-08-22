@@ -7,6 +7,10 @@ import rxscalajs.Observable
 import boopickle.Default._
 
 object YaFFBEDB extends JSApp {
+  implicit class Tuple4Plus[A,B,C,D](val tuple: (A,B,C,D)) extends AnyVal {
+    def +[E,F](other: (E,F)): (A,B,C,D,E,F) =
+      (tuple._1, tuple._2, tuple._3, tuple._4, other._1, other._2)
+  }
   val EMPTY = "--empty--"
   def main(): Unit = {
     val idx = Data.get[List[UnitIndex]]("pickle/unit/index.pickle").map { us =>
@@ -31,7 +35,7 @@ object YaFFBEDB extends JSApp {
         Data.get[UnitData](s"pickle/unit/$id_.pickle").map(Some.apply)
       })
 
-    val unitSkills  = unitInfo.flatMap { u =>
+    val unitSkills = unitInfo.flatMap { u =>
       Observable.combineLatest(u.fold(
         List.empty[Observable[(UnitSkill, SkillInfo)]])(_.skills.map { s =>
         Data.get[SkillInfo](s"pickle/skill/${s.id}.pickle").map { s -> _ }
@@ -71,8 +75,6 @@ object YaFFBEDB extends JSApp {
     val ability4Sink = createStringHandler()
     val ability4Id = prependNone(ability4Sink)
     val ability4 = materiaFor(ability4Id)
-    val abilities = withTimestamp(ability1).combineLatest(
-      withTimestamp(ability2), withTimestamp(ability3), withTimestamp(ability4))
 
     val rhandSink = createStringHandler()
     val rhandId = prependNone(rhandSink)
@@ -96,35 +98,54 @@ object YaFFBEDB extends JSApp {
     val equippedGear = withTimestamp(rhand).combineLatest(
       withTimestamp(lhand), withTimestamp(headEquip), withTimestamp(bodyEquip))
     val accs = withTimestamp(acc1).combineLatest(withTimestamp(acc2))
-    val equipped = equippedGear.combineLatest(accs).combineLatest(abilities)
 
     type EqStamp = (Option[EquipIndex],Double)
     type MatStamp = (Option[MateriaIndex],Double)
-    def passivesFromAll(
-      equips: (((EqStamp, EqStamp, EqStamp, EqStamp),(EqStamp,EqStamp)),
-        (MatStamp,MatStamp,MatStamp,MatStamp))): List[SkillEffect] = {
-      val ((((r,_),(l,_),(h,_),(b,_)),((a1,_),(a2,_))),((m1,_),(m2,_),(m3,_),(m4,_))) = equips
-      passivesFromEq(List(r, l, h, b, a1, a2)) ++
-        passivesFromMat(List(m1, m2, m3, m4))
+    case class Equipped(
+      rhand: EqStamp, lhand: EqStamp,
+      head:  EqStamp, body:  EqStamp,
+      acc1:  EqStamp, acc2:  EqStamp) {
+      def allEquipped: List[EquipIndex] =
+        (rhand._1 ++ lhand._1 ++ head._1 ++ body._1 ++ acc1._1 ++ acc2._1).toList
     }
-    def skillsFromAll(
-      equips: (((EqStamp, EqStamp, EqStamp, EqStamp),(EqStamp,EqStamp)),
-        (MatStamp,MatStamp,MatStamp,MatStamp))): List[(String,String)] = {
-      val ((((r,_),(l,_),(h,_),(b,_)),((a1,_),(a2,_))),((m1,_),(m2,_),(m3,_),(m4,_))) = equips
-      skillsFromEq(List(r, l, h, b, a1, a2)) ++
-        skillsFromMat(List(m1, m2, m3, m4))
+    case class Abilities(
+      ability1: MatStamp, ability2: MatStamp,
+      ability3: MatStamp, ability4: MatStamp) {
+      def allEquipped: List[MateriaIndex] =
+        (ability1._1 ++ ability2._1 ++ ability3._1 ++ ability4._1).toList
     }
 
-    def passivesFromEq(equip: List[Option[EquipIndex]]) =
-      equip.flatMap(_.fold(List.empty[SkillEffect])(_.skilleffects))
-    def passivesFromMat(equip: List[Option[MateriaIndex]]) =
-      equip.flatMap(_.fold(List.empty[SkillEffect])(_.skilleffects))
-    def skillsFromEq(equip: List[Option[EquipIndex]]) =
-      equip.flatMap(_.fold(List.empty[(String,String)])(e =>
+    val abilities = withTimestamp(ability1).combineLatest(
+      withTimestamp(ability2), withTimestamp(ability3),
+      withTimestamp(ability4)).map(Abilities.tupled.apply)
+
+    val equipped = equippedGear.combineLatest(accs).map { a =>
+      Equipped.tupled.apply(a._1 + a._2)
+    }.combineLatest(abilities)
+
+    val equippedStats = equipped.map { case (eqs, abis) =>
+      ()
+    }
+
+    def passivesFromAll(equips: List[EquipIndex],
+      abilities: List[MateriaIndex]) : List[SkillEffect] = {
+      passivesFromEq(equips) ++ passivesFromMat(abilities)
+    }
+    def skillsFromAll(equips: List[EquipIndex],
+      abilities: List[MateriaIndex]): List[(String,String)] = {
+      skillsFromEq(equips) ++ skillsFromMat(abilities)
+    }
+
+    def passivesFromEq(equip: List[EquipIndex]) =
+      equip.flatMap(_.skilleffects)
+    def passivesFromMat(equip: List[MateriaIndex]) =
+      equip.flatMap(_.skilleffects)
+    def skillsFromEq(equip: List[EquipIndex]) =
+      equip.flatMap(e =>
         e.skillEffects.toList.map { case (k,v) => k -> v.mkString("\n") }
-      ))
-    def skillsFromMat(equip: List[Option[MateriaIndex]]) =
-      equip.flatMap(_.fold(List.empty[(String,String)])(m => List(m.name -> m.effects.mkString("\n"))))
+      )
+    def skillsFromMat(equip: List[MateriaIndex]) =
+      equip.flatMap(m => List(m.name -> m.effects.mkString("\n")))
 
     def typeOf(eqItem: Option[EquipIndex]): Int =
       eqItem.fold(-1)(_.tpe)
@@ -135,13 +156,13 @@ object YaFFBEDB extends JSApp {
       case (_,info) => info.skilleffects
     }}
     val allPassives = unitInfo.combineLatest(unitPassives, equipped).map {
-      case ((info, passives,all@(((_, _, _, _),(_, _)),(_,_,_,_)))) =>
-      info -> SkillEffect.collateEffects(info.get, passivesFromAll(all) ++ passives) // FIXME
+      case (info, passives,(eqs,abis)) =>
+      info -> SkillEffect.collateEffects(info, passivesFromAll(eqs.allEquipped, abis.allEquipped) ++ passives)
     }
 
     val equipSkills: Observable[List[(String,String)]] = equipped.map {
-      case (all@(((_, _, _, _),(_, _)),(_,_,_,_))) =>
-      skillsFromAll(all)
+      case (eqs, abis) =>
+      skillsFromAll(eqs.allEquipped, abis.allEquipped)
     }
 
     def clearInput(node: scalajs.js.Dynamic): Unit = {
@@ -196,21 +217,21 @@ object YaFFBEDB extends JSApp {
     }
 
     val rhandValidator = allPassives.combineLatest(equipped).map {
-      case (((info,effs),(((rh, lh, hd, bd),(a1, a2)),(m1,m2,m3,m4)))) =>
-        handValidator("r-hand", rh._1, lh._1, info, effs, rh._2 < lh._2)
+      case (((info,effs),(eqs, abis))) =>
+        handValidator("r-hand", eqs.rhand._1, eqs.lhand._1, info, effs, eqs.rhand._2 < eqs.lhand._2)
         EMPTY
     }
     val lhandValidator = allPassives.combineLatest(equipped).map {
-      case (((info,effs),(((rh, lh, hd, bd),(a1, a2)),(m1,m2,m3,m4)))) =>
-        handValidator("l-hand", lh._1, rh._1, info, effs, lh._2 < rh._2)
+      case (((info,effs),(eqs, abis))) =>
+        handValidator("l-hand", eqs.lhand._1, eqs.rhand._1, info, effs, eqs.lhand._2 < eqs.rhand._2)
         EMPTY
     }
     val equipsValidator = allPassives.combineLatest(equipped).map {
-      case (((info,effs),(((rh, lh, hd, bd),(a1, a2)),(m1,m2,m3,m4)))) =>
-        equipValidator("u-head", hd._1, info, effs)
-        equipValidator("u-body", hd._1, info, effs)
-        equipValidator("u-acc1", hd._1, info, effs)
-        equipValidator("u-acc2", hd._1, info, effs)
+      case (((info,effs),(eqs, abis))) =>
+        equipValidator("u-head", eqs.head._1, info, effs)
+        equipValidator("u-body", eqs.body._1, info, effs)
+        equipValidator("u-acc1", eqs.acc1._1, info, effs)
+        equipValidator("u-acc2", eqs.acc2._1, info, effs)
         EMPTY
     }
 
@@ -219,54 +240,46 @@ object YaFFBEDB extends JSApp {
         _.entries.values.toList.sortBy(_.rarity).lastOption)
     }
 
-    val unitActives = unitSkills.map { skills =>
-      skills.filter(_._2.active).map { case (unitskill, skillinfo) =>
-        tr(
-          td(cls := "unit-skill-rarity", s"${unitskill.rarity}\u2605"),
-          td(cls := "unit-skill-level", unitskill.level.toString),
-          td(cls := "unit-skill-name", skillinfo.name),
-          td(cls := "unit-skill-desc", children <--
-            Observable.just(skillinfo.effects.map(e => div(e)))),
-          td(cls := "unit-skill-cost", skillinfo.mpCost.toString),
-        )
-      }
-    }
+    val activesTable = components.dataTable(unitSkills.map(_.filter(_._2.active)),
+      "skills-active",
+      List("Rarity", "Level", "Name", "Description", "MP"),
+      List("unit-skill-rarity", "unit-skill-level", "unit-skill-name", "unit-skill-desc", "unit-skill-cost"))(
+      List(
+        a => span(s"${a._1.rarity}\u2605"),
+        a => span(a._1.level.toString),
+        a => span(a._2.name),
+        a => div(a._2.effects.map(e => div(e)): _*),
+        a => span(a._2.mpCost.toString)
+      ))
 
-    val unitTraits = unitSkills.map { skills =>
-      skills.filterNot(_._2.active).map { case (unitskill, skillinfo) =>
-        tr(
-          td(cls := "unit-trait-rarity", s"${unitskill.rarity}\u2605"),
-          td(cls := "unit-trait-level",  unitskill.level.toString),
-          td(cls := "unit-trait-name",   skillinfo.name),
-          td(cls := "unit-trait-desc",   children <--
-            Observable.just(skillinfo.effects.map(e => div(e)))),
-        )
-      }
-    }
+    val traitsTable = components.dataTable(unitSkills.map(_.filterNot(_._2.active)),
+      "skills-trait",
+      List("Rarity", "Level", "Name", "Description"),
+      List("unit-trait-rarity", "unit-trait-level", "unit-trait-name", "unit-trait-desc"))(List(
+        a => span(s"${a._1.rarity}\u2605"),
+        a => span(a._1.level.toString),
+        a => span(a._2.name),
+        a => div(a._2.effects.map(e => div(e)): _*),
+      ))
 
-    val equippedSkills = equipSkills.map { skills =>
-      skills.map { case (name, desc) =>
-      tr(
-          td(cls := "unit-equip-name",   children <-- Observable.just(name.split("\n").map(e => div(e)))),
-          td(cls := "unit-equip-desc",   children <--
-            Observable.just(desc.split("\n").map(e => div(e)))),
-            )
-      }
-    }
+    val equippedTable = components.dataTable(equipSkills,
+      "skills-equip",
+      List("Name", "Description"),
+      List("unit-equip-name", "unit-equip-desc"))(List(
+        a => div(a._1.split("\n").map(e => div(e)):_*),
+        a => div(a._2.split("\n").map(e => div(e)):_*)
+      ))
 
     val unitDescription = unitInfo.map { i =>
       i.fold("")(_.entries.values.toList.sortBy(
         _.rarity).lastOption.fold("Unknown")(_.strings.description.getOrElse("Unknown")))
     }
 
-    val unitPresenceCheck: (Option[UnitData],EquipIndex) => Boolean = (u, e) =>
-      u.nonEmpty
-
     def materiaOption(u: Option[UnitData], e: Option[UnitEntry]): Observable[List[VNode]] =
       materia.map { m =>
         List(option(value := EMPTY, "Empty")) ++
           m.filter(mi => e.exists(_.canEquip(mi))).map { mi =>
-            val mid = mi.describeEffects(u.get) // FIXME
+            val mid = mi.describeEffects(u)
             val mids = if (mid.trim.isEmpty) ""
             else s"\u27a1 $mid"
             option(value := mi.id, s"${mi.name} $mids")
@@ -277,9 +290,9 @@ object YaFFBEDB extends JSApp {
       (es, (u, passives)) <- equips.combineLatest(allPassives)
     } yield {
       List(option(value := EMPTY, "Empty")) ++
-        es.filter(e => slots(e.slotId) && passives.canEquip(e.tpe, u)).map { e =>
+        es.filter(e => slots(e.slotId) && e.canEquip(u) && passives.canEquip(e.tpe, u)).map { e =>
           option(value := e.id,
-            s"${e.name} \u27a1 ${e.stats} ${e.describeEffects(u.get)}") // FIXME
+            s"${e.name} \u27a1 ${e.stats} ${e.describeEffects(u)}")
         }
     }
 
@@ -352,19 +365,13 @@ object YaFFBEDB extends JSApp {
           )
         ),
         h3("Abilities & Spells"),
-        table(cls := "skills-active",
-          tr(th("Rarity"), th("Level"), th("Name"),
-            th("Description"), th("MP")), children <-- unitActives),
+        activesTable,
         h3("Traits"),
-        table(cls := "skills-trait",
-          tr(th("Rarity"), th("Level"), th("Name"),
-            th("Description")), children <-- unitTraits),
-        div(hidden <-- equippedSkills.map(_.isEmpty),
+        traitsTable,
+        div(hidden <-- equipSkills.map(_.isEmpty),
           h3("Equipped"),
-          table(cls := "skills-equip",
-            tr(th("Name"),
-              th("Description")), children <-- equippedSkills),
-          ),
+          equippedTable,
+        ),
         ),
         meta(name := "validation-sink-placeholder", content <-- rhandValidator.combineLatest(lhandValidator, equipsValidator).map(_ => "")),
       )

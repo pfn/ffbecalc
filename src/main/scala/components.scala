@@ -56,4 +56,21 @@ object components {
       ),
     )
   }
+
+  def dataTable[A](data: Observable[Seq[A]],
+    tableCls: String,
+    headers: List[String],
+    colcls: List[String])(fs: List[A => VNode]): VNode = {
+    table(cls := tableCls,
+      tr(headers.zip(colcls).map { case (h, c) =>
+          th(cls := c, h);
+        }: _*), children <-- data.map { d =>
+          d.map { a =>
+            tr(fs.zip(colcls).map { case (f, c) =>
+              td(cls := c, f(a))
+            }: _*)
+          }
+        }
+    )
+  }
 }
