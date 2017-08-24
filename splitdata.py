@@ -9,6 +9,7 @@ equip   = json.load(file("equipment.json"))
 enhance = json.load(file("enhancements.json"))
 lb      = json.load(file("limitbursts.json"))
 espers  = json.load(file("summons.json"))
+esperbs = json.load(file("summons_boards.json"))
 skills  = json.load(file("skills.json"))
 materia = json.load(file("materia.json"))
 
@@ -29,6 +30,7 @@ mkdir("json/unit")
 mkdir("json/equip")
 mkdir("json/enhance")
 mkdir("json/esper")
+mkdir("json/esperboard")
 mkdir("json/lb")
 mkdir("json/skill")
 mkdir("json/materia")
@@ -127,9 +129,10 @@ for x in skills.keys():
   json.dump(skills[x], file("json/skill/%s.json" % x, "w"))
 
 for x in espers.keys():
-  if "names" in espers[x]:
+  if "names" in espers[x] and x in esperbs:
     esperdex[espers[x]['names'][0]] = x
     json.dump(espers[x], file("json/esper/%s.json" % x, "w"))
+    json.dump(esperbs[x], file("json/esperboard/%s.json" % x, "w"))
   
 json.dump(unitdex,    file("json/unit/index.json",    "w"), indent=2)
 json.dump(equipdex,   file("json/equip/index.json",   "w"), indent=2)
