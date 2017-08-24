@@ -142,9 +142,10 @@ object DataDecoders {
     }
   }
   implicit val decodeEquipIndexData: Decoder[EquipIndexData] =
-    Decoder.forProduct9(
+    Decoder.forProduct10(
       "id",
       "slot_id",
+      "is_twohanded",
       "skills",
       "type_id",
       "effects_raw",

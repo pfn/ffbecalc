@@ -46,7 +46,8 @@ object YaFFBEDB extends JSApp {
 
     val esperIdSubject = Subject[Option[String]]()
     val esperStats = createHandler[Option[EsperStatInfo]]()
-    val (esper, esperInfo) = Esper.esperInfo(espers, esperIdSubject, esperStats)
+    val esperSkills = createHandler[List[(String,List[String],List[SkillEffect])]]()
+    val esper = createHandler[Option[EsperData]]()
 
     def equipFor(idOb: Observable[Option[String]]): Observable[Option[EquipIndex]] = for {
       ms <- equips
@@ -97,22 +98,6 @@ object YaFFBEDB extends JSApp {
       withStamp(lhand), withStamp(headEquip), withStamp(bodyEquip))
     val accs = withStamp(acc1).combineLatest(withStamp(acc2))
 
-    type EqStamp = (Option[EquipIndex],Double)
-    type MatStamp = (Option[MateriaIndex],Double)
-    case class Equipped(
-      rhand: EqStamp, lhand: EqStamp,
-      head:  EqStamp, body:  EqStamp,
-      acc1:  EqStamp, acc2:  EqStamp) {
-      def allEquipped: List[EquipIndex] =
-        (rhand._1 ++ lhand._1 ++ head._1 ++ body._1 ++ acc1._1 ++ acc2._1).toList
-    }
-    case class Abilities(
-      ability1: MatStamp, ability2: MatStamp,
-      ability3: MatStamp, ability4: MatStamp) {
-      def allEquipped: List[MateriaIndex] =
-        (ability1._1 ++ ability2._1 ++ ability3._1 ++ ability4._1).toList
-    }
-
     val (ability1, ability2, ability3, ability4, abilitySlots) =
       components.abilitySlots(materia, unitInfo, unitEntry)
     val abilities = withStamp(ability1).combineLatest(
@@ -155,14 +140,15 @@ object YaFFBEDB extends JSApp {
     val unitPassives = unitSkills.map { _.filterNot(_._2.active).flatMap {
       case (_,info) => info.skilleffects
     }}
-    val allPassives = unitInfo.combineLatest(unitPassives, equipped).map {
-      case (info, passives,(eqs,abis)) =>
-      info -> SkillEffect.collateEffects(info, passivesFromAll(eqs.allEquipped, abis.allEquipped) ++ passives)
+    val allPassives = unitInfo.combineLatest(unitPassives, equipped, esperSkills).map {
+      case (info, passives,(eqs,abis), fromEsper) =>
+      info -> SkillEffect.collateEffects(info, passivesFromAll(eqs.allEquipped, abis.allEquipped) ++ passives ++ fromEsper.flatMap(_._3))
     }
 
-    val equipSkills: Observable[List[(String,String)]] = equipped.map {
-      case (eqs, abis) =>
-      skillsFromAll(eqs.allEquipped, abis.allEquipped)
+    val equipSkills: Observable[List[(String,String)]] = equipped.combineLatest(esperSkills).map {
+      case ((eqs, abis), fromE) =>
+      skillsFromAll(eqs.allEquipped, abis.allEquipped) ++
+        fromE.map { case (n,d,e) => n -> d.mkString("\n") }
     }
 
     def publishTo[A](sink: Subject[A], value: A): Unit = sink.next(value)
@@ -258,7 +244,7 @@ object YaFFBEDB extends JSApp {
           select(children <-- idx, value <-- idx.combineLatest(unitIdSubject).map(_._2).map(_.getOrElse(EMPTY)).startWith(EMPTY), inputString --> unitIdSink),
           div(hidden <-- unitId.map(_.isEmpty).startWith(true),
             components.unitBaseStats(unitEntry, unitStats),
-            components.unitStats(unitStats, esperStats),
+            components.unitStats(unitEntry, unitStats, equipped, allPassives.map(_._2), esperStats),
           )
         ),
         div(hidden <-- unitId.map(_.isEmpty).startWith(true),
@@ -283,7 +269,7 @@ object YaFFBEDB extends JSApp {
           children <-- abilitySlots,
         ),
         h3("Esper"),
-        esperInfo,
+        Esper.esperInfo(esper, espers, esperIdSubject, esperStats, esperSkills),
         h3("Abilities & Spells"),
         activesTable,
         h3("Traits"),

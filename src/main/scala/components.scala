@@ -72,9 +72,28 @@ object components {
     )
   }
 
-  def unitStats(stats: Observable[Option[Stats]], esper: Observable[Option[EsperStatInfo]]): VNode = {
-    def st(f: Stats => Int) = stats.combineLatest(esper).map { case (s,e) =>
-      s.fold("???")(d => f(d + e).toString)
+  def unitStats(unit: Observable[Option[UnitEntry]], stats: Observable[Option[Stats]], equipped: Observable[(Equipped,Abilities)], allPassives: Observable[SkillEffect.CollatedEffect], esper: Observable[Option[EsperStatInfo]]) = {
+    val effective = stats.combineLatest(esper, equipped, allPassives).map {
+      case (s,e,(eqs,abis),pasv) =>
+        s.map { st =>
+          val alleq = eqs.allEquipped
+          val passives = (pasv.stats + pasv.statFromEquips(alleq))
+
+          val is2h = alleq.exists(_.twohands)
+          val isSW = alleq.count(_.slotId == 1) == 1 &&
+            alleq.count(_.slotId == 2) == 0
+          val eqstats = alleq.foldLeft(Stats.zero) { (ac, equip) =>
+            ac + equip.stats
+          }
+          val dhstats = if (!is2h && isSW) eqstats * pasv.dh
+          else if (is2h && isSW) Stats.zero
+          else Stats.zero
+
+          st * passives + e + eqstats + dhstats
+        }
+    }
+    def st(f: Stats => Int) = effective.map { s =>
+      s.fold("???")(d => f(d).toString)
     }
     table(cls := "unit-stats",
       caption("Effective Stats"),
@@ -96,6 +115,62 @@ object components {
         td(cls := "unit-stat-name", "SPR"),
         td(cls := "unit-stat-data", child <-- st(_.spr))
       ),
+      /*
+      children <-- unit.combineLatest(allPassives).map { case (u,pasv) =>
+        u.fold(List.empty[VNode]) { entry =>
+          List(
+            tr(
+              td(colspan := 1, "Status Resist"),
+              td(colspan := 3, entry.statusResist.toString),
+            ),
+            tr(
+              td(colspan := 1, "Element Resist"),
+              td(colspan := 3, entry.elementResist.toString),
+            ),
+            tr(
+              td(colspan := 1, "Passive Eleres"),
+              td(colspan := 3, pasv.elementResists.toString),
+            ),
+            tr(
+              td(colspan := 1, "Passive ailres"),
+              td(colspan := 3, pasv.statusResists.toString),
+            ),
+            tr(
+              td(colspan := 1, "Killers"),
+              td(colspan := 3, pasv.killers.toString),
+            ),
+            tr(
+              td(colspan := 1, "EVO MAG %"),
+              td(colspan := 3, pasv.evomag.toString),
+            ),
+            tr(
+              td(colspan := 1, "Dodge %"),
+              td(colspan := 3, pasv.dodge.toString),
+            ),
+            tr(
+              td(colspan := 1, "Jump"),
+              td(colspan := 3, pasv.jump.toString),
+            ),
+            tr(
+              td(colspan := 1, "LB %"),
+              td(colspan := 3, pasv.lbrate.toString),
+            ),
+            tr(
+              td(colspan := 1, "LB fill"),
+              td(colspan := 3, (pasv.lbfill / 100.0).toString),
+            ),
+            tr(
+              td(colspan := 1, "Auto-refresh"),
+              td(colspan := 3, pasv.refresh.toString),
+            ),
+            tr(
+              td(colspan := 1, "Camouflage"),
+              td(colspan := 3, pasv.camouflage.toString),
+            ),
+          )
+        }
+      }
+      */
     )
   }
 

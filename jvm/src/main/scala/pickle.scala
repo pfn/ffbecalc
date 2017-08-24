@@ -36,7 +36,8 @@ object Pickler {
       equippath / "index.json", picklepath / "equip" / "index.pickle", {
         _.right.map { m =>
           m.toList.map { case (k,v) =>
-            EquipIndex(k, v.id, v.slotId, v.skills.getOrElse(Nil),
+            EquipIndex(k, v.id, v.twohands.getOrElse(false), v.slotId,
+              v.skills.getOrElse(Nil),
               v.tpe, v.skilleffects, v.effects.getOrElse(Nil),
               v.skillEffects, v.stats, v.req)
           }.sortBy(_.name)

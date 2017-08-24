@@ -19,7 +19,7 @@ object Esper {
     allCheck: Observable[Boolean],
     checker: Observable[(Int,Boolean)]) = {
     val (nodes, sinks) = board.zipWithIndex.collect {
-      case (EsperSlot(r@EsperSkillEffectReward(name, effs), cost), i)
+      case (EsperSlot(r@EsperSkillEffectReward(name, desc, effs), cost), i)
         if inRarity(rarity, cost) =>
         val checkSink = createHandler[(Int, EsperSkillEffectReward, Boolean)]()
 
@@ -29,7 +29,7 @@ object Esper {
               case (a,b) if a == i => b
             }.merge(allCheck).startWith(true)
           ), "\u00a0", name.replaceAll(" ", "\u00a0")))
-        node -> checkSink.startWith((i,r,true))
+        node -> checkSink.merge(allCheck.map { b => (i,r,b) }).startWith((i,r,true))
     }.unzip
 
     sink <-- Observable.combineLatest(sinks).map {
@@ -40,10 +40,9 @@ object Esper {
     }
     nodes
   }
-  def trainEsperSkill(esperboard: Observable[List[EsperSlot]], esperRarity: Observable[Int]) = {
+  def trainEsperSkill(esperboard: Observable[List[EsperSlot]], esperRarity: Observable[Int], outs: Handler[Map[Int, (EsperSkillEffectReward,Boolean)]]) = {
     esperboard.combineLatest(esperRarity) map { case (board,rarity) =>
       val checker = Subject[(Int,Boolean)]()
-      val outs = createHandler[Map[Int, (EsperSkillEffectReward,Boolean)]]()
       val allChecked = createBoolHandler()
       List(
         th(label(input(tpe := "checkbox", checked <-- outs.map(_.values.forall(_._2)).startWith(true), inputChecked --> allChecked), "\u00a0", "Skills")),
@@ -87,10 +86,10 @@ object Esper {
       )
     }
   }
-  def esperInfo(espers: Observable[Map[String,Int]], esperIdSubject: Subject[Option[String]], esperStats: Handler[Option[EsperStatInfo]]): (Observable[Option[EsperData]], VNode) = {
+  def esperInfo(esper: Handler[Option[EsperData]], espers: Observable[Map[String,Int]], esperIdSubject: Subject[Option[String]], esperStats: Handler[Option[EsperStatInfo]], esperSkills: Handler[List[(String,List[String],List[SkillEffect])]]) = {
     val esperSink = createStringHandler()
     val esperId = esperSink.map(maybeId).merge(esperIdSubject)
-    val esper: Observable[Option[EsperData]] = esperId.flatMap { e =>
+    esper <-- esperId.flatMap { e =>
       e.fold(Observable.just(Option.empty[EsperData])) { eid =>
         Data.get[EsperData](s"pickle/esper/${eid}.pickle").map(Some.apply)
       }
@@ -103,7 +102,7 @@ object Esper {
               case u@EsperSlot(EsperAbilityReward(id), cost) =>
                 Data.get[SkillInfo](s"pickle/skill/$id.pickle").flatMap { s =>
                   if (s.active) Observable.just(EsperSlot(UnknownEsperSkill, 100))
-                  else Observable.just(EsperSlot(EsperSkillEffectReward(s.name, s.skilleffects), cost))
+                  else Observable.just(EsperSlot(EsperSkillEffectReward(s.name, s.effects, s.skilleffects), cost))
                 }.catchError(_ => Observable.just(u))
               case x => Observable.just(x)
             }
@@ -119,6 +118,7 @@ object Esper {
       e.map(_.entries(r))
     }
 
+    val skillSink = createHandler[Map[Int,(EsperSkillEffectReward,Boolean)]]()
     val hpSink  = createHandler[Map[Int,(EsperStatReward,Boolean)]]()
     val mpSink  = createHandler[Map[Int,(EsperStatReward,Boolean)]]()
     val atkSink = createHandler[Map[Int,(EsperStatReward,Boolean)]]()
@@ -137,6 +137,11 @@ object Esper {
       }
     }
     esperStats <-- modifiedStats
+    esperSkills <-- skillSink.map { m =>
+      m.values.toList.collect { case (esr, b) if b =>
+        (esr.name, esr.desc, esr.effects)
+      }
+    }
     def esperStat(stat: String, f: EsperStatInfo => Int) =
       modifiedStats.map { 
         _.fold("")(x => f(x) + stat)
@@ -171,7 +176,7 @@ object Esper {
           span(child <-- esperStat("SPR", _.spr.max))
         ),
         table(id := "esper-training",
-          tr(children <-- trainEsperSkill(esperboard, esperRarity)),
+          tr(children <-- trainEsperSkill(esperboard, esperRarity, skillSink)),
           tr(children <-- trainEsperStat("HP",  esperboard, esperRarity, hpSink, _.maybeHP)),
           tr(children <-- trainEsperStat("MP",  esperboard, esperRarity, mpSink, _.maybeMP)),
           tr(children <-- trainEsperStat("ATK", esperboard, esperRarity, atkSink, _.maybeATK)),
@@ -181,6 +186,6 @@ object Esper {
         )
       )
     )
-    (esper, infoTable)
+    infoTable
   }
 }
