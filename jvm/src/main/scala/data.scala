@@ -12,13 +12,17 @@ object DataDecoders {
     }
 
     def decodeSkillEffect(c: ACursor): List[SkillEffect] = {
-      val restrict = c.downField("unit_restriction").as[Option[List[Int]]].fold(
-        e => Nil, _.toList.flatten)
-      array(c.downField("effects").downArray).map(a =>
-        decodeEffect(restrict, a.downArray)).collect {
-          case Right(x) => x
-        }.filterNot(
-          _ == UnknownSkillEffect).toList
+      if (c.downField("unit_restriction").succeeded) {
+        val restrict = c.downField("unit_restriction").as[Option[List[Int]]].fold(
+          e => Nil, _.toList.flatten)
+        array(c.downField("effects").downArray).map(a =>
+          decodeEffect(restrict, a.downArray)).collect {
+            case Right(x) => x
+          }.filterNot(
+            _ == UnknownSkillEffect).toList
+      } else {
+        decodeEffect(Nil, c.downArray).fold(_ => Nil, x => List(x))
+      }
     }
 
     def decodeEffect(restrict: List[Int], c: ACursor): Decoder.Result[SkillEffect] = {
@@ -198,5 +202,27 @@ object DataDecoders {
     Decoder.forProduct3(
       "stats", "element_resist", "status_resist")(EsperEntry.apply)
   implicit val decodeEsperData: Decoder[EsperData] =
-    Decoder.forProduct1("entries")(EsperData.apply)
+    Decoder.forProduct2("names", "entries")(EsperData.apply)
+  implicit val decodeEsperSkill: Decoder[EsperSkill] = new Decoder[EsperSkill] {
+    def apply(c: HCursor): Decoder.Result[EsperSkill] = {
+      val x = for {
+        field <- c.downArray.as[String]
+        value <- c.downArray.right.as[Int]
+      } yield {
+        field match {
+          case "HP"      => EsperStatReward.hp(value)
+          case "MP"      => EsperStatReward.mp(value)
+          case "ATK"     => EsperStatReward.atk(value)
+          case "DEF"     => EsperStatReward.defs(value)
+          case "MAG"     => EsperStatReward.mag(value)
+          case "SPR"     => EsperStatReward.spr(value)
+          case "MAGIC"   => UnknownEsperSkill
+          case "ABILITY" => EsperAbilityReward(value)
+        }
+      }
+      Right(x.fold(_ => UnknownEsperSkill, identity))
+    }
+  }
+  implicit val decodeEsperSlot: Decoder[EsperSlot] =
+    Decoder.forProduct2("reward", "cost")(EsperSlot.apply)
 }

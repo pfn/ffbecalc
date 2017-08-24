@@ -27,6 +27,7 @@ object Pickler {
     //enhance lb
     val equippath   = jsonpath / "equip"
     val esperpath   = jsonpath / "esper"
+    val esperbpath  = jsonpath / "esperboard"
     val materiapath = jsonpath / "materia"
     val unitpath    = jsonpath / "unit"
     val skillpath   = jsonpath / "skill"
@@ -79,7 +80,17 @@ object Pickler {
       pickle[EsperData,EsperData](f, picklepath / "esper" / out,
         _.fold(e => sys.error("esper data: " + e), identity))
     }
-    println(unpickle[List[EquipIndex]](picklepath / "equip" / "index.pickle"))
+    (esperbpath * jsonFilter).foreach { f =>
+      val n = f.getName
+      val out = n.dropRight(5) + ".pickle"
+      pickle[Map[String,EsperSlot],List[EsperSlot]](f,
+        picklepath / "esperboard" / out,
+        _.fold(e => sys.error("esperboard data: " + e),
+          _.toList.sortBy(_._1).collect { case (_,v) if v.reward != UnknownEsperSkill => v }))
+    }
+    //println(unpickle[List[EquipIndex]](picklepath / "equip" / "index.pickle"))
+    println(unpickle[List[EsperSlot]](picklepath / "esperboard" / "4.pickle"))
+    //println(unpickle[SkillInfo](picklepath / "skill" / "910274.pickle"))
   }
 
   val jsonFilter: String => Boolean = {

@@ -6,20 +6,26 @@ div#unit-info {
   min-width: 20em;
   width: 25%;
 }
-div#content { max-width: 48em; margin: 0 30%; }
+div#content { max-width: 48em; margin: 0 15% 0 30%; }
 div#esper-container { margin: 16px; }
+div#esper-stats { margin-top: 16px; }
+button#esper-skills { margin-left: 16px }
 body { font-family: sans-serif; }
 table {
   width: calc(100% - 32px);
   border-collapse: collapse;
 }
+label { white-space: nowrap; }
+table#esper-training { width: calc(100% - 32px); margin: 16px }
+#esper-training th { text-align: left; width: 20%; }
+#esper-training span { margin-left: 16px; }
 table.skills-equip,
 table.skills-active,
 table.skills-trait { width: calc(100% - 32px); margin: 16px; }
 table.skills-equip tr,
 table.skills-trait tr,
 table.skills-active tr { border: solid thin; }
-select {
+button, select {
   height: calc(2.25rem + 2px);
   font-size: 1rem;
 }
@@ -32,6 +38,13 @@ option {
   line-height: 1.25;
   font-size: 1rem;
 }
+table.unit-stats {
+  margin-top: 16px;
+  border-style: solid;
+  border-width: 1px;
+  width: calc(100% - 16px);
+}
+table.unit-stats > caption { text-align: left }
 td.unit-stat-name {
   width: 25%;
   font-size: smaller;

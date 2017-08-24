@@ -1,17 +1,13 @@
 package yaffbedb
 
 import scala.scalajs.js.JSApp
+import org.scalajs.dom.document
 
 import outwatch.dom._
-import rxscalajs.Observable
+import rxscalajs.{Observable,Subject}
 import boopickle.Default._
 
 object YaFFBEDB extends JSApp {
-  implicit class Tuple4Plus[A,B,C,D](val tuple: (A,B,C,D)) extends AnyVal {
-    def +[E,F](other: (E,F)): (A,B,C,D,E,F) =
-      (tuple._1, tuple._2, tuple._3, tuple._4, other._1, other._2)
-  }
-  val EMPTY = "--empty--"
   def main(): Unit = {
     val idx = Data.get[List[UnitIndex]]("pickle/unit/index.pickle").map { us =>
       List(option(value := EMPTY, "-- Select a unit --")) ++
@@ -21,19 +17,25 @@ object YaFFBEDB extends JSApp {
         }
     }
 
-    val equips = Data.get[List[EquipIndex]]("pickle/equip/index.pickle")
+    val equips  = Data.get[List[EquipIndex]]("pickle/equip/index.pickle")
     val materia = Data.get[List[MateriaIndex]]("pickle/materia/index.pickle")
-    val espers = Data.get[Map[String,Int]]("pickle/esper/index.pickle")
+    val espers  = Data.get[Map[String,Int]]("pickle/esper/index.pickle")
 
-    def maybeId(id: String): Option[String] =
-      if (id.startsWith("--")) None else Some(id)
     val unitIdSink = createStringHandler()
-    val unitId = unitIdSink.map(maybeId)
+    val unitIdSubject = Subject[Option[String]]
+    val unitId = unitIdSubject.merge(unitIdSink.map(maybeId))
 
     val unitInfo: Observable[Option[UnitData]] = unitId.flatMap(id => 
       id.fold(Observable.just(Option.empty[UnitData])) { id_ =>
-        Data.get[UnitData](s"pickle/unit/$id_.pickle").map(Some.apply)
+        Data.get[UnitData](s"pickle/unit/$id_.pickle").map { u =>
+          Some(u)
+        }
       })
+
+    val unitEntry: Observable[Option[UnitEntry]] = unitInfo.map {
+      _.fold(Option.empty[UnitEntry])(
+        _.entries.values.toList.sortBy(_.rarity).lastOption)
+    }
 
     val unitSkills = unitInfo.flatMap { u =>
       Observable.combineLatest(u.fold(
@@ -42,62 +44,58 @@ object YaFFBEDB extends JSApp {
       }))
     }
 
-    val esperSink = createStringHandler()
-    val esperId = esperSink.map(maybeId)
-    val esper: Observable[Option[EsperData]] = esperId.flatMap { e =>
-      e.fold(Observable.just(Option.empty[EsperData])) { eid =>
-        Data.get[EsperData](s"pickle/esper/${eid}.pickle").map(Some.apply)
-      }
-    }
+    val esperIdSubject = Subject[Option[String]]()
+    val esperStats = createHandler[Option[EsperStatInfo]]()
+    val (esper, esperInfo) = Esper.esperInfo(espers, esperIdSubject, esperStats)
 
-    def prependNone(idOb: Observable[String]): Observable[Option[String]] =
-      Observable.just(None) ++ idOb.map(maybeId)
-    def materiaFor(idOb: Observable[Option[String]]): Observable[Option[MateriaIndex]] = for {
-      ms <- materia
-      id <- idOb
-    } yield ms.find(_.id == id.flatMap(i => util.Try(i.toInt).toOption).getOrElse(0))
     def equipFor(idOb: Observable[Option[String]]): Observable[Option[EquipIndex]] = for {
       ms <- equips
       id <- idOb
     } yield ms.find(_.id == id.flatMap(i => util.Try(i.toInt).toOption).getOrElse(0))
-    def withTimestamp[A](ob: Observable[A]): Observable[(A,Double)] =
-      ob.map(_ -> scalajs.js.Date.now())
+    val onLoad = outwatch.Sink.create[org.scalajs.dom.raw.Element] { e =>
+      val hash = document.location.hash.drop(1).split(",")
+      val unitid = hash.headOption
 
-    val ability1Sink = createStringHandler()
-    val ability1Id = prependNone(ability1Sink)
-    val ability1 = materiaFor(ability1Id)
-    val ability2Sink = createStringHandler()
-    val ability2Id = prependNone(ability2Sink)
-    val ability2 = materiaFor(ability2Id)
-    val ability3Sink = createStringHandler()
-    val ability3Id = prependNone(ability3Sink)
-    val ability3 = materiaFor(ability3Id)
-    val ability4Sink = createStringHandler()
-    val ability4Id = prependNone(ability4Sink)
-    val ability4 = materiaFor(ability4Id)
+      unitIdSubject.next(unitid)
+      if (hash.size > 1)
+        esperIdSubject.next(hash.lastOption)
+    }
+
+    espers.combineLatest(esper.startWith(None), unitId) { case (es, e,i) =>
+      val update = i.map { id =>
+        e.fold(id)(esp => id + "," + es(esp.names.head))
+      }
+      document.location.hash = update.getOrElse("")
+    }
 
     val rhandSink = createStringHandler()
     val rhandId = prependNone(rhandSink)
-    val rhand = equipFor(rhandId)
+    val rhandSubject = Subject[Option[String]]()
+    val rhand = equipFor(rhandId.merge(rhandSubject))
     val lhandSink = createStringHandler()
     val lhandId = prependNone(lhandSink)
-    val lhand = equipFor(lhandId)
+    val lhandSubject = Subject[Option[String]]()
+    val lhand = equipFor(lhandId.merge(lhandSubject))
     val headSink = createStringHandler()
+    val headSubject = Subject[Option[String]]()
     val headId = prependNone(headSink)
-    val headEquip = equipFor(headId)
+    val headEquip = equipFor(headId.merge(headSubject))
     val bodySink = createStringHandler()
+    val bodySubject = Subject[Option[String]]()
     val bodyId = prependNone(bodySink)
-    val bodyEquip = equipFor(bodyId)
+    val bodyEquip = equipFor(bodyId.merge(bodySubject))
     val acc1Sink = createStringHandler()
+    val acc1Subject = Subject[Option[String]]()
     val acc1Id = prependNone(acc1Sink)
-    val acc1 = equipFor(acc1Id)
+    val acc1 = equipFor(acc1Id.merge(acc1Subject))
     val acc2Sink = createStringHandler()
+    val acc2Subject = Subject[Option[String]]()
     val acc2Id = prependNone(acc2Sink)
-    val acc2 = equipFor(acc2Id)
+    val acc2 = equipFor(acc2Id.merge(acc2Subject))
 
-    val equippedGear = withTimestamp(rhand).combineLatest(
-      withTimestamp(lhand), withTimestamp(headEquip), withTimestamp(bodyEquip))
-    val accs = withTimestamp(acc1).combineLatest(withTimestamp(acc2))
+    val equippedGear = withStamp(rhand).combineLatest(
+      withStamp(lhand), withStamp(headEquip), withStamp(bodyEquip))
+    val accs = withStamp(acc1).combineLatest(withStamp(acc2))
 
     type EqStamp = (Option[EquipIndex],Double)
     type MatStamp = (Option[MateriaIndex],Double)
@@ -115,9 +113,11 @@ object YaFFBEDB extends JSApp {
         (ability1._1 ++ ability2._1 ++ ability3._1 ++ ability4._1).toList
     }
 
-    val abilities = withTimestamp(ability1).combineLatest(
-      withTimestamp(ability2), withTimestamp(ability3),
-      withTimestamp(ability4)).map(Abilities.tupled.apply)
+    val (ability1, ability2, ability3, ability4, abilitySlots) =
+      components.abilitySlots(materia, unitInfo, unitEntry)
+    val abilities = withStamp(ability1).combineLatest(
+      withStamp(ability2), withStamp(ability3),
+      withStamp(ability4)).map(Abilities.tupled.apply)
 
     val equipped = equippedGear.combineLatest(accs).map { a =>
       Equipped.tupled.apply(a._1 + a._2)
@@ -150,7 +150,7 @@ object YaFFBEDB extends JSApp {
     def typeOf(eqItem: Option[EquipIndex]): Int =
       eqItem.fold(-1)(_.tpe)
     def isSlot(slot: Int, eqItem: Option[EquipIndex]): Boolean =
-      eqItem.fold(-1)(_.slotId) == slot
+      eqItem.exists(_.slotId == slot)
 
     val unitPassives = unitSkills.map { _.filterNot(_._2.active).flatMap {
       case (_,info) => info.skilleffects
@@ -165,79 +165,45 @@ object YaFFBEDB extends JSApp {
       skillsFromAll(eqs.allEquipped, abis.allEquipped)
     }
 
-    def clearInput(node: scalajs.js.Dynamic): Unit = {
-      val evt = scalajs.js.Dynamic.global.document.createEvent("HTMLEvents")
-      evt.initEvent("change", true, true)
-      node.value = EMPTY
-      node.dispatchEvent(evt)
-    }
-    def handValidator(node: String,
+    def publishTo[A](sink: Subject[A], value: A): Unit = sink.next(value)
+    def handValidator(
       r: Option[EquipIndex], l: Option[EquipIndex],
       info: Option[UnitData], effs: SkillEffect.CollatedEffect,
-      older: Boolean): Unit = {
-      val n = scalajs.js.Dynamic.global.document.getElementById(node)
-      var isValid = true
-      if (isSlot(2, r) && isSlot(2, r) && older) {
-        clearInput(n)
-        isValid = false
-      }
-      if (isSlot(1, r) && isSlot(1, l)) {
-        if ((!effs.canDualWield(typeOf(r)) || !effs.canDualWield(typeOf(l))) && older) {
-          clearInput(n)
-          isValid = false
-        }
-      }
-      if (r.nonEmpty && !effs.canEquip(typeOf(r), info)) {
-        clearInput(n)
-        isValid = false
-      }
-      r.foreach { e =>
-        if (isValid && e.id.toString != n.value) {
-          n.value = e.id
-        }
-      }
+      sink: Subject[Option[String]], older: Boolean): String = {
+      if (isSlot(2, r) && isSlot(2, l) && older) {
+        publishTo(sink, None)
+        EMPTY
+      } else if ((isSlot(1, r) && isSlot(1, l)) &&
+        ((!effs.canDualWield(typeOf(r)) || !effs.canDualWield(typeOf(l))) && older)) {
+        publishTo(sink, None)
+        EMPTY
+      } else if (r.nonEmpty && !effs.canEquip(typeOf(r), info)) {
+        publishTo(sink, None)
+        EMPTY
+      } else r.fold(EMPTY)(_.id.toString)
     }
 
     def equipValidator(
-      node: String,
       e: Option[EquipIndex],
       info: Option[UnitData],
-      effs: SkillEffect.CollatedEffect): Unit = {
-      val n = scalajs.js.Dynamic.global.document.getElementById(node)
-      var isValid = true
+      effs: SkillEffect.CollatedEffect, sink: Subject[Option[String]]): String = {
       if (e.nonEmpty && !effs.canEquip(typeOf(e), info)) {
-        clearInput(n)
-        isValid = false
-      }
-      e.foreach { i =>
-        if (isValid && i.id.toString != n.value) {
-          n.value = i.id
-        }
-      }
+        publishTo(sink, None)
+        EMPTY
+      } else e.fold(EMPTY)(_.id.toString)
     }
 
     val rhandValidator = allPassives.combineLatest(equipped).map {
       case (((info,effs),(eqs, abis))) =>
-        handValidator("r-hand", eqs.rhand._1, eqs.lhand._1, info, effs, eqs.rhand._2 < eqs.lhand._2)
-        EMPTY
+        handValidator(eqs.rhand._1, eqs.lhand._1, info, effs, rhandSubject, eqs.rhand._2 < eqs.lhand._2)
     }
     val lhandValidator = allPassives.combineLatest(equipped).map {
       case (((info,effs),(eqs, abis))) =>
-        handValidator("l-hand", eqs.lhand._1, eqs.rhand._1, info, effs, eqs.lhand._2 < eqs.rhand._2)
-        EMPTY
+        handValidator(eqs.lhand._1, eqs.rhand._1, info, effs, lhandSubject, eqs.lhand._2 < eqs.rhand._2)
     }
-    val equipsValidator = allPassives.combineLatest(equipped).map {
+    def equipsValidator(sink: Subject[Option[String]], f: Equipped => EqStamp) = allPassives.combineLatest(equipped).map {
       case (((info,effs),(eqs, abis))) =>
-        equipValidator("u-head", eqs.head._1, info, effs)
-        equipValidator("u-body", eqs.body._1, info, effs)
-        equipValidator("u-acc1", eqs.acc1._1, info, effs)
-        equipValidator("u-acc2", eqs.acc2._1, info, effs)
-        EMPTY
-    }
-
-    val unitEntry: Observable[Option[UnitEntry]] = unitInfo.map {
-      _.fold(Option.empty[UnitEntry])(
-        _.entries.values.toList.sortBy(_.rarity).lastOption)
+        equipValidator(f(eqs)._1, info, effs, sink)
     }
 
     val activesTable = components.dataTable(unitSkills.map(_.filter(_._2.active)),
@@ -275,17 +241,6 @@ object YaFFBEDB extends JSApp {
         _.rarity).lastOption.fold("Unknown")(_.strings.description.getOrElse("Unknown")))
     }
 
-    def materiaOption(u: Option[UnitData], e: Option[UnitEntry]): Observable[List[VNode]] =
-      materia.map { m =>
-        List(option(value := EMPTY, "Empty")) ++
-          m.filter(mi => e.exists(_.canEquip(mi))).map { mi =>
-            val mid = mi.describeEffects(u)
-            val mids = if (mid.trim.isEmpty) ""
-            else s"\u27a1 $mid"
-            option(value := mi.id, s"${mi.name} $mids")
-          }
-      }
-
     def equippable(slots: Set[Int]) = for {
       (es, (u, passives)) <- equips.combineLatest(allPassives)
     } yield {
@@ -295,41 +250,15 @@ object YaFFBEDB extends JSApp {
             s"${e.name} \u27a1 ${e.stats} ${e.describeEffects(u)}")
         }
     }
-
-    val abilitySlots = unitInfo.combineLatest(unitEntry).map { case(u, e) =>
-      val slots = e.fold(0)(_.abilitySlots)
-
-      if (slots == 0) {
-        Nil
-      } else if (slots == 1) {
-        List(tr(td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", value <-- rhandValidator, children <-- materiaOption(u, e), inputString --> ability1Sink))))
-      } else if (slots == 2) {
-        List(tr(td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(u, e), inputString --> ability1Sink)),
-          td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- materiaOption(u, e), inputString --> ability2Sink))))
-      } else if (slots == 3) {
-        List(
-          tr(
-            td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(u, e), inputString --> ability1Sink)),
-            td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- materiaOption(u, e), inputString --> ability2Sink))),
-          tr(
-            td(label(forLabel := "u-ability3", "Ability 3"), select(id := "u-ability3", cls := "equip-slot", children <-- materiaOption(u, e), inputString --> ability3Sink))))
-      } else {
-        List(
-          tr(
-            td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(u, e), inputString --> ability1Sink)),
-            td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- materiaOption(u, e), inputString --> ability2Sink))),
-          tr(
-            td(label(forLabel := "u-ability3", "Ability 3"), select(id := "u-ability3", cls := "equip-slot", children <-- materiaOption(u, e), inputString --> ability3Sink)),
-            td(label(forLabel := "u-ability4", "Ability 4"), select(id := "u-ability4", cls := "equip-slot", children <-- materiaOption(u, e), inputString --> ability4Sink))))
-      }
-    }
+    val unitStats = createHandler[Option[Stats]]()
 
     OutWatch.render("#content",
-      div(
+      div(insert --> onLoad,
         div(id := "unit-info",
-          select(children <-- idx, inputString --> unitIdSink),
+          select(children <-- idx, value <-- idx.combineLatest(unitIdSubject).map(_._2).map(_.getOrElse(EMPTY)).startWith(EMPTY), inputString --> unitIdSink),
           div(hidden <-- unitId.map(_.isEmpty).startWith(true),
-            components.unitStats(unitEntry),
+            components.unitBaseStats(unitEntry, unitStats),
+            components.unitStats(unitStats, esperStats),
           )
         ),
         div(hidden <-- unitId.map(_.isEmpty).startWith(true),
@@ -337,16 +266,16 @@ object YaFFBEDB extends JSApp {
         h3("Equipment"),
         table(
           tr(
-            td(label(forLabel := "r-hand", "Right Hand"), select(id := "r-hand", cls := "equip-slot", children <-- equippable(Set(1, 2)), inputString --> rhandSink)),
-            td(label(forLabel := "l-hand", "Left Hand"), select(id := "l-hand", cls := "equip-slot", children <-- equippable(Set(1, 2)), inputString --> lhandSink))
+            td(label(forId := "r-hand", "Right Hand"), select(id := "r-hand", cls := "equip-slot", value <-- rhandValidator, children <-- equippable(Set(1, 2)), inputString --> rhandSink)),
+            td(label(forId := "l-hand",  "Left Hand"), select(id := "l-hand", cls := "equip-slot", value <-- lhandValidator, children <-- equippable(Set(1, 2)), inputString --> lhandSink))
           ),
           tr(
-            td(label(forLabel := "u-head", "Head"), select(id := "u-head", cls := "equip-slot", children <-- equippable(Set(3)), inputString --> headSink)),
-            td(label(forLabel := "u-body", "Body"), select(id := "u-body", cls := "equip-slot", children <-- equippable(Set(4)), inputString --> bodySink)),
+            td(label(forId := "u-head", "Head"), select(id := "u-head", cls := "equip-slot", value <-- equipsValidator(headSubject, _.head), children <-- equippable(Set(3)), inputString --> headSink)),
+            td(label(forId := "u-body", "Body"), select(id := "u-body", cls := "equip-slot", value <-- equipsValidator(bodySubject, _.body), children <-- equippable(Set(4)), inputString --> bodySink)),
           ),
           tr(
-            td(label(forLabel := "u-acc1", "Accessory 1"), select(id := "u-acc1", cls := "equip-slot", children <-- equippable(Set(5)), inputString --> acc1Sink)),
-            td(label(forLabel := "u-acc2", "Accessory 2"), select(id := "u-acc2", cls := "equip-slot", children <-- equippable(Set(5)), inputString --> acc2Sink))
+            td(label(forId := "u-acc1", "Accessory 1"), select(id := "u-acc1", cls := "equip-slot", value <-- equipsValidator(acc1Subject, _.acc1), children <-- equippable(Set(5)), inputString --> acc1Sink)),
+            td(label(forId := "u-acc2", "Accessory 2"), select(id := "u-acc2", cls := "equip-slot", value <-- equipsValidator(acc2Subject, _.acc2), children <-- equippable(Set(5)), inputString --> acc2Sink))
           )
         ),
         h3("Materia"),
@@ -354,16 +283,7 @@ object YaFFBEDB extends JSApp {
           children <-- abilitySlots,
         ),
         h3("Esper"),
-        div(id := "esper-container",
-          select(children <-- espers.map { es =>
-            val names = es.keys.toList.sorted
-            option(value := EMPTY, "-- Select Esper --") ::
-              names.map(n => option(value := es(n), n))
-          }, inputString --> esperSink),
-          span(hidden <-- esper.startWith(None).map(_.isEmpty), " ",
-            span(child <-- esper.map(_.fold(""){_.entries(1).stats.hp.max + "HP"}))
-          )
-        ),
+        esperInfo,
         h3("Abilities & Spells"),
         activesTable,
         h3("Traits"),
@@ -373,23 +293,7 @@ object YaFFBEDB extends JSApp {
           equippedTable,
         ),
         ),
-        meta(name := "validation-sink-placeholder", content <-- rhandValidator.combineLatest(lhandValidator, equipsValidator).map(_ => "")),
       )
     )
-  }
-}
-
-object Data {
-  import java.nio.ByteBuffer
-  import scala.scalajs.js.typedarray.{TypedArrayBuffer,ArrayBuffer}
-  import org.scalajs.dom.ext.Ajax
-  import scala.concurrent.ExecutionContext.Implicits.global
-  def get[A : Pickler](url: String): Observable[A] = {
-    Observable.from(Ajax.get(
-      url = url,
-      responseType = "arraybuffer",
-      headers = Map("Content-Type" -> "application/octet-stream")
-    ).map(r => Unpickle[A].fromBytes(
-      TypedArrayBuffer.wrap(r.response.asInstanceOf[ArrayBuffer]))))
   }
 }

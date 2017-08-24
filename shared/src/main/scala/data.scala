@@ -34,22 +34,49 @@ case class UnitData(
   equip: List[Int],
   entries: Map[String,UnitEntry],
   skills: List[UnitSkill])
-case class EsperData(entries: List[EsperEntry])
+case class EsperData(names: List[String], entries: List[EsperEntry])
 case class EsperEntry(
   stats: EsperStatInfo,
   elementResist: ElementResist,
   statusResist: AilmentResist
 )
+sealed trait EsperSkill
+object EsperStatReward {
+  def hp(x: Int)   = EsperStatReward(x, 0, 0, 0, 0, 0)
+  def mp(x: Int)   = EsperStatReward(0, x, 0, 0, 0, 0)
+  def atk(x: Int)  = EsperStatReward(0, 0, x, 0, 0, 0)
+  def defs(x: Int) = EsperStatReward(0, 0, 0, x, 0, 0)
+  def mag(x: Int)  = EsperStatReward(0, 0, 0, 0, x, 0)
+  def spr(x: Int)  = EsperStatReward(0, 0, 0, 0, 0, x)
+}
+case class EsperAbilityReward(skill: Int) extends EsperSkill
+case class EsperSkillEffectReward(name: String, effects: List[SkillEffect]) extends EsperSkill
+case class EsperStatReward(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int) extends EsperSkill {
+  def maybeHP  = if (hp   > 0) Some(hp)   else None
+  def maybeMP  = if (mp   > 0) Some(mp)   else None
+  def maybeATK = if (atk  > 0) Some(atk)  else None
+  def maybeDEF = if (defs > 0) Some(defs) else None
+  def maybeMAG = if (mag  > 0) Some(mag)  else None
+  def maybeSPR = if (spr  > 0) Some(spr)  else None
+}
+case object UnknownEsperSkill extends EsperSkill
+case class EsperSlot(
+  reward: EsperSkill,
+  cost:   Int
+)
+
 case class EsperStatInfo(
   hp:   EsperStatRange,
   mp:   EsperStatRange,
   atk:  EsperStatRange,
   defs: EsperStatRange,
   mag:  EsperStatRange,
-  spr:  EsperStatRange
-)
+  spr:  EsperStatRange) {
+  def +(o: EsperStatReward) = EsperStatInfo(hp + o.hp, mp + o.mp, atk + o.atk, defs + o.defs, mag + o.mag, spr + o.spr)
+}
 case class EsperStatRange(min: Int, max: Int) {
-  def effectiveMax = max / 100.0
+  def effectiveMax = max / 100
+  def +(o: Int) = EsperStatRange(min + o, max + o)
 }
 case class SkillInfo(
   name: String,
@@ -389,8 +416,8 @@ case class PassiveEquipStatEffect(
   hp:   Int,
   mp:   Int,
   atk:  Int,
-  mag:  Int,
   defs: Int,
+  mag:  Int,
   spr:  Int) extends SkillEffect {
   def restrictions = Set.empty
   def asPassiveStatEffect =
