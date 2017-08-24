@@ -55,11 +55,11 @@ object YaFFBEDB extends JSApp {
     } yield ms.find(_.id == id.flatMap(i => util.Try(i.toInt).toOption).getOrElse(0))
     val onLoad = outwatch.Sink.create[org.scalajs.dom.raw.Element] { e =>
       val hash = document.location.hash.drop(1).split(",")
-      val unitid = hash.headOption
+      val unitid = hash.headOption.filter(_.nonEmpty)
 
       unitIdSubject.next(unitid)
       if (hash.size > 1)
-        esperIdSubject.next(hash.lastOption)
+        esperIdSubject.next(hash.lastOption.filter(_.nonEmpty))
     }
 
     espers.combineLatest(esper.startWith(None), unitId) { case (es, e,i) =>
