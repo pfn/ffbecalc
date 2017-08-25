@@ -88,9 +88,19 @@ case class Stats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int) {
     mag + o.mag,
     spr + o.spr
   )
+
+  def -(o: Stats) = Stats(
+    hp - o.hp,
+    mp - o.mp,
+    atk - o.atk,
+    defs - o.defs,
+    mag - o.mag,
+    spr - o.spr
+  )
 }
 object Stats {
   def zero = Stats(0, 0, 0, 0, 0, 0)
+  def fromEquipStats(s: EquipStats) = Stats(s.hp, s.mp, s.atk, s.defs, s.mag, s.spr)
 }
 
 object Data {

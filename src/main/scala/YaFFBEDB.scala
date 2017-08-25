@@ -221,16 +221,84 @@ object YaFFBEDB extends JSApp {
         _.rarity).lastOption.fold("Unknown")(_.strings.description.getOrElse("Unknown")))
     }
 
+    def effectiveStats(u: UnitData, base: Stats, equip: EquipIndex, pasv: SkillEffect.CollatedEffect): Stats = {
+      val eqs = equip.stats
+      val elements = eqs.element.fold(List.empty[Int])(_.map(e =>
+        SkillEffect.ELEMENTS.getOrElse(e, -1)))
+      val elestats = elements.map(e =>
+        pasv.weapEleStats.getOrElse(e, PassiveStatEffect.zero))
+      val eqstats = pasv.equipStats.getOrElse(equip.tpe, PassiveStatEffect.zero)
+      val s = Stats.fromEquipStats(equip.stats)
+      val innates = SkillEffect.collateEffects(None, equip.skilleffects)
+
+      val innatestats = innates.stats :: innates.equipStats.keys.toList.flatMap {
+        k => if (pasv.canEquip(k, Some(u))) List(innates.equipStats(k)) else Nil
+      }
+      (eqstats :: (innatestats ++ elestats)).foldLeft(s) { (ac, x) =>
+        ac + base * x - base
+      }
+    }
+    sealed trait Sort extends Function1[Any,Sort] {
+      def apply(any: Any) = this
+    }
+
+    object Sort {
+      case object AZ extends Sort
+      case object HP extends Sort
+      case object MP extends Sort
+      case object ATK extends Sort
+      case object DEF extends Sort
+      case object MAG extends Sort
+      case object SPR extends Sort
+    }
+    def sortFor(xs: List[EquipIndex], sorting: Sort, pasv: SkillEffect.CollatedEffect, unit: Option[UnitData], base: Option[Stats]) = {
+      val m = for {
+        u <- unit
+        b <- base
+      } yield {
+        val f: (EquipIndex,EquipIndex) => Boolean = sorting match {
+          case Sort.AZ => (_,_) => true
+          case Sort.HP => (x,y) =>
+            effectiveStats(u, b, x, pasv).hp > effectiveStats(u, b, y, pasv).hp
+          case Sort.MP => (x,y) =>
+            effectiveStats(u, b, x, pasv).mp > effectiveStats(u, b, y, pasv).mp
+          case Sort.ATK => (x,y) =>
+            effectiveStats(u, b, x, pasv).atk > effectiveStats(u, b, y, pasv).atk
+          case Sort.DEF => (x,y) =>
+            effectiveStats(u, b, x, pasv).defs > effectiveStats(u, b, y, pasv).defs
+          case Sort.MAG => (x,y) =>
+            effectiveStats(u, b, x, pasv).mag > effectiveStats(u, b, y, pasv).mag
+          case Sort.SPR => (x,y) =>
+            effectiveStats(u, b, x, pasv).spr > effectiveStats(u, b, y, pasv).spr
+        }
+
+        if (sorting == Sort.AZ) xs else xs.sortWith(f)
+      }
+      m.getOrElse(xs)
+    }
+
+    val sortAZ = createHandler[Sort](Sort.AZ)
+    val sortHP = createHandler[Sort]()
+    val sortMP = createHandler[Sort]()
+    val sortATK = createHandler[Sort]()
+    val sortDEF = createHandler[Sort]()
+    val sortMAG = createHandler[Sort]()
+    val sortSPR = createHandler[Sort]()
+    val sorting = sortAZ.merge(sortHP, sortMP, sortATK).merge(sortDEF, sortMAG, sortSPR)
+
+    val unitStats = createHandler[Option[Stats]](None)
     def equippable(slots: Set[Int]) = for {
-      (es, (u, passives)) <- equips.combineLatest(allPassives)
+      (es, (u, passives), sort, base) <- equips.combineLatest(allPassives, sorting, unitStats)
     } yield {
+      val eqs = es.filter(e =>
+        slots(e.slotId) && e.canEquip(u) && passives.canEquip(e.tpe, u))
+
       List(option(value := EMPTY, "Empty")) ++
-        es.filter(e => slots(e.slotId) && e.canEquip(u) && passives.canEquip(e.tpe, u)).map { e =>
+        sortFor(eqs, sort, passives, u, base).map { e =>
           option(value := e.id,
             s"${e.name} \u27a1 ${e.stats} ${e.describeEffects(u)}")
         }
     }
-    val unitStats = createHandler[Option[Stats]](None)
 
     OutWatch.render("#content",
       div(insert --> onLoad,
@@ -244,6 +312,14 @@ object YaFFBEDB extends JSApp {
         div(hidden <-- unitId.map(_.isEmpty),
         p(child <-- unitDescription.orElse(Observable.just(""))),
         h3("Equipment"),
+        div(cls := "sort-options", span("Sort"),
+        label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.AZ) --> sortAZ, checked := true), "A-Z"),
+        label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.HP) --> sortHP), "HP"),
+        label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.MP) --> sortMP), "MP"),
+        label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.ATK) --> sortATK), "ATK"),
+        label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.DEF) --> sortDEF), "DEF"),
+        label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.MAG) --> sortMAG), "MAG"),
+        label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.SPR) --> sortSPR), "SPR")),
         table(
           tr(
             td(label(forId := "r-hand", "Right Hand"), select(id := "r-hand", cls := "equip-slot", value <-- rhandValidator, children <-- equippable(Set(1, 2)), inputId --> rhandId)),

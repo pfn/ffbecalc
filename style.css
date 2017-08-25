@@ -65,3 +65,7 @@ td.unit-skill-desc { width: 65%; }
 td.unit-skill-cost { width: 5%; }
 td { padding: 8px; }
 th { padding: 8px; }
+.sort-options { margin-bottom: 16px }
+.sort-options span { margin-right: 16px }
+.sort-options label { margin-left: 16px }
+.sort-options input { margin-right: 8px }
