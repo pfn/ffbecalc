@@ -191,14 +191,49 @@ object components {
     )
   }
 
-  def materiaOption(ms: Observable[List[MateriaIndex]], u: Option[UnitData], e: Option[UnitEntry]): Observable[List[VNode]] =
-    ms.map { m =>
+  def effectiveStats(u: UnitData, equip: MateriaIndex, pasv: SkillEffect.CollatedEffect): PassiveStatEffect = {
+    val innates = SkillEffect.collateEffects(None, equip.skilleffects)
+
+    val innatestats = innates.stats :: innates.equipStats.keys.toList.flatMap {
+      k => if (pasv.canEquip(k, Some(u))) List(innates.equipStats(k)) else Nil
+    }
+    innatestats.foldLeft(PassiveStatEffect.zero) { (ac, x) =>
+      ac + x
+    }
+  }
+  def sortFor(xs: List[MateriaIndex], sorting: Sort, pasv: SkillEffect.CollatedEffect, unit: Option[UnitData]) = {
+    val m = for {
+      u <- unit
+    } yield {
+      val es = effectiveStats(u, _: MateriaIndex, pasv)
+      def cmp(f: PassiveStatEffect => Int):
+        (MateriaIndex,MateriaIndex) => Boolean = (x,y) => f(es(x)) > f(es(y))
+        
+      val f: (MateriaIndex,MateriaIndex) => Boolean = sorting match {
+        case Sort.AZ  => (_,_) => true
+        case Sort.HP  => cmp(_.hp)
+        case Sort.MP  => cmp(_.mp)
+        case Sort.ATK => cmp(_.atk)
+        case Sort.DEF => cmp(_.defs)
+        case Sort.MAG => cmp(_.mag)
+        case Sort.SPR => cmp(_.spr)
+      }
+
+      if (sorting == Sort.AZ) xs else xs.sortWith(f)
+    }
+    m.getOrElse(xs)
+  }
+  def materiaOption(ms: Observable[List[MateriaIndex]], up: Observable[Seq[SkillEffect]], u: Option[UnitData], e: Option[UnitEntry], sorting: Observable[Sort], worn: Observable[Option[MateriaIndex]]): Observable[List[VNode]] = ms.combineLatest(up, sorting, worn).map {
+    case (m, ps, s, w) =>
+      val mats = m.filter(mi => e.exists(_.canEquip(mi)))
       List(option(value := EMPTY, "Empty")) ++
-        m.filter(mi => e.exists(_.canEquip(mi))).map { mi =>
+        sortFor(mats, s, SkillEffect.collateEffects(u, ps.toList), u).map { mi =>
           val mid = mi.describeEffects(u)
           val mids = if (mid.trim.isEmpty) ""
           else s"\u27a1 $mid"
-          option(value := mi.id, s"${mi.name} $mids")
+          option(value := mi.id,
+            selected := w.exists(_.id == mi.id),
+            s"${mi.name} $mids")
         }
     }
   def materiaFor(m: Observable[List[MateriaIndex]], idOb: Observable[Option[String]]): Observable[Option[MateriaIndex]] = for {
@@ -206,7 +241,7 @@ object components {
     id <- idOb
   } yield ms.find(_.id == id.flatMap(i => util.Try(i.toInt).toOption).getOrElse(0))
   type MaybeMateria = Observable[Option[MateriaIndex]]
-  def abilitySlots(m: Observable[List[MateriaIndex]], unitInfo: Observable[Option[UnitData]], unitEntry: Observable[Option[UnitEntry]]): (MaybeMateria,MaybeMateria,MaybeMateria,MaybeMateria,Observable[List[VNode]]) = {
+  def abilitySlots(m: Observable[List[MateriaIndex]], unitInfo: Observable[Option[UnitData]], up: Observable[Seq[SkillEffect]], unitEntry: Observable[Option[UnitEntry]], sorting: Observable[Sort]): (MaybeMateria,MaybeMateria,MaybeMateria,MaybeMateria,Observable[List[VNode]]) = {
     val ability1Id = createIdHandler(None)
     val ability1 = materiaFor(m, ability1Id)
     val ability2Id = createIdHandler(None)
@@ -220,28 +255,34 @@ object components {
 
       val slots = e.fold(0)(_.abilitySlots)
 
+      def materiaList(w: MaybeMateria) = materiaOption(m, up, u, e, sorting, w)
+      val m1s = materiaList(ability1)
+      val m2s = materiaList(ability2)
+      val m3s = materiaList(ability3)
+      val m4s = materiaList(ability4)
+
       if (slots == 0) {
         Nil
       } else if (slots == 1) {
-        List(tr(td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(m, u, e), inputId --> ability1Id))))
+        List(tr(td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- m1s, inputId --> ability1Id))))
       } else if (slots == 2) {
-        List(tr(td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(m, u, e), inputId --> ability1Id)),
-          td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- materiaOption(m, u, e), inputId --> ability2Id))))
+        List(tr(td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- m1s, inputId --> ability1Id)),
+          td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- m2s, inputId --> ability2Id))))
       } else if (slots == 3) {
         List(
           tr(
-            td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(m, u, e), inputId --> ability1Id)),
-            td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- materiaOption(m, u, e), inputId --> ability2Id))),
+            td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- m1s, inputId --> ability1Id)),
+            td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- m2s, inputId --> ability2Id))),
           tr(
-            td(label(forLabel := "u-ability3", "Ability 3"), select(id := "u-ability3", cls := "equip-slot", children <-- materiaOption(m, u, e), inputId --> ability3Id))))
+            td(label(forLabel := "u-ability3", "Ability 3"), select(id := "u-ability3", cls := "equip-slot", children <-- m3s, inputId --> ability3Id))))
       } else {
         List(
           tr(
-            td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(m, u, e), inputId --> ability1Id)),
-            td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- materiaOption(m, u, e), inputId --> ability2Id))),
+            td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- m1s, inputId --> ability1Id)),
+            td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- m2s, inputId --> ability2Id))),
           tr(
-            td(label(forLabel := "u-ability3", "Ability 3"), select(id := "u-ability3", cls := "equip-slot", children <-- materiaOption(m, u, e), inputId --> ability3Id)),
-            td(label(forLabel := "u-ability4", "Ability 4"), select(id := "u-ability4", cls := "equip-slot", children <-- materiaOption(m, u, e), inputId --> ability4Id))))
+            td(label(forLabel := "u-ability3", "Ability 3"), select(id := "u-ability3", cls := "equip-slot", children <-- m3s, inputId --> ability3Id)),
+            td(label(forLabel := "u-ability4", "Ability 4"), select(id := "u-ability4", cls := "equip-slot", children <-- m4s, inputId --> ability4Id))))
       }
     }
   }

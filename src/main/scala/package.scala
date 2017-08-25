@@ -117,4 +117,18 @@ object Data {
       TypedArrayBuffer.wrap(r.response.asInstanceOf[ArrayBuffer]))))
   }
 }
+
+sealed trait Sort extends Function1[Any,Sort] {
+  def apply(any: Any) = this
+}
+
+object Sort {
+  case object AZ extends Sort
+  case object HP extends Sort
+  case object MP extends Sort
+  case object ATK extends Sort
+  case object DEF extends Sort
+  case object MAG extends Sort
+  case object SPR extends Sort
+}
 }

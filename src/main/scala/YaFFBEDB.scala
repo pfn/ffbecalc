@@ -69,6 +69,15 @@ object YaFFBEDB extends JSApp {
       document.location.hash = update.getOrElse("")
     }
 
+    val sortAZ = createHandler[Sort](Sort.AZ)
+    val sortHP = createHandler[Sort]()
+    val sortMP = createHandler[Sort]()
+    val sortATK = createHandler[Sort]()
+    val sortDEF = createHandler[Sort]()
+    val sortMAG = createHandler[Sort]()
+    val sortSPR = createHandler[Sort]()
+    val sorting = sortAZ.merge(sortHP, sortMP, sortATK).merge(sortDEF, sortMAG, sortSPR)
+
     val rhandId = createIdHandler(None)
     val rhandSubject = Subject[Option[String]]()
     val rhand = equipFor(rhandId.merge(rhandSubject))
@@ -92,8 +101,12 @@ object YaFFBEDB extends JSApp {
       withStamp(lhand), withStamp(headEquip), withStamp(bodyEquip))
     val accs = withStamp(acc1).combineLatest(withStamp(acc2))
 
+    val unitStats = createHandler[Option[Stats]](None)
+    val unitPassives = unitSkills.map { _.filterNot(_._2.active).flatMap {
+      case (_,info) => info.skilleffects
+    }}
     val (ability1, ability2, ability3, ability4, abilitySlots) =
-      components.abilitySlots(materia, unitInfo, unitEntry)
+      components.abilitySlots(materia, unitInfo, unitPassives, unitEntry, sorting)
     val abilities = withStamp(ability1).combineLatest(
       withStamp(ability2), withStamp(ability3),
       withStamp(ability4)).map(Abilities.tupled.apply)
@@ -131,9 +144,6 @@ object YaFFBEDB extends JSApp {
     def isSlot(slot: Int, eqItem: Option[EquipIndex]): Boolean =
       eqItem.exists(_.slotId == slot)
 
-    val unitPassives = unitSkills.map { _.filterNot(_._2.active).flatMap {
-      case (_,info) => info.skilleffects
-    }}
     val allPassives = unitInfo.combineLatest(unitPassives, equipped, esperSkills).map {
       case (info, passives,(eqs,abis), fromEsper) =>
       info -> SkillEffect.collateEffects(info, passivesFromAll(eqs.allEquipped, abis.allEquipped) ++ passives ++ fromEsper.flatMap(_._3))
@@ -238,38 +248,22 @@ object YaFFBEDB extends JSApp {
         ac + base * x - base
       }
     }
-    sealed trait Sort extends Function1[Any,Sort] {
-      def apply(any: Any) = this
-    }
-
-    object Sort {
-      case object AZ extends Sort
-      case object HP extends Sort
-      case object MP extends Sort
-      case object ATK extends Sort
-      case object DEF extends Sort
-      case object MAG extends Sort
-      case object SPR extends Sort
-    }
     def sortFor(xs: List[EquipIndex], sorting: Sort, pasv: SkillEffect.CollatedEffect, unit: Option[UnitData], base: Option[Stats]) = {
       val m = for {
         u <- unit
         b <- base
       } yield {
+        val es = effectiveStats(u, b, _: EquipIndex, pasv)
+        def cmp(f: Stats => Int):
+          (EquipIndex,EquipIndex) => Boolean = (x,y) => f(es(x)) > f(es(y))
         val f: (EquipIndex,EquipIndex) => Boolean = sorting match {
-          case Sort.AZ => (_,_) => true
-          case Sort.HP => (x,y) =>
-            effectiveStats(u, b, x, pasv).hp > effectiveStats(u, b, y, pasv).hp
-          case Sort.MP => (x,y) =>
-            effectiveStats(u, b, x, pasv).mp > effectiveStats(u, b, y, pasv).mp
-          case Sort.ATK => (x,y) =>
-            effectiveStats(u, b, x, pasv).atk > effectiveStats(u, b, y, pasv).atk
-          case Sort.DEF => (x,y) =>
-            effectiveStats(u, b, x, pasv).defs > effectiveStats(u, b, y, pasv).defs
-          case Sort.MAG => (x,y) =>
-            effectiveStats(u, b, x, pasv).mag > effectiveStats(u, b, y, pasv).mag
-          case Sort.SPR => (x,y) =>
-            effectiveStats(u, b, x, pasv).spr > effectiveStats(u, b, y, pasv).spr
+          case Sort.AZ  => (_,_) => true
+          case Sort.HP  => cmp(_.hp)
+          case Sort.MP  => cmp(_.mp)
+          case Sort.ATK => cmp(_.atk)
+          case Sort.DEF => cmp(_.defs)
+          case Sort.MAG => cmp(_.mag)
+          case Sort.SPR => cmp(_.spr)
         }
 
         if (sorting == Sort.AZ) xs else xs.sortWith(f)
@@ -277,18 +271,8 @@ object YaFFBEDB extends JSApp {
       m.getOrElse(xs)
     }
 
-    val sortAZ = createHandler[Sort](Sort.AZ)
-    val sortHP = createHandler[Sort]()
-    val sortMP = createHandler[Sort]()
-    val sortATK = createHandler[Sort]()
-    val sortDEF = createHandler[Sort]()
-    val sortMAG = createHandler[Sort]()
-    val sortSPR = createHandler[Sort]()
-    val sorting = sortAZ.merge(sortHP, sortMP, sortATK).merge(sortDEF, sortMAG, sortSPR)
-
-    val unitStats = createHandler[Option[Stats]](None)
-    def equippable(slots: Set[Int]) = for {
-      (es, (u, passives), sort, base) <- equips.combineLatest(allPassives, sorting, unitStats)
+    def equippable(slots: Set[Int], worn: Observable[Option[EquipIndex]]) = for {
+      ((es, (u, passives), sort, base), w) <- equips.combineLatest(allPassives, sorting, unitStats).combineLatest(worn)
     } yield {
       val eqs = es.filter(e =>
         slots(e.slotId) && e.canEquip(u) && passives.canEquip(e.tpe, u))
@@ -296,6 +280,7 @@ object YaFFBEDB extends JSApp {
       List(option(value := EMPTY, "Empty")) ++
         sortFor(eqs, sort, passives, u, base).map { e =>
           option(value := e.id,
+            selected := w.exists(_.id == e.id),
             s"${e.name} \u27a1 ${e.stats} ${e.describeEffects(u)}")
         }
     }
@@ -322,16 +307,16 @@ object YaFFBEDB extends JSApp {
         label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.SPR) --> sortSPR), "SPR")),
         table(
           tr(
-            td(label(forId := "r-hand", "Right Hand"), select(id := "r-hand", cls := "equip-slot", value <-- rhandValidator, children <-- equippable(Set(1, 2)), inputId --> rhandId)),
-            td(label(forId := "l-hand",  "Left Hand"), select(id := "l-hand", cls := "equip-slot", value <-- lhandValidator, children <-- equippable(Set(1, 2)), inputId --> lhandId))
+            td(label(forId := "r-hand", "Right Hand"), select(id := "r-hand", cls := "equip-slot", value <-- rhandValidator, children <-- equippable(Set(1, 2), rhand), inputId --> rhandId)),
+            td(label(forId := "l-hand",  "Left Hand"), select(id := "l-hand", cls := "equip-slot", value <-- lhandValidator, children <-- equippable(Set(1, 2), lhand), inputId --> lhandId))
           ),
           tr(
-            td(label(forId := "u-head", "Head"), select(id := "u-head", cls := "equip-slot", value <-- equipsValidator(headSubject, _.head), children <-- equippable(Set(3)), inputId --> headId)),
-            td(label(forId := "u-body", "Body"), select(id := "u-body", cls := "equip-slot", value <-- equipsValidator(bodySubject, _.body), children <-- equippable(Set(4)), inputId --> bodyId)),
+            td(label(forId := "u-head", "Head"), select(id := "u-head", cls := "equip-slot", value <-- equipsValidator(headSubject, _.head), children <-- equippable(Set(3), headEquip), inputId --> headId)),
+            td(label(forId := "u-body", "Body"), select(id := "u-body", cls := "equip-slot", value <-- equipsValidator(bodySubject, _.body), children <-- equippable(Set(4), bodyEquip), inputId --> bodyId)),
           ),
           tr(
-            td(label(forId := "u-acc1", "Accessory 1"), select(id := "u-acc1", cls := "equip-slot", value <-- equipsValidator(acc1Subject, _.acc1), children <-- equippable(Set(5)), inputId --> acc1Id)),
-            td(label(forId := "u-acc2", "Accessory 2"), select(id := "u-acc2", cls := "equip-slot", value <-- equipsValidator(acc2Subject, _.acc2), children <-- equippable(Set(5)), inputId --> acc2Id))
+            td(label(forId := "u-acc1", "Accessory 1"), select(id := "u-acc1", cls := "equip-slot", value <-- equipsValidator(acc1Subject, _.acc1), children <-- equippable(Set(5), acc1), inputId --> acc1Id)),
+            td(label(forId := "u-acc2", "Accessory 2"), select(id := "u-acc2", cls := "equip-slot", value <-- equipsValidator(acc2Subject, _.acc2), children <-- equippable(Set(5), acc2), inputId --> acc2Id))
           )
         ),
         h3("Materia"),
