@@ -429,6 +429,8 @@ object PassiveEquipStatEffect {
   def decode(xs: List[Int]): SkillEffect = xs match {
     case List(a, b, c, d, e) =>
       PassiveEquipStatEffect(a, 0, 0, b, c, d, e)
+    case List(a, b, c, d, e, f, g, h) =>
+      PassiveEquipStatEffect(a, f, g, b, c, d, e)
     case _ => UnknownSkillEffect
   }
 }
