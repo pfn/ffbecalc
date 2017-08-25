@@ -21,15 +21,15 @@ object Esper {
     val (nodes, sinks) = board.zipWithIndex.collect {
       case (EsperSlot(r@EsperSkillEffectReward(name, desc, effs), cost), i)
         if inRarity(rarity, cost) =>
-        val checkSink = createHandler[(Int, EsperSkillEffectReward, Boolean)]()
+        val checkSink = createHandler[(Int, EsperSkillEffectReward, Boolean)]((i, r, true))
 
         val node = span(label(
           input(tpe := "checkbox", inputChecked(b => (i, r, b)) --> checkSink,
             checked <-- checker.collect {
               case (a,b) if a == i => b
-            }.merge(allCheck).startWith(true)
+            }.merge(allCheck)
           ), "\u00a0", name.replaceAll(" ", "\u00a0")))
-        node -> checkSink.merge(allCheck.map { b => (i,r,b) }).startWith((i,r,true))
+        node -> checkSink.merge(allCheck.map { b => (i,r,b) })
     }.unzip
 
     sink <-- Observable.combineLatest(sinks).map {
@@ -43,9 +43,9 @@ object Esper {
   def trainEsperSkill(esperboard: Observable[List[EsperSlot]], esperRarity: Observable[Int], outs: Handler[Map[Int, (EsperSkillEffectReward,Boolean)]]) = {
     esperboard.combineLatest(esperRarity) map { case (board,rarity) =>
       val checker = Subject[(Int,Boolean)]()
-      val allChecked = createBoolHandler()
+      val allChecked = createBoolHandler(true)
       List(
-        th(label(input(tpe := "checkbox", checked <-- outs.map(_.values.forall(_._2)).startWith(true), inputChecked --> allChecked), "\u00a0", "Skills")),
+        th(label(input(tpe := "checkbox", checked <-- outs.map(_.values.forall(_._2)), inputChecked --> allChecked), "\u00a0", "Skills")),
         td(esperskills(board, rarity, outs, allChecked, checker):_*)
       )
     }
@@ -63,9 +63,9 @@ object Esper {
           input(tpe := "checkbox", inputChecked(b => (i, r, b)) --> checkSink,
             checked <-- checker.collect {
               case (a,b) if a == i => b
-            }.merge(allCheck).startWith(true)
+            }.merge(allCheck)
           ), "\u00a0", f(r).get.toString))
-        node -> checkSink.merge(allCheck.map { b => (i,r,b) }).startWith((i,r,true))
+        node -> checkSink.merge(allCheck.map { b => (i,r,b) })
     }.unzip
 
     sink <-- Observable.combineLatest(sinks).map {
@@ -79,9 +79,9 @@ object Esper {
   def trainEsperStat(stat: String, esperboard: Observable[List[EsperSlot]], esperRarity: Observable[Int], outs: Handler[Map[Int, (EsperStatReward,Boolean)]], f: EsperStatReward => Option[Int]) = {
     esperboard.combineLatest(esperRarity) map { case (board,rarity) =>
       val checker = Subject[(Int,Boolean)]()
-      val allChecked = createBoolHandler()
+      val allChecked = createBoolHandler(true)
       List(
-        th(label(input(tpe := "checkbox", checked <-- outs.map(_.values.forall(_._2)).startWith(true), inputChecked --> allChecked), "\u00a0", stat)),
+        th(label(input(tpe := "checkbox", checked <-- outs.map(_.values.forall(_._2)), inputChecked --> allChecked), "\u00a0", stat)),
         td(esperstats(board, rarity, outs, allChecked, checker, f):_*)
       )
     }
@@ -110,27 +110,29 @@ object Esper {
         }
       }
     }
-    val esperRaritySink = createStringHandler()
-    val esperRarity = esperRaritySink.startWith("1").map(r =>
+    val esperRaritySink = createStringHandler("1")
+    val esperRarity = esperRaritySink.map(r =>
       util.Try(r.toInt).toOption.getOrElse(1)
     )
     val esperEntry = esper.combineLatest(esperRarity).map { case (e,r) =>
       e.map(_.entries(r))
     }
 
-    val skillSink = createHandler[Map[Int,(EsperSkillEffectReward,Boolean)]]()
-    val hpSink  = createHandler[Map[Int,(EsperStatReward,Boolean)]]()
-    val mpSink  = createHandler[Map[Int,(EsperStatReward,Boolean)]]()
-    val atkSink = createHandler[Map[Int,(EsperStatReward,Boolean)]]()
-    val defSink = createHandler[Map[Int,(EsperStatReward,Boolean)]]()
-    val magSink = createHandler[Map[Int,(EsperStatReward,Boolean)]]()
-    val sprSink = createHandler[Map[Int,(EsperStatReward,Boolean)]]()
+    def createStatSink()  =
+      createHandler[Map[Int,(EsperStatReward,Boolean)]](Map.empty)
+    val skillSink = createHandler[Map[Int,(EsperSkillEffectReward,Boolean)]](Map.empty)
+    val hpSink  = createStatSink()
+    val mpSink  = createStatSink()
+    val atkSink = createStatSink()
+    val defSink = createStatSink()
+    val magSink = createStatSink()
+    val sprSink = createStatSink()
     val selStats = Observable.combineLatest(List(hpSink, mpSink, atkSink, defSink, magSink, sprSink)).map {
       _.foldLeft(List.empty[(Int,EsperStatReward)]) {
         case (ac, maps) =>
           ac ++ maps.toList.collect { case (k,v) if v._2 => (k,v._1) }
       }
-    }.startWith(Nil)
+    }
     val modifiedStats = esperEntry.combineLatest(selStats).map { case (e, sel) =>
       e.fold(Option.empty[EsperStatInfo]){ entry =>
         Some(sel.foldLeft(entry.stats) { (a,b) => a + b._2 })
@@ -153,7 +155,7 @@ object Esper {
         option(value := EMPTY, "-- Select Esper --") ::
           names.map(n => option(value := es(n), n))
       }, inputString --> esperSink, value <-- espers.combineLatest(esperIdSubject).map(_._2).map(_.getOrElse(EMPTY)).startWith(EMPTY)),
-      span(hidden <-- esper.startWith(None).map(_.isEmpty), "\u00a0",
+      span(hidden <-- esper.map(_.isEmpty), "\u00a0",
         select(children <-- esper.map { e =>
           e.fold(List.empty[VNode])(_.entries.zipWithIndex.map { case (_, i) =>
             option(value := i, s"${i+1} \u2605", selected := i == 1)

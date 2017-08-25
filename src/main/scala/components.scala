@@ -11,14 +11,14 @@ object components {
     }
 
   def unitBaseStats(unit: Observable[Option[UnitEntry]], stats: outwatch.Sink[Option[Stats]]): VNode = {
-    val hpCheck  = createBoolHandler()
-    val mpCheck  = createBoolHandler()
-    val atkCheck = createBoolHandler()
-    val defCheck = createBoolHandler()
-    val magCheck = createBoolHandler()
-    val sprCheck = createBoolHandler()
+    val hpCheck  = createBoolHandler(true)
+    val mpCheck  = createBoolHandler(true)
+    val atkCheck = createBoolHandler(true)
+    val defCheck = createBoolHandler(true)
+    val magCheck = createBoolHandler(true)
+    val sprCheck = createBoolHandler(true)
 
-    stats <-- unit.combineLatest(hpCheck.startWith(true).combineLatest(mpCheck.startWith(true)).combineLatest(atkCheck.startWith(true).combineLatest(defCheck.startWith(true), magCheck.startWith(true), sprCheck.startWith(true)))).map {
+    stats <-- unit.combineLatest(hpCheck.combineLatest(mpCheck).combineLatest(atkCheck.combineLatest(defCheck, magCheck, sprCheck))).map {
       case (entry, ((hp,mp),(atk,defs,mag,spr))) =>
       entry.map { e =>
         Stats(
@@ -38,36 +38,36 @@ object components {
           input(id := "hp-pot-check", tpe := "checkbox", checked := true, inputChecked --> hpCheck),
           label(forLabel := "hp-pot-check", "HP")),
         td(cls := "unit-stat-data",
-          child <-- maxstat(unit, hpCheck.startWith(true), _.stats.hp)),
+          child <-- maxstat(unit, hpCheck, _.stats.hp)),
         td(cls := "unit-stat-name",
           input(id := "mp-pot-check", tpe := "checkbox", checked := true, inputChecked --> mpCheck),
           label(forLabel := "mp-pot-check", "MP")),
         td(cls := "unit-stat-data",
-          child <-- maxstat(unit, mpCheck.startWith(true), _.stats.mp)),
+          child <-- maxstat(unit, mpCheck, _.stats.mp)),
       ),
       tr(
         td(cls := "unit-stat-name",
           input(id := "atk-pot-check", tpe := "checkbox", checked := true, inputChecked --> atkCheck),
           label(forLabel := "atk-pot-check", "ATK")),
         td(cls := "unit-stat-data",
-          child <-- maxstat(unit, atkCheck.startWith(true), _.stats.atk)),
+          child <-- maxstat(unit, atkCheck, _.stats.atk)),
         td(cls := "unit-stat-name",
           input(id := "def-pot-check", tpe := "checkbox", checked := true, inputChecked --> defCheck),
           label(forLabel := "def-pot-check", "DEF")),
         td(cls := "unit-stat-data",
-          child <-- maxstat(unit, defCheck.startWith(true), _.stats.defs))
+          child <-- maxstat(unit, defCheck, _.stats.defs))
       ),
       tr(
         td(cls := "unit-stat-name",
           input(id := "mag-pot-check", tpe := "checkbox", checked := true, inputChecked --> magCheck),
           label(forLabel := "mag-pot-check", "MAG")),
         td(cls := "unit-stat-data",
-          child <-- maxstat(unit, magCheck.startWith(true), _.stats.mag)),
+          child <-- maxstat(unit, magCheck, _.stats.mag)),
         td(cls := "unit-stat-name",
           input(id := "spr-pot-check", tpe := "checkbox", checked := true, inputChecked --> sprCheck),
           label(forLabel := "spr-pot-check", "SPR")),
         td(cls := "unit-stat-data",
-          child <-- maxstat(unit, sprCheck.startWith(true), _.stats.spr))
+          child <-- maxstat(unit, sprCheck, _.stats.spr))
       ),
     )
   }
@@ -207,17 +207,13 @@ object components {
   } yield ms.find(_.id == id.flatMap(i => util.Try(i.toInt).toOption).getOrElse(0))
   type MaybeMateria = Observable[Option[MateriaIndex]]
   def abilitySlots(m: Observable[List[MateriaIndex]], unitInfo: Observable[Option[UnitData]], unitEntry: Observable[Option[UnitEntry]]): (MaybeMateria,MaybeMateria,MaybeMateria,MaybeMateria,Observable[List[VNode]]) = {
-    val ability1Sink = createStringHandler()
-    val ability1Id = prependNone(ability1Sink)
+    val ability1Id = createIdHandler(None)
     val ability1 = materiaFor(m, ability1Id)
-    val ability2Sink = createStringHandler()
-    val ability2Id = prependNone(ability2Sink)
+    val ability2Id = createIdHandler(None)
     val ability2 = materiaFor(m, ability2Id)
-    val ability3Sink = createStringHandler()
-    val ability3Id = prependNone(ability3Sink)
+    val ability3Id = createIdHandler(None)
     val ability3 = materiaFor(m, ability3Id)
-    val ability4Sink = createStringHandler()
-    val ability4Id = prependNone(ability4Sink)
+    val ability4Id = createIdHandler(None)
     val ability4 = materiaFor(m, ability4Id)
     (ability1, ability2, ability3, ability4) + 
     unitInfo.combineLatest(unitEntry).map { case (u, e) =>
@@ -227,25 +223,25 @@ object components {
       if (slots == 0) {
         Nil
       } else if (slots == 1) {
-        List(tr(td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(m, u, e), inputString --> ability1Sink))))
+        List(tr(td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(m, u, e), inputId --> ability1Id))))
       } else if (slots == 2) {
-        List(tr(td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(m, u, e), inputString --> ability1Sink)),
-          td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- materiaOption(m, u, e), inputString --> ability2Sink))))
+        List(tr(td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(m, u, e), inputId --> ability1Id)),
+          td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- materiaOption(m, u, e), inputId --> ability2Id))))
       } else if (slots == 3) {
         List(
           tr(
-            td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(m, u, e), inputString --> ability1Sink)),
-            td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- materiaOption(m, u, e), inputString --> ability2Sink))),
+            td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(m, u, e), inputId --> ability1Id)),
+            td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- materiaOption(m, u, e), inputId --> ability2Id))),
           tr(
-            td(label(forLabel := "u-ability3", "Ability 3"), select(id := "u-ability3", cls := "equip-slot", children <-- materiaOption(m, u, e), inputString --> ability3Sink))))
+            td(label(forLabel := "u-ability3", "Ability 3"), select(id := "u-ability3", cls := "equip-slot", children <-- materiaOption(m, u, e), inputId --> ability3Id))))
       } else {
         List(
           tr(
-            td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(m, u, e), inputString --> ability1Sink)),
-            td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- materiaOption(m, u, e), inputString --> ability2Sink))),
+            td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- materiaOption(m, u, e), inputId --> ability1Id)),
+            td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- materiaOption(m, u, e), inputId --> ability2Id))),
           tr(
-            td(label(forLabel := "u-ability3", "Ability 3"), select(id := "u-ability3", cls := "equip-slot", children <-- materiaOption(m, u, e), inputString --> ability3Sink)),
-            td(label(forLabel := "u-ability4", "Ability 4"), select(id := "u-ability4", cls := "equip-slot", children <-- materiaOption(m, u, e), inputString --> ability4Sink))))
+            td(label(forLabel := "u-ability3", "Ability 3"), select(id := "u-ability3", cls := "equip-slot", children <-- materiaOption(m, u, e), inputId --> ability3Id)),
+            td(label(forLabel := "u-ability4", "Ability 4"), select(id := "u-ability4", cls := "equip-slot", children <-- materiaOption(m, u, e), inputId --> ability4Id))))
       }
     }
   }

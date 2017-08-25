@@ -21,9 +21,9 @@ object YaFFBEDB extends JSApp {
     val materia = Data.get[List[MateriaIndex]]("pickle/materia/index.pickle")
     val espers  = Data.get[Map[String,Int]]("pickle/esper/index.pickle")
 
-    val unitIdSink = createStringHandler()
+    val unitIdSink = createIdHandler(None)
     val unitIdSubject = Subject[Option[String]]
-    val unitId = unitIdSubject.merge(unitIdSink.map(maybeId))
+    val unitId = unitIdSubject.merge(unitIdSink)
 
     val unitInfo: Observable[Option[UnitData]] = unitId.flatMap(id => 
       id.fold(Observable.just(Option.empty[UnitData])) { id_ =>
@@ -45,9 +45,9 @@ object YaFFBEDB extends JSApp {
     }
 
     val esperIdSubject = Subject[Option[String]]()
-    val esperStats = createHandler[Option[EsperStatInfo]]()
-    val esperSkills = createHandler[List[(String,List[String],List[SkillEffect])]]()
-    val esper = createHandler[Option[EsperData]]()
+    val esperStats = createHandler[Option[EsperStatInfo]](None)
+    val esperSkills = createHandler[List[(String,List[String],List[SkillEffect])]](Nil)
+    val esper = createHandler[Option[EsperData]](None)
 
     def equipFor(idOb: Observable[Option[String]]): Observable[Option[EquipIndex]] = for {
       ms <- equips
@@ -62,36 +62,30 @@ object YaFFBEDB extends JSApp {
         esperIdSubject.next(hash.lastOption.filter(_.nonEmpty))
     }
 
-    espers.combineLatest(esper.startWith(None), unitId) { case (es, e,i) =>
+    espers.combineLatest(esper, unitId) { case (es, e,i) =>
       val update = i.map { id =>
         e.fold(id)(esp => id + "," + es(esp.names.head))
       }
       document.location.hash = update.getOrElse("")
     }
 
-    val rhandSink = createStringHandler()
-    val rhandId = prependNone(rhandSink)
+    val rhandId = createIdHandler(None)
     val rhandSubject = Subject[Option[String]]()
     val rhand = equipFor(rhandId.merge(rhandSubject))
-    val lhandSink = createStringHandler()
-    val lhandId = prependNone(lhandSink)
+    val lhandId = createIdHandler(None)
     val lhandSubject = Subject[Option[String]]()
     val lhand = equipFor(lhandId.merge(lhandSubject))
-    val headSink = createStringHandler()
+    val headId = createIdHandler(None)
     val headSubject = Subject[Option[String]]()
-    val headId = prependNone(headSink)
     val headEquip = equipFor(headId.merge(headSubject))
-    val bodySink = createStringHandler()
+    val bodyId = createIdHandler(None)
     val bodySubject = Subject[Option[String]]()
-    val bodyId = prependNone(bodySink)
     val bodyEquip = equipFor(bodyId.merge(bodySubject))
-    val acc1Sink = createStringHandler()
+    val acc1Id = createIdHandler(None)
     val acc1Subject = Subject[Option[String]]()
-    val acc1Id = prependNone(acc1Sink)
     val acc1 = equipFor(acc1Id.merge(acc1Subject))
-    val acc2Sink = createStringHandler()
+    val acc2Id = createIdHandler(None)
     val acc2Subject = Subject[Option[String]]()
-    val acc2Id = prependNone(acc2Sink)
     val acc2 = equipFor(acc2Id.merge(acc2Subject))
 
     val equippedGear = withStamp(rhand).combineLatest(
@@ -236,32 +230,32 @@ object YaFFBEDB extends JSApp {
             s"${e.name} \u27a1 ${e.stats} ${e.describeEffects(u)}")
         }
     }
-    val unitStats = createHandler[Option[Stats]]()
+    val unitStats = createHandler[Option[Stats]](None)
 
     OutWatch.render("#content",
       div(insert --> onLoad,
         div(id := "unit-info",
-          select(children <-- idx, value <-- idx.combineLatest(unitIdSubject).map(_._2).map(_.getOrElse(EMPTY)).startWith(EMPTY), inputString --> unitIdSink),
-          div(hidden <-- unitId.map(_.isEmpty).startWith(true),
+          select(children <-- idx, value <-- idx.combineLatest(unitIdSubject).map(_._2).map(_.getOrElse(EMPTY)).startWith(EMPTY), inputId --> unitIdSink),
+          div(hidden <-- unitId.map(_.isEmpty),
             components.unitBaseStats(unitEntry, unitStats),
             components.unitStats(unitEntry, unitStats, equipped, allPassives.map(_._2), esperStats),
           )
         ),
-        div(hidden <-- unitId.map(_.isEmpty).startWith(true),
+        div(hidden <-- unitId.map(_.isEmpty),
         p(child <-- unitDescription.orElse(Observable.just(""))),
         h3("Equipment"),
         table(
           tr(
-            td(label(forId := "r-hand", "Right Hand"), select(id := "r-hand", cls := "equip-slot", value <-- rhandValidator, children <-- equippable(Set(1, 2)), inputString --> rhandSink)),
-            td(label(forId := "l-hand",  "Left Hand"), select(id := "l-hand", cls := "equip-slot", value <-- lhandValidator, children <-- equippable(Set(1, 2)), inputString --> lhandSink))
+            td(label(forId := "r-hand", "Right Hand"), select(id := "r-hand", cls := "equip-slot", value <-- rhandValidator, children <-- equippable(Set(1, 2)), inputId --> rhandId)),
+            td(label(forId := "l-hand",  "Left Hand"), select(id := "l-hand", cls := "equip-slot", value <-- lhandValidator, children <-- equippable(Set(1, 2)), inputId --> lhandId))
           ),
           tr(
-            td(label(forId := "u-head", "Head"), select(id := "u-head", cls := "equip-slot", value <-- equipsValidator(headSubject, _.head), children <-- equippable(Set(3)), inputString --> headSink)),
-            td(label(forId := "u-body", "Body"), select(id := "u-body", cls := "equip-slot", value <-- equipsValidator(bodySubject, _.body), children <-- equippable(Set(4)), inputString --> bodySink)),
+            td(label(forId := "u-head", "Head"), select(id := "u-head", cls := "equip-slot", value <-- equipsValidator(headSubject, _.head), children <-- equippable(Set(3)), inputId --> headId)),
+            td(label(forId := "u-body", "Body"), select(id := "u-body", cls := "equip-slot", value <-- equipsValidator(bodySubject, _.body), children <-- equippable(Set(4)), inputId --> bodyId)),
           ),
           tr(
-            td(label(forId := "u-acc1", "Accessory 1"), select(id := "u-acc1", cls := "equip-slot", value <-- equipsValidator(acc1Subject, _.acc1), children <-- equippable(Set(5)), inputString --> acc1Sink)),
-            td(label(forId := "u-acc2", "Accessory 2"), select(id := "u-acc2", cls := "equip-slot", value <-- equipsValidator(acc2Subject, _.acc2), children <-- equippable(Set(5)), inputString --> acc2Sink))
+            td(label(forId := "u-acc1", "Accessory 1"), select(id := "u-acc1", cls := "equip-slot", value <-- equipsValidator(acc1Subject, _.acc1), children <-- equippable(Set(5)), inputId --> acc1Id)),
+            td(label(forId := "u-acc2", "Accessory 2"), select(id := "u-acc2", cls := "equip-slot", value <-- equipsValidator(acc2Subject, _.acc2), children <-- equippable(Set(5)), inputId --> acc2Id))
           )
         ),
         h3("Materia"),

@@ -20,10 +20,11 @@ package object yaffbedb {
       (tuple._1, tuple._2, tuple._3, tuple._4, other)
   }
 
-  def prependNone(idOb: Observable[String]): Observable[Option[String]] =
-    Observable.just(None) ++ idOb.map(maybeId)
+  val inputId = outwatch.dom.inputString(maybeId)
+  def createIdHandler(ss: Option[String]*) = outwatch.dom.createHandler[Option[String]](ss:_*)
+
   def maybeId(id: String): Option[String] =
-    if (id.startsWith("--")) None else Some(id)
+    if (id == EMPTY) None else Some(id)
 }
 
 package yaffbedb {
