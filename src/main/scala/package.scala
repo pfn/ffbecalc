@@ -63,21 +63,21 @@ case class Stats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int) {
   )
 
   def *(o: PassiveStatEffect) = Stats(
-    (hp   * math.min(400, ((100.0 + o.hp))   / 100.0)).toInt,
-    (mp   * math.min(400, ((100.0 + o.mp))   / 100.0)).toInt,
-    (atk  * math.min(400, ((100.0 + o.atk))  / 100.0)).toInt,
-    (defs * math.min(400, ((100.0 + o.defs)) / 100.0)).toInt,
-    (mag  * math.min(400, ((100.0 + o.mag))  / 100.0)).toInt,
-    (spr  * math.min(400, ((100.0 + o.spr))  / 100.0)).toInt,
+    (hp   * math.min(400, 100.0 + o.hp)   / 100.0).toInt,
+    (mp   * math.min(400, 100.0 + o.mp)   / 100.0).toInt,
+    (atk  * math.min(400, 100.0 + o.atk)  / 100.0).toInt,
+    (defs * math.min(400, 100.0 + o.defs) / 100.0).toInt,
+    (mag  * math.min(400, 100.0 + o.mag)  / 100.0).toInt,
+    (spr  * math.min(400, 100.0 + o.spr)  / 100.0).toInt,
   )
 
   def *(o: PassiveSinglehandEffect) = Stats(
-    (hp   * math.min(300, (o.hp   / 100.0))).toInt,
-    (mp   * math.min(300, (o.mp   / 100.0))).toInt,
-    (atk  * math.min(300, (o.atk  / 100.0))).toInt,
-    (defs * math.min(300, (o.defs / 100.0))).toInt,
-    (mag  * math.min(300, (o.mag  / 100.0))).toInt,
-    (spr  * math.min(300, (o.spr  / 100.0))).toInt,
+    (hp   * math.min(300, o.hp   / 100.0)).toInt,
+    (mp   * math.min(300, o.mp   / 100.0)).toInt,
+    (atk  * math.min(300, o.atk  / 100.0)).toInt,
+    (defs * math.min(300, o.defs / 100.0)).toInt,
+    (mag  * math.min(300, o.mag  / 100.0)).toInt,
+    (spr  * math.min(300, o.spr  / 100.0)).toInt,
   )
 
   def +(o: Stats) = Stats(
