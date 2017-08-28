@@ -126,6 +126,7 @@ for x in lb.keys():
   json.dump(lb[x], file("json/lb/%s.json" % x, "w"))
 
 for x in skills.keys():
+  skills[x]["id"] = x
   json.dump(skills[x], file("json/skill/%s.json" % x, "w"))
 
 for x in espers.keys():
