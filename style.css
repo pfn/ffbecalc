@@ -1,5 +1,6 @@
 div#unit-info {
   position: fixed;
+  overflow: scroll;
   left: 0;
   top: 0;
   margin: 16px;

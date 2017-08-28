@@ -372,7 +372,7 @@ case class PassiveElementResist(
   dark: Int
 ) extends SkillEffect {
   def +(o: PassiveElementResist) =
-    PassiveElementResist(restrictions.intersect(o.restrictions), fire + o.fire, ice + o.ice, lightning + o.lightning,
+    PassiveElementResist(restrictions ++ o.restrictions, fire + o.fire, ice + o.ice, lightning + o.lightning,
       water + o.water, wind + o.wind, earth + o.earth,
       light + o.light, dark + o.dark)
   def asElementResist = ElementResist(fire, ice, lightning, water, wind, earth, light, dark)
@@ -389,7 +389,7 @@ case class PassiveStatusResist(
   petrify: Int
 ) extends SkillEffect {
   def +(o: PassiveStatusResist) = PassiveStatusResist(
-    restrictions.intersect(o.restrictions),
+    restrictions ++ o.restrictions,
     poison + o.poison,
     blind + o.blind,
     sleep + o.sleep,
@@ -473,14 +473,14 @@ object PassiveStatEffect {
   def zero = PassiveStatEffect(Set.empty, 0, 0, 0, 0, 0, 0)
 }
 case class PassiveStatEffect(
-  restrict: Set[Int],
+  restrictions: Set[Int],
   hp:   Int,
   mp:   Int,
   atk:  Int,
   defs: Int,
   mag:  Int,
-  spr:  Int) extends SkillEffect with NoRestrictions {
-  def +(o: PassiveStatEffect) = PassiveStatEffect(restrict.intersect(o.restrict), hp + o.hp, mp + o.mp,
+  spr:  Int) extends SkillEffect {
+  def +(o: PassiveStatEffect) = PassiveStatEffect(restrictions ++ o.restrictions, hp + o.hp, mp + o.mp,
     atk + o.atk, defs + o.defs, mag + o.mag, spr + o.spr)
   override def toString = {
     ((if (atk != 0) List(s"ATK+$atk%") else Nil) ++

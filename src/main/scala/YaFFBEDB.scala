@@ -239,7 +239,7 @@ object YaFFBEDB extends JSApp {
         pasv.weapEleStats.getOrElse(e, PassiveStatEffect.zero))
       val eqstats = pasv.equipStats.getOrElse(equip.tpe, PassiveStatEffect.zero)
       val s = Stats.fromEquipStats(equip.stats)
-      val innates = SkillEffect.collateEffects(None, equip.skilleffects)
+      val innates = SkillEffect.collateEffects(Some(u), equip.skilleffects)
 
       val innatestats = innates.stats :: innates.equipStats.keys.toList.flatMap {
         k => if (pasv.canEquip(k, Some(u))) List(innates.equipStats(k)) else Nil
