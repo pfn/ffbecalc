@@ -25,7 +25,7 @@ object Esper {
 
         val node = span(label(
           input(tpe := "checkbox", inputChecked(b => (i, r, b)) --> checkSink,
-            checked <-- checker.collect {
+            prop("checked") <-- checker.collect {
               case (a,b) if a == i => b
             }.merge(allCheck)
           ), "\u00a0", name.replaceAll(" ", "\u00a0")))
@@ -45,7 +45,7 @@ object Esper {
       val checker = Subject[(Int,Boolean)]()
       val allChecked = createBoolHandler(true)
       List(
-        th(label(input(tpe := "checkbox", checked <-- outs.map(_.values.forall(_._2)), inputChecked --> allChecked), "\u00a0", "Skills")),
+        th(label(input(tpe := "checkbox", prop("checked") <-- outs.map(_.values.forall(_._2)), inputChecked --> allChecked), "\u00a0", "Skills")),
         td(esperskills(board, rarity, outs, allChecked, checker):_*)
       )
     }
@@ -61,7 +61,7 @@ object Esper {
 
         val node = span(label(
           input(tpe := "checkbox", inputChecked(b => (i, r, b)) --> checkSink,
-            checked <-- checker.collect {
+            prop("checked") <-- checker.collect {
               case (a,b) if a == i => b
             }.merge(allCheck)
           ), "\u00a0", f(r).get.toString))
@@ -81,7 +81,7 @@ object Esper {
       val checker = Subject[(Int,Boolean)]()
       val allChecked = createBoolHandler(true)
       List(
-        th(label(input(tpe := "checkbox", checked <-- outs.map(_.values.forall(_._2)), inputChecked --> allChecked), "\u00a0", stat)),
+        th(label(input(tpe := "checkbox", prop("checked") <-- outs.map(_.values.forall(_._2)), inputChecked --> allChecked), "\u00a0", stat)),
         td(esperstats(board, rarity, outs, allChecked, checker, f):_*)
       )
     }

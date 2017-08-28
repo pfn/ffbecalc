@@ -30,7 +30,11 @@ button, select {
   height: calc(2.25rem + 2px);
   font-size: 1rem;
 }
-select.equip-slot {
+#unit-info select {
+  width: calc(100% - 16px);
+}
+select.equip-slot,
+.skills-active select, .skills-trait select {
   width: 100%;
 }
 option {

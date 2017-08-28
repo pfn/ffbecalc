@@ -79,6 +79,7 @@ case class EsperStatRange(min: Int, max: Int) {
   def +(o: Int) = EsperStatRange(min + o, max + o)
 }
 case class SkillInfo(
+  id: Int,
   name: String,
   active: Boolean,
   tpe: String,
@@ -86,6 +87,8 @@ case class SkillInfo(
   mpCost: Int,
   skilleffects: List[SkillEffect],
   effects: List[String])
+case class EnhancementStrings(name: List[String], desc: List[String])
+case class Enhancement(oldSkill: Int, newSkill: Int, strings: EnhancementStrings)
 case class MateriaIndexData(id: String, effects: Option[List[String]], rarity: Int, magicType: Option[String], skilleffects: List[SkillEffect])
 case class MateriaIndex(name: String, id: Int, effects: List[String], rarity: Int, magicType: Option[String], skilleffects: List[SkillEffect]) {
   def describeEffects(unit: Option[UnitData]) = {
@@ -309,7 +312,7 @@ object SkillEffect {
         a.copy(elementResists = a.elementResists + e)
       case e@PassiveStatusResist(_,_,_,_,_,_,_,_,_) =>
         a.copy(statusResists = a.statusResists + e)
-      case e@PassiveStatEffect(_,_,_,_,_,_,_) =>
+      case e@PassiveStatEffect(_,_,_,_,_,_,_,_) =>
         a.copy(stats = a.stats + e)
       case e@PassiveWeapEleStatEffect(_,_,_,_,_,_,_) =>
         val eff = a.weapEleStats.getOrElse(e.element, PassiveStatEffect.zero)
@@ -416,7 +419,7 @@ case class PassiveWeapEleStatEffect(
   mag:  Int,
   spr:  Int) extends SkillEffect with NoRestrictions {
   def asPassiveStatEffect =
-    PassiveStatEffect(Set.empty, hp, mp, atk, defs, mag, spr)
+    PassiveStatEffect(Set.empty, hp, mp, atk, defs, mag, spr, 0)
 }
 object PassiveEquipEffect {
   def decode(xs: List[Int]): SkillEffect = xs match {
@@ -461,16 +464,16 @@ case class PassiveEquipStatEffect(
   spr:  Int) extends SkillEffect {
   def restrictions = Set.empty
   def asPassiveStatEffect =
-    PassiveStatEffect(Set.empty, hp, mp, atk, defs, mag, spr)
+    PassiveStatEffect(Set.empty, hp, mp, atk, defs, mag, spr, 0)
 }
 object PassiveStatEffect {
   def decode(restrict: Set[Int], xs: List[Int]): SkillEffect = xs match {
     case List(a, b, c, d, e, f, g) =>
-      PassiveStatEffect(restrict, e, f, a, b, c, d)
+      PassiveStatEffect(restrict, e, f, a, b, c, d, g)
     case _ => UnknownSkillEffect
   }
 
-  def zero = PassiveStatEffect(Set.empty, 0, 0, 0, 0, 0, 0)
+  def zero = PassiveStatEffect(Set.empty, 0, 0, 0, 0, 0, 0, 0)
 }
 case class PassiveStatEffect(
   restrictions: Set[Int],
@@ -479,9 +482,10 @@ case class PassiveStatEffect(
   atk:  Int,
   defs: Int,
   mag:  Int,
-  spr:  Int) extends SkillEffect {
+  spr:  Int,
+  crit: Int) extends SkillEffect {
   def +(o: PassiveStatEffect) = PassiveStatEffect(restrictions ++ o.restrictions, hp + o.hp, mp + o.mp,
-    atk + o.atk, defs + o.defs, mag + o.mag, spr + o.spr)
+    atk + o.atk, defs + o.defs, mag + o.mag, spr + o.spr, crit + o.crit)
   override def toString = {
     ((if (atk != 0) List(s"ATK+$atk%") else Nil) ++
     (if (mag != 0) List(s"MAG+$mag%") else Nil) ++

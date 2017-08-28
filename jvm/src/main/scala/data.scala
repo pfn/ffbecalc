@@ -155,7 +155,8 @@ object DataDecoders {
       "reqs"
     )(EquipIndexData.apply)
   implicit val decodeSkillInfo: Decoder[SkillInfo] =
-    Decoder.forProduct7(
+    Decoder.forProduct8(
+      "id",
       "name",
       "active",
       "type",
@@ -226,4 +227,9 @@ object DataDecoders {
   }
   implicit val decodeEsperSlot: Decoder[EsperSlot] =
     Decoder.forProduct2("reward", "cost")(EsperSlot.apply)
+  implicit val decodeEnhancementStrings: Decoder[EnhancementStrings] =
+    Decoder.forProduct2("names", "description")(EnhancementStrings.apply)
+
+  implicit val decodeEnhancement: Decoder[Enhancement] =
+    Decoder.forProduct3("skill_id_old", "skill_id_new", "strings")(Enhancement.apply)
 }

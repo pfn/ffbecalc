@@ -25,6 +25,7 @@ object Pickler {
     val jsonpath   = new File("json")
     val picklepath = new File("pickle")
     //enhance lb
+    val enhancepath = jsonpath / "enhance"
     val equippath   = jsonpath / "equip"
     val esperpath   = jsonpath / "esper"
     val esperbpath  = jsonpath / "esperboard"
@@ -32,6 +33,13 @@ object Pickler {
     val unitpath    = jsonpath / "unit"
     val skillpath   = jsonpath / "skill"
 
+    (enhancepath * jsonFilter).foreach { f =>
+      val n = f.getName
+      val out = n.dropRight(5) + ".pickle"
+      pickle[Map[String,Enhancement],Map[String,Enhancement]](
+        f, picklepath / "enhance" / out,
+        _.fold(e => sys.error("unit enhance data: " + e), identity))
+    }
     pickle[Map[String,EquipIndexData],List[EquipIndex]](
       equippath / "index.json", picklepath / "equip" / "index.pickle", {
         _.right.map { m =>

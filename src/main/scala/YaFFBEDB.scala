@@ -31,6 +31,15 @@ object YaFFBEDB extends JSApp {
           Some(u)
         }
       })
+    val enhancements: Observable[Map[String,Enhancement]] = unitId.flatMap(id =>
+      id.fold(Observable.just(Map.empty[String,Enhancement])) { id_ =>
+        Data.get[Map[String,Enhancement]](s"pickle/enhance/$id_.pickle").catchError(_ => Observable.just(Map.empty))
+      })
+    val enhancedSkills: Observable[Map[Int,(Enhancement,SkillInfo)]] = enhancements.flatMap { es =>
+      Observable.combineLatest(es.toList.map { case (k,v) =>
+        Data.get[SkillInfo](s"pickle/skill/${v.newSkill}.pickle").map(d => (v.oldSkill,(v,d)))
+      }).map(_.toMap)
+    }
 
     val unitEntry: Observable[Option[UnitEntry]] = unitInfo.map {
       _.fold(Option.empty[UnitEntry])(
@@ -102,9 +111,11 @@ object YaFFBEDB extends JSApp {
     val accs = withStamp(acc1).combineLatest(withStamp(acc2))
 
     val unitStats = createHandler[Option[Stats]](None)
-    val unitPassives = unitSkills.map { _.filterNot(_._2.active).flatMap {
-      case (_,info) => info.skilleffects
-    }}
+    val selectedTraits = createHandler[List[SkillInfo]]()
+    //val unitPassives = unitSkills.map { _.filterNot(_._2.active).flatMap {
+    //  case (_,info) => info.skilleffects
+    //}}
+    val unitPassives = selectedTraits.map(_.flatMap(_.skilleffects))
     val (ability1, ability2, ability3, ability4, abilitySlots) =
       components.abilitySlots(materia, unitInfo, unitPassives, unitEntry, sorting)
     val abilities = withStamp(ability1).combineLatest(
@@ -196,35 +207,112 @@ object YaFFBEDB extends JSApp {
         equipValidator(f(eqs)._1, info, effs, sink)
     }
 
-    val activesTable = components.dataTable(unitSkills.map(_.filter(_._2.active)),
-      "skills-active",
-      List("Rarity", "Level", "Name", "Description", "MP"),
-      List("unit-skill-rarity", "unit-skill-level", "unit-skill-name", "unit-skill-desc", "unit-skill-cost"))(
-      List(
-        a => span(s"${a._1.rarity}\u2605"),
-        a => span(a._1.level.toString),
-        a => span(a._2.name),
-        a => div(a._2.effects.map(e => div(e)): _*),
-        a => span(a._2.mpCost.toString)
-      ))
+    def enhancementsOf(id: Int, enhs: Map[Int,(Enhancement,SkillInfo)]):
+    Option[(SkillInfo,SkillInfo)] =
+      for {
+        p1 <- enhs.get(id)
+        p2 <- enhs.get(p1._2.id)
+      } yield (p1._2, p2._2)
 
-    val traitsTable = components.dataTable(unitSkills.map(_.filterNot(_._2.active)),
-      "skills-trait",
-      List("Rarity", "Level", "Name", "Description"),
-      List("unit-trait-rarity", "unit-trait-level", "unit-trait-name", "unit-trait-desc"))(List(
-        a => span(s"${a._1.rarity}\u2605"),
-        a => span(a._1.level.toString),
-        a => span(a._2.name),
-        a => div(a._2.effects.map(e => div(e)): _*),
-      ))
+    def enhancedInfo[A](info: SkillInfo, enhanced: Option[Int], enhs: Map[Int,(Enhancement,SkillInfo)], f: SkillInfo => A): A = {
+      enhanced.fold(f(info)) { en =>
+        val d = enhs(info.id)
+        val s = if (en == info.id) info else if (d._2.id == en) d._2 else enhs(enhs(info.id)._2.id)._2
+        f(s)
+      }
+    }
+    def deco(f: (UnitSkill,SkillInfo,Map[Int,(Enhancement,SkillInfo)]) => VNode): ((UnitSkill,SkillInfo,Map[Int,(Enhancement,SkillInfo)])) => VNode = f.tupled(_)
+    val activesTable = {
+      val enhSink = createHandler[(Int,Int)]()
+      val enhMap = enhSink.scan(Map.empty[Int,Int]) { (ac, e) =>
+        ac + e
+      }.startWith(Map.empty)
 
-    val equippedTable = components.dataTable(equipSkills,
+      unitSkills.combineLatest(enhancedSkills).map(a => a._1.filter(_._2.active).map(b => (b._1, b._2, a._2))).map { ss =>
+        components.dataTable(ss,
+          "skills-active",
+          List("Rarity", "Level", "Name", "Description", "MP"),
+          List("unit-skill-rarity", "unit-skill-level",
+            "unit-skill-name", "unit-skill-desc", "unit-skill-cost"))(
+          List(
+            a => span(s"${a._1.rarity}\u2605"),
+            a => span(a._1.level.toString),
+            deco { (us, info, enhs) =>
+              enhancementsOf(info.id, enhs).fold {
+                span(info.name)
+              } { enh =>
+                select(inputString(i => info.id -> i.toInt) --> enhSink,
+                  option(value := info.id, info.name),
+                  option(value := enh._1.id, "+1 " + info.name),
+                  option(value := enh._2.id, "+2 " + info.name)
+                )
+              }
+            },
+            deco { (us, info, enhs) =>
+              div(children <-- enhMap.map(e => enhancedInfo(info, e.get(info.id), enhs, _.effects.map(e => div(e)))))
+            },
+            deco { (us, info, enhs) =>
+              span(child <-- enhMap.map(e => enhancedInfo(info, e.get(info.id), enhs, _.mpCost.toString)))
+            }
+          )
+        )
+      }
+    }
+
+    val traitsTable = {
+      val enhSink = createHandler[(Int,Int)]()
+      val enhMap = enhSink.scan(Map.empty[Int,Int]) { (ac, e) =>
+        ac + e
+      }.startWith(Map.empty)
+
+      unitSkills.combineLatest(enhancedSkills).map(a => a._1.filterNot(_._2.active).map(b => (b._1, b._2, a._2))).map { ss =>
+        val infos = ss.map(_._2).toList
+        selectedTraits <-- enhMap.map { es =>
+          infos.map { i =>
+            val rid = es.getOrElse(i.id, i.id)
+            if (rid == i.id) i
+            else {
+              val enht = ss.head._3
+              val si = enht(i.id)._2
+              if (si.id == rid) si
+              else enht(si.id)._2
+            }
+          }
+        }
+        components.dataTable(ss,
+          "skills-trait",
+          List("Rarity", "Level", "Name", "Description"),
+          List("unit-trait-rarity", "unit-trait-level",
+            "unit-trait-name", "unit-trait-desc"))(List(
+            a => span(s"${a._1.rarity}\u2605"),
+            a => span(a._1.level.toString),
+            deco { (us, info, enhs) =>
+              enhancementsOf(info.id, enhs).fold {
+                span(info.name)
+              } { enh =>
+                select(inputString(i => info.id -> i.toInt) --> enhSink,
+                  option(value := info.id, info.name),
+                  option(value := enh._1.id, "+1 " + info.name),
+                  option(value := enh._2.id, "+2 " + info.name)
+                )
+              }
+            },
+            deco { (us, info, enhs) =>
+              div(children <-- enhMap.map(e => enhancedInfo(info, e.get(info.id), enhs, _.effects.map(e => div(e)))))
+            },
+          )
+        )
+      }
+    }
+
+    val equippedTable = equipSkills.map(es => components.dataTable(es,
       "skills-equip",
       List("Name", "Description"),
       List("unit-equip-name", "unit-equip-desc"))(List(
         a => div(a._1.split("\n").map(e => div(e)):_*),
         a => div(a._2.split("\n").map(e => div(e)):_*)
       ))
+    )
 
     val unitDescription = unitInfo.map { i =>
       i.fold("")(_.entries.values.toList.sortBy(
@@ -326,12 +414,12 @@ object YaFFBEDB extends JSApp {
         h3("Esper"),
         Esper.esperInfo(esper, espers, esperIdSubject, esperStats, esperSkills),
         h3("Abilities & Spells"),
-        activesTable,
+        div(child <-- activesTable),
         h3("Traits"),
-        traitsTable,
+        div(child <-- traitsTable),
         div(hidden <-- equipSkills.map(_.isEmpty),
           h3("Equipped"),
-          equippedTable,
+          div(child <-- equippedTable),
         ),
         ),
       )
