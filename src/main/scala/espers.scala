@@ -151,6 +151,8 @@ object Esper {
         _.fold("")(x => f(x) + stat)
       }
 
+    val trainClicks = createHandler[Unit](())
+    val showTrainer = trainClicks.scan(false) { (show,_) => !show }
     val infoTable = div(id := "esper-container",
       select(children <-- espers.map { es =>
         val names = es.keys.toList.sorted
@@ -165,7 +167,7 @@ object Esper {
           },
           inputString --> esperRaritySink),
           "\u00a0",
-        button(id := "esper-skills", tpe := "button", "Train Esper"),
+        button(id := "esper-skills", tpe := "button", click(()) --> trainClicks, "Train Esper"),
         div(id := "esper-stats",
           span(child <-- esperStat("HP", _.hp.max)),
           "\u00a0",
@@ -179,7 +181,7 @@ object Esper {
           "\u00a0",
           span(child <-- esperStat("SPR", _.spr.max))
         ),
-        table(id := "esper-training",
+        table(id := "esper-training", hidden <-- showTrainer,
           tr(children <-- trainEsperSkill(esperboard, esperRarity, skillSink)),
           tr(children <-- trainEsperStat("HP",  esperboard, esperRarity, hpSink, _.maybeHP)),
           tr(children <-- trainEsperStat("MP",  esperboard, esperRarity, mpSink, _.maybeMP)),
