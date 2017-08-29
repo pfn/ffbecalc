@@ -25,9 +25,7 @@ object Esper {
 
         val node = span(label(
           input(tpe := "checkbox", inputChecked(b => (i, r, b)) --> checkSink,
-            prop("checked") <-- checker.collect {
-              case (a,b) if a == i => b
-            }.merge(allCheck)
+            prop("checked") <-- checkCheck(i, checker, allCheck)
           ), "\u00a0", name.replaceAll(" ", "\u00a0")))
         node -> checkSink.merge(allCheck.map { b => (i,r,b) })
     }.unzip
@@ -40,12 +38,18 @@ object Esper {
     }
     nodes
   }
+
+  // workaround for https://github.com/OutWatch/outwatch/commit/55687e9204f708ab7b1525d002143950ed0b826e#commitcomment-23957764
+  def allAreChecked(checked: Observable[Map[Int,(_,Boolean)]]) =
+    checked.map(d => if (d.values.forall(_._2)) "true" else "")
+  def checkCheck(i: Int, src: Observable[(Int,Boolean)], all: Observable[Boolean]) =
+    src.collect { case (a,b) if a == i => b }.merge(all).map(b => if (b) "true" else "")
   def trainEsperSkill(esperboard: Observable[List[EsperSlot]], esperRarity: Observable[Int], outs: Handler[Map[Int, (EsperSkillEffectReward,Boolean)]]) = {
     esperboard.combineLatest(esperRarity) map { case (board,rarity) =>
       val checker = Subject[(Int,Boolean)]()
       val allChecked = createBoolHandler(true)
       List(
-        th(label(input(tpe := "checkbox", prop("checked") <-- outs.map(_.values.forall(_._2)), inputChecked --> allChecked), "\u00a0", "Skills")),
+        th(label(input(tpe := "checkbox", prop("checked") <-- allAreChecked(outs), inputChecked --> allChecked), "\u00a0", "Skills")),
         td(esperskills(board, rarity, outs, allChecked, checker):_*)
       )
     }
@@ -61,9 +65,7 @@ object Esper {
 
         val node = span(label(
           input(tpe := "checkbox", inputChecked(b => (i, r, b)) --> checkSink,
-            prop("checked") <-- checker.collect {
-              case (a,b) if a == i => b
-            }.merge(allCheck)
+            prop("checked") <-- checkCheck(i, checker, allCheck)
           ), "\u00a0", f(r).get.toString))
         node -> checkSink.merge(allCheck.map { b => (i,r,b) })
     }.unzip
@@ -81,12 +83,12 @@ object Esper {
       val checker = Subject[(Int,Boolean)]()
       val allChecked = createBoolHandler(true)
       List(
-        th(label(input(tpe := "checkbox", prop("checked") <-- outs.map(_.values.forall(_._2)), inputChecked --> allChecked), "\u00a0", stat)),
+        th(label(input(tpe := "checkbox", prop("checked") <-- allAreChecked(outs), inputChecked --> allChecked), "\u00a0", stat)),
         td(esperstats(board, rarity, outs, allChecked, checker, f):_*)
       )
     }
   }
-  def esperInfo(esper: Handler[Option[EsperData]], espers: Observable[Map[String,Int]], esperIdSubject: Subject[Option[String]], esperStats: Handler[Option[EsperStatInfo]], esperSkills: Handler[List[(String,List[String],List[SkillEffect])]]) = {
+  def esperInfo(esper: Handler[Option[EsperData]], esperEntry: Handler[Option[EsperEntry]], espers: Observable[Map[String,Int]], esperIdSubject: Subject[Option[String]], esperStats: Handler[Option[EsperStatInfo]], esperSkills: Handler[List[(String,List[String],List[SkillEffect])]]) = {
     val esperSink = createStringHandler()
     val esperId = esperSink.map(maybeId).merge(esperIdSubject)
     esper <-- esperId.flatMap { e =>
@@ -114,7 +116,7 @@ object Esper {
     val esperRarity = esperRaritySink.map(r =>
       util.Try(r.toInt).toOption.getOrElse(1)
     )
-    val esperEntry = esper.combineLatest(esperRarity).map { case (e,r) =>
+    esperEntry <-- esper.combineLatest(esperRarity).map { case (e,r) =>
       e.map(_.entries(r))
     }
 

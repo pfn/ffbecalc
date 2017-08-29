@@ -28,6 +28,7 @@ object components {
           if (defs) e.stats.defs.maxpots else e.stats.defs.max,
           if (mag)  e.stats.mag.maxpots  else e.stats.mag.max,
           if (spr)  e.stats.spr.maxpots  else e.stats.spr.max,
+          AilmentResist.zero, ElementResist.zero
         )
       }
     }
@@ -72,9 +73,28 @@ object components {
     )
   }
 
-  def unitStats(unit: Observable[Option[UnitEntry]], stats: Observable[Option[Stats]], equipped: Observable[(Equipped,Abilities)], allPassives: Observable[SkillEffect.CollatedEffect], esper: Observable[Option[EsperStatInfo]]) = {
-    val effective = stats.combineLatest(esper, equipped, allPassives).map {
-      case (s,e,(eqs,abis),pasv) =>
+  def renderResists(resists: List[Int], clz: String) = {
+    table(cls := s"unit-resists $clz",
+      tr(
+        td(div()),
+        td(div()),
+        td(div()),
+        td(div()),
+        td(div()),
+        td(div()),
+        td(div()),
+        td(div()),
+      ),
+      tr(
+        resists.map { r =>
+          td(r.toString + "%")
+        }:_*
+      )
+    )
+  }
+  def unitStats(unit: Observable[Option[UnitEntry]], stats: Observable[Option[Stats]], equipped: Observable[(Equipped,Abilities)], allPassives: Observable[SkillEffect.CollatedEffect], esper: Observable[Option[EsperStatInfo]], esperEntry: Observable[Option[EsperEntry]]) = {
+    val effective = stats.combineLatest(esper.combineLatest(esperEntry), equipped, allPassives).map {
+      case (s,(e,ee),(eqs,abis),pasv) =>
         s.map { st =>
           val alleq = eqs.allEquipped
           val passives = (pasv.stats + pasv.statFromEquips(alleq))
@@ -89,11 +109,11 @@ object components {
           else if (is2h && isSW) Stats.zero
           else Stats.zero
 
-          st * passives + e + eqstats + dhstats
+          (st * passives + e + eqstats + dhstats ++ ee, passives, pasv.dh, !is2h && isSW)
         }
     }
     def st(f: Stats => Int) = effective.map { s =>
-      s.fold("???")(d => f(d).toString)
+      s.fold("???")(d => f(d._1).toString)
     }
     table(cls := "unit-stats",
       caption("Effective Stats"),
@@ -115,63 +135,79 @@ object components {
         td(cls := "unit-stat-name", "SPR"),
         td(cls := "unit-stat-data", child <-- st(_.spr))
       ),
-      /*
-      children <-- unit.combineLatest(allPassives).map { case (u,pasv) =>
+      children <-- unit.combineLatest(allPassives, effective).map { case (u,pasv,eff) =>
         u.fold(List.empty[VNode]) { entry =>
           List(
-            tr(
-              td(colspan := 1, "Status Resist"),
-              td(colspan := 3, entry.statusResist.toString),
-            ),
-            tr(
-              td(colspan := 1, "Element Resist"),
-              td(colspan := 3, entry.elementResist.toString),
-            ),
-            tr(
-              td(colspan := 1, "Passive Eleres"),
-              td(colspan := 3, pasv.elementResists.toString),
-            ),
-            tr(
-              td(colspan := 1, "Passive ailres"),
-              td(colspan := 3, pasv.statusResists.toString),
-            ),
-            tr(
-              td(colspan := 1, "Killers"),
-              td(colspan := 3, pasv.killers.toString),
-            ),
-            tr(
-              td(colspan := 1, "EVO MAG %"),
-              td(colspan := 3, pasv.evomag.toString),
-            ),
-            tr(
-              td(colspan := 1, "Dodge %"),
-              td(colspan := 3, pasv.dodge.toString),
-            ),
-            tr(
-              td(colspan := 1, "Jump"),
-              td(colspan := 3, pasv.jump.toString),
-            ),
-            tr(
-              td(colspan := 1, "LB %"),
-              td(colspan := 3, pasv.lbrate.toString),
-            ),
-            tr(
-              td(colspan := 1, "LB fill"),
-              td(colspan := 3, (pasv.lbfill / 100.0).toString),
-            ),
-            tr(
-              td(colspan := 1, "Auto-refresh"),
-              td(colspan := 3, pasv.refresh.toString),
-            ),
-            tr(
-              td(colspan := 1, "Camouflage"),
-              td(colspan := 3, pasv.camouflage.toString),
-            ),
-          )
+            tr(td(colspan := 4,
+              renderResists(
+                (entry.statusResist + eff.fold(AilmentResist.zero)(_._1.status) + pasv.statusResists.asAilmentResist).asList,
+                "status-table")
+            )),
+            tr(td(colspan := 4,
+              renderResists(
+                (entry.elementResist + eff.fold(ElementResist.zero)(_._1.element) + pasv.elementResists.asElementResist).asList,
+                "elements-table")
+            )),
+          ) ++
+            renderStat(statOf(eff, _.hp), "+HP") ++
+            renderStat(statOf(eff, _.mp), "+MP") ++
+            renderStat(statOf(eff, _.atk), "+ATK") ++
+            renderStat(statOf(eff, _.defs), "+DEF") ++
+            renderStat(statOf(eff, _.mag), "+MAG") ++
+            renderStat(statOf(eff, _.spr), "+SPR") ++
+            renderStat(dhOf(eff, _.hp), "+Equip HP") ++
+            renderStat(dhOf(eff, _.mp), "+Equip MP") ++
+            renderStat(dhOf(eff, _.atk), "+Equip ATK") ++
+            renderStat(dhOf(eff, _.defs), "+Equip DEF") ++
+            renderStat(dhOf(eff, _.mag), "+Equip MAG") ++
+            renderStat(dhOf(eff, _.spr), "+Equip SPR") ++
+            renderStat(statOf(eff, _.crit), "Crit chance", max = 100) ++
+            renderDodge(pasv.dodge) ++
+            renderKillers(pasv.killers) ++
+            renderStat(pasv.lbrate, "+LB fill") ++
+            renderStat(pasv.lbfill / 100, "LB/turn", pct = false) ++
+            renderStat(pasv.jump, "+Jump Damage") ++
+            renderStat(pasv.evomag, "+EVO MAG") ++
+            renderStat((eff.fold(0)(_._1.mp) * (pasv.refresh / 100.0)).toInt,
+              pasv.refresh + "% MP/turn", pct = false) ++
+            renderStat(pasv.camouflage, "Camouflage")
         }
       }
-      */
     )
+  }
+
+  def statOf(x: Option[(Stats,PassiveStatEffect,PassiveSinglehandEffect,Boolean)], f: PassiveStatEffect => Int): Int = x.fold(0)(d => f(d._2))
+  def dhOf(x: Option[(Stats,PassiveStatEffect,PassiveSinglehandEffect,Boolean)], f: PassiveSinglehandEffect => Int): Int = x.fold(0)(d => if (d._4) f(d._3) else 0)
+
+  def renderStat(stat: Int, label: String, max: Int = 300, pct: Boolean = true): List[VNode] = {
+    if (stat != 0) {
+      val toohigh = if (stat > max) "; color: red"
+      else ""
+      List(
+        tr(
+          td(colspan := 2, label),
+          td(colspan := 2, Attributes.style := ("text-align: right" + toohigh), stat + (if (pct) "%" else ""))
+        )
+      )
+    } else Nil
+  }
+
+  def renderKillers(killers: Map[Int,(Int,Int)]): List[VNode] = {
+    val pkillers = killers.toList.flatMap { case (k,v) =>
+      if (v._1 != 0)
+        renderStat(v._1, SkillEffect.TRIBE(k) + " Killer")
+      else Nil
+    }
+    val mkillers = killers.toList.flatMap { case (k,v) =>
+      if (v._2 != 0)
+        renderStat(v._2, "Magic " + SkillEffect.TRIBE(k) + " Killer")
+      else Nil
+    }
+    pkillers ++ mkillers
+  }
+  def renderDodge(dodge: PassiveDodgeEffect): List[VNode] = {
+    renderStat(dodge.phys, "Physical Dodge", max = 100) ++
+      renderStat(dodge.mag, "Magical Dodge", max = 100)
   }
 
   def dataTable[A](data: Seq[A],

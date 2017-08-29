@@ -597,6 +597,7 @@ case class AilmentResist(
   disease: Int,
   petrify: Int) {
   def +(o: AilmentResist) = AilmentResist(poison + o.poison, blind + o.blind, sleep + o.sleep, silence + o.silence, paralysis + o.paralysis, confusion + o.confusion, disease + o.disease, petrify + o.petrify)
+  def asList = List(poison, blind, sleep, silence, paralysis, confusion, disease, petrify)
 }
 object AilmentResist {
   def zero = AilmentResist(0, 0, 0, 0, 0, 0, 0, 0)
@@ -629,6 +630,7 @@ case class ElementResist(
   light: Int,
   dark: Int) {
   def +(o: ElementResist) = ElementResist(fire + o.fire, ice + o.ice, lightning + o.lightning, water + o.water, wind + o.wind, earth + o.earth, light + o.light, dark + o.dark)
+  def asList = List(fire, ice, lightning, water, wind, earth, light, dark)
 
 }
 object ElementResist {

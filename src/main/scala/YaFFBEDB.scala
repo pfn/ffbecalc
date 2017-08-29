@@ -35,9 +35,9 @@ object YaFFBEDB extends JSApp {
       id.fold(Observable.just(Map.empty[String,Enhancement])) { id_ =>
         Data.get[Map[String,Enhancement]](s"pickle/enhance/$id_.pickle").catchError(_ => Observable.just(Map.empty))
       })
-    val enhancedSkills: Observable[Map[Int,(Enhancement,SkillInfo)]] = enhancements.flatMap { es =>
+    val enhancedSkills: Observable[Map[Int,SkillInfo]] = enhancements.flatMap { es =>
       Observable.combineLatest(es.toList.map { case (k,v) =>
-        Data.get[SkillInfo](s"pickle/skill/${v.newSkill}.pickle").map(d => (v.oldSkill,(v,d)))
+        Data.get[SkillInfo](s"pickle/skill/${v.newSkill}.pickle").map(d => (v.oldSkill,d))
       }).map(_.toMap)
     }
 
@@ -57,6 +57,7 @@ object YaFFBEDB extends JSApp {
     val esperStats = createHandler[Option[EsperStatInfo]](None)
     val esperSkills = createHandler[List[(String,List[String],List[SkillEffect])]](Nil)
     val esper = createHandler[Option[EsperData]](None)
+    val esperEntry = createHandler[Option[EsperEntry]](None)
 
     def equipFor(idOb: Observable[Option[String]]): Observable[Option[EquipIndex]] = for {
       ms <- equips
@@ -112,9 +113,6 @@ object YaFFBEDB extends JSApp {
 
     val unitStats = createHandler[Option[Stats]](None)
     val selectedTraits = createHandler[List[SkillInfo]]()
-    //val unitPassives = unitSkills.map { _.filterNot(_._2.active).flatMap {
-    //  case (_,info) => info.skilleffects
-    //}}
     val unitPassives = selectedTraits.map(_.flatMap(_.skilleffects))
     val (ability1, ability2, ability3, ability4, abilitySlots) =
       components.abilitySlots(materia, unitInfo, unitPassives, unitEntry, sorting)
@@ -207,21 +205,21 @@ object YaFFBEDB extends JSApp {
         equipValidator(f(eqs)._1, info, effs, sink)
     }
 
-    def enhancementsOf(id: Int, enhs: Map[Int,(Enhancement,SkillInfo)]):
+    def enhancementsOf(id: Int, enhs: Map[Int,SkillInfo]):
     Option[(SkillInfo,SkillInfo)] =
       for {
         p1 <- enhs.get(id)
-        p2 <- enhs.get(p1._2.id)
-      } yield (p1._2, p2._2)
+        p2 <- enhs.get(p1.id)
+      } yield (p1, p2)
 
-    def enhancedInfo[A](info: SkillInfo, enhanced: Option[Int], enhs: Map[Int,(Enhancement,SkillInfo)], f: SkillInfo => A): A = {
+    def enhancedInfo[A](info: SkillInfo, enhanced: Option[Int], enhs: Map[Int,SkillInfo], f: SkillInfo => A): A = {
       enhanced.fold(f(info)) { en =>
         val d = enhs(info.id)
-        val s = if (en == info.id) info else if (d._2.id == en) d._2 else enhs(enhs(info.id)._2.id)._2
+        val s = if (en == info.id) info else if (d.id == en) d else enhs(enhs(info.id).id)
         f(s)
       }
     }
-    def deco(f: (UnitSkill,SkillInfo,Map[Int,(Enhancement,SkillInfo)]) => VNode): ((UnitSkill,SkillInfo,Map[Int,(Enhancement,SkillInfo)])) => VNode = f.tupled(_)
+    def deco(f: (UnitSkill,SkillInfo,Map[Int,SkillInfo]) => VNode): ((UnitSkill,SkillInfo,Map[Int,SkillInfo])) => VNode = f.tupled(_)
     val activesTable = {
       val enhSink = createHandler[(Int,Int)]()
       val enhMap = enhSink.scan(Map.empty[Int,Int]) { (ac, e) =>
@@ -267,15 +265,15 @@ object YaFFBEDB extends JSApp {
 
       unitSkills.combineLatest(enhancedSkills).map(a => a._1.filterNot(_._2.active).map(b => (b._1, b._2, a._2))).map { ss =>
         val infos = ss.map(_._2).toList
+        val enhs = ss.headOption.fold(Map.empty[Int,SkillInfo])(_._3)
         selectedTraits <-- enhMap.map { es =>
           infos.map { i =>
             val rid = es.getOrElse(i.id, i.id)
             if (rid == i.id) i
             else {
-              val enht = ss.head._3
-              val si = enht(i.id)._2
+              val si = enhs(i.id)
               if (si.id == rid) si
-              else enht(si.id)._2
+              else enhs(si.id)
             }
           }
         }
@@ -379,7 +377,7 @@ object YaFFBEDB extends JSApp {
           select(children <-- idx, value <-- idx.combineLatest(unitIdSubject).map(_._2).map(_.getOrElse(EMPTY)).startWith(EMPTY), inputId --> unitIdSink),
           div(hidden <-- unitId.map(_.isEmpty),
             components.unitBaseStats(unitEntry, unitStats),
-            components.unitStats(unitEntry, unitStats, equipped, allPassives.map(_._2), esperStats),
+            components.unitStats(unitEntry, unitStats, equipped, allPassives.map(_._2), esperStats, esperEntry),
           )
         ),
         div(hidden <-- unitId.map(_.isEmpty),
@@ -412,7 +410,7 @@ object YaFFBEDB extends JSApp {
           children <-- abilitySlots,
         ),
         h3("Esper"),
-        Esper.esperInfo(esper, espers, esperIdSubject, esperStats, esperSkills),
+        Esper.esperInfo(esper, esperEntry, espers, esperIdSubject, esperStats, esperSkills),
         h3("Abilities & Spells"),
         div(child <-- activesTable),
         h3("Traits"),

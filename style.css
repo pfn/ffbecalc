@@ -1,13 +1,25 @@
+@media (min-width: 70em) {
+  div#content { max-width: 48em; margin: 0 15% 0 32%; }
+}
+@media (max-width: 70em) {
+  div#content { max-width: 48em; margin: 0 15% 0 23em; }
+}
 div#unit-info {
   position: fixed;
-  overflow: scroll;
   left: 0;
   top: 0;
+  bottom: 0;
   margin: 16px;
-  min-width: 20em;
+  min-width: 22em;
   width: 25%;
 }
-div#content { max-width: 48em; margin: 0 15% 0 30%; }
+div#unit-info > select:first-child {
+  margin-bottom: 16px;
+}
+div#unit-info > div {
+  height: calc(100% - 2.25rem - 16px);
+  overflow: scroll;
+}
 div#esper-container { margin: 16px; }
 div#esper-stats { margin-top: 16px; }
 button#esper-skills { margin-left: 16px }
@@ -44,20 +56,23 @@ option {
   font-size: 1rem;
 }
 table.unit-stats {
-  margin-top: 16px;
   border-style: solid;
   border-width: 1px;
   width: calc(100% - 16px);
+  font-size: smaller;
+  margin-bottom: 16px;
+}
+
+table.unit-resists {
+  width: 100%;
 }
 table.unit-stats > caption { text-align: left }
 td.unit-stat-name {
   width: 25%;
-  font-size: smaller;
 }
 td.unit-stat-data {
   width: auto;
   text-align: right;
-  font-size: smaller;
 }
 td.unit-trait-rarity { width: 5%; }
 td.unit-trait-level { width: 5%; }
@@ -74,3 +89,67 @@ th { padding: 8px; }
 .sort-options span { margin-right: 16px }
 .sort-options label { margin-left: 16px }
 .sort-options input { margin-right: 8px }
+
+table.unit-resists td {
+  font-size: xx-small;
+}
+.unit-resists > tr:nth-child(2) > td {
+  text-align: center;
+}
+.unit-resists > tr:first-child > td {
+  padding: 0;
+}
+.unit-resists > tr:first-child > td > div {
+  background-image: url("images/unit-stat-icons.png");
+  transform: scale(0.70);
+  width: 39px;
+  height: 39px;
+}
+.elements-table > tr:first-child > td:nth-child(1) > div {
+  background-position: 0 0;
+}
+.elements-table > tr:first-child > td:nth-child(2) > div {
+  background-position: calc(-39px * 1) 0;
+}
+.elements-table > tr:first-child > td:nth-child(3) > div {
+  background-position: calc(-39px * 2) 0;
+}
+.elements-table > tr:first-child > td:nth-child(4) > div {
+  background-position: calc(-39px * 3 - 1px) 0;
+}
+.elements-table > tr:first-child > td:nth-child(5) > div {
+  background-position: calc(-39px * 4 - 2px) 0;
+}
+.elements-table > tr:first-child > td:nth-child(6) > div {
+  background-position: calc(-39px * 5 - 3px) 0;
+}
+.elements-table > tr:first-child > td:nth-child(7) > div {
+  background-position: calc(-39px * 6 - 4px) 0;
+}
+.elements-table > tr:first-child > td:nth-child(8) > div {
+  background-position: calc(-39px * 7 - 5px) 0;
+}
+.status-table > tr:first-child > td:nth-child(1) > div {
+  background-position: calc(-318px) 0;
+}
+.status-table > tr:first-child > td:nth-child(2) > div {
+  background-position: calc(-318px - 40px * 2) 0;
+}
+.status-table > tr:first-child > td:nth-child(3) > div {
+  background-position: calc(-318px - 40px * 3) 0;
+}
+.status-table > tr:first-child > td:nth-child(4) > div {
+  background-position: calc(-318px - 40px * 4) 0;
+}
+.status-table > tr:first-child > td:nth-child(5) > div {
+  background-position: calc(-318px - 40px * 5) 0;
+}
+.status-table > tr:first-child > td:nth-child(6) > div {
+  background-position: calc(-318px - 40px * 6) 0;
+}
+.status-table > tr:first-child > td:nth-child(7) > div {
+  background-position: calc(-318px - 40px * 7) 0;
+}
+.status-table > tr:first-child > td:nth-child(8) > div {
+  background-position: calc(-318px - 40px * 8) 0;
+}

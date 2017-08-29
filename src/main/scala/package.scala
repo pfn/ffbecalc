@@ -43,7 +43,7 @@ case class Abilities(
 }
 
 import boopickle.Default._
-case class Stats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int) {
+case class Stats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int, status: AilmentResist, element: ElementResist) {
   def +(o: Option[EsperStatInfo]) = Stats(
     hp   + o.fold(0)(_.hp.effectiveMax),
     mp   + o.fold(0)(_.mp.effectiveMax),
@@ -51,6 +51,13 @@ case class Stats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int) {
     defs + o.fold(0)(_.defs.effectiveMax),
     mag  + o.fold(0)(_.mag.effectiveMax),
     spr  + o.fold(0)(_.spr.effectiveMax),
+    status, element
+  )
+
+  def ++(o: Option[EsperEntry]) = Stats(
+    hp, mp, atk, defs, mag, spr,
+    status + o.fold(AilmentResist.zero)(_.statusResist),
+    element + o.fold(ElementResist.zero)(_.elementResist)
   )
 
   def +(o: EquipStats) = Stats(
@@ -59,7 +66,9 @@ case class Stats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int) {
     atk + o.atk,
     defs + o.defs,
     mag + o.mag,
-    spr + o.spr
+    spr + o.spr,
+    status + o.ailmentResist,
+    element + o.elementResist
   )
 
   def *(o: PassiveStatEffect) = Stats(
@@ -69,6 +78,7 @@ case class Stats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int) {
     (defs * math.min(400, 100.0 + o.defs) / 100.0).toInt,
     (mag  * math.min(400, 100.0 + o.mag)  / 100.0).toInt,
     (spr  * math.min(400, 100.0 + o.spr)  / 100.0).toInt,
+    status, element
   )
 
   def *(o: PassiveSinglehandEffect) = Stats(
@@ -78,6 +88,7 @@ case class Stats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int) {
     (defs * math.min(300, o.defs / 100.0)).toInt,
     (mag  * math.min(300, o.mag  / 100.0)).toInt,
     (spr  * math.min(300, o.spr  / 100.0)).toInt,
+    status, element
   )
 
   def +(o: Stats) = Stats(
@@ -86,7 +97,9 @@ case class Stats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int) {
     atk + o.atk,
     defs + o.defs,
     mag + o.mag,
-    spr + o.spr
+    spr + o.spr,
+    status + o.status,
+    element + o.element
   )
 
   def -(o: Stats) = Stats(
@@ -95,12 +108,14 @@ case class Stats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int) {
     atk - o.atk,
     defs - o.defs,
     mag - o.mag,
-    spr - o.spr
+    spr - o.spr,
+    status,
+    element
   )
 }
 object Stats {
-  def zero = Stats(0, 0, 0, 0, 0, 0)
-  def fromEquipStats(s: EquipStats) = Stats(s.hp, s.mp, s.atk, s.defs, s.mag, s.spr)
+  def zero = Stats(0, 0, 0, 0, 0, 0, AilmentResist.zero, ElementResist.zero)
+  def fromEquipStats(s: EquipStats) = Stats(s.hp, s.mp, s.atk, s.defs, s.mag, s.spr, s.ailmentResist, s.elementResist)
 }
 
 object Data {
