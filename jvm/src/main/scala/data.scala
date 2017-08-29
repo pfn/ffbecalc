@@ -21,7 +21,9 @@ object DataDecoders {
           }.filterNot(
             _ == UnknownSkillEffect).toList
       } else {
-        decodeEffect(Nil, c.downArray).fold(_ => Nil, x => List(x))
+        val active = c.up.up.downField("active").as[Boolean].toOption.getOrElse(false)
+        if (active) Nil else
+          decodeEffect(Nil, c.downArray).fold(_ => Nil, x => List(x))
       }
     }
 
