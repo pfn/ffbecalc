@@ -102,12 +102,15 @@ case class EquipStats(
   statusEffects: Option[EquipAilments],
   element: Option[List[String]]) {
   override def toString = {
-    ((if (atk != 0) List(s"ATK+${atk}") else Nil) ++
+    val ss = ((if (atk != 0) List(s"ATK+${atk}") else Nil) ++
     (if (defs != 0) List(s"DEF+${defs}") else Nil) ++
     (if (mag != 0) List(s"MAG+${mag}") else Nil) ++
     (if (spr != 0) List(s"SPR+${spr}") else Nil) ++
     (if (hp != 0) List(s"HP+${hp}") else Nil) ++
     (if (mp != 0) List(s"MP+${mp}") else Nil)).mkString(" ")
+    val status = statusResists.fold("")(_.asAilmentResist.toString)
+    val element = elementResists.fold("")(_.asElementResist.toString)
+    List(ss, status, element).filter(_.trim.nonEmpty).mkString(", ")
   }
 
   def elementResist = elementResists.fold(ElementResist.zero)(_.asElementResist)
@@ -146,21 +149,32 @@ sealed trait NoRestrictions {
 }
 object SkillEffect {
   val SEX = Map("Male" -> 1, "Female" -> 2)
-  val TRIBE = Vector(
-    0,
-    "Beast",
-    "Bird",
-    "Aquan",
-    "Demon",
-    "Man",
-    "Machine",
-    "Dragon",
-    "Spirit",
-    "Bug",
-    "Stone",
-    "Plant",
-    "Undead"
+  val TRIBE = Map(
+    1 ->  "Beast",
+    2 ->  "Bird",
+    3 ->  "Aquan",
+    4 ->  "Demon",
+    5 ->  "Man",
+    6 ->  "Machine",
+    7 ->  "Dragon",
+    8 ->  "Spirit",
+    9 ->  "Bug",
+    10 -> "Stone",
+    11 -> "Plant",
+    12 -> "Undead"
   )
+
+  val AILMENTS = Map(
+    1 -> "Poison",
+    2 -> "Blind",
+    3 -> "Sleep",
+    4 -> "Silence",
+    5 -> "Paralyze",
+    6 -> "Confusion",
+    7 -> "Disease",
+    8 -> "Petrify"
+  )
+
   val ELEMENTS = Map(
     "Fire"      -> 1,
     "Ice"       -> 2,
@@ -207,6 +221,7 @@ object SkillEffect {
       case (0 | 1, 3, 2)     => PassiveStatusResist.decode(restrict.toSet, xs)
       case (0 | 1, 3, 3)     => PassiveElementResist.decode(restrict.toSet, xs)
       case (0 | 1, 3, 5)     => PassiveEquipEffect.decode(xs)
+      case (0 | 1, 3, 24)    => PassiveAttractEffect.decode(xs)
       case (0 | 1, 3, 10004) => PassiveWeapEleStatEffect.decode(xs)
       case (0 | 1, 3, 10003) => PassiveSinglehandEffect.decode(xs)
       case (0 | 1, 3, 6)     => PassiveEquipStatEffect.decode(xs)
@@ -240,6 +255,7 @@ object SkillEffect {
     lbrate: Int,
     lbfill: Int,
     refresh: Int,
+    attract: Int,
     camouflage: Int,
     dh: PassiveSinglehandEffect,
     dw: PassiveDualWieldEffect) {
@@ -268,6 +284,7 @@ object SkillEffect {
         )
       }._1
     }
+
     def canDualWield(weapon: Int) = dw.all || dw.weapons(weapon)
     def canEquip(tpe: Int, info: Option[UnitData]) =
       info.fold(false)(_.equip.toSet(tpe)) || equips(tpe)
@@ -275,16 +292,54 @@ object SkillEffect {
     def dwString = {
       if (dw.all) "DualWield"
       else if (dw.weapons.nonEmpty) {
-        val weaps = dw.weapons.toList.sorted.map(EQUIP.apply).mkString(",")
+        val weaps = dw.weapons.toList.sorted.map(EQUIP.apply).mkString(", ")
         s"""DualWield(${weaps})"""
       } else ""
     }
-    def equipStatsString =
-      equipStats.keys.map(k => s"(${equipStats(k)} w/ ${EQUIP(k)})").mkString(" ")
-    override def toString = {
-      dwString + " " + stats.toString + " " +
-        equipStatsString
+
+    def killerString = killers.toList.flatMap { case (k,(p,m)) =>
+      val pk = if (p > 0) List(s"$p% ${TRIBE(k)}-Killer") else Nil
+      val mk = if (m > 0) List(s"$m% Magic ${TRIBE(k)}-Killer") else Nil
+      pk ++ mk
+    }.mkString(" ")
+
+    def dhString = {
+      val items = dh.asList.groupBy(_._1).toList.map { case (k,v) =>
+        s"""$k% Equip ${v.map(_._2).mkString("/")}"""
+      }
+      if (items.nonEmpty) items :+ "w/ 1h"
+      else items
+    }.mkString(" ")
+
+    def refreshString = if (refresh > 0) s"$refresh% Auto-Refresh" else ""
+    def camoString = if (camouflage > 0) s"$camouflage% Camouflage" else ""
+    def dodgeString = {
+      val m = if (dodge.mag > 0) List(s"${dodge.mag}% Magic Evasion") else Nil
+      val p = if (dodge.phys > 0) List(s"${dodge.phys}% Dodge") else Nil
+      (p ++ m).mkString(" ")
     }
+
+    def lbrateString = if (lbrate > 0) s"$lbrate% LB fill" else ""
+    def lbfillString = if (lbfill > 0) s"${lbfill/100} LB/turn" else ""
+    def attractString = if (attract > 0) s"$attract% Attract" else ""
+    def equipStatsString =
+      equipStats.keys.map(k => s"${equipStats(k)} w/ ${EQUIP(k)}").mkString(", ")
+
+    override def toString = List(
+      dwString,
+      dhString,
+      stats.toString,
+      equipStatsString,
+      dodgeString,
+      killerString,
+      elementResists.asElementResist.toString,
+      statusResists.asAilmentResist.toString,
+      lbrateString,
+      lbfillString,
+      refreshString,
+      camoString,
+      attractString
+    ).filter(_.trim.nonEmpty).mkString(", ")
   }
   object CollatedEffect {
     def apply(): CollatedEffect = CollatedEffect(
@@ -297,6 +352,7 @@ object SkillEffect {
       Set.empty,
       0,
       PassiveDodgeEffect(0, 0),
+      0,
       0,
       0,
       0,
@@ -332,6 +388,8 @@ object SkillEffect {
         a.copy(dodge = PassiveDodgeEffect(p + a.dodge.phys, m + a.dodge.mag))
       case PassiveJumpEffect(j) =>
         a.copy(jump = a.jump + j)
+      case PassiveAttractEffect(d) =>
+        a.copy(attract = a.attract + d)
       case PassiveLimitBurstFillEffect(mod) => a.copy(lbfill = a.lbfill + mod)
       case PassiveLimitBurstRateEffect(mod) => a.copy(lbrate = a.lbrate + mod)
       case PassiveCamouflageEffect(_, mod) => a.copy(camouflage = a.camouflage + mod)
@@ -393,7 +451,7 @@ case class PassiveStatusResist(
   blind: Int,
   sleep: Int,
   silence: Int,
-  paralysis: Int,
+  paralyze: Int,
   confusion: Int,
   disease: Int,
   petrify: Int
@@ -404,11 +462,11 @@ case class PassiveStatusResist(
     blind + o.blind,
     sleep + o.sleep,
     silence + o.silence,
-    paralysis + o.paralysis,
+    paralyze + o.paralyze,
     confusion + o.confusion,
     disease + o.disease,
     petrify + o.petrify)
-  def asAilmentResist = AilmentResist(poison, blind, sleep, silence, paralysis, confusion, disease, petrify)
+  def asAilmentResist = AilmentResist(poison, blind, sleep, silence, paralyze, confusion, disease, petrify)
 }
 object PassiveWeapEleStatEffect {
   def decode(xs: List[Int]): SkillEffect = xs match {
@@ -443,6 +501,14 @@ object PassiveEquipStatEffect {
 }
 case class PassiveSinglehandEffect(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int) extends SkillEffect with NoRestrictions {
   def +(o: PassiveSinglehandEffect) = PassiveSinglehandEffect(hp + o.hp, mp + o.mp, atk + o.atk, defs + o.defs, mag + o.mag, spr + o.spr)
+  def asList = List(
+    hp   -> "HP",
+    mp   -> "MP",
+    atk  -> "ATK",
+    defs -> "DEF",
+    mag  -> "MAG",
+    spr  -> "SPR",
+  ).filterNot(_._1 == 0)
 }
 object PassiveSinglehandEffect {
   def decode(xs: List[Int]): SkillEffect = xs match {
@@ -490,14 +556,19 @@ case class PassiveStatEffect(
   crit: Int) extends SkillEffect {
   def +(o: PassiveStatEffect) = PassiveStatEffect(restrictions ++ o.restrictions, hp + o.hp, mp + o.mp,
     atk + o.atk, defs + o.defs, mag + o.mag, spr + o.spr, crit + o.crit)
-  override def toString = {
-    ((if (atk != 0) List(s"ATK+$atk%") else Nil) ++
-    (if (mag != 0) List(s"MAG+$mag%") else Nil) ++
-    (if (defs != 0) List(s"DEF+$defs%") else Nil) ++
-    (if (spr != 0) List(s"SPR+$spr%") else Nil) ++
-    (if (hp != 0) List(s"HP+$hp%") else Nil) ++
-    (if (mp != 0) List(s"MP+$mp%") else Nil)).mkString(" ")
-  }
+  def asList = List(
+    hp   -> "HP",
+    mp   -> "MP",
+    atk  -> "ATK",
+    defs -> "DEF",
+    mag  -> "MAG",
+    spr  -> "SPR",
+    crit -> "Crit"
+  ).filterNot(_._1 == 0)
+
+  override def toString = asList.groupBy(_._1).toList.map { case (k,v) =>
+    s"""$k% ${v.map(_._2).mkString("/")}"""
+  }.mkString(" ")
 }
 object PassiveKillerEffect {
   def decode(xs: List[Int]): SkillEffect = xs match {
@@ -539,6 +610,12 @@ object PassiveJumpEffect {
   }
 }
 case class PassiveJumpEffect(mod: Int) extends SkillEffect with NoRestrictions
+object PassiveAttractEffect {
+  def decode(xs: List[Int]): SkillEffect = xs match {
+    case List(a) => PassiveAttractEffect(a)
+  }
+}
+case class PassiveAttractEffect(mod: Int) extends SkillEffect with NoRestrictions
 object PassiveLimitBurstRateEffect {
   def decode(xs: List[Int]): SkillEffect = xs match {
     case List(a) => PassiveLimitBurstRateEffect(a)
@@ -569,7 +646,7 @@ case class EquipAilments(
   blind: Option[Int],
   sleep: Option[Int],
   silence: Option[Int],
-  paralysis: Option[Int],
+  paralyze: Option[Int],
   confusion: Option[Int],
   disease: Option[Int],
   petrify: Option[Int]) {
@@ -577,7 +654,7 @@ case class EquipAilments(
     blind.getOrElse(0),
     sleep.getOrElse(0),
     silence.getOrElse(0),
-    paralysis.getOrElse(0),
+    paralyze.getOrElse(0),
     confusion.getOrElse(0),
     disease.getOrElse(0),
     petrify.getOrElse(0))
@@ -588,12 +665,29 @@ case class AilmentResist(
   blind: Int,
   sleep: Int,
   silence: Int,
-  paralysis: Int,
+  paralyze: Int,
   confusion: Int,
   disease: Int,
   petrify: Int) {
-  def +(o: AilmentResist) = AilmentResist(poison + o.poison, blind + o.blind, sleep + o.sleep, silence + o.silence, paralysis + o.paralysis, confusion + o.confusion, disease + o.disease, petrify + o.petrify)
-  def asList = List(poison, blind, sleep, silence, paralysis, confusion, disease, petrify)
+  def +(o: AilmentResist) = AilmentResist(poison + o.poison, blind + o.blind, sleep + o.sleep, silence + o.silence, paralyze + o.paralyze, confusion + o.confusion, disease + o.disease, petrify + o.petrify)
+  def asList = List(
+    poison    -> "Poison",
+    blind     -> "Blind",
+    sleep     -> "Sleep",
+    silence   -> "Silence",
+    paralyze  -> "Paralyze",
+    confusion -> "Confusion",
+    disease   -> "Disease",
+    petrify   -> "Petrify")
+  override def toString = {
+    val items = asList.filterNot(_._1 == 0).groupBy(_._1).toList.map {
+      case (k,v) =>
+        val res = if (v.size == 8) "All Ailments"
+        else v.map(_._2).mkString("/")
+        s"""$k% $res Resist"""
+    }
+    items.mkString(", ")
+  }
 }
 object AilmentResist {
   def zero = AilmentResist(0, 0, 0, 0, 0, 0, 0, 0)
@@ -626,8 +720,25 @@ case class ElementResist(
   light: Int,
   dark: Int) {
   def +(o: ElementResist) = ElementResist(fire + o.fire, ice + o.ice, lightning + o.lightning, water + o.water, wind + o.wind, earth + o.earth, light + o.light, dark + o.dark)
-  def asList = List(fire, ice, lightning, water, wind, earth, light, dark)
-
+  def asList = List(
+    fire      -> "Fire",
+    ice       -> "Ice",
+    lightning -> "Lightning",
+    water     -> "Water",
+    wind      -> "Wind",
+    earth     -> "Earth",
+    light     -> "Light",
+    dark      -> "Dark"
+  )
+  override def toString = {
+    val items = asList.filterNot(_._1 == 0).groupBy(_._1).toList.map {
+      case (k,v) =>
+        val res = if (v.size == 8) "All Elements"
+        else v.map(_._2).mkString("/")
+        s"""$k% $res Resist"""
+    }
+    items.mkString(", ")
+  }
 }
 object ElementResist {
   def zero = ElementResist(0, 0, 0, 0, 0, 0, 0, 0)

@@ -9,49 +9,49 @@ import boopickle.Default._
 
 object YaFFBEDB extends JSApp {
   def main(): Unit = {
-    val idx = Data.get[List[UnitIndex]]("pickle/unit/index.pickle").map { us =>
+    val unitIdSubject = Subject[Option[String]]
+    val unitIdSink = createIdHandler(None)
+    val unitId = unitIdSubject.merge(unitIdSink)
+
+    val unitIndex = Data.get[List[UnitIndex]]("pickle/unit/index.pickle").combineLatest(unitId.startWith(None)).map { case (us, id) =>
       List(option(value := EMPTY, "-- Select a unit --")) ++
         us.map { u =>
           val rarity = ("\u2605" * u.min) + ("\u2606" * (u.max - u.min))
-          option(value := u.id, s"${u.name}: $rarity")
+          option(value := u.id, selected := id.exists(_ == u.id), s"${u.name}: $rarity")
         }
-    }
+    }.share
 
     val equips  = Data.get[List[EquipIndex]]("pickle/equip/index.pickle")
     val materia = Data.get[List[MateriaIndex]]("pickle/materia/index.pickle")
     val espers  = Data.get[Map[String,Int]]("pickle/esper/index.pickle")
-
-    val unitIdSink = createIdHandler(None)
-    val unitIdSubject = Subject[Option[String]]
-    val unitId = unitIdSubject.merge(unitIdSink)
 
     val unitInfo: Observable[Option[UnitData]] = unitId.flatMap(id => 
       id.fold(Observable.just(Option.empty[UnitData])) { id_ =>
         Data.get[UnitData](s"pickle/unit/$id_.pickle").map { u =>
           Some(u)
         }
-      })
+      }).share
     val enhancements: Observable[Map[String,Enhancement]] = unitId.flatMap(id =>
       id.fold(Observable.just(Map.empty[String,Enhancement])) { id_ =>
         Data.get[Map[String,Enhancement]](s"pickle/enhance/$id_.pickle").catchError(_ => Observable.just(Map.empty))
-      })
+      }).share
     val enhancedSkills: Observable[Map[Int,SkillInfo]] = enhancements.flatMap { es =>
       Observable.combineLatest(es.toList.map { case (k,v) =>
         Data.get[SkillInfo](s"pickle/skill/${v.newSkill}.pickle").map(d => (v.oldSkill,d))
       }).map(_.toMap)
-    }
+    }.share
 
     val unitEntry: Observable[Option[UnitEntry]] = unitInfo.map {
       _.fold(Option.empty[UnitEntry])(
         _.entries.values.toList.sortBy(_.rarity).lastOption)
-    }
+    }.share
 
     val unitSkills = unitInfo.flatMap { u =>
       Observable.combineLatest(u.fold(
         List.empty[Observable[(UnitSkill, SkillInfo)]])(_.skills.map { s =>
         Data.get[SkillInfo](s"pickle/skill/${s.id}.pickle").map { s -> _ }
       }))
-    }
+    }.share
 
     val esperIdSubject = Subject[Option[String]]()
     val esperStats = createHandler[Option[EsperStatInfo]](None)
@@ -108,25 +108,21 @@ object YaFFBEDB extends JSApp {
     val acc2 = equipFor(acc2Id.merge(acc2Subject))
 
     val equippedGear = withStamp(rhand).combineLatest(
-      withStamp(lhand), withStamp(headEquip), withStamp(bodyEquip))
-    val accs = withStamp(acc1).combineLatest(withStamp(acc2))
+      withStamp(lhand), withStamp(headEquip), withStamp(bodyEquip)).share
+    val accs = withStamp(acc1).combineLatest(withStamp(acc2)).share
 
     val unitStats = createHandler[Option[Stats]](None)
     val selectedTraits = createHandler[List[SkillInfo]]()
-    val unitPassives = selectedTraits.map(_.flatMap(_.skilleffects))
+    val unitPassives = selectedTraits.map(_.flatMap(_.skilleffects)).share
     val (ability1, ability2, ability3, ability4, abilitySlots) =
       components.abilitySlots(materia, unitInfo, unitPassives, unitEntry, sorting)
     val abilities = withStamp(ability1).combineLatest(
       withStamp(ability2), withStamp(ability3),
-      withStamp(ability4)).map(Abilities.tupled.apply)
+      withStamp(ability4)).map(Abilities.tupled.apply).share
 
     val equipped = equippedGear.combineLatest(accs).map { a =>
       Equipped.tupled.apply(a._1 + a._2)
-    }.combineLatest(abilities)
-
-    val equippedStats = equipped.map { case (eqs, abis) =>
-      ()
-    }
+    }.combineLatest(abilities).share
 
     def passivesFromAll(equips: List[EquipIndex],
       abilities: List[MateriaIndex]) : List[SkillEffect] = {
@@ -137,8 +133,7 @@ object YaFFBEDB extends JSApp {
       skillsFromEq(equips) ++ skillsFromMat(abilities)
     }
 
-    def passivesFromEq(equip: List[EquipIndex]) =
-      equip.flatMap(_.skilleffects)
+    def passivesFromEq(equip: List[EquipIndex]) = equip.flatMap(_.skilleffects)
     def passivesFromMat(equip: List[MateriaIndex]) =
       equip.flatMap(_.skilleffects)
     def skillsFromEq(equip: List[EquipIndex]) =
@@ -156,13 +151,13 @@ object YaFFBEDB extends JSApp {
     val allPassives = unitInfo.combineLatest(unitPassives, equipped, esperSkills).map {
       case (info, passives,(eqs,abis), fromEsper) =>
       info -> SkillEffect.collateEffects(info, passivesFromAll(eqs.allEquipped, abis.allEquipped) ++ passives ++ fromEsper.flatMap(_._3))
-    }
+    }.share
 
     val equipSkills: Observable[List[(String,String)]] = equipped.combineLatest(esperSkills).map {
       case ((eqs, abis), fromE) =>
       skillsFromAll(eqs.allEquipped, abis.allEquipped) ++
         fromE.map { case (n,d,e) => n -> d.mkString("\n") }
-    }
+    }.share
 
     def publishTo[A](sink: Subject[A], value: A): Unit = sink.next(value)
     def handValidator(
@@ -219,7 +214,7 @@ object YaFFBEDB extends JSApp {
         f(s)
       }
     }
-    def deco(f: (UnitSkill,SkillInfo,Map[Int,SkillInfo]) => VNode): ((UnitSkill,SkillInfo,Map[Int,SkillInfo])) => VNode = f.tupled(_)
+    def deco[A,B,C](f: (A,B,C) => VNode): ((A,B,C)) => VNode = f.tupled(_)
     val activesTable = {
       val enhSink = createHandler[(Int,Int)]()
       val enhMap = enhSink.scan(Map.empty[Int,Int]) { (ac, e) =>
@@ -374,7 +369,7 @@ object YaFFBEDB extends JSApp {
     OutWatch.render("#content",
       div(insert --> onLoad,
         div(id := "unit-info",
-          select(children <-- idx, value <-- idx.combineLatest(unitIdSubject).map(_._2).map(_.getOrElse(EMPTY)).startWith(EMPTY), inputId --> unitIdSink),
+          select(children <-- unitIndex, inputId --> unitIdSink),
           div(hidden <-- unitId.map(_.isEmpty),
             components.unitBaseStats(unitEntry, unitStats),
             components.unitStats(unitEntry, unitStats, equipped, allPassives.map(_._2), esperStats, esperEntry),

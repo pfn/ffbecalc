@@ -72,7 +72,7 @@ object DataDecoders {
     "Blind",
     "Sleep",
     "Silence",
-    "Paralysis",
+    "Paralyze",
     "Confusion",
     "Disease",
     "Petrify")(EquipAilments.apply)

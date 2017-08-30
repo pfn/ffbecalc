@@ -85,11 +85,7 @@ object components {
         td(div()),
         td(div()),
       ),
-      tr(
-        resists.map { r =>
-          td(r.toString + "%")
-        }:_*
-      )
+      tr(resists.map { r => td(r.toString + "%") }:_*)
     )
   }
   def unitStats(unit: Observable[Option[UnitEntry]], stats: Observable[Option[Stats]], equipped: Observable[(Equipped,Abilities)], allPassives: Observable[SkillEffect.CollatedEffect], esper: Observable[Option[EsperStatInfo]], esperEntry: Observable[Option[EsperEntry]]) = {
@@ -111,7 +107,7 @@ object components {
 
           (st * passives + e + eqstats + dhstats ++ ee, passives, pasv.dh, !is2h && isSW)
         }
-    }
+    }.share
     def st(f: Stats => Int) = effective.map { s =>
       s.fold("???")(d => f(d._1).toString)
     }
@@ -137,15 +133,16 @@ object components {
       ),
       children <-- unit.combineLatest(allPassives, effective).map { case (u,pasv,eff) =>
         u.fold(List.empty[VNode]) { entry =>
+          // TODO handle draw-attacks
           List(
             tr(td(colspan := 4,
               renderResists(
-                (entry.statusResist + eff.fold(AilmentResist.zero)(_._1.status) + pasv.statusResists.asAilmentResist).asList,
+                (entry.statusResist + eff.fold(AilmentResist.zero)(_._1.status) + pasv.statusResists.asAilmentResist).asList.map(_._1),
                 "status-table")
             )),
             tr(td(colspan := 4,
               renderResists(
-                (entry.elementResist + eff.fold(ElementResist.zero)(_._1.element) + pasv.elementResists.asElementResist).asList,
+                (entry.elementResist + eff.fold(ElementResist.zero)(_._1.element) + pasv.elementResists.asElementResist).asList.map(_._1),
                 "elements-table")
             )),
           ) ++
@@ -170,6 +167,7 @@ object components {
             renderStat(pasv.evomag, "+EVO MAG") ++
             renderStat((eff.fold(0)(_._1.mp) * (pasv.refresh / 100.0)).toInt,
               pasv.refresh + "% MP/turn", pct = false) ++
+            renderStat(pasv.attract, "Draw Attacks") ++
             renderStat(pasv.camouflage, "Camouflage")
         }
       }

@@ -90,7 +90,7 @@ object Esper {
   }
   def esperInfo(esper: Handler[Option[EsperData]], esperEntry: Handler[Option[EsperEntry]], espers: Observable[Map[String,Int]], esperIdSubject: Subject[Option[String]], esperStats: Handler[Option[EsperStatInfo]], esperSkills: Handler[List[(String,List[String],List[SkillEffect])]]) = {
     val esperSink = createStringHandler()
-    val esperId = esperSink.map(maybeId).merge(esperIdSubject)
+    val esperId = esperSink.map(maybeId).merge(esperIdSubject).share
     esper <-- esperId.flatMap { e =>
       e.fold(Observable.just(Option.empty[EsperData])) { eid =>
         Data.get[EsperData](s"pickle/esper/${eid}.pickle").map(Some.apply)
@@ -111,7 +111,7 @@ object Esper {
           ).map(x => x.toList)
         }
       }
-    }
+    }.share
     val esperRaritySink = createStringHandler("1")
     val esperRarity = esperRaritySink.map(r =>
       util.Try(r.toInt).toOption.getOrElse(1)
@@ -139,7 +139,7 @@ object Esper {
       e.fold(Option.empty[EsperStatInfo]){ entry =>
         Some(sel.foldLeft(entry.stats) { (a,b) => a + b._2 })
       }
-    }
+    }.share
     esperStats <-- modifiedStats
     esperSkills <-- skillSink.map { m =>
       m.values.toList.collect { case (esr, b) if b =>

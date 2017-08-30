@@ -18,7 +18,7 @@ div#unit-info > select:first-child {
 }
 div#unit-info > div {
   height: calc(100% - 2.25rem - 16px);
-  overflow: scroll;
+  overflow-y: auto;
 }
 div#esper-container { margin: 16px; }
 div#esper-stats { margin-top: 16px; }
@@ -133,23 +133,23 @@ table.unit-resists td {
   background-position: calc(-318px) 0;
 }
 .status-table > tr:first-child > td:nth-child(2) > div {
-  background-position: calc(-318px - 40px * 2) 0;
+  background-position: calc(-318px - 40px * 1) 0;
 }
 .status-table > tr:first-child > td:nth-child(3) > div {
-  background-position: calc(-318px - 40px * 3) 0;
+  background-position: calc(-318px - 40px * 2) 0;
 }
 .status-table > tr:first-child > td:nth-child(4) > div {
-  background-position: calc(-318px - 40px * 4) 0;
+  background-position: calc(-318px - 40px * 3) 0;
 }
 .status-table > tr:first-child > td:nth-child(5) > div {
-  background-position: calc(-318px - 40px * 5) 0;
+  background-position: calc(-318px - 40px * 4) 0;
 }
 .status-table > tr:first-child > td:nth-child(6) > div {
-  background-position: calc(-318px - 40px * 6) 0;
+  background-position: calc(-318px - 40px * 5) 0;
 }
 .status-table > tr:first-child > td:nth-child(7) > div {
-  background-position: calc(-318px - 40px * 7) 0;
+  background-position: calc(-318px - 40px * 6) 0;
 }
 .status-table > tr:first-child > td:nth-child(8) > div {
-  background-position: calc(-318px - 40px * 8) 0;
+  background-position: calc(-318px - 40px * 7) 0;
 }
