@@ -9,7 +9,7 @@ import boopickle.Default._
 
 object YaFFBEDB extends JSApp {
   def main(): Unit = {
-    val unitIdSubject = Subject[Option[String]]
+    val unitIdSubject = Subject[Option[String]]()
     val unitIdSink = createIdHandler(None)
     val unitId = unitIdSubject.merge(unitIdSink)
 
@@ -19,7 +19,7 @@ object YaFFBEDB extends JSApp {
           val rarity = ("\u2605" * u.min) + ("\u2606" * (u.max - u.min))
           option(value := u.id, selected := id.exists(_ == u.id), s"${u.name}: $rarity")
         }
-    }.share
+    }.publishReplay(1).refCount
 
     val equips  = Data.get[List[EquipIndex]]("pickle/equip/index.pickle")
     val materia = Data.get[List[MateriaIndex]]("pickle/materia/index.pickle")
@@ -30,28 +30,28 @@ object YaFFBEDB extends JSApp {
         Data.get[UnitData](s"pickle/unit/$id_.pickle").map { u =>
           Some(u)
         }
-      }).share
+      }).publishReplay(1).refCount
     val enhancements: Observable[Map[String,Enhancement]] = unitId.flatMap(id =>
       id.fold(Observable.just(Map.empty[String,Enhancement])) { id_ =>
         Data.get[Map[String,Enhancement]](s"pickle/enhance/$id_.pickle").catchError(_ => Observable.just(Map.empty))
-      }).share
+      }).publishReplay(1).refCount
     val enhancedSkills: Observable[Map[Int,SkillInfo]] = enhancements.flatMap { es =>
       Observable.combineLatest(es.toList.map { case (k,v) =>
         Data.get[SkillInfo](s"pickle/skill/${v.newSkill}.pickle").map(d => (v.oldSkill,d))
       }).map(_.toMap)
-    }.share
+    }.publishReplay(1).refCount
 
     val unitEntry: Observable[Option[UnitEntry]] = unitInfo.map {
       _.fold(Option.empty[UnitEntry])(
         _.entries.values.toList.sortBy(_.rarity).lastOption)
-    }.share
+    }.publishReplay(1).refCount
 
     val unitSkills = unitInfo.flatMap { u =>
       Observable.combineLatest(u.fold(
         List.empty[Observable[(UnitSkill, SkillInfo)]])(_.skills.map { s =>
         Data.get[SkillInfo](s"pickle/skill/${s.id}.pickle").map { s -> _ }
       }))
-    }.share
+    }.publishReplay(1).refCount
 
     val esperIdSubject = Subject[Option[String]]()
     val esperStats = createHandler[Option[EsperStatInfo]](None)
@@ -86,7 +86,7 @@ object YaFFBEDB extends JSApp {
     val sortDEF = createHandler[Sort]()
     val sortMAG = createHandler[Sort]()
     val sortSPR = createHandler[Sort]()
-    val sorting = sortAZ.merge(sortHP, sortMP, sortATK).merge(sortDEF, sortMAG, sortSPR)
+    val sorting = sortAZ.merge(sortHP, sortMP, sortATK).merge(sortDEF, sortMAG, sortSPR).publishReplay(1).refCount
 
     val rhandId = createIdHandler(None)
     val rhandSubject = Subject[Option[String]]()
@@ -108,21 +108,21 @@ object YaFFBEDB extends JSApp {
     val acc2 = equipFor(acc2Id.merge(acc2Subject))
 
     val equippedGear = withStamp(rhand).combineLatest(
-      withStamp(lhand), withStamp(headEquip), withStamp(bodyEquip)).share
-    val accs = withStamp(acc1).combineLatest(withStamp(acc2)).share
+      withStamp(lhand), withStamp(headEquip), withStamp(bodyEquip))
+    val accs = withStamp(acc1).combineLatest(withStamp(acc2))
 
     val unitStats = createHandler[Option[Stats]](None)
     val selectedTraits = createHandler[List[SkillInfo]]()
-    val unitPassives = selectedTraits.map(_.flatMap(_.skilleffects)).share
+    val unitPassives = selectedTraits.map(_.flatMap(_.skilleffects))
     val (ability1, ability2, ability3, ability4, abilitySlots) =
       components.abilitySlots(materia, unitInfo, unitPassives, unitEntry, sorting)
     val abilities = withStamp(ability1).combineLatest(
       withStamp(ability2), withStamp(ability3),
-      withStamp(ability4)).map(Abilities.tupled.apply).share
+      withStamp(ability4)).map(Abilities.tupled.apply)
 
     val equipped = equippedGear.combineLatest(accs).map { a =>
       Equipped.tupled.apply(a._1 + a._2)
-    }.combineLatest(abilities).share
+    }.combineLatest(abilities)
 
     def passivesFromAll(equips: List[EquipIndex],
       abilities: List[MateriaIndex]) : List[SkillEffect] = {
@@ -151,13 +151,13 @@ object YaFFBEDB extends JSApp {
     val allPassives = unitInfo.combineLatest(unitPassives, equipped, esperSkills).map {
       case (info, passives,(eqs,abis), fromEsper) =>
       info -> SkillEffect.collateEffects(info, passivesFromAll(eqs.allEquipped, abis.allEquipped) ++ passives ++ fromEsper.flatMap(_._3))
-    }.share
+    }
 
     val equipSkills: Observable[List[(String,String)]] = equipped.combineLatest(esperSkills).map {
       case ((eqs, abis), fromE) =>
       skillsFromAll(eqs.allEquipped, abis.allEquipped) ++
         fromE.map { case (n,d,e) => n -> d.mkString("\n") }
-    }.share
+    }
 
     def publishTo[A](sink: Subject[A], value: A): Unit = sink.next(value)
     def handValidator(

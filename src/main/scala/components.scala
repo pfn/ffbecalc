@@ -1,7 +1,7 @@
 package yaffbedb
 
 import outwatch.dom._
-import rxscalajs.Observable
+import rxscalajs.{Observable,Subject}
 
 object components {
   def maxstat(unit: Observable[Option[UnitEntry]],
@@ -133,7 +133,6 @@ object components {
       ),
       children <-- unit.combineLatest(allPassives, effective).map { case (u,pasv,eff) =>
         u.fold(List.empty[VNode]) { entry =>
-          // TODO handle draw-attacks
           List(
             tr(td(colspan := 4,
               renderResists(
@@ -272,19 +271,27 @@ object components {
   } yield ms.find(_.id == id.flatMap(i => util.Try(i.toInt).toOption).getOrElse(0))
   type MaybeMateria = Observable[Option[MateriaIndex]]
   def abilitySlots(m: Observable[List[MateriaIndex]], unitInfo: Observable[Option[UnitData]], up: Observable[Seq[SkillEffect]], unitEntry: Observable[Option[UnitEntry]], sorting: Observable[Sort]): (MaybeMateria,MaybeMateria,MaybeMateria,MaybeMateria,Observable[List[VNode]]) = {
+    val a1 = Subject[Option[String]]()
+    val a2 = Subject[Option[String]]()
+    val a3 = Subject[Option[String]]()
+    val a4 = Subject[Option[String]]()
     val ability1Id = createIdHandler(None)
-    val ability1 = materiaFor(m, ability1Id)
+    val ability1 = materiaFor(m, ability1Id.merge(a1))
     val ability2Id = createIdHandler(None)
-    val ability2 = materiaFor(m, ability2Id)
+    val ability2 = materiaFor(m, ability2Id.merge(a2))
     val ability3Id = createIdHandler(None)
-    val ability3 = materiaFor(m, ability3Id)
+    val ability3 = materiaFor(m, ability3Id.merge(a3))
     val ability4Id = createIdHandler(None)
-    val ability4 = materiaFor(m, ability4Id)
+    val ability4 = materiaFor(m, ability4Id.merge(a4))
     (ability1, ability2, ability3, ability4) + 
     unitInfo.combineLatest(unitEntry).map { case (u, e) =>
 
       val slots = e.fold(0)(_.abilitySlots)
 
+      a1.next(None)
+      a2.next(None)
+      a3.next(None)
+      a4.next(None)
       def materiaList(w: MaybeMateria) = materiaOption(m, up, u, e, sorting, w)
       val m1s = materiaList(ability1)
       val m2s = materiaList(ability2)

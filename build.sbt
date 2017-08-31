@@ -17,8 +17,6 @@ name := "yaffbedb"
 
 scalaVersion in Global := "2.12.3"
 
-//scalaJSUseMainModuleInitializer := true
-
 libraryDependencies += "io.github.outwatch" %%% "outwatch" % "0.10.2"
 libraryDependencies += "io.suzaku" %%% "boopickle" % "1.2.6"
 
