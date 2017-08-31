@@ -153,3 +153,5 @@ table.unit-resists td {
 .status-table > tr:first-child > td:nth-child(8) > div {
   background-position: calc(-318px - 40px * 7) 0;
 }
+#equip-slots label, #materia-slots label { white-space: normal; }
+#equip-slots tr > td, #materia-slots tr > td { width: 50% }

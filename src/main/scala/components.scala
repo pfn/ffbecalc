@@ -10,6 +10,24 @@ object components {
       u.fold("0")(e => if (p) f(e).maxpots.toString else f(e).max.toString)
     }
 
+  def sortBy(out: outwatch.Sink[Sort]): VNode = {
+    val sortAZ = createHandler[Sort](Sort.AZ)
+    val sortHP = createHandler[Sort]()
+    val sortMP = createHandler[Sort]()
+    val sortATK = createHandler[Sort]()
+    val sortDEF = createHandler[Sort]()
+    val sortMAG = createHandler[Sort]()
+    val sortSPR = createHandler[Sort]()
+    out <-- sortAZ.merge(sortHP, sortMP, sortATK).merge(sortDEF, sortMAG, sortSPR)
+    div(cls := "sort-options", span("Sort"),
+      label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.AZ) --> sortAZ, checked := true), "A-Z"),
+      label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.HP) --> sortHP), "HP"),
+      label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.MP) --> sortMP), "MP"),
+      label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.ATK) --> sortATK), "ATK"),
+      label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.DEF) --> sortDEF), "DEF"),
+      label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.MAG) --> sortMAG), "MAG"),
+      label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.SPR) --> sortSPR), "SPR")),
+  }
   def unitBaseStats(unit: Observable[Option[UnitEntry]], stats: outwatch.Sink[Option[Stats]]): VNode = {
     val hpCheck  = createBoolHandler(true)
     val mpCheck  = createBoolHandler(true)
@@ -276,22 +294,18 @@ object components {
     val a3 = Subject[Option[String]]()
     val a4 = Subject[Option[String]]()
     val ability1Id = createIdHandler(None)
-    val ability1 = materiaFor(m, ability1Id.merge(a1))
+    val ability1 = materiaFor(m, ability1Id.merge(a1)).publishReplay(1).refCount
     val ability2Id = createIdHandler(None)
-    val ability2 = materiaFor(m, ability2Id.merge(a2))
+    val ability2 = materiaFor(m, ability2Id.merge(a2)).publishReplay(1).refCount
     val ability3Id = createIdHandler(None)
-    val ability3 = materiaFor(m, ability3Id.merge(a3))
+    val ability3 = materiaFor(m, ability3Id.merge(a3)).publishReplay(1).refCount
     val ability4Id = createIdHandler(None)
-    val ability4 = materiaFor(m, ability4Id.merge(a4))
+    val ability4 = materiaFor(m, ability4Id.merge(a4)).publishReplay(1).refCount
     (ability1, ability2, ability3, ability4) + 
     unitInfo.combineLatest(unitEntry).map { case (u, e) =>
 
       val slots = e.fold(0)(_.abilitySlots)
 
-      a1.next(None)
-      a2.next(None)
-      a3.next(None)
-      a4.next(None)
       def materiaList(w: MaybeMateria) = materiaOption(m, up, u, e, sorting, w)
       val m1s = materiaList(ability1)
       val m2s = materiaList(ability2)
@@ -299,29 +313,44 @@ object components {
       val m4s = materiaList(ability4)
 
       if (slots == 0) {
+        a1.next(None)
+        a2.next(None)
+        a3.next(None)
+        a4.next(None)
         Nil
       } else if (slots == 1) {
-        List(tr(td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- m1s, inputId --> ability1Id))))
+        a2.next(None)
+        a3.next(None)
+        a4.next(None)
+        List(tr(
+          mslot("Ability 1", m1s, ability1Id)
+        ))
       } else if (slots == 2) {
-        List(tr(td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- m1s, inputId --> ability1Id)),
-          td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- m2s, inputId --> ability2Id))))
+        a3.next(None)
+        a4.next(None)
+        List(tr(
+          mslot("Ability 1", m1s, ability1Id),
+          mslot("Ability 2", m2s, ability2Id)))
       } else if (slots == 3) {
+        a4.next(None)
         List(
           tr(
-            td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- m1s, inputId --> ability1Id)),
-            td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- m2s, inputId --> ability2Id))),
-          tr(
-            td(label(forLabel := "u-ability3", "Ability 3"), select(id := "u-ability3", cls := "equip-slot", children <-- m3s, inputId --> ability3Id))))
+            mslot("Ability 1", m1s, ability1Id),
+            mslot("Ability 2", m2s, ability2Id)),
+          tr(mslot("Ability 3", m3s, ability3Id)))
       } else {
         List(
           tr(
-            td(label(forLabel := "u-ability1", "Ability 1"), select(id := "u-ability1", cls := "equip-slot", children <-- m1s, inputId --> ability1Id)),
-            td(label(forLabel := "u-ability2", "Ability 2"), select(id := "u-ability2", cls := "equip-slot", children <-- m2s, inputId --> ability2Id))),
+            mslot("Ability 1", m1s, ability1Id),
+            mslot("Ability 2", m2s, ability2Id)),
           tr(
-            td(label(forLabel := "u-ability3", "Ability 3"), select(id := "u-ability3", cls := "equip-slot", children <-- m3s, inputId --> ability3Id)),
-            td(label(forLabel := "u-ability4", "Ability 4"), select(id := "u-ability4", cls := "equip-slot", children <-- m4s, inputId --> ability4Id))))
+            mslot("Ability 3", m3s, ability3Id),
+            mslot("Ability 4", m4s, ability4Id)))
       }
     }
   }
+
+  def mslot(name: String, cs: Observable[List[VNode]], sink: outwatch.Sink[Option[String]]): VNode =
+    td(label(name, select(cls := "equip-slot", children <-- cs, inputId --> sink)))
 
 }

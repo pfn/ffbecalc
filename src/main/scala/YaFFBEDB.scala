@@ -8,6 +8,22 @@ import rxscalajs.{Observable,Subject}
 import boopickle.Default._
 
 object YaFFBEDB extends JSApp {
+  case class PageState(
+    unit: Option[Int],
+    rhand: Option[Int],
+    lhand: Option[Int],
+    head: Option[Int],
+    body: Option[Int],
+    acc1: Option[Int],
+    acc2: Option[Int],
+    mat1: Option[Int],
+    mat2: Option[Int],
+    mat3: Option[Int],
+    mat4: Option[Int],
+    pots: (Boolean, Boolean, Boolean, Boolean, Boolean, Boolean),
+    esper: Option[Int],
+    esperRarity: Option[Int],
+  )
   def main(): Unit = {
     val unitIdSubject = Subject[Option[String]]()
     val unitIdSink = createIdHandler(None)
@@ -63,7 +79,7 @@ object YaFFBEDB extends JSApp {
       ms <- equips
       id <- idOb
     } yield ms.find(_.id == id.flatMap(i => util.Try(i.toInt).toOption).getOrElse(0))
-    val onLoad = outwatch.Sink.create[org.scalajs.dom.raw.Element] { e =>
+    def loadFromHash(): Unit = {
       val hash = document.location.hash.drop(1).split(",")
       val unitid = hash.headOption.filter(_.nonEmpty)
 
@@ -72,21 +88,18 @@ object YaFFBEDB extends JSApp {
         esperIdSubject.next(hash.lastOption.filter(_.nonEmpty))
     }
 
+    val onLoad = outwatch.Sink.create[org.scalajs.dom.raw.Element] { e =>
+      scala.scalajs.js.Dynamic.global.window.addEventListener("popstate",
+        { e: org.scalajs.dom.Event => loadFromHash() }, true)
+      loadFromHash()
+    }
+
     espers.combineLatest(esper, unitId) { case (es, e,i) =>
       val update = i.map { id =>
         e.fold(id)(esp => id + "," + es(esp.names.head))
       }
       document.location.hash = update.getOrElse("")
     }
-
-    val sortAZ = createHandler[Sort](Sort.AZ)
-    val sortHP = createHandler[Sort]()
-    val sortMP = createHandler[Sort]()
-    val sortATK = createHandler[Sort]()
-    val sortDEF = createHandler[Sort]()
-    val sortMAG = createHandler[Sort]()
-    val sortSPR = createHandler[Sort]()
-    val sorting = sortAZ.merge(sortHP, sortMP, sortATK).merge(sortDEF, sortMAG, sortSPR).publishReplay(1).refCount
 
     val rhandId = createIdHandler(None)
     val rhandSubject = Subject[Option[String]]()
@@ -114,6 +127,8 @@ object YaFFBEDB extends JSApp {
     val unitStats = createHandler[Option[Stats]](None)
     val selectedTraits = createHandler[List[SkillInfo]]()
     val unitPassives = selectedTraits.map(_.flatMap(_.skilleffects))
+    val _sorting = createHandler[Sort](Sort.AZ)
+    val sorting = _sorting.publishReplay(1).refCount
     val (ability1, ability2, ability3, ability4, abilitySlots) =
       components.abilitySlots(materia, unitInfo, unitPassives, unitEntry, sorting)
     val abilities = withStamp(ability1).combineLatest(
@@ -366,6 +381,12 @@ object YaFFBEDB extends JSApp {
         }
     }
 
+    def eqslot(name: String, slots: Set[Int], validator: Observable[String], worn: Observable[Option[EquipIndex]], sink: outwatch.Sink[Option[String]]): VNode = {
+      td(label(name, select(cls := "equip-slot",
+        value <-- validator,
+        children <-- equippable(slots, worn),
+        inputId --> sink)))
+    }
     OutWatch.render("#content",
       div(insert --> onLoad,
         div(id := "unit-info",
@@ -378,30 +399,23 @@ object YaFFBEDB extends JSApp {
         div(hidden <-- unitId.map(_.isEmpty),
         p(child <-- unitDescription.orElse(Observable.just(""))),
         h3("Equipment"),
-        div(cls := "sort-options", span("Sort"),
-        label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.AZ) --> sortAZ, checked := true), "A-Z"),
-        label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.HP) --> sortHP), "HP"),
-        label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.MP) --> sortMP), "MP"),
-        label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.ATK) --> sortATK), "ATK"),
-        label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.DEF) --> sortDEF), "DEF"),
-        label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.MAG) --> sortMAG), "MAG"),
-        label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.SPR) --> sortSPR), "SPR")),
-        table(
+        components.sortBy(_sorting),
+        table(id := "equip-slots",
           tr(
-            td(label(forId := "r-hand", "Right Hand"), select(id := "r-hand", cls := "equip-slot", value <-- rhandValidator, children <-- equippable(Set(1, 2), rhand), inputId --> rhandId)),
-            td(label(forId := "l-hand",  "Left Hand"), select(id := "l-hand", cls := "equip-slot", value <-- lhandValidator, children <-- equippable(Set(1, 2), lhand), inputId --> lhandId))
+            eqslot("Right Hand", Set(1, 2), rhandValidator, rhand, rhandId),
+            eqslot("Left Hand",  Set(1, 2), lhandValidator, lhand, lhandId),
           ),
           tr(
-            td(label(forId := "u-head", "Head"), select(id := "u-head", cls := "equip-slot", value <-- equipsValidator(headSubject, _.head), children <-- equippable(Set(3), headEquip), inputId --> headId)),
-            td(label(forId := "u-body", "Body"), select(id := "u-body", cls := "equip-slot", value <-- equipsValidator(bodySubject, _.body), children <-- equippable(Set(4), bodyEquip), inputId --> bodyId)),
+            eqslot("Head", Set(3), equipsValidator(headSubject, _.head), headEquip, headId),
+            eqslot("Body", Set(4), equipsValidator(bodySubject, _.body), bodyEquip, bodyId),
           ),
           tr(
-            td(label(forId := "u-acc1", "Accessory 1"), select(id := "u-acc1", cls := "equip-slot", value <-- equipsValidator(acc1Subject, _.acc1), children <-- equippable(Set(5), acc1), inputId --> acc1Id)),
-            td(label(forId := "u-acc2", "Accessory 2"), select(id := "u-acc2", cls := "equip-slot", value <-- equipsValidator(acc2Subject, _.acc2), children <-- equippable(Set(5), acc2), inputId --> acc2Id))
+            eqslot("Accessory 1", Set(5), equipsValidator(acc1Subject, _.acc1), acc1, acc1Id),
+            eqslot("Accessory 2", Set(5), equipsValidator(acc2Subject, _.acc2), acc2, acc2Id),
           )
         ),
         h3("Materia"),
-        table(
+        table(id := "materia-slots",
           children <-- abilitySlots,
         ),
         h3("Esper"),
