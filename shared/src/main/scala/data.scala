@@ -109,8 +109,10 @@ case class EquipStats(
     (if (hp != 0) List(s"HP+${hp}") else Nil) ++
     (if (mp != 0) List(s"MP+${mp}") else Nil)).mkString(" ")
     val status = statusResists.fold("")(_.asAilmentResist.toString)
-    val element = elementResists.fold("")(_.asElementResist.toString)
-    List(ss, status, element).filter(_.trim.nonEmpty).mkString(", ")
+    val eleres = elementResists.fold("")(_.asElementResist.toString)
+    val ele = element.fold("")(e => "+" + e.mkString("/"))
+    val effects = statusEffects.fold("")(_.toString)
+    List(ss, ele, effects, status, eleres).filter(_.trim.nonEmpty).mkString(", ")
   }
 
   def elementResist = elementResists.fold(ElementResist.zero)(_.asElementResist)
@@ -658,6 +660,24 @@ case class EquipAilments(
     confusion.getOrElse(0),
     disease.getOrElse(0),
     petrify.getOrElse(0))
+  def asList = List(
+    poison    -> "Poison",
+    blind     -> "Blind",
+    sleep     -> "Sleep",
+    silence   -> "Silence",
+    paralyze  -> "Paralyze",
+    confusion -> "Confusion",
+    disease   -> "Disease",
+    petrify   -> "Petrify")
+  override def toString = {
+    val items = asList.filterNot(_._1.getOrElse(0) == 0).groupBy(_._1.getOrElse(0)).toList.map {
+      case (k,v) =>
+        val res = if (v.size == 8) "All Ailments"
+        else v.map(_._2).mkString("/")
+        s"""$k% $res"""
+    }
+    items.mkString(", ")
+  }
 }
 
 case class AilmentResist(
