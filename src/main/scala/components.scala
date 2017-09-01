@@ -28,7 +28,7 @@ object components {
       label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.MAG) --> sortMAG), "MAG"),
       label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.SPR) --> sortSPR), "SPR")),
   }
-  def unitBaseStats(unit: Observable[Option[UnitEntry]], stats: outwatch.Sink[Option[Stats]]): VNode = {
+  def unitBaseStats(unit: Observable[Option[UnitEntry]], stats: outwatch.Sink[Option[BaseStats]], sub: PotSubjects): VNode = {
     val hpCheck  = createBoolHandler(true)
     val mpCheck  = createBoolHandler(true)
     val atkCheck = createBoolHandler(true)
@@ -36,17 +36,17 @@ object components {
     val magCheck = createBoolHandler(true)
     val sprCheck = createBoolHandler(true)
 
-    stats <-- unit.combineLatest(hpCheck.combineLatest(mpCheck).combineLatest(atkCheck.combineLatest(defCheck, magCheck, sprCheck))).map {
+    stats <-- unit.combineLatest(hpCheck.merge(sub.hp).combineLatest(mpCheck.merge(sub.mp)).combineLatest(atkCheck.merge(sub.atk).combineLatest(defCheck.merge(sub.defs), magCheck.merge(sub.mag), sprCheck.merge(sub.spr)))).map {
       case (entry, ((hp,mp),(atk,defs,mag,spr))) =>
       entry.map { e =>
-        Stats(
+        BaseStats(
           if (hp)   e.stats.hp.maxpots   else e.stats.hp.max,
           if (mp)   e.stats.mp.maxpots   else e.stats.mp.max,
           if (atk)  e.stats.atk.maxpots  else e.stats.atk.max,
           if (defs) e.stats.defs.maxpots else e.stats.defs.max,
           if (mag)  e.stats.mag.maxpots  else e.stats.mag.max,
           if (spr)  e.stats.spr.maxpots  else e.stats.spr.max,
-          AilmentResist.zero, ElementResist.zero
+          Pots(hp, mp, atk, defs, mag, spr)
         )
       }
     }
@@ -91,6 +91,18 @@ object components {
     )
   }
 
+  def renderEquippable(unit: Option[UnitData], ps: SkillEffect.CollatedEffect): List[VNode] = {
+    def canEq(tpe: Int) = {
+      val cls2 = if (ps.canEquip(tpe, unit)) "can" else "cant"
+      span(cls := "icon-equips " + cls2 + "-equip")
+    }
+    val row1 = List(1,2,3,4,5,6,7,8,30,31,40,41)
+    val row2 = List(9,10,11,12,13,14,15,16,50,51,52,53)
+    List(
+      div(row1.map(canEq):_*),
+      div(row2.map(canEq):_*)
+    )
+  }
   def renderResists(resists: List[Int], clz: String) = {
     table(cls := s"unit-resists $clz",
       tr(
@@ -106,7 +118,7 @@ object components {
       tr(resists.map { r => td(r.toString + "%") }:_*)
     )
   }
-  def unitStats(unit: Observable[Option[UnitEntry]], stats: Observable[Option[Stats]], equipped: Observable[(Equipped,Abilities)], allPassives: Observable[SkillEffect.CollatedEffect], esper: Observable[Option[EsperStatInfo]], esperEntry: Observable[Option[EsperEntry]]) = {
+  def unitStats(unitInfo: Observable[Option[UnitData]], unit: Observable[Option[UnitEntry]], stats: Observable[Option[BaseStats]], equipped: Observable[(Equipped,Abilities)], allPassives: Observable[SkillEffect.CollatedEffect], esper: Observable[Option[EsperStatInfo]], esperEntry: Observable[Option[EsperEntry]]) = {
     val effective = stats.combineLatest(esper.combineLatest(esperEntry), equipped, allPassives).map {
       case (s,(e,ee),(eqs,abis),pasv) =>
         s.map { st =>
@@ -123,7 +135,7 @@ object components {
           else if (is2h && isSW) Stats.zero
           else Stats.zero
 
-          (st * passives + e + eqstats + dhstats ++ ee, passives, pasv.dh, !is2h && isSW)
+          (st.asStats * passives + e + eqstats + dhstats ++ ee, passives, pasv.dh, !is2h && isSW)
         }
     }.share
     def st(f: Stats => Int) = effective.map { s =>
@@ -149,9 +161,10 @@ object components {
         td(cls := "unit-stat-name", "SPR"),
         td(cls := "unit-stat-data", child <-- st(_.spr))
       ),
-      children <-- unit.combineLatest(allPassives, effective).map { case (u,pasv,eff) =>
+      children <-- unit.combineLatest(unitInfo, allPassives, effective).map { case (u,ui,pasv,eff) =>
         u.fold(List.empty[VNode]) { entry =>
           List(
+            tr(td(List(colspan := 4) ++ renderEquippable(ui, pasv):_*)),
             tr(td(colspan := 4,
               renderResists(
                 (entry.statusResist + eff.fold(AilmentResist.zero)(_._1.status) + pasv.statusResists.asAilmentResist).asList.map(_._1),
@@ -288,19 +301,15 @@ object components {
     id <- idOb
   } yield ms.find(_.id == id.flatMap(i => util.Try(i.toInt).toOption).getOrElse(0))
   type MaybeMateria = Observable[Option[MateriaIndex]]
-  def abilitySlots(m: Observable[List[MateriaIndex]], unitInfo: Observable[Option[UnitData]], up: Observable[Seq[SkillEffect]], unitEntry: Observable[Option[UnitEntry]], sorting: Observable[Sort]): (MaybeMateria,MaybeMateria,MaybeMateria,MaybeMateria,Observable[List[VNode]]) = {
-    val a1 = Subject[Option[String]]()
-    val a2 = Subject[Option[String]]()
-    val a3 = Subject[Option[String]]()
-    val a4 = Subject[Option[String]]()
+  def abilitySlots(m: Observable[List[MateriaIndex]], unitInfo: Observable[Option[UnitData]], up: Observable[Seq[SkillEffect]], unitEntry: Observable[Option[UnitEntry]], sorting: Observable[Sort], subject: AbilitySubjects): (MaybeMateria,MaybeMateria,MaybeMateria,MaybeMateria,Observable[List[VNode]]) = {
     val ability1Id = createIdHandler(None)
-    val ability1 = materiaFor(m, ability1Id.merge(a1)).publishReplay(1).refCount
+    val ability1 = materiaFor(m, ability1Id.merge(subject.a1)).publishReplay(1).refCount
     val ability2Id = createIdHandler(None)
-    val ability2 = materiaFor(m, ability2Id.merge(a2)).publishReplay(1).refCount
+    val ability2 = materiaFor(m, ability2Id.merge(subject.a2)).publishReplay(1).refCount
     val ability3Id = createIdHandler(None)
-    val ability3 = materiaFor(m, ability3Id.merge(a3)).publishReplay(1).refCount
+    val ability3 = materiaFor(m, ability3Id.merge(subject.a3)).publishReplay(1).refCount
     val ability4Id = createIdHandler(None)
-    val ability4 = materiaFor(m, ability4Id.merge(a4)).publishReplay(1).refCount
+    val ability4 = materiaFor(m, ability4Id.merge(subject.a4)).publishReplay(1).refCount
     (ability1, ability2, ability3, ability4) + 
     unitInfo.combineLatest(unitEntry).map { case (u, e) =>
 
@@ -313,26 +322,26 @@ object components {
       val m4s = materiaList(ability4)
 
       if (slots == 0) {
-        a1.next(None)
-        a2.next(None)
-        a3.next(None)
-        a4.next(None)
+        subject.a1.next(None)
+        subject.a2.next(None)
+        subject.a3.next(None)
+        subject.a4.next(None)
         Nil
       } else if (slots == 1) {
-        a2.next(None)
-        a3.next(None)
-        a4.next(None)
+        subject.a2.next(None)
+        subject.a3.next(None)
+        subject.a4.next(None)
         List(tr(
           mslot("Ability 1", m1s, ability1Id)
         ))
       } else if (slots == 2) {
-        a3.next(None)
-        a4.next(None)
+        subject.a3.next(None)
+        subject.a4.next(None)
         List(tr(
           mslot("Ability 1", m1s, ability1Id),
           mslot("Ability 2", m2s, ability2Id)))
       } else if (slots == 3) {
-        a4.next(None)
+        subject.a4.next(None)
         List(
           tr(
             mslot("Ability 1", m1s, ability1Id),

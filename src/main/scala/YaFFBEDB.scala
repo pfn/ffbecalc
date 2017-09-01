@@ -2,32 +2,52 @@ package yaffbedb
 
 import scala.scalajs.js.JSApp
 import org.scalajs.dom.document
+import org.scalajs.dom.window
 
 import outwatch.dom._
 import rxscalajs.{Observable,Subject}
 import boopickle.Default._
+import scala.concurrent.duration.{span => _, _}
 
 object YaFFBEDB extends JSApp {
   case class PageState(
-    unit: Option[Int],
+    unit:  Option[Int],
     rhand: Option[Int],
     lhand: Option[Int],
-    head: Option[Int],
-    body: Option[Int],
-    acc1: Option[Int],
-    acc2: Option[Int],
-    mat1: Option[Int],
-    mat2: Option[Int],
-    mat3: Option[Int],
-    mat4: Option[Int],
-    pots: (Boolean, Boolean, Boolean, Boolean, Boolean, Boolean),
+    head:  Option[Int],
+    body:  Option[Int],
+    acc1:  Option[Int],
+    acc2:  Option[Int],
+    mat1:  Option[Int],
+    mat2:  Option[Int],
+    mat3:  Option[Int],
+    mat4:  Option[Int],
+    pots:  Pots,
     esper: Option[Int],
-    esperRarity: Option[Int],
+    esperRarity: Int,
+    esperSkills: Map[Int,Boolean]
   )
+  object PageState {
+    def idOfEq(e: (Option[EquipIndex],Double)) = e._1.map(_.id)
+    def idOfMat(e: (Option[MateriaIndex],Double)) = e._1.map(_.id)
+    def from(unitId: Option[Int], stats: Option[BaseStats],
+      eqs: Equipped, abis: Abilities,
+      esper: Option[Int], esperR: Int,
+      esperSkills: Map[Int,Boolean]) = PageState(
+      unitId,
+      idOfEq(eqs.rhand),      idOfEq(eqs.lhand),
+      idOfEq(eqs.head),       idOfEq(eqs.body),
+      idOfEq(eqs.acc1),       idOfEq(eqs.acc2),
+      idOfMat(abis.ability1), idOfMat(abis.ability2),
+      idOfMat(abis.ability3), idOfMat(abis.ability4),
+      stats.fold(Pots.all)(_.pots),
+      esper, esperR,
+      esperSkills)
+  }
   def main(): Unit = {
     val unitIdSubject = Subject[Option[String]]()
     val unitIdSink = createIdHandler(None)
-    val unitId = unitIdSubject.merge(unitIdSink)
+    val unitId = unitIdSubject.merge(unitIdSink).distinct.publishReplay(1).refCount
 
     val unitIndex = Data.get[List[UnitIndex]]("pickle/unit/index.pickle").combineLatest(unitId.startWith(None)).map { case (us, id) =>
       List(option(value := EMPTY, "-- Select a unit --")) ++
@@ -36,6 +56,7 @@ object YaFFBEDB extends JSApp {
           option(value := u.id, selected := id.exists(_ == u.id), s"${u.name}: $rarity")
         }
     }.publishReplay(1).refCount
+    val pots = PotSubjects()
 
     val equips  = Data.get[List[EquipIndex]]("pickle/equip/index.pickle")
     val materia = Data.get[List[MateriaIndex]]("pickle/materia/index.pickle")
@@ -78,29 +99,9 @@ object YaFFBEDB extends JSApp {
     def equipFor(idOb: Observable[Option[String]]): Observable[Option[EquipIndex]] = for {
       ms <- equips
       id <- idOb
-    } yield ms.find(_.id == id.flatMap(i => util.Try(i.toInt).toOption).getOrElse(0))
-    def loadFromHash(): Unit = {
-      val hash = document.location.hash.drop(1).split(",")
-      val unitid = hash.headOption.filter(_.nonEmpty)
-
-      unitIdSubject.next(unitid)
-      if (hash.size > 1)
-        esperIdSubject.next(hash.lastOption.filter(_.nonEmpty))
+    } yield {
+      ms.find(_.id == id.flatMap(i => util.Try(i.toInt).toOption).getOrElse(0))
     }
-
-    val onLoad = outwatch.Sink.create[org.scalajs.dom.raw.Element] { e =>
-      scala.scalajs.js.Dynamic.global.window.addEventListener("popstate",
-        { e: org.scalajs.dom.Event => loadFromHash() }, true)
-      loadFromHash()
-    }
-
-    espers.combineLatest(esper, unitId) { case (es, e,i) =>
-      val update = i.map { id =>
-        e.fold(id)(esp => id + "," + es(esp.names.head))
-      }
-      document.location.hash = update.getOrElse("")
-    }
-
     val rhandId = createIdHandler(None)
     val rhandSubject = Subject[Option[String]]()
     val rhand = equipFor(rhandId.merge(rhandSubject))
@@ -124,13 +125,14 @@ object YaFFBEDB extends JSApp {
       withStamp(lhand), withStamp(headEquip), withStamp(bodyEquip))
     val accs = withStamp(acc1).combineLatest(withStamp(acc2))
 
-    val unitStats = createHandler[Option[Stats]](None)
+    val unitStats = createHandler[Option[BaseStats]](None)
     val selectedTraits = createHandler[List[SkillInfo]]()
     val unitPassives = selectedTraits.map(_.flatMap(_.skilleffects))
     val _sorting = createHandler[Sort](Sort.AZ)
     val sorting = _sorting.publishReplay(1).refCount
+    val abilitySubjects = AbilitySubjects()
     val (ability1, ability2, ability3, ability4, abilitySlots) =
-      components.abilitySlots(materia, unitInfo, unitPassives, unitEntry, sorting)
+      components.abilitySlots(materia, unitInfo, unitPassives, unitEntry, sorting, abilitySubjects)
     val abilities = withStamp(ability1).combineLatest(
       withStamp(ability2), withStamp(ability3),
       withStamp(ability4)).map(Abilities.tupled.apply)
@@ -327,7 +329,7 @@ object YaFFBEDB extends JSApp {
         _.rarity).lastOption.fold("Unknown")(_.strings.description.getOrElse("Unknown")))
     }
 
-    def effectiveStats(u: UnitData, base: Stats, equip: EquipIndex, pasv: SkillEffect.CollatedEffect): Stats = {
+    def effectiveStats(u: UnitData, base: BaseStats, equip: EquipIndex, pasv: SkillEffect.CollatedEffect): Stats = {
       val eqs = equip.stats
       val elements = eqs.element.fold(List.empty[Int])(_.map(e =>
         SkillEffect.ELEMENTS.getOrElse(e, -1)))
@@ -341,10 +343,10 @@ object YaFFBEDB extends JSApp {
         k => if (pasv.canEquip(k, Some(u))) List(innates.equipStats(k)) else Nil
       }
       (eqstats :: (innatestats ++ elestats)).foldLeft(s) { (ac, x) =>
-        ac + base * x - base
+        ac + base.asStats * x - base.asStats
       }
     }
-    def sortFor(xs: List[EquipIndex], sorting: Sort, pasv: SkillEffect.CollatedEffect, unit: Option[UnitData], base: Option[Stats]) = {
+    def sortFor(xs: List[EquipIndex], sorting: Sort, pasv: SkillEffect.CollatedEffect, unit: Option[UnitData], base: Option[BaseStats]) = {
       val m = for {
         u <- unit
         b <- base
@@ -387,13 +389,85 @@ object YaFFBEDB extends JSApp {
         children <-- equippable(slots, worn),
         inputId --> sink)))
     }
+
+    val esperTraining = createHandler[Map[Int,Boolean]](Map.empty)
+    val esperTrainingSubject = Subject[Map[Int,Boolean]]()
+    val esperRarity = createStringHandler("1")
+
+    def subscribeChanges = equipped.combineLatest(unitStats,unitInfo).combineLatest(espers, esper).combineLatest(esperRarity, esperTraining).bufferTime(1.second).map(_.lastOption) {
+      case Some((((((eqs,abis),sts,i),es, e)),rarity, training)) =>
+      /*
+        val ps = PageState.from(
+          i.map(_.id), sts, eqs, abis, e.map(x => es(x.names.head)),
+          util.Try(rarity.toInt).getOrElse(1), training)
+        if (i.nonEmpty) {
+          val pstr = Data.toString(ps)
+          if (document.location.hash.drop(1) != pstr)
+            window.history.pushState(0, i.fold("ffbecalc")(_.name), "#" + pstr)
+        }
+        */
+        val update = i.map { u =>
+          e.fold(u.id.toString)(esp => u.id.toString + "," + es(esp.names.head))
+        }
+
+        if (document.location.hash != update.getOrElse(""))
+          document.location.hash = update.getOrElse("")
+      case None =>
+      }
+
+    def loadFromHash(): Unit = {
+      val hash = document.location.hash.drop(1).split(",")
+      val unitid = hash.headOption.filter(_.nonEmpty)
+
+      unitIdSubject.next(unitid)
+      if (hash.size > 1)
+        esperIdSubject.next(hash.lastOption.filter(_.nonEmpty))
+
+      /*
+      val hash = document.location.hash.drop(1)
+      val ps = util.Try(Data.fromString[PageState](hash)).toOption
+      def s(i: Option[Int]): Option[String] = i.map(_.toString)
+      for {
+        state <- ps
+        unit <- state.unit
+      } {
+        unitIdSubject.next(Some(unit.toString))
+        pots.next(state.pots)
+        abilitySubjects.a1.next(s(state.mat1))
+        abilitySubjects.a2.next(s(state.mat2))
+        abilitySubjects.a3.next(s(state.mat3))
+        abilitySubjects.a4.next(s(state.mat4))
+        acc1Subject.next(s(state.acc1))
+        acc2Subject.next(s(state.acc2))
+        headSubject.next(s(state.head))
+        bodySubject.next(s(state.body))
+        rhandSubject.next(s(state.rhand))
+        lhandSubject.next(s(state.lhand))
+        esperIdSubject.next(s(state.esper))
+        esperTrainingSubject.next(state.esperSkills)
+      }
+      */
+    }
+
+    val onLoad = outwatch.Sink.create[org.scalajs.dom.raw.Element] { e =>
+      var subscription = Option.empty[rxscalajs.subscription.Subscription]
+      window.addEventListener("popstate",
+        { e: org.scalajs.dom.PopStateEvent =>
+          subscription.foreach(_.unsubscribe)
+          loadFromHash()
+          subscription = Some(subscribeChanges)
+        }, true)
+      loadFromHash()
+      subscription = Some(subscribeChanges)
+    }
+
     OutWatch.render("#content",
       div(insert --> onLoad,
         div(id := "unit-info",
           select(children <-- unitIndex, inputId --> unitIdSink),
           div(hidden <-- unitId.map(_.isEmpty),
-            components.unitBaseStats(unitEntry, unitStats),
-            components.unitStats(unitEntry, unitStats, equipped, allPassives.map(_._2), esperStats, esperEntry),
+            components.unitBaseStats(unitEntry, unitStats, pots),
+            components.unitStats(unitInfo, unitEntry, unitStats, equipped, allPassives.map(_._2), esperStats, esperEntry),
           )
         ),
         div(hidden <-- unitId.map(_.isEmpty),
@@ -419,7 +493,7 @@ object YaFFBEDB extends JSApp {
           children <-- abilitySlots,
         ),
         h3("Esper"),
-        Esper.esperInfo(esper, esperEntry, espers, esperIdSubject, esperStats, esperSkills),
+        Esper.esperInfo(esper, esperEntry, esperRarity, espers, esperIdSubject, esperStats, esperSkills, esperTraining, esperTrainingSubject),
         h3("Abilities & Spells"),
         div(child <-- activesTable),
         h3("Traits"),

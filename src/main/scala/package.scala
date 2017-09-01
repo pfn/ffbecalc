@@ -1,4 +1,4 @@
-import rxscalajs.Observable
+import rxscalajs.{Observable,Subject}
 import java.util.UUID
 
 package object yaffbedb {
@@ -42,7 +42,29 @@ case class Abilities(
     (ability1._1 ++ ability2._1 ++ ability3._1 ++ ability4._1).toList
 }
 
-import boopickle.Default._
+case class PotSubjects(hp: Subject[Boolean], mp: Subject[Boolean], atk: Subject[Boolean], defs: Subject[Boolean], mag: Subject[Boolean], spr: Subject[Boolean]) {
+  def next(p: Pots) = {
+    hp.next(p.hp)
+    mp.next(p.mp)
+    atk.next(p.atk)
+    defs.next(p.defs)
+    mag.next(p.mag)
+    spr.next(p.spr)
+  }
+}
+object PotSubjects {
+  def apply(): PotSubjects = PotSubjects(Subject(), Subject(), Subject(),
+    Subject(), Subject(), Subject())
+}
+case class Pots(hp: Boolean, mp: Boolean,
+  atk: Boolean, defs: Boolean, mag: Boolean, spr: Boolean)
+object Pots {
+  def all = Pots(true, true, true, true, true, true)
+  def none = Pots(false, false, false, false, false, false)
+}
+case class BaseStats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int, pots: Pots) {
+  def asStats = Stats(hp, mp, atk, defs, mag, spr, AilmentResist.zero, ElementResist.zero)
+}
 case class Stats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int, status: AilmentResist, element: ElementResist) {
   def +(o: Option[EsperStatInfo]) = Stats(
     hp   + o.fold(0)(_.hp.effectiveMax),
@@ -119,6 +141,7 @@ object Stats {
 }
 
 object Data {
+  import boopickle.Default._
   import java.nio.ByteBuffer
   import scala.scalajs.js.typedarray.{TypedArrayBuffer,ArrayBuffer}
   import org.scalajs.dom.ext.Ajax
@@ -131,6 +154,13 @@ object Data {
     ).map(r => Unpickle[A].fromBytes(
       TypedArrayBuffer.wrap(r.response.asInstanceOf[ArrayBuffer]))))
   }
+
+  import java.util.Base64
+  def toString[A : Pickler](a: A): String =
+    java.nio.charset.StandardCharsets.UTF_8.decode(Base64.getUrlEncoder.encode(Pickle.intoBytes(a))).toString
+
+  def fromString[A : Pickler](s: String): A =
+    Unpickle[A].fromBytes(ByteBuffer.wrap(Base64.getUrlDecoder.decode(s)))
 }
 
 sealed trait Sort extends Function1[Any,Sort] {
@@ -146,4 +176,9 @@ object Sort {
   case object MAG extends Sort
   case object SPR extends Sort
 }
+
+object AbilitySubjects {
+  def apply(): AbilitySubjects = AbilitySubjects(Subject[Option[String]](), Subject[Option[String]](), Subject[Option[String]](), Subject[Option[String]]())
+}
+case class AbilitySubjects(a1: Subject[Option[String]], a2: Subject[Option[String]], a3: Subject[Option[String]], a4: Subject[Option[String]])
 }

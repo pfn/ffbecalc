@@ -153,5 +153,97 @@ table.unit-resists td {
 .status-table > tr:first-child > td:nth-child(8) > div {
   background-position: calc(-318px - 40px * 7) 0;
 }
+
+.icon-equips {
+  display: inline-block;
+  width: 25px;
+  margin: 0;
+  padding: 0;
+}
+.icon-equips::after {
+  background-image: url("images/unit-stat-icons.png");
+  transform: scale(0.65);
+  display: inline-block;
+  width: 39px;
+  height: 39px;
+  content: "";
+  margin: 0;
+  padding: 0;
+}
+
+td div:nth-child(2) .icon-equips:nth-child(6)::after {
+  background-position: calc(-638px - 40px * 1) 0;
+}
+td div:nth-child(2) .icon-equips:nth-child(1)::after {
+  background-position: calc(-638px - 40px * 2) 0;
+}
+td div:nth-child(2) .icon-equips:nth-child(11)::after {
+  background-position: calc(-638px - 40px * 3) 0;
+}
+td div:nth-child(1) .icon-equips:nth-child(12)::after {
+  background-position: calc(-638px - 40px * 4) 0;
+}
+td div:nth-child(1) .icon-equips:nth-child(8)::after {
+  background-position: calc(-638px - 40px * 5) 0;
+}
+td div:nth-child(1) .icon-equips:nth-child(10)::after {
+  background-position: calc(-638px - 40px * 6) 0;
+}
+td div:nth-child(2) .icon-equips:nth-child(10)::after {
+  background-position: calc(-638px - 40px * 7) 0;
+}
+td div:nth-child(1) .icon-equips:nth-child(9)::after {
+  background-position: calc(-638px - 40px * 8) 0;
+}
+td div:nth-child(1) .icon-equips:nth-child(3)::after {
+  background-position: calc(-638px - 40px * 9) 0;
+}
+td div:nth-child(1) .icon-equips:nth-child(7)::after {
+  background-position: calc(-638px - 40px * 10) 0;
+}
+td div:nth-child(2) .icon-equips:nth-child(3)::after {
+  background-position: calc(-638px - 40px * 11) 0;
+}
+td div:nth-child(2) .icon-equips:nth-child(7)::after {
+  background-position: calc(-638px - 40px * 12) 0;
+}
+td div:nth-child(1) .icon-equips:nth-child(6)::after {
+  background-position: calc(-638px - 40px * 13) 0;
+}
+td div:nth-child(2) .icon-equips:nth-child(2)::after {
+  background-position: calc(-638px - 40px * 14) 0;
+}
+td div:nth-child(1) .icon-equips:nth-child(11)::after {
+  background-position: calc(-638px - 40px * 15) 0;
+}
+td div:nth-child(1) .icon-equips:nth-child(4)::after {
+  background-position: calc(-638px - 40px * 16) 0;
+}
+td div:nth-child(1) .icon-equips:nth-child(2)::after {
+  background-position: calc(-638px - 40px * 17) 0;
+}
+td div:nth-child(1) .icon-equips:nth-child(1)::after {
+  background-position: calc(-638px - 40px * 18) 0;
+}
+td div:nth-child(1) .icon-equips:nth-child(5)::after {
+  background-position: calc(-638px - 40px * 19) 0;
+}
+td div:nth-child(2) .icon-equips:nth-child(9)::after {
+  background-position: calc(-638px - 40px * 20) 0;
+}
+td div:nth-child(2) .icon-equips:nth-child(8)::after {
+  background-position: calc(-638px - 40px * 21) 0;
+}
+td div:nth-child(2) .icon-equips:nth-child(12)::after {
+  background-position: calc(-638px - 40px * 22) 0;
+}
+td div:nth-child(2) .icon-equips:nth-child(5)::after {
+  background-position: calc(-638px - 40px * 23) 0;
+}
+td div:nth-child(2) .icon-equips:nth-child(4)::after {
+  background-position: calc(-638px - 40px * 24) 0;
+}
+.cant-equip::after { opacity: 0.2 }
+
 #equip-slots label, #materia-slots label { white-space: normal; }
 #equip-slots tr > td, #materia-slots tr > td { width: 50% }

@@ -19,3 +19,6 @@ scalaVersion in Global := "2.12.3"
 
 libraryDependencies += "io.github.outwatch" %%% "outwatch" % "0.10.2"
 libraryDependencies += "io.suzaku" %%% "boopickle" % "1.2.6"
+
+refreshBrowsers :=
+  (refreshBrowsers triggeredBy (webpack in fastOptJS in Compile)).value
