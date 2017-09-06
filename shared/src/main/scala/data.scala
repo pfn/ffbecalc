@@ -4,11 +4,11 @@ case class UnitIndex(name: String, min: Int, max: Int, id: String)
 case class UnitIndexData(min: Int, max: Int, id: String)
 case class UnitSkill(rarity: Int, level: Int, tpe: String, id: Int)
 case class UnitStrings(
-  description: Option[String],
-  summon: Option[String],
-  evolution: Option[String],
-  affinity: Option[String],
-  fusion: Option[String])
+  description: List[String],
+  summon: List[String],
+  evolution: List[String],
+  affinity: List[String],
+  fusion: List[String])
 case class UnitEntry(
   rarity: Int,
   stats: StatInfo,
@@ -89,7 +89,7 @@ case class SkillInfo(
   effects: List[String])
 case class EnhancementStrings(name: List[String], desc: List[String])
 case class Enhancement(oldSkill: Int, newSkill: Int, strings: EnhancementStrings)
-case class MateriaIndexData(id: String, effects: Option[List[String]], rarity: Int, magicType: Option[String], skilleffects: List[SkillEffect])
+case class MateriaIndexData(id: String, effects: List[String], rarity: Int, magicType: Option[String], skilleffects: List[SkillEffect])
 case class MateriaIndex(name: String, id: Int, effects: List[String], rarity: Int, magicType: Option[String], skilleffects: List[SkillEffect]) {
   def describeEffects(unit: Option[UnitData]) = {
     SkillEffect.collateEffects(unit, skilleffects).toString
@@ -100,7 +100,7 @@ case class EquipStats(
   elementResists: Option[EquipElementResist],
   statusResists: Option[EquipAilments],
   statusEffects: Option[EquipAilments],
-  element: Option[List[String]]) {
+  element: List[String]) {
   override def toString = {
     val ss = ((if (atk != 0) List(s"ATK+${atk}") else Nil) ++
     (if (defs != 0) List(s"DEF+${defs}") else Nil) ++
@@ -110,7 +110,7 @@ case class EquipStats(
     (if (mp != 0) List(s"MP+${mp}") else Nil)).mkString(" ")
     val status = statusResists.fold("")(_.asAilmentResist.toString)
     val eleres = elementResists.fold("")(_.asElementResist.toString)
-    val ele = element.fold("")(e => "+" + e.mkString("/"))
+    val ele = if (element.isEmpty) "" else "+" + element.mkString("/")
     val effects = statusEffects.fold("")(_.toString)
     List(ss, ele, effects, status, eleres).filter(_.trim.nonEmpty).mkString(", ")
   }
@@ -128,9 +128,9 @@ case class UnitEquipReq(id: Int) extends EquipReq {
   def canEquip(unit: UnitData) = unit.id == id
 }
 case class EquipIndexData(
-  id: Int, slotId: Int, twohands: Option[Boolean], skills: Option[List[Int]], tpe: Int, skilleffects: List[SkillEffect], effects: Option[List[String]], skillEffects: Map[String,List[String]], stats: EquipStats, req: Option[EquipReq])
+  id: Int, slotId: Int, twohands: Option[Boolean], skills: List[Int], tpe: Int, skilleffects: List[SkillEffect], skillEffects: Map[String,List[String]], stats: EquipStats, req: Option[EquipReq])
 case class EquipIndex(
-  name: String, id: Int, twohands: Boolean, slotId: Int, skills: List[Int], tpe: Int, skilleffects: List[SkillEffect], effects: List[String], skillEffects: Map[String,List[String]], stats: EquipStats, req: Option[EquipReq]) {
+  name: String, id: Int, twohands: Boolean, slotId: Int, skills: List[Int], tpe: Int, skilleffects: List[SkillEffect], skillEffects: Map[String,List[String]], stats: EquipStats, req: Option[EquipReq]) {
   def describeEffects(unit: Option[UnitData]) = {
     SkillEffect.collateEffects(unit, skilleffects).toString
   }
@@ -266,9 +266,8 @@ object SkillEffect {
       eqs.foldLeft((PassiveStatEffect.zero,Set.empty[Int],Set.empty[Int])) { case ((ac,eqused,eleused), equip) =>
         val usedeq = eqused + equip.tpe
         val weapele = if (equip.slotId == 1)
-          equip.stats.element.fold(List.empty[Int]) { es =>
-            es.map(ELEMENTS.getOrElse(_, -1))
-        } else Nil
+          equip.stats.element.map { ELEMENTS.getOrElse(_, -1) }
+        else Nil
 
         val usedele = eleused ++ weapele
         (ac + (if (!eqused(equip.tpe))

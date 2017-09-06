@@ -326,13 +326,13 @@ object YaFFBEDB extends JSApp {
 
     val unitDescription = unitInfo.map { i =>
       i.fold("")(_.entries.values.toList.sortBy(
-        _.rarity).lastOption.fold("Unknown")(_.strings.description.getOrElse("Unknown")))
+        _.rarity).lastOption.fold("Unknown")(_.strings.description.headOption.getOrElse("Unknown")))
     }
 
     def effectiveStats(u: UnitData, base: BaseStats, equip: EquipIndex, pasv: SkillEffect.CollatedEffect): Stats = {
       val eqs = equip.stats
-      val elements = eqs.element.fold(List.empty[Int])(_.map(e =>
-        SkillEffect.ELEMENTS.getOrElse(e, -1)))
+      val elements = eqs.element.map(e =>
+        SkillEffect.ELEMENTS.getOrElse(e, -1))
       val elestats = elements.map(e =>
         pasv.weapEleStats.getOrElse(e, PassiveStatEffect.zero))
       val eqstats = pasv.equipStats.getOrElse(equip.tpe, PassiveStatEffect.zero)

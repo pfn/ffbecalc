@@ -45,8 +45,8 @@ object Pickler {
         _.right.map { m =>
           m.toList.map { case (k,v) =>
             EquipIndex(k, v.id, v.twohands.getOrElse(false), v.slotId,
-              v.skills.getOrElse(Nil),
-              v.tpe, v.skilleffects, v.effects.getOrElse(Nil),
+              v.skills,
+              v.tpe, v.skilleffects,
               v.skillEffects, v.stats, v.req)
           }.sortBy(_.name)
         }.fold(e => sys.error("equips " + e), identity)
@@ -64,7 +64,7 @@ object Pickler {
         _.right.map { m =>
           m.toList.map { case (k,v) =>
             MateriaIndex(k, util.Try(v.id.toInt).toOption.getOrElse(0),
-              v.effects.getOrElse(Nil), v.rarity, v.magicType, v.skilleffects)
+              v.effects, v.rarity, v.magicType, v.skilleffects)
           }.sortBy(_.name)
         }.fold(e => sys.error("materias: " + e), identity)
       })

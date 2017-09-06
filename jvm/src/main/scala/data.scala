@@ -2,6 +2,13 @@ package yaffbedb
 import io.circe._
 
 object DataDecoders {
+  implicit def decodeList[A : Decoder]: Decoder[List[A]] = new Decoder[List[A]] {
+    def apply(c: HCursor): Decoder.Result[List[A]] = {
+      if (!c.downArray.succeeded || c.value.isNull)
+        Right(Nil)
+      else c.as[List[A]](Decoder.decodeList)
+    }
+  }
   implicit val decodeSkillEffects: Decoder[List[SkillEffect]] = new Decoder[List[SkillEffect]] {
     def array(a: ACursor): Stream[ACursor] =
       a #:: array(a.right).takeWhile(_.succeeded)
@@ -144,14 +151,13 @@ object DataDecoders {
     }
   }
   implicit val decodeEquipIndexData: Decoder[EquipIndexData] =
-    Decoder.forProduct10(
+    Decoder.forProduct9(
       "id",
       "slot_id",
       "is_twohanded",
       "skills",
       "type_id",
       "effects_raw",
-      "effects",
       "skill_effects",
       "stats",
       "reqs"
