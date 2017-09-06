@@ -4,11 +4,6 @@ import outwatch.dom._
 import rxscalajs.{Observable,Subject}
 
 object components {
-  def maxstat(unit: Observable[Option[UnitEntry]],
-    withPots: Observable[Boolean], f: UnitEntry => StatRange) =
-    unit.combineLatest(withPots).map { case (u, p) =>
-      u.fold("0")(e => if (p) f(e).maxpots.toString else f(e).max.toString)
-    }
 
   def sortBy(out: outwatch.Sink[Sort]): VNode = {
     val sortAZ = createHandler[Sort](Sort.AZ)
@@ -19,76 +14,80 @@ object components {
     val sortMAG = createHandler[Sort]()
     val sortSPR = createHandler[Sort]()
     out <-- sortAZ.merge(sortHP, sortMP, sortATK).merge(sortDEF, sortMAG, sortSPR)
-    div(cls := "sort-options", span("Sort"),
-      label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.AZ) --> sortAZ, checked := true), "A-Z"),
-      label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.HP) --> sortHP), "HP"),
-      label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.MP) --> sortMP), "MP"),
-      label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.ATK) --> sortATK), "ATK"),
-      label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.DEF) --> sortDEF), "DEF"),
-      label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.MAG) --> sortMAG), "MAG"),
-      label(input(tpe := "radio", name := "eq-sort", inputChecked(Sort.SPR) --> sortSPR), "SPR")),
-  }
-  def unitBaseStats(unit: Observable[Option[UnitEntry]], stats: outwatch.Sink[Option[BaseStats]], sub: PotSubjects): VNode = {
-    val hpCheck  = createBoolHandler(true)
-    val mpCheck  = createBoolHandler(true)
-    val atkCheck = createBoolHandler(true)
-    val defCheck = createBoolHandler(true)
-    val magCheck = createBoolHandler(true)
-    val sprCheck = createBoolHandler(true)
 
-    stats <-- unit.combineLatest(hpCheck.merge(sub.hp).combineLatest(mpCheck.merge(sub.mp)).combineLatest(atkCheck.merge(sub.atk).combineLatest(defCheck.merge(sub.defs), magCheck.merge(sub.mag), sprCheck.merge(sub.spr)))).map {
-      case (entry, ((hp,mp),(atk,defs,mag,spr))) =>
-      entry.map { e =>
-        BaseStats(
-          if (hp)   e.stats.hp.maxpots   else e.stats.hp.max,
-          if (mp)   e.stats.mp.maxpots   else e.stats.mp.max,
-          if (atk)  e.stats.atk.maxpots  else e.stats.atk.max,
-          if (defs) e.stats.defs.maxpots else e.stats.defs.max,
-          if (mag)  e.stats.mag.maxpots  else e.stats.mag.max,
-          if (spr)  e.stats.spr.maxpots  else e.stats.spr.max,
-          Pots(hp, mp, atk, defs, mag, spr)
-        )
+    def sortItem(s: Sort, h: Handler[Sort], n: String, check: Boolean = false) =
+      label(input(tpe := "radio", name := "eq-sort",
+        inputChecked(s) --> h, checked := true), n)
+
+    div(cls := "sort-options", span("Sort"),
+      sortItem(Sort.AZ,  sortAZ,  "A-Z", true),
+      sortItem(Sort.HP,  sortHP,  "HP"),
+      sortItem(Sort.MP,  sortMP,  "MP"),
+      sortItem(Sort.ATK, sortATK, "ATK"),
+      sortItem(Sort.DEF, sortDEF, "DEF"),
+      sortItem(Sort.MAG, sortMAG, "MAG"),
+      sortItem(Sort.SPR, sortSPR, "SPR"))
+  }
+  def unitBaseStats(unit: Observable[Option[UnitEntry]], stats: outwatch.Sink[Option[BaseStats]], sub: PotSubjects) = {
+    def potsFor(unit: Option[UnitEntry], f: StatInfo => StatRange): Int =
+      unit.fold(0)(e => f(e.stats).pots)
+    def maxstat(unit: Option[UnitEntry],
+      withPots: Observable[Int], f: StatInfo => StatRange) =
+      withPots.map { p =>
+        unit.fold(0)(e => f(e.stats).max + p).toString
       }
+
+    unit.map { u =>
+      val potClicks = createHandler[Unit](())
+      val showPots = potClicks.scan(false) { (show,_) => !show }
+      def createIntHandler(x: Int) = createHandler[Int](x)
+      val hpPots  = createIntHandler(potsFor(u, _.hp))
+      val mpPots  = createIntHandler(potsFor(u, _.mp))
+      val atkPots = createIntHandler(potsFor(u, _.atk))
+      val defPots = createIntHandler(potsFor(u, _.defs))
+      val magPots = createIntHandler(potsFor(u, _.mag))
+      val sprPots = createIntHandler(potsFor(u, _.spr))
+      stats <-- unit.combineLatest(hpPots.merge(sub.hp).combineLatest(mpPots.merge(sub.mp)).combineLatest(atkPots.merge(sub.atk).combineLatest(defPots.merge(sub.defs), magPots.merge(sub.mag), sprPots.merge(sub.spr)))).map {
+        case (entry, ((hp,mp),(atk,defs,mag,spr))) =>
+        entry.map { e =>
+          BaseStats(
+            e.stats.hp.max + hp,
+            e.stats.mp.max + mp,
+            e.stats.atk.max + atk,
+            e.stats.defs.max + defs,
+            e.stats.mag.max + mag,
+            e.stats.spr.max + spr,
+            Pots(hp, mp, atk, defs, mag, spr)
+          )
+        }
+      }
+      div(cls := "unit-stats",
+        div(
+          div("HP " , child <-- maxstat(u, hpPots, _.hp)),
+          div("MP " , child <-- maxstat(u, mpPots, _.mp)),
+          div("ATK ", child <-- maxstat(u, atkPots, _.atk)),
+          div("DEF ", child <-- maxstat(u, defPots, _.defs)),
+          div("MAG ", child <-- maxstat(u, magPots, _.mag)),
+          div("SPR ", child <-- maxstat(u, sprPots, _.spr)),
+          button("Pots", tpe := "button", click(()) --> potClicks),
+        ),
+        div(hidden <-- showPots,
+          potSlider("HP",  potsFor(u, _.hp),  10,  hpPots),
+          potSlider("MP",  potsFor(u, _.mp),   5,  mpPots),
+          potSlider("ATK", potsFor(u, _.atk),  1,  atkPots),
+          potSlider("DEF", potsFor(u, _.defs), 1,  defPots),
+          potSlider("MAG", potsFor(u, _.mag),  1,  magPots),
+          potSlider("SPR", potsFor(u, _.spr),  1,  sprPots),
+        ),
+      )
     }
-    table(cls := "unit-stats",
-      caption("Base Stats"),
-      tr(
-        td(cls := "unit-stat-name",
-          input(id := "hp-pot-check", tpe := "checkbox", checked := true, inputChecked --> hpCheck),
-          label(forLabel := "hp-pot-check", "HP")),
-        td(cls := "unit-stat-data",
-          child <-- maxstat(unit, hpCheck, _.stats.hp)),
-        td(cls := "unit-stat-name",
-          input(id := "mp-pot-check", tpe := "checkbox", checked := true, inputChecked --> mpCheck),
-          label(forLabel := "mp-pot-check", "MP")),
-        td(cls := "unit-stat-data",
-          child <-- maxstat(unit, mpCheck, _.stats.mp)),
-      ),
-      tr(
-        td(cls := "unit-stat-name",
-          input(id := "atk-pot-check", tpe := "checkbox", checked := true, inputChecked --> atkCheck),
-          label(forLabel := "atk-pot-check", "ATK")),
-        td(cls := "unit-stat-data",
-          child <-- maxstat(unit, atkCheck, _.stats.atk)),
-        td(cls := "unit-stat-name",
-          input(id := "def-pot-check", tpe := "checkbox", checked := true, inputChecked --> defCheck),
-          label(forLabel := "def-pot-check", "DEF")),
-        td(cls := "unit-stat-data",
-          child <-- maxstat(unit, defCheck, _.stats.defs))
-      ),
-      tr(
-        td(cls := "unit-stat-name",
-          input(id := "mag-pot-check", tpe := "checkbox", checked := true, inputChecked --> magCheck),
-          label(forLabel := "mag-pot-check", "MAG")),
-        td(cls := "unit-stat-data",
-          child <-- maxstat(unit, magCheck, _.stats.mag)),
-        td(cls := "unit-stat-name",
-          input(id := "spr-pot-check", tpe := "checkbox", checked := true, inputChecked --> sprCheck),
-          label(forLabel := "spr-pot-check", "SPR")),
-        td(cls := "unit-stat-data",
-          child <-- maxstat(unit, sprCheck, _.stats.spr))
-      ),
-    )
+  }
+
+  val inputInt = inputNumber(_.toInt)
+  def potSlider(name: String, maxv: Int, steps: Int, h: Handler[Int]) = {
+    div(cls := "pot-slider", 
+      div(input(tpe := "range", min := 0, max := maxv, step := steps, value := maxv, inputInt --> h)),
+      div(span("+", child <-- h), s" $name"))
   }
 
   def renderEquippable(unit: Option[UnitData], ps: SkillEffect.CollatedEffect): List[VNode] = {
@@ -137,31 +136,11 @@ object components {
 
           (st.asStats * passives + e + eqstats + dhstats ++ ee, passives, pasv.dh, !is2h && isSW)
         }
-    }.share
-    def st(f: Stats => Int) = effective.map { s =>
-      s.fold("???")(d => f(d._1).toString)
     }
     table(cls := "unit-stats",
       caption("Effective Stats"),
-      tr(
-        td(cls := "unit-stat-name", "HP"),
-        td(cls := "unit-stat-data", child <-- st(_.hp)),
-        td(cls := "unit-stat-name", "MP"),
-        td(cls := "unit-stat-data", child <-- st(_.mp)),
-      ),
-      tr(
-        td(cls := "unit-stat-name", "ATK"),
-        td(cls := "unit-stat-data", child <-- st(_.atk)),
-        td(cls := "unit-stat-name", "DEF"),
-        td(cls := "unit-stat-data", child <-- st(_.defs))
-      ),
-      tr(
-        td(cls := "unit-stat-name", "MAG"),
-        td(cls := "unit-stat-data", child <-- st(_.mag)),
-        td(cls := "unit-stat-name", "SPR"),
-        td(cls := "unit-stat-data", child <-- st(_.spr))
-      ),
-      children <-- unit.combineLatest(unitInfo, allPassives, effective).map { case (u,ui,pasv,eff) =>
+      children <-- unit.combineLatest(unitInfo, allPassives, effective).combineLatest(equipped).map { case ((u,ui,pasv,eff),(eqs,abis)) =>
+      def st(f: Stats => Int) = eff.fold("???")(d => f(d._1).toString)
         u.fold(List.empty[VNode]) { entry =>
           List(
             tr(td(List(colspan := 4) ++ renderEquippable(ui, pasv):_*)),
@@ -176,6 +155,26 @@ object components {
                 "elements-table")
             )),
           ) ++
+      List(
+        tr(
+            td(cls := "unit-stat-name", "HP"),
+            td(cls := "unit-stat-data", st(_.hp)),
+            td(cls := "unit-stat-name", "MP"),
+            td(cls := "unit-stat-data", st(_.mp)),
+          ),
+          tr(
+            td(cls := "unit-stat-name", "ATK"),
+            td(cls := "unit-stat-data", st(_.atk)),
+            td(cls := "unit-stat-name", "DEF"),
+            td(cls := "unit-stat-data", st(_.defs))
+          ),
+          tr(
+            td(cls := "unit-stat-name", "MAG"),
+            td(cls := "unit-stat-data", st(_.mag)),
+            td(cls := "unit-stat-name", "SPR"),
+            td(cls := "unit-stat-data", st(_.spr))
+          )) ++
+            renderEquipped(ui, eqs.allEquipped, abis.allEquipped) ++
             renderStat(statOf(eff, _.hp), "+HP") ++
             renderStat(statOf(eff, _.mp), "+MP") ++
             renderStat(statOf(eff, _.atk), "+ATK") ++
@@ -202,6 +201,13 @@ object components {
         }
       }
     )
+  }
+
+  def renderEquipped(u: Option[UnitData], eqs: List[EquipIndex], abis: List[MateriaIndex]) = {
+    List(tr(td(colspan := 4, ul(
+      (eqs.map(e => s"${e.name}: ${e.stats} ${e.describeEffects(u)}") ++
+        abis.map(e => s"${e.name}: ${e.describeEffects(u)}")).map(n => li(n)):_*
+    ))))
   }
 
   def statOf(x: Option[(Stats,PassiveStatEffect,PassiveSinglehandEffect,Boolean)], f: PassiveStatEffect => Int): Int = x.fold(0)(d => f(d._2))

@@ -56,15 +56,9 @@ option {
   font-size: 1rem;
 }
 table.unit-stats {
+  margin-left: 0;
   border-style: solid;
   border-width: 1px;
-  width: calc(100% - 16px);
-  font-size: smaller;
-  margin-bottom: 16px;
-}
-
-table.unit-resists {
-  width: 100%;
 }
 table.unit-stats > caption { text-align: left }
 td.unit-stat-name {
@@ -73,6 +67,38 @@ td.unit-stat-name {
 td.unit-stat-data {
   width: auto;
   text-align: right;
+}
+
+.unit-stats {
+  width: calc(100% - 16px);
+  margin-left: 16px;
+  font-size: smaller;
+}
+.unit-stats > div > div {
+  display: inline-block;
+  margin-right: 16px;
+  width: calc((100% - 16px) / 7 - 16px);
+}
+.unit-stats > div > button {
+  width: calc((100% - 16px) / 7 - 16px);
+  font-size: inherit;
+  height: 1.75rem;
+}
+
+.unit-stats > div {
+  margin-bottom: 16px;
+}
+
+.unit-stats ul {
+  margin: 0;
+  padding-left: 1em;
+}
+.unit-stats li {
+  text-indent: -0.5em;
+}
+
+table.unit-resists {
+  width: 100%;
 }
 td.unit-trait-rarity { width: 5%; }
 td.unit-trait-level { width: 5%; }
@@ -247,3 +273,21 @@ td div:nth-child(2) .icon-equips:nth-child(4)::after {
 
 #equip-slots label, #materia-slots label { white-space: normal; }
 #equip-slots tr > td, #materia-slots tr > td { width: 50% }
+.pot-slider {
+  width: calc(100% - 32px) !important;
+}
+.pot-slider {
+  margin-bottom: 8px;
+}
+.pot-slider div {
+  display: inline-block;
+  width: 83%;
+}
+.pot-slider div:nth-child(2) {
+  width: 17%;
+  text-align: right;
+}
+input[type="range"] {
+  width: 95%;
+  vertical-align: middle;
+}

@@ -42,7 +42,7 @@ case class Abilities(
     (ability1._1 ++ ability2._1 ++ ability3._1 ++ ability4._1).toList
 }
 
-case class PotSubjects(hp: Subject[Boolean], mp: Subject[Boolean], atk: Subject[Boolean], defs: Subject[Boolean], mag: Subject[Boolean], spr: Subject[Boolean]) {
+case class PotSubjects(hp: Subject[Int], mp: Subject[Int], atk: Subject[Int], defs: Subject[Int], mag: Subject[Int], spr: Subject[Int]) {
   def next(p: Pots) = {
     hp.next(p.hp)
     mp.next(p.mp)
@@ -56,11 +56,10 @@ object PotSubjects {
   def apply(): PotSubjects = PotSubjects(Subject(), Subject(), Subject(),
     Subject(), Subject(), Subject())
 }
-case class Pots(hp: Boolean, mp: Boolean,
-  atk: Boolean, defs: Boolean, mag: Boolean, spr: Boolean)
+case class Pots(hp: Int, mp: Int,
+  atk: Int, defs: Int, mag: Int, spr: Int)
 object Pots {
-  def all = Pots(true, true, true, true, true, true)
-  def none = Pots(false, false, false, false, false, false)
+  def none = Pots(0,0,0,0,0,0)
 }
 case class BaseStats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int, pots: Pots) {
   def asStats = Stats(hp, mp, atk, defs, mag, spr, AilmentResist.zero, ElementResist.zero)

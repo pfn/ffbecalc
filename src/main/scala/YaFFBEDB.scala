@@ -40,7 +40,7 @@ object YaFFBEDB extends JSApp {
       idOfEq(eqs.acc1),       idOfEq(eqs.acc2),
       idOfMat(abis.ability1), idOfMat(abis.ability2),
       idOfMat(abis.ability3), idOfMat(abis.ability4),
-      stats.fold(Pots.all)(_.pots),
+      stats.fold(Pots.none)(_.pots),
       esper, esperR,
       esperSkills)
   }
@@ -466,12 +466,13 @@ object YaFFBEDB extends JSApp {
         div(id := "unit-info",
           select(children <-- unitIndex, inputId --> unitIdSink),
           div(hidden <-- unitId.map(_.isEmpty),
-            components.unitBaseStats(unitEntry, unitStats, pots),
             components.unitStats(unitInfo, unitEntry, unitStats, equipped, allPassives.map(_._2), esperStats, esperEntry),
           )
         ),
         div(hidden <-- unitId.map(_.isEmpty),
         p(child <-- unitDescription.orElse(Observable.just(""))),
+        h3("Base Stats"),
+        div(child <-- components.unitBaseStats(unitEntry, unitStats, pots)),
         h3("Equipment"),
         components.sortBy(_sorting),
         table(id := "equip-slots",
