@@ -47,7 +47,7 @@ object YaFFBEDB extends JSApp {
   def main(): Unit = {
     val unitIdSubject = Subject[Option[String]]()
     val unitIdSink = createIdHandler(None)
-    val unitId = unitIdSubject.merge(unitIdSink).distinct.publishReplay(1).refCount
+    val unitId = unitIdSubject.merge(unitIdSink).distinctUntilChanged
 
     val unitIndex = Data.get[List[UnitIndex]]("pickle/unit/index.pickle").combineLatest(unitId.startWith(None)).map { case (us, id) =>
       List(option(value := EMPTY, "-- Select a unit --")) ++
@@ -104,22 +104,22 @@ object YaFFBEDB extends JSApp {
     }
     val rhandId = createIdHandler(None)
     val rhandSubject = Subject[Option[String]]()
-    val rhand = equipFor(rhandId.merge(rhandSubject))
+    val rhand = equipFor(rhandId.merge(rhandSubject).distinctUntilChanged)
     val lhandId = createIdHandler(None)
     val lhandSubject = Subject[Option[String]]()
-    val lhand = equipFor(lhandId.merge(lhandSubject))
+    val lhand = equipFor(lhandId.merge(lhandSubject).distinctUntilChanged)
     val headId = createIdHandler(None)
     val headSubject = Subject[Option[String]]()
-    val headEquip = equipFor(headId.merge(headSubject))
+    val headEquip = equipFor(headId.merge(headSubject).distinctUntilChanged)
     val bodyId = createIdHandler(None)
     val bodySubject = Subject[Option[String]]()
-    val bodyEquip = equipFor(bodyId.merge(bodySubject))
+    val bodyEquip = equipFor(bodyId.merge(bodySubject).distinctUntilChanged)
     val acc1Id = createIdHandler(None)
     val acc1Subject = Subject[Option[String]]()
-    val acc1 = equipFor(acc1Id.merge(acc1Subject))
+    val acc1 = equipFor(acc1Id.merge(acc1Subject).distinctUntilChanged)
     val acc2Id = createIdHandler(None)
     val acc2Subject = Subject[Option[String]]()
-    val acc2 = equipFor(acc2Id.merge(acc2Subject))
+    val acc2 = equipFor(acc2Id.merge(acc2Subject).distinctUntilChanged)
 
     val equippedGear = withStamp(rhand).combineLatest(
       withStamp(lhand), withStamp(headEquip), withStamp(bodyEquip))
@@ -127,7 +127,7 @@ object YaFFBEDB extends JSApp {
 
     val unitStats = createHandler[Option[BaseStats]](None)
     val selectedTraits = createHandler[List[SkillInfo]]()
-    val unitPassives = selectedTraits.map(_.flatMap(_.skilleffects))
+    val unitPassives = selectedTraits.map(_.flatMap(_.skilleffects)).publishReplay(1).refCount
     val _sorting = createHandler[Sort](Sort.AZ)
     val sorting = _sorting.publishReplay(1).refCount
     val abilitySubjects = AbilitySubjects()
@@ -139,7 +139,7 @@ object YaFFBEDB extends JSApp {
 
     val equipped = equippedGear.combineLatest(accs).map { a =>
       Equipped.tupled.apply(a._1 + a._2)
-    }.combineLatest(abilities)
+    }.combineLatest(abilities).distinctUntilChanged
 
     def passivesFromAll(equips: List[EquipIndex],
       abilities: List[MateriaIndex]) : List[SkillEffect] = {
@@ -204,15 +204,15 @@ object YaFFBEDB extends JSApp {
       } else e.fold(EMPTY)(_.id.toString)
     }
 
-    val rhandValidator = allPassives.combineLatest(equipped).map {
+    val rhandValidator = allPassives.combineLatest(equipped).distinctUntilChanged.map {
       case (((info,effs),(eqs, abis))) =>
         handValidator(eqs.rhand._1, eqs.lhand._1, info, effs, rhandSubject, eqs.rhand._2 < eqs.lhand._2)
     }
-    val lhandValidator = allPassives.combineLatest(equipped).map {
+    val lhandValidator = allPassives.combineLatest(equipped).distinctUntilChanged.map {
       case (((info,effs),(eqs, abis))) =>
         handValidator(eqs.lhand._1, eqs.rhand._1, info, effs, lhandSubject, eqs.lhand._2 < eqs.rhand._2)
     }
-    def equipsValidator(sink: Subject[Option[String]], f: Equipped => EqStamp) = allPassives.combineLatest(equipped).map {
+    def equipsValidator(sink: Subject[Option[String]], f: Equipped => EqStamp) = allPassives.combineLatest(equipped).distinctUntilChanged.map {
       case (((info,effs),(eqs, abis))) =>
         equipValidator(f(eqs)._1, info, effs, sink)
     }
@@ -236,7 +236,7 @@ object YaFFBEDB extends JSApp {
       val enhSink = createHandler[(Int,Int)]()
       val enhMap = enhSink.scan(Map.empty[Int,Int]) { (ac, e) =>
         ac + e
-      }.startWith(Map.empty)
+      }.distinctUntilChanged.startWith(Map.empty)
 
       unitSkills.combineLatest(enhancedSkills).map(a => a._1.filter(_._2.active).map(b => (b._1, b._2, a._2))).map { ss =>
         components.dataTable(ss,
@@ -273,7 +273,7 @@ object YaFFBEDB extends JSApp {
       val enhSink = createHandler[(Int,Int)]()
       val enhMap = enhSink.scan(Map.empty[Int,Int]) { (ac, e) =>
         ac + e
-      }.startWith(Map.empty)
+      }.distinctUntilChanged.startWith(Map.empty)
 
       unitSkills.combineLatest(enhancedSkills).map(a => a._1.filterNot(_._2.active).map(b => (b._1, b._2, a._2))).map { ss =>
         val infos = ss.map(_._2).toList
@@ -371,7 +371,7 @@ object YaFFBEDB extends JSApp {
     }
 
     def equippable(slots: Set[Int], worn: Observable[Option[EquipIndex]]) = for {
-      ((es, (u, passives), sort, base), w) <- equips.combineLatest(allPassives, sorting, unitStats).combineLatest(worn)
+      ((es, (u, passives), sort, base), w) <- equips.combineLatest(allPassives, sorting, unitStats).combineLatest(worn).distinctUntilChanged
     } yield {
       val eqs = es.filter(e =>
         slots(e.slotId) && e.canEquip(u) && passives.canEquip(e.tpe, u))

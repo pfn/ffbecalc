@@ -114,7 +114,7 @@ object components {
         td(div()),
         td(div()),
       ),
-      tr(resists.map { r => td(r.toString + "%") }:_*)
+      tr(resists.map { r => td(s"$r%") }:_*)
     )
   }
   def unitStats(unitInfo: Observable[Option[UnitData]], unit: Observable[Option[UnitEntry]], stats: Observable[Option[BaseStats]], equipped: Observable[(Equipped,Abilities)], allPassives: Observable[SkillEffect.CollatedEffect], esper: Observable[Option[EsperStatInfo]], esperEntry: Observable[Option[EsperEntry]]) = {
@@ -289,8 +289,8 @@ object components {
     }
     m.getOrElse(xs)
   }
-  def materiaOption(ms: Observable[List[MateriaIndex]], up: Observable[Seq[SkillEffect]], u: Option[UnitData], e: Option[UnitEntry], sorting: Observable[Sort], worn: Observable[Option[MateriaIndex]]): Observable[List[VNode]] = ms.combineLatest(up, sorting, worn).map {
-    case (m, ps, s, w) =>
+  def materiaOption(m: List[MateriaIndex], up: Observable[Seq[SkillEffect]], u: Option[UnitData], e: Option[UnitEntry], sorting: Observable[Sort], worn: Observable[Option[MateriaIndex]]): Observable[List[VNode]] = up.combineLatest(sorting, worn).map {
+    case (ps, s, w) =>
       val mats = m.filter(mi => e.exists(_.canEquip(mi)))
       List(option(value := EMPTY, "Empty")) ++
         sortFor(mats, s, SkillEffect.collateEffects(u, ps.toList), u).map { mi =>
@@ -309,19 +309,19 @@ object components {
   type MaybeMateria = Observable[Option[MateriaIndex]]
   def abilitySlots(m: Observable[List[MateriaIndex]], unitInfo: Observable[Option[UnitData]], up: Observable[Seq[SkillEffect]], unitEntry: Observable[Option[UnitEntry]], sorting: Observable[Sort], subject: AbilitySubjects): (MaybeMateria,MaybeMateria,MaybeMateria,MaybeMateria,Observable[List[VNode]]) = {
     val ability1Id = createIdHandler(None)
-    val ability1 = materiaFor(m, ability1Id.merge(subject.a1)).publishReplay(1).refCount
+    val ability1 = materiaFor(m, ability1Id.merge(subject.a1).distinctUntilChanged).publishReplay(1).refCount
     val ability2Id = createIdHandler(None)
-    val ability2 = materiaFor(m, ability2Id.merge(subject.a2)).publishReplay(1).refCount
+    val ability2 = materiaFor(m, ability2Id.merge(subject.a2).distinctUntilChanged).publishReplay(1).refCount
     val ability3Id = createIdHandler(None)
-    val ability3 = materiaFor(m, ability3Id.merge(subject.a3)).publishReplay(1).refCount
+    val ability3 = materiaFor(m, ability3Id.merge(subject.a3).distinctUntilChanged).publishReplay(1).refCount
     val ability4Id = createIdHandler(None)
-    val ability4 = materiaFor(m, ability4Id.merge(subject.a4)).publishReplay(1).refCount
+    val ability4 = materiaFor(m, ability4Id.merge(subject.a4).distinctUntilChanged).publishReplay(1).refCount
     (ability1, ability2, ability3, ability4) + 
-    unitInfo.combineLatest(unitEntry).map { case (u, e) =>
+    unitInfo.combineLatest(unitEntry,m).map { case (u, e, ms) =>
 
       val slots = e.fold(0)(_.abilitySlots)
 
-      def materiaList(w: MaybeMateria) = materiaOption(m, up, u, e, sorting, w)
+      def materiaList(w: MaybeMateria) = materiaOption(ms, up, u, e, sorting, w)
       val m1s = materiaList(ability1)
       val m2s = materiaList(ability2)
       val m3s = materiaList(ability3)

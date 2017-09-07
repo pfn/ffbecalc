@@ -33,7 +33,9 @@ case class UnitData(
   sex: String,
   equip: List[Int],
   entries: Map[String,UnitEntry],
-  skills: List[UnitSkill])
+  skills: List[UnitSkill]) {
+  lazy val equipSet = equip.toSet
+}
 case class EsperData(names: List[String], entries: List[EsperEntry])
 case class EsperEntry(
   stats: EsperStatInfo,
@@ -91,9 +93,11 @@ case class EnhancementStrings(name: List[String], desc: List[String])
 case class Enhancement(oldSkill: Int, newSkill: Int, strings: EnhancementStrings)
 case class MateriaIndexData(id: String, effects: List[String], rarity: Int, magicType: Option[String], skilleffects: List[SkillEffect])
 case class MateriaIndex(name: String, id: Int, effects: List[String], rarity: Int, magicType: Option[String], skilleffects: List[SkillEffect]) {
-  def describeEffects(unit: Option[UnitData]) = {
-    SkillEffect.collateEffects(unit, skilleffects).toString
+  val memo = Memo { a: Option[UnitData] =>
+    SkillEffect.collateEffects(a, skilleffects).toString
   }
+
+  def describeEffects(unit: Option[UnitData]) = memo(unit)
 }
 case class EquipStats(
   hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int,
@@ -101,7 +105,7 @@ case class EquipStats(
   statusResists: Option[EquipAilments],
   statusEffects: Option[EquipAilments],
   element: List[String]) {
-  override def toString = {
+  override lazy val toString = {
     val ss = ((if (atk != 0) List(s"ATK+${atk}") else Nil) ++
     (if (defs != 0) List(s"DEF+${defs}") else Nil) ++
     (if (mag != 0) List(s"MAG+${mag}") else Nil) ++
@@ -127,13 +131,24 @@ case class SexEquipReq(sex: Int) extends EquipReq {
 case class UnitEquipReq(id: Int) extends EquipReq {
   def canEquip(unit: UnitData) = unit.id == id
 }
+case class Memo[A,B](f: A => B) extends Function1[A,B] {
+  var memo = Map.empty[A,B]
+  def apply(a: A): B = {
+    val r = memo.getOrElse(a, f(a))
+    memo += a -> r
+    r
+  }
+}
 case class EquipIndexData(
   id: Int, slotId: Int, twohands: Option[Boolean], skills: List[Int], tpe: Int, skilleffects: List[SkillEffect], skillEffects: Map[String,List[String]], stats: EquipStats, req: Option[EquipReq])
 case class EquipIndex(
   name: String, id: Int, twohands: Boolean, slotId: Int, skills: List[Int], tpe: Int, skilleffects: List[SkillEffect], skillEffects: Map[String,List[String]], stats: EquipStats, req: Option[EquipReq]) {
-  def describeEffects(unit: Option[UnitData]) = {
-    SkillEffect.collateEffects(unit, skilleffects).toString
+
+  val memo = Memo { a: Option[UnitData] =>
+    SkillEffect.collateEffects(a, skilleffects).toString
   }
+
+  def describeEffects(unit: Option[UnitData]) = memo(unit)
 
   def canEquip(unit: Option[UnitData]) =
     unit.fold(true)(u => req.forall(_.canEquip(u)))
@@ -288,7 +303,7 @@ object SkillEffect {
 
     def canDualWield(weapon: Int) = dw.all || dw.weapons(weapon)
     def canEquip(tpe: Int, info: Option[UnitData]) =
-      info.fold(false)(_.equip.toSet(tpe)) || equips(tpe)
+      info.fold(false)(_.equipSet(tpe)) || equips(tpe)
 
     def dwString = {
       if (dw.all) "DualWield"
@@ -326,7 +341,7 @@ object SkillEffect {
     def equipStatsString =
       equipStats.keys.map(k => s"${equipStats(k)} w/ ${EQUIP(k)}").mkString(", ")
 
-    override def toString = List(
+    override lazy val toString = List(
       dwString,
       dhString,
       stats.toString,
@@ -567,7 +582,7 @@ case class PassiveStatEffect(
     crit -> "Crit"
   ).filterNot(_._1 == 0)
 
-  override def toString = asList.groupBy(_._1).toList.map { case (k,v) =>
+  override lazy val toString = asList.groupBy(_._1).toList.map { case (k,v) =>
     s"""$k% ${v.map(_._2).mkString("/")}"""
   }.mkString(" ")
 }
@@ -668,7 +683,7 @@ case class EquipAilments(
     confusion -> "Confusion",
     disease   -> "Disease",
     petrify   -> "Petrify")
-  override def toString = {
+  override lazy val toString = {
     val items = asList.filterNot(_._1.getOrElse(0) == 0).groupBy(_._1.getOrElse(0)).toList.map {
       case (k,v) =>
         val res = if (v.size == 8) "All Ailments"
@@ -698,7 +713,7 @@ case class AilmentResist(
     confusion -> "Confusion",
     disease   -> "Disease",
     petrify   -> "Petrify")
-  override def toString = {
+  override lazy val toString = {
     val items = asList.filterNot(_._1 == 0).groupBy(_._1).toList.map {
       case (k,v) =>
         val res = if (v.size == 8) "All Ailments"
@@ -749,7 +764,7 @@ case class ElementResist(
     light     -> "Light",
     dark      -> "Dark"
   )
-  override def toString = {
+  override lazy val toString = {
     val items = asList.filterNot(_._1 == 0).groupBy(_._1).toList.map {
       case (k,v) =>
         val res = if (v.size == 8) "All Elements"
