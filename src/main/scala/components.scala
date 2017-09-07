@@ -17,7 +17,7 @@ object components {
 
     def sortItem(s: Sort, h: Handler[Sort], n: String, check: Boolean = false) =
       label(input(tpe := "radio", name := "eq-sort",
-        inputChecked(s) --> h, checked := true), n)
+        inputChecked(s) --> h, checked := check), n)
 
     div(cls := "sort-options", span("Sort"),
       sortItem(Sort.AZ,  sortAZ,  "A-Z", true),
