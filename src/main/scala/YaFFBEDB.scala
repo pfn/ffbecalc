@@ -71,12 +71,12 @@ object YaFFBEDB extends JSApp {
     val enhancements: Observable[Map[String,Enhancement]] = unitId.flatMap(id =>
       id.fold(Observable.just(Map.empty[String,Enhancement])) { id_ =>
         Data.get[Map[String,Enhancement]](s"pickle/enhance/$id_.pickle").catchError(_ => Observable.just(Map.empty))
-      }).publishReplay(1).refCount
+      })
     val enhancedSkills: Observable[Map[Int,SkillInfo]] = enhancements.flatMap { es =>
       Observable.combineLatest(es.toList.map { case (k,v) =>
         Data.get[SkillInfo](s"pickle/skill/${v.newSkill}.pickle").map(d => (v.oldSkill,d))
       }).map(_.toMap)
-    }.publishReplay(1).refCount
+    }
 
     val unitEntry: Observable[Option[UnitEntry]] = unitInfo.map {
       _.fold(Option.empty[UnitEntry])(
@@ -88,7 +88,7 @@ object YaFFBEDB extends JSApp {
         List.empty[Observable[(UnitSkill, SkillInfo)]])(_.skills.map { s =>
         Data.get[SkillInfo](s"pickle/skill/${s.id}.pickle").map { s -> _ }
       }))
-    }.publishReplay(1).refCount
+    }
 
     val esperIdSubject = Subject[Option[String]]()
     val esperStats = createHandler[Option[EsperStatInfo]](None)
@@ -277,11 +277,12 @@ object YaFFBEDB extends JSApp {
 
       unitSkills.combineLatest(enhancedSkills).map(a => a._1.filterNot(_._2.active).map(b => (b._1, b._2, a._2))).map { ss =>
         val infos = ss.map(_._2).toList
-        val enhs = ss.headOption.fold(Map.empty[Int,SkillInfo])(_._3)
+        val enhs = ss.find(_._3.nonEmpty).map(_._3).getOrElse(Map.empty)
+
         selectedTraits <-- enhMap.map { es =>
           infos.map { i =>
             val rid = es.getOrElse(i.id, i.id)
-            if (rid == i.id) i
+            if (rid == i.id || enhs.isEmpty) i
             else {
               val si = enhs(i.id)
               if (si.id == rid) si
