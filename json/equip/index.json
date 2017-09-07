@@ -1362,7 +1362,7 @@
     }, 
     "skill_effects": {
       "Emergency Shell": [
-        "Gain Auto-Shell when HP drops below 10%"
+        "Increase SPR by 30% when HP drops below 10% (max 100000x)"
       ]
     }, 
     "type_id": 60, 
@@ -6786,10 +6786,10 @@
     }, 
     "skill_effects": {
       "Waking Instinct": [
-        "Increase ATK by 40% when HP drops below 50%", 
-        "Increase DEF by 40% when HP drops below 50%", 
-        "Increase MAG by 40% when HP drops below 50%", 
-        "Increase SPR by 40% when HP drops below 50%"
+        "Increase ATK by 40% when HP drops below 50% (max 9000x)", 
+        "Increase DEF by 40% when HP drops below 50% (max 9000x)", 
+        "Increase MAG by 40% when HP drops below 50% (max 9000x)", 
+        "Increase SPR by 40% when HP drops below 50% (max 9000x)"
       ], 
       "Dragon Killer": [
         "Increase physical damage against Dragons by 50%"
@@ -8636,7 +8636,7 @@
     }, 
     "skill_effects": {
       "Emergency Protect": [
-        "Gain Auto-Protect when HP drops below 10%"
+        "Increase DEF by 30% when HP drops below 10% (max 100000x)"
       ]
     }, 
     "type_id": 60, 
@@ -9884,7 +9884,7 @@
     }, 
     "skill_effects": {
       "Emergency Protect": [
-        "Gain Auto-Protect when HP drops below 10%"
+        "Increase DEF by 30% when HP drops below 10% (max 100000x)"
       ]
     }, 
     "type_id": 60, 
@@ -10026,10 +10026,10 @@
     }, 
     "skill_effects": {
       "Emergency Protect": [
-        "Gain Auto-Protect when HP drops below 10%"
+        "Increase DEF by 30% when HP drops below 10% (max 100000x)"
       ], 
       "Emergency Shell": [
-        "Gain Auto-Shell when HP drops below 10%"
+        "Increase SPR by 30% when HP drops below 10% (max 100000x)"
       ]
     }, 
     "type_id": 60, 
@@ -12330,7 +12330,7 @@
     }, 
     "skill_effects": {
       "Emergency Regen": [
-        "Gain Auto-Regen when HP drops below 10%"
+        "Regenerate 30 HP per turn when HP drops below 10% (max 100000x)"
       ]
     }, 
     "type_id": 60, 
@@ -13245,10 +13245,10 @@
     }, 
     "skill_effects": {
       "Cruel Oath": [
-        "Increase ATK by 40% for 3 turns when HP drops below 30%", 
-        "Increase DEF by 40% for 3 turns when HP drops below 30%", 
-        "Increase MAG by 40% for 3 turns when HP drops below 30%", 
-        "Increase SPR by 40% for 3 turns when HP drops below 30%"
+        "Increase ATK by 40% for 3 turns when HP drops below 30% (max 9000x)", 
+        "Increase DEF by 40% for 3 turns when HP drops below 30% (max 9000x)", 
+        "Increase MAG by 40% for 3 turns when HP drops below 30% (max 9000x)", 
+        "Increase SPR by 40% for 3 turns when HP drops below 30% (max 9000x)"
       ]
     }, 
     "type_id": 4, 
