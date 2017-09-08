@@ -226,9 +226,11 @@ object YaFFBEDB extends JSApp {
 
     def enhancedInfo[A](info: SkillInfo, enhanced: Option[Int], enhs: Map[Int,SkillInfo], f: SkillInfo => A): A = {
       enhanced.fold(f(info)) { en =>
-        val d = enhs(info.id)
-        val s = if (en == info.id) info else if (d.id == en) d else enhs(enhs(info.id).id)
-        f(s)
+        val d = enhs.getOrElse(info.id, info)
+        val s = if (en == info.id) Some(info)
+          else if (d.id == en) Some(d)
+          else enhs.get(enhs.getOrElse(info.id, info).id)
+        f(s.getOrElse(info))
       }
     }
     def deco[A,B,C](f: (A,B,C) => VNode): ((A,B,C)) => VNode = f.tupled(_)
@@ -236,9 +238,10 @@ object YaFFBEDB extends JSApp {
       val enhSink = createHandler[(Int,Int)]()
       val enhMap = enhSink.scan(Map.empty[Int,Int]) { (ac, e) =>
         ac + e
-      }.distinctUntilChanged.startWith(Map.empty)
+      }.distinctUntilChanged.startWith(Map.empty).publishReplay(1).refCount
 
-      unitSkills.combineLatest(enhancedSkills).map(a => a._1.filter(_._2.active).map(b => (b._1, b._2, a._2))).map { ss =>
+      unitSkills.combineLatest(enhancedSkills).map( a =>
+        a._1.filter(_._2.active).map(b => (b._1, b._2, a._2))).map { ss =>
         components.dataTable(ss,
           "skills-active",
           List("Rarity", "Level", "Name", "Description", "MP"),
@@ -273,23 +276,30 @@ object YaFFBEDB extends JSApp {
       val enhSink = createHandler[(Int,Int)]()
       val enhMap = enhSink.scan(Map.empty[Int,Int]) { (ac, e) =>
         ac + e
-      }.distinctUntilChanged.startWith(Map.empty)
+      }.distinctUntilChanged.startWith(Map.empty).publishReplay(1).refCount
+      // a double-subscription occurs below (???) --> workaround  :-(
+      var subscription = Option.empty[rxscalajs.subscription.AnonymousSubscription]
 
-      unitSkills.combineLatest(enhancedSkills).map(a => a._1.filterNot(_._2.active).map(b => (b._1, b._2, a._2))).map { ss =>
+      unitSkills.combineLatest(enhancedSkills).map(a =>
+        a._1.filterNot(_._2.active).map{b =>
+        (b._1, b._2, a._2)}).map { ss =>
         val infos = ss.map(_._2).toList
-        val enhs = ss.find(_._3.nonEmpty).map(_._3).getOrElse(Map.empty)
+        val enhs = ss.headOption.fold(Map.empty[Int,SkillInfo])(_._3)
 
-        selectedTraits <-- enhMap.map { es =>
-          infos.map { i =>
+        subscription.foreach(_.unsubscribe())
+        subscription = Some(selectedTraits <-- enhMap.map { es =>
+          infos.flatMap { i =>
             val rid = es.getOrElse(i.id, i.id)
-            if (rid == i.id || enhs.isEmpty) i
-            else {
-              val si = enhs(i.id)
-              if (si.id == rid) si
-              else enhs(si.id)
-            }
+            if (rid == i.id || enhs.isEmpty) List(i)
+            else enhs.get(i.id).flatMap { s =>
+              if (s.id == rid) Some(s) else enhs.get(s.id)
+            }.orElse(enhs.get(rid)).toList
           }
-        }
+        })
+        def hasEnh(base: SkillInfo, target: SkillInfo) =
+          selected <-- enhMap.map { es =>
+            es.getOrElse(base.id, base.id) == target.id
+          }
         components.dataTable(ss,
           "skills-trait",
           List("Rarity", "Level", "Name", "Description"),
@@ -302,9 +312,9 @@ object YaFFBEDB extends JSApp {
                 span(info.name)
               } { enh =>
                 select(inputString(i => info.id -> i.toInt) --> enhSink,
-                  option(value := info.id, info.name),
-                  option(value := enh._1.id, "+1 " + info.name),
-                  option(value := enh._2.id, "+2 " + info.name)
+                  option(value := info.id, info.name, hasEnh(info, info)),
+                  option(value := enh._1.id, "+1 " + info.name, hasEnh(info, enh._1)),
+                  option(value := enh._2.id, "+2 " + info.name, hasEnh(info, enh._2))
                 )
               }
             },
