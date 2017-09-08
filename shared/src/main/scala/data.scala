@@ -35,6 +35,12 @@ case class UnitData(
   entries: Map[String,UnitEntry],
   skills: List[UnitSkill]) {
   lazy val equipSet = equip.toSet
+  override def equals(o: Any) = o match {
+    case d: UnitData => d.id == id
+    case _ => false
+  }
+
+  override def hashCode() = id
 }
 case class EsperData(names: List[String], entries: List[EsperEntry])
 case class EsperEntry(
@@ -133,10 +139,10 @@ case class UnitEquipReq(id: Int) extends EquipReq {
 }
 case class Memo[A,B](f: A => B) extends Function1[A,B] {
   var memo = Map.empty[A,B]
-  def apply(a: A): B = {
-    val r = memo.getOrElse(a, f(a))
-    memo += a -> r
-    r
+  def apply(a: A): B = memo.get(a).getOrElse {
+    val m = f(a)
+    memo += a -> m
+    m
   }
 }
 case class EquipIndexData(
