@@ -2914,6 +2914,33 @@
     ], 
     "magic_type": "Green"
   }, 
+  "Regenerator": {
+    "skill_names": [
+      "Regenerator"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            49, 
+            [
+              20, 
+              3, 
+              910320
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "1500000021", 
+    "effects": [
+      "20% chance to counter physical attacks with Regenerator (910320) to self"
+    ], 
+    "rarity": 5
+  }, 
   "Cure": {
     "id": "504010020", 
     "effects_raw": [], 
@@ -4960,7 +4987,7 @@
     "effects_raw": [], 
     "id": "504203210", 
     "effects": [
-      "Critical physical damage (2.1x, ATK)", 
+      "Critical physical damage (2.1x, ATK) to one enemy", 
       "Inflict Paralyze (50%) on one enemy"
     ], 
     "rarity": 6
@@ -7131,7 +7158,7 @@
     "effects_raw": [], 
     "id": "1500000000", 
     "effects": [
-      "Critical physical damage (1x, ATK)"
+      "Critical physical damage (1x, ATK) to one enemy"
     ], 
     "rarity": 3
   }, 
@@ -7416,18 +7443,6 @@
     ], 
     "magic_type": "Black"
   }, 
-  "Curaja": {
-    "id": "504010160", 
-    "effects_raw": [], 
-    "effects": [
-      "Restore 1000 (+3.4x, Heal) HP to all allies"
-    ], 
-    "rarity": 6, 
-    "skill_names": [
-      "Curaja"
-    ], 
-    "magic_type": "White"
-  }, 
   "Barfira": {
     "id": "504030110", 
     "effects_raw": [], 
@@ -7553,12 +7568,12 @@
     "magic_type": "Black"
   }, 
   "Curaga": {
-    "id": "504010150", 
+    "id": "504010160", 
     "effects_raw": [], 
     "effects": [
-      "Restore 800 (+3.4x, Heal) HP to target"
+      "Restore 1000 (+3.4x, Heal) HP to all allies"
     ], 
-    "rarity": 5, 
+    "rarity": 6, 
     "skill_names": [
       "Curaga"
     ], 
@@ -8252,32 +8267,17 @@
     ], 
     "rarity": 5
   }, 
-  "Regenerator": {
-    "skill_names": [
-      "Regenerator"
-    ], 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            0, 
-            3, 
-            49, 
-            [
-              20, 
-              3, 
-              910320
-            ]
-          ]
-        ]
-      }
-    ], 
-    "id": "1500000021", 
+  "Curada": {
+    "id": "504010150", 
+    "effects_raw": [], 
     "effects": [
-      "20% chance to counter physical attacks with Regenerator (910320) to self"
+      "Restore 800 (+3.4x, Heal) HP to target"
     ], 
-    "rarity": 5
+    "rarity": 5, 
+    "skill_names": [
+      "Curada"
+    ], 
+    "magic_type": "White"
   }, 
   "Echidna's Kiss": {
     "skill_names": [
