@@ -418,7 +418,7 @@ object SkillEffect {
       case PassiveRefreshEffect(_, mod) => a.copy(refresh = a.refresh + mod)
       case sh@PassiveSinglehandEffect(_,_,_,_,_,_) =>
         a.copy(dh = a.dh + sh)
-      case PassiveDoublehandEffect(dh) =>
+      case PassiveDoublehandEffect(dh, acc) =>
         a.copy(dh = a.dh.copy(atk = a.dh.atk + dh))
       case PassiveDualWieldEffect(weaps, all) =>
         a.copy(dw = PassiveDualWieldEffect(a.dw.weapons ++ weaps, all || a.dw.all))
@@ -517,6 +517,14 @@ object PassiveEquipStatEffect {
   def decode(xs: List[Int]): SkillEffect = xs match {
     case List(a, b, c, d, e) =>
       PassiveEquipStatEffect(a, 0, 0, b, c, d, e)
+    case List(a, atk, defs, mag, spr, hp) =>
+      PassiveEquipStatEffect(a, hp, 0, atk, defs, mag, spr)
+    case List(a, atk, defs, mag, spr, hp, mp) =>
+      PassiveEquipStatEffect(a, hp, mp, atk, defs, mag, spr)
+    case List(a, atk, defs, mag, spr, hp, mp, _) => // 8 args, last is???
+      PassiveEquipStatEffect(a, hp, mp, atk, defs, mag, spr)
+    case List(a, atk, defs, mag, spr, hp, mp, _, _) => // 9 args, last 2 are???
+      PassiveEquipStatEffect(a, hp, mp, atk, defs, mag, spr)
     case List(a, b, c, d, e, f, g, h) =>
       PassiveEquipStatEffect(a, f, g, b, c, d, e)
   }
@@ -539,12 +547,17 @@ object PassiveSinglehandEffect {
   }
   def zero = PassiveSinglehandEffect(0, 0, 0, 0, 0, 0)
 }
-case class PassiveDoublehandEffect(dh: Int) extends SkillEffect with NoRestrictions
+case class PassiveDoublehandEffect(dh: Int, accuracy: Int) extends SkillEffect with NoRestrictions
 object PassiveDoublehandEffect {
   def decode(xs: List[Int]): SkillEffect = xs match {
-    case List(a) => PassiveDoublehandEffect(a)
+    case List(a) => PassiveDoublehandEffect(a, 0)
+    // TODO handle b and c: accuracy, c == 2 => 2h
+    case List(a, b, c) =>
+      if (c == 2) Passive2HEffect(a, b)
+      else PassiveDoublehandEffect(a, b)
   }
 }
+case class Passive2HEffect(dh: Int, accuracy: Int) extends SkillEffect with NoRestrictions
 case class PassiveEquipStatEffect(
   cond: Int,
   hp:   Int,

@@ -130,7 +130,7 @@ for x in skills.keys():
   json.dump(skills[x], file("json/skill/%s.json" % x, "w"))
 
 for x in espers.keys():
-  if "names" in espers[x] and x in esperbs:
+  if "names" in espers[x] and x in esperbs and espers[x]["names"] is not None:
     esperdex[espers[x]['names'][0]] = x
     json.dump(espers[x], file("json/esper/%s.json" % x, "w"))
     json.dump(esperbs[x], file("json/esperboard/%s.json" % x, "w"))

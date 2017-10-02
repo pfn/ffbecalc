@@ -1,15 +1,51 @@
 {
-  "Crush Helm": {
+  "\u81ea\u7136\u3092\u611b\u3059\u308b\u9b54\u6cd5\u5263\u58eb": {
     "skill_names": [
-      "Crush Helm"
+      "\u81ea\u7136\u3092\u611b\u3059\u308b\u9b54\u6cd5\u5263\u58eb"
     ], 
-    "effects_raw": [], 
-    "id": "504204910", 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            6, 
+            [
+              2, 
+              40, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            6, 
+            [
+              53, 
+              0, 
+              0, 
+              40, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504220680", 
     "effects": [
-      "Physical damage (1.9x, ATK) to one enemy", 
-      "Reduce DEF and SPR by 40% for 3 turns to one enemy"
+      "Increase ATK by 40% when equipped with a Sword", 
+      "Increase MAG by 40% when equipped with a Robe"
     ], 
-    "rarity": 7
+    "rarity": 8
   }, 
   "Equip Staff": {
     "skill_names": [
@@ -36,6 +72,18 @@
     ], 
     "rarity": 5
   }, 
+  "Crush Helm": {
+    "skill_names": [
+      "Crush Helm"
+    ], 
+    "effects_raw": [], 
+    "id": "504204910", 
+    "effects": [
+      "Physical damage (1.9x, ATK) to one enemy", 
+      "Reduce DEF and SPR by 40% for 3 turns to one enemy"
+    ], 
+    "rarity": 7
+  }, 
   "Libra": {
     "id": "504010010", 
     "effects_raw": [], 
@@ -47,6 +95,18 @@
       "Libra"
     ], 
     "magic_type": "White"
+  }, 
+  "Frozen Hurricane": {
+    "skill_names": [
+      "Frozen Hurricane"
+    ], 
+    "effects_raw": [], 
+    "id": "504217610", 
+    "effects": [
+      "Magic ice damage (2.67x, MAG) to all enemies (ignore cover and reflect)", 
+      "Inflict Stop (50%) for 3 turns on all enemies"
+    ], 
+    "rarity": 8
   }, 
   "Rhythmic Flair": {
     "skill_names": [
@@ -500,6 +560,38 @@
     ], 
     "rarity": 2
   }, 
+  "Silence Resistance": {
+    "skill_names": [
+      "Silence Resistance"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            2, 
+            [
+              0, 
+              0, 
+              0, 
+              100, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504213200", 
+    "effects": [
+      "Increase resistance to Silence by 100%"
+    ], 
+    "rarity": 3
+  }, 
   "Stone": {
     "id": "504020060", 
     "effects_raw": [], 
@@ -650,6 +742,37 @@
     ], 
     "rarity": 2
   }, 
+  "Girder": {
+    "skill_names": [
+      "Girder"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              10, 
+              0, 
+              0, 
+              10, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504217640", 
+    "effects": [
+      "Increase DEF and HP by 10%"
+    ], 
+    "rarity": 5
+  }, 
   "Barrage": {
     "skill_names": [
       "Barrage"
@@ -703,11 +826,43 @@
     ], 
     "rarity": 5
   }, 
+  "\u30a2\u30f3\u30c1\u30c7\u30a3\u30b9\u30a2\u30b9\u30bf\u30fc": {
+    "skill_names": [
+      "\u30a2\u30f3\u30c1\u30c7\u30a3\u30b9\u30a2\u30b9\u30bf\u30fc"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            2, 
+            [
+              100, 
+              100, 
+              100, 
+              100, 
+              100, 
+              100, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504219950", 
+    "effects": [
+      "Increase resistance to Poison, Blind, Sleep, Silence, Paralyze and Confusion by 100%"
+    ], 
+    "rarity": 7
+  }, 
   "Banish": {
     "id": "504010060", 
     "effects_raw": [], 
     "effects": [
-      "Magic light damage (1.2x, MAG) to one enemy"
+      "Magic light damage (1.2x, SPR) to one enemy"
     ], 
     "rarity": 2, 
     "skill_names": [
@@ -715,23 +870,21 @@
     ], 
     "magic_type": "White"
   }, 
-  "ATK +10%": {
+  "Martial Arts Mastery": {
     "skill_names": [
-      "ATK +10%"
+      "Martial Arts Mastery"
     ], 
     "effects_raw": [
       {
         "unit_restriction": null, 
         "effects": [
           [
-            1, 
+            0, 
             3, 
-            1, 
+            6, 
             [
-              10, 
-              0, 
-              0, 
-              0, 
+              16, 
+              50, 
               0, 
               0, 
               0
@@ -740,11 +893,11 @@
         ]
       }
     ], 
-    "id": "504100070", 
+    "id": "504211340", 
     "effects": [
-      "Increase ATK by 10%"
+      "Increase ATK by 50% when equipped with a Fist"
     ], 
-    "rarity": 1
+    "rarity": 6
   }, 
   "Adventurer IV": {
     "skill_names": [
@@ -839,6 +992,37 @@
     ], 
     "rarity": 6
   }, 
+  "Strategist's Ingenuity": {
+    "skill_names": [
+      "Strategist's Ingenuity"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              30, 
+              30, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504218390", 
+    "effects": [
+      "Increase MAG and SPR by 30%"
+    ], 
+    "rarity": 8
+  }, 
   "Stone Blade": {
     "skill_names": [
       "Stone Blade"
@@ -861,43 +1045,16 @@
     ], 
     "rarity": 2
   }, 
-  "Defender": {
+  "Manufacted Nethicite": {
     "skill_names": [
-      "Defender"
+      "Manufacted Nethicite"
     ], 
-    "effects_raw": [
-      {
-        "unit_restriction": [
-          213000105, 
-          213000204, 
-          213000304, 
-          213000403, 
-          213000504, 
-          213000603
-        ], 
-        "effects": [
-          [
-            0, 
-            3, 
-            1, 
-            [
-              0, 
-              10, 
-              0, 
-              10, 
-              0, 
-              0, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "id": "504202500", 
+    "effects_raw": [], 
+    "id": "504209500", 
     "effects": [
-      "Increase DEF and SPR by 10%"
+      "Nullify next spell(s) for one turn on self"
     ], 
-    "rarity": 5
+    "rarity": 7
   }, 
   "Adventurer II": {
     "skill_names": [
@@ -954,36 +1111,36 @@
     ], 
     "rarity": 4
   }, 
-  "Mana's Protection": {
+  "Seething Cauldron": {
     "skill_names": [
-      "Mana's Protection"
+      "Seething Cauldron"
     ], 
     "effects_raw": [
       {
         "unit_restriction": null, 
         "effects": [
           [
-            0, 
+            1, 
             3, 
             1, 
             [
               0, 
+              0, 
               10, 
               0, 
               0, 
-              0, 
-              5, 
+              10, 
               0
             ]
           ]
         ]
       }
     ], 
-    "id": "504203810", 
+    "id": "504205460", 
     "effects": [
-      "Increase DEF by 10% and MP by 5%"
+      "Increase MAG and MP by 10%"
     ], 
-    "rarity": 5
+    "rarity": 6
   }, 
   "Silence": {
     "id": "504030100", 
@@ -997,36 +1154,36 @@
     ], 
     "magic_type": "Green"
   }, 
-  "Malboro's Whisper": {
+  "Azure Armor": {
     "skill_names": [
-      "Malboro's Whisper"
+      "Azure Armor"
     ], 
     "effects_raw": [
       {
         "unit_restriction": null, 
         "effects": [
           [
-            1, 
+            0, 
             3, 
             1, 
             [
               0, 
               0, 
-              30, 
               0, 
-              20, 
+              10, 
               0, 
+              5, 
               0
             ]
           ]
         ]
       }
     ], 
-    "id": "1500000019", 
+    "id": "504206850", 
     "effects": [
-      "Increase MAG by 30% and HP by 20%"
+      "Increase SPR by 10% and MP by 5%"
     ], 
-    "rarity": 8
+    "rarity": 5
   }, 
   "Beast Killer": {
     "skill_names": [
@@ -1075,9 +1232,7 @@
     "effects_raw": [
       {
         "unit_restriction": [
-          254000503, 
-          254000504, 
-          254000505
+          254000503
         ], 
         "effects": [
           [
@@ -1160,6 +1315,65 @@
     ], 
     "rarity": 8
   }, 
+  "Buster Form": {
+    "skill_names": [
+      "Buster Form"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            13, 
+            [
+              100, 
+              25, 
+              2
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504214990", 
+    "effects": [
+      "Increase equipment ATK by 100% when armed with a single weapon", 
+      "Increase Accuracy by 25%"
+    ], 
+    "rarity": 8
+  }, 
+  "Broadminded": {
+    "skill_names": [
+      "Broadminded"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              30, 
+              10, 
+              0, 
+              0, 
+              10, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504217950", 
+    "effects": [
+      "Increase ATK by 30% and DEF and HP by 10%"
+    ], 
+    "rarity": 7
+  }, 
   "Toxic Rain": {
     "skill_names": [
       "Toxic Rain"
@@ -1171,6 +1385,59 @@
       "Inflict 3 random status effects (100%) to all enemies"
     ], 
     "rarity": 8
+  }, 
+  "\u5927\u9b54\u9053\u58eb\u306e\u8a60\u5531\u6cd5": {
+    "skill_names": [
+      "\u5927\u9b54\u9053\u58eb\u306e\u8a60\u5531\u6cd5"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              15, 
+              15, 
+              15, 
+              0
+            ]
+          ], 
+          [
+            1, 
+            3, 
+            32, 
+            [
+              5
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504220660", 
+    "effects": [
+      "Increase SPR, HP and MP by 15%", 
+      "Recover MP (5%) per turn"
+    ], 
+    "rarity": 8
+  }, 
+  "Biora": {
+    "id": "504020180", 
+    "effects_raw": [], 
+    "effects": [
+      "Magic dark damage (1.25x, MAG) to all enemies", 
+      "Inflict Poison (15%) on all enemies"
+    ], 
+    "rarity": 5, 
+    "skill_names": [
+      "Biora"
+    ], 
+    "magic_type": "Black"
   }, 
   "Large Sword Mastery": {
     "skill_names": [
@@ -1248,6 +1515,38 @@
     ], 
     "rarity": 5
   }, 
+  "Blind Resistance": {
+    "skill_names": [
+      "Blind Resistance"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            2, 
+            [
+              0, 
+              100, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504215440", 
+    "effects": [
+      "Increase resistance to Blind by 100%"
+    ], 
+    "rarity": 3
+  }, 
   "Hydaelyn Guard": {
     "skill_names": [
       "Hydaelyn Guard"
@@ -1279,6 +1578,38 @@
       "Increase resistance to all elements by 10%"
     ], 
     "rarity": 6
+  }, 
+  "Light Resistance +20%": {
+    "skill_names": [
+      "Light Resistance +20%"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            3, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              20, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504216040", 
+    "effects": [
+      "Increase resistance to Light by 20%"
+    ], 
+    "rarity": 3
   }, 
   "Mentality": {
     "skill_names": [
@@ -1323,6 +1654,38 @@
     ], 
     "rarity": 6
   }, 
+  "Hammersmith": {
+    "skill_names": [
+      "Hammersmith"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            6, 
+            [
+              9, 
+              30, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504219880", 
+    "effects": [
+      "Increase ATK by 30% when equipped with a Hammer"
+    ], 
+    "rarity": 5
+  }, 
   "Barthunder": {
     "id": "504030050", 
     "effects_raw": [], 
@@ -1365,6 +1728,67 @@
       "Increase HP by 10% and DEF by 5%"
     ], 
     "rarity": 5
+  }, 
+  "Petrification Resistance": {
+    "skill_names": [
+      "Petrification Resistance"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            2, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              100
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504215170", 
+    "effects": [
+      "Increase resistance to Petrify by 100%"
+    ], 
+    "rarity": 3
+  }, 
+  "\u5996\u5200\u306e\u77e5\u8b58": {
+    "skill_names": [
+      "\u5996\u5200\u306e\u77e5\u8b58"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            6, 
+            [
+              4, 
+              20, 
+              0, 
+              30, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504219930", 
+    "effects": [
+      "Increase MAG by 30% and ATK by 20% when equipped with a Katana"
+    ], 
+    "rarity": 7
   }, 
   "Healer's Wisdom": {
     "skill_names": [
@@ -1540,6 +1964,37 @@
     ], 
     "rarity": 6
   }, 
+  "\u771f\u30fb\u8ce2\u4eba\u306e\u667a\u6167": {
+    "skill_names": [
+      "Shin-Sage's Prajna"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              25, 
+              0, 
+              15, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504219010", 
+    "effects": [
+      "Increase MAG by 25% and HP by 15%"
+    ], 
+    "rarity": 7
+  }, 
   "White Knight": {
     "skill_names": [
       "White Knight"
@@ -1607,47 +2062,36 @@
     ], 
     "magic_type": "Green"
   }, 
-  "Dark Knight's Soul": {
+  "\u30b8\u30a7\u30de\u306e\u9a0e\u58eb": {
     "skill_names": [
-      "Dark Knight's Soul"
+      "\u30b8\u30a7\u30de\u306e\u9a0e\u58eb"
     ], 
     "effects_raw": [
       {
         "unit_restriction": null, 
         "effects": [
           [
-            1, 
+            0, 
             3, 
-            6, 
-            [
-              2, 
-              30, 
-              0, 
-              0, 
-              0
-            ]
-          ], 
-          [
             1, 
-            3, 
-            6, 
             [
-              52, 
-              20, 
-              0, 
-              0, 
+              15, 
+              15, 
+              15, 
+              15, 
+              10, 
+              10, 
               0
             ]
           ]
         ]
       }
     ], 
-    "id": "504205260", 
+    "id": "504220270", 
     "effects": [
-      "Increase ATK by 30% when equipped with a Sword", 
-      "Increase ATK by 20% when equipped with a Heavy Armor"
+      "Increase ATK, DEF, MAG and SPR by 15% and HP and MP by 10%"
     ], 
-    "rarity": 7
+    "rarity": 8
   }, 
   "Proud Fencer": {
     "skill_names": [
@@ -1693,37 +2137,6 @@
     ], 
     "rarity": 8
   }, 
-  "Seething Cauldron": {
-    "skill_names": [
-      "Seething Cauldron"
-    ], 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            1, 
-            [
-              0, 
-              0, 
-              10, 
-              0, 
-              0, 
-              10, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "id": "504205460", 
-    "effects": [
-      "Increase MAG and MP by 10%"
-    ], 
-    "rarity": 6
-  }, 
   "Doublehand": {
     "skill_names": [
       "Doublehand"
@@ -1737,7 +2150,9 @@
             3, 
             13, 
             [
-              50
+              50, 
+              25, 
+              0
             ]
           ]
         ]
@@ -1745,7 +2160,8 @@
     ], 
     "id": "504101360", 
     "effects": [
-      "Increase equipment ATK by 50% when armed with a single one-handed weapon"
+      "Increase equipment ATK by 50% when armed with a single one-handed weapon", 
+      "Increase Accuracy by 25%"
     ], 
     "rarity": 8
   }, 
@@ -1777,6 +2193,38 @@
       "Increase MAG by 50% when equipped with a Sword"
     ], 
     "rarity": 5
+  }, 
+  "Mage's Resolution": {
+    "skill_names": [
+      "Mage's Resolution"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            6, 
+            [
+              6, 
+              0, 
+              20, 
+              40, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504214930", 
+    "effects": [
+      "Increase MAG by 40% and DEF by 20% when equipped with a Rod"
+    ], 
+    "rarity": 7
   }, 
   "Auto-Shell": {
     "skill_names": [
@@ -1845,14 +2293,46 @@
     ], 
     "rarity": 1
   }, 
-  "Drink": {
+  "\u98a8\u5c5e\u6027\u8010\u6027+20%": {
     "skill_names": [
-      "Drink"
+      "\u98a8\u5c5e\u6027\u8010\u6027+20%"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            3, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              20, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504220650", 
+    "effects": [
+      "Increase resistance to Wind by 20%"
+    ], 
+    "rarity": 3
+  }, 
+  "Blizzara Blade": {
+    "skill_names": [
+      "Blizzara Blade"
     ], 
     "effects_raw": [], 
-    "id": "504200090", 
+    "id": "504200620", 
     "effects": [
-      "Allow use of drinkable items"
+      "Hybrid ice damage (2.1x, ATK & MAG) to one enemy"
     ], 
     "rarity": 3
   }, 
@@ -1952,6 +2432,48 @@
       "Reduce ATK, DEF, MAG and SPR by 35% for 3 turns to all enemies"
     ], 
     "rarity": 8
+  }, 
+  "Art of Purification": {
+    "skill_names": [
+      "Art of Purification"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              10, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            11, 
+            [
+              12, 
+              0, 
+              20
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504219230", 
+    "effects": [
+      "Increase MAG by 10%", 
+      "Increase magic damage against Reapers by 20%"
+    ], 
+    "rarity": 5
   }, 
   "Twinspell": {
     "skill_names": [
@@ -2057,10 +2579,29 @@
   }, 
   "Casanova": {
     "skill_names": [
-      "Casanova", 
-      "HP +15%"
+      "HP +15%", 
+      "Casanova"
     ], 
     "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              15, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }, 
       {
         "unit_restriction": [
           203000704, 
@@ -2081,33 +2622,14 @@
             ]
           ]
         ]
-      }, 
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            1, 
-            [
-              0, 
-              0, 
-              0, 
-              0, 
-              15, 
-              0, 
-              0
-            ]
-          ]
-        ]
       }
     ], 
     "id": "1500000023", 
     "effects": [
-      "70% chance to intercept attacks on a female ally, reducing all damage by 35%", 
-      "Increase HP by 15%"
+      "Increase HP by 15%", 
+      "70% chance to intercept attacks on a female ally, reducing all damage by 35%"
     ], 
-    "rarity": 2
+    "rarity": 6
   }, 
   "Spirit Slayer": {
     "skill_names": [
@@ -2183,9 +2705,9 @@
     ], 
     "rarity": 5
   }, 
-  "\u307c\u3046\u3048\u3044\u307b\u3093\u306e\u3046": {
+  "Dark Knight's Soul": {
     "skill_names": [
-      "\u307c\u3046\u3048\u3044\u307b\u3093\u306e\u3046"
+      "Dark Knight's Soul"
     ], 
     "effects_raw": [
       {
@@ -2194,38 +2716,22 @@
           [
             1, 
             3, 
-            4, 
+            6, 
             [
               2, 
-              60, 
-              9000, 
-              50, 
+              30, 
               0, 
-              -1
+              0, 
+              0
             ]
           ], 
           [
             1, 
             3, 
-            4, 
+            6, 
             [
-              4, 
-              60, 
-              9000, 
-              50, 
-              0, 
-              -1
-            ]
-          ], 
-          [
-            0, 
-            3, 
-            1, 
-            [
-              40, 
-              0, 
-              0, 
-              0, 
+              52, 
+              20, 
               0, 
               0, 
               0
@@ -2234,13 +2740,23 @@
         ]
       }
     ], 
-    "id": "504206070", 
+    "id": "504205260", 
     "effects": [
-      "Increase DEF by 60% when HP drops below 50% (max 9000x)", 
-      "Increase SPR by 60% when HP drops below 50% (max 9000x)", 
-      "Increase ATK by 40%"
+      "Increase ATK by 30% when equipped with a Sword", 
+      "Increase ATK by 20% when equipped with a Heavy Armor"
     ], 
-    "rarity": 8
+    "rarity": 7
+  }, 
+  "Drink": {
+    "skill_names": [
+      "Drink"
+    ], 
+    "effects_raw": [], 
+    "id": "504200090", 
+    "effects": [
+      "Allow use of drinkable items"
+    ], 
+    "rarity": 3
   }, 
   "Equip L Sword": {
     "skill_names": [
@@ -2375,6 +2891,37 @@
     ], 
     "rarity": 5
   }, 
+  "Full Moon": {
+    "skill_names": [
+      "Full Moon"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              5, 
+              15, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "1500000026", 
+    "effects": [
+      "Increase HP by 15% and SPR by 5%"
+    ], 
+    "rarity": 5
+  }, 
   "Bravery": {
     "id": "504030210", 
     "effects_raw": [], 
@@ -2395,17 +2942,9 @@
       {
         "unit_restriction": [
           401000205, 
-          401000206, 
-          401000207, 
           401000305, 
-          401000306, 
-          401000307, 
           401000404, 
-          401000405, 
-          401000406, 
-          401000503, 
-          401000504, 
-          401000505
+          401000503
         ], 
         "effects": [
           [
@@ -2560,7 +3099,7 @@
     "effects_raw": [], 
     "id": "504202370", 
     "effects": [
-      "Cure Silence, Poison and Blind for self"
+      "Cure Poison, Blind and Silence for self"
     ], 
     "rarity": 4
   }, 
@@ -2595,6 +3134,37 @@
       "Increase resistance to Light by 15%"
     ], 
     "rarity": 2
+  }, 
+  "\u8853\u7b56": {
+    "skill_names": [
+      "\u8853\u7b56"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              10, 
+              0, 
+              5, 
+              5, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504220630", 
+    "effects": [
+      "Increase MAG by 10% and HP and MP by 5%"
+    ], 
+    "rarity": 5
   }, 
   "Heaven's Guidance": {
     "skill_names": [
@@ -2635,7 +3205,7 @@
     "id": "504010210", 
     "effects_raw": [], 
     "effects": [
-      "Magic light damage (2.3x, MAG) to one enemy"
+      "Magic light damage (2.3x, SPR) to one enemy"
     ], 
     "rarity": 7, 
     "skill_names": [
@@ -2914,9 +3484,9 @@
     ], 
     "magic_type": "Green"
   }, 
-  "Regenerator": {
+  "Barrier Master": {
     "skill_names": [
-      "Regenerator"
+      "Barrier Master"
     ], 
     "effects_raw": [
       {
@@ -2925,21 +3495,41 @@
           [
             0, 
             3, 
-            49, 
+            1, 
             [
-              20, 
-              3, 
-              910320
+              0, 
+              15, 
+              0, 
+              15, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            3, 
+            [
+              15, 
+              15, 
+              15, 
+              15, 
+              15, 
+              15, 
+              15, 
+              15
             ]
           ]
         ]
       }
     ], 
-    "id": "1500000021", 
+    "id": "504216730", 
     "effects": [
-      "20% chance to counter physical attacks with Regenerator (910320) to self"
+      "Increase DEF and SPR by 15%", 
+      "Increase resistance to all elements by 15%"
     ], 
-    "rarity": 5
+    "rarity": 7
   }, 
   "Cure": {
     "id": "504010020", 
@@ -3089,6 +3679,65 @@
     ], 
     "rarity": 6
   }, 
+  "Cane Mastery": {
+    "skill_names": [
+      "Cane Mastery"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            6, 
+            [
+              5, 
+              0, 
+              0, 
+              0, 
+              50, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504216060", 
+    "effects": [
+      "Increase SPR by 50% when equipped with a Staff"
+    ], 
+    "rarity": 6
+  }, 
+  "Reactive Defense": {
+    "skill_names": [
+      "Reactive Defense"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            49, 
+            [
+              20, 
+              3, 
+              910321
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "1500000022", 
+    "effects": [
+      "20% chance to counter physical attacks with Reactive Defense (910321) to self"
+    ], 
+    "rarity": 7
+  }, 
   "Undead Killer": {
     "skill_names": [
       "Undead Killer"
@@ -3140,6 +3789,33 @@
       "Enable unit to equip Fists"
     ], 
     "rarity": 5
+  }, 
+  "Man-Eater+": {
+    "skill_names": [
+      "Man-Eater+"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            1, 
+            11, 
+            [
+              5, 
+              75, 
+              75
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504219910", 
+    "effects": [
+      "Increase physical and magic damage against Humans by 75%"
+    ], 
+    "rarity": 6
   }, 
   "First Strike": {
     "skill_names": [
@@ -3266,9 +3942,9 @@
     ], 
     "rarity": 5
   }, 
-  "Reactive Defense": {
+  "Ice Resistance +20%": {
     "skill_names": [
-      "Reactive Defense"
+      "Ice Resistance +20%"
     ], 
     "effects_raw": [
       {
@@ -3277,21 +3953,26 @@
           [
             0, 
             3, 
-            49, 
+            3, 
             [
+              0, 
               20, 
-              3, 
-              910321
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
             ]
           ]
         ]
       }
     ], 
-    "id": "1500000022", 
+    "id": "504219240", 
     "effects": [
-      "20% chance to counter physical attacks with Reactive Defense (910321) to self"
+      "Increase resistance to Ice by 20%"
     ], 
-    "rarity": 7
+    "rarity": 3
   }, 
   "Equip Instrument": {
     "skill_names": [
@@ -3341,6 +4022,33 @@
     ], 
     "rarity": 2
   }, 
+  "Dragon Killer+": {
+    "skill_names": [
+      "Dragon Killer+"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            11, 
+            [
+              7, 
+              75, 
+              75
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504211360", 
+    "effects": [
+      "Increase physical and magic damage against Dragons by 75%"
+    ], 
+    "rarity": 6
+  }, 
   "Barwatera": {
     "id": "504030170", 
     "effects_raw": [], 
@@ -3353,17 +4061,85 @@
     ], 
     "magic_type": "Green"
   }, 
-  "Gravity": {
-    "id": "504020150", 
-    "effects_raw": [], 
-    "effects": [
-      "50% HP damage to one enemy"
-    ], 
-    "rarity": 4, 
+  "Yevon's Wisdom": {
     "skill_names": [
-      "Gravity"
+      "Yevon's Wisdom"
     ], 
-    "magic_type": "Black"
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              15, 
+              15, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            21, 
+            [
+              10
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504219080", 
+    "effects": [
+      "Increase HP and MP by 15%", 
+      "Increase Esper summon damage by 10%"
+    ], 
+    "rarity": 7
+  }, 
+  "Dual Wield+": {
+    "skill_names": [
+      "Dual Wield+"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            14, 
+            [
+              "none"
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            1, 
+            [
+              15, 
+              0, 
+              15, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504219270", 
+    "effects": [
+      "Enable unit to equip two one-handed weapons", 
+      "Increase ATK and MAG by 15%"
+    ], 
+    "rarity": 8
   }, 
   "Divine Seal": {
     "skill_names": [
@@ -3419,6 +4195,18 @@
     ], 
     "rarity": 8
   }, 
+  "\u30ea\u30d5\u30ec\u30b7\u30e5": {
+    "id": "504010380", 
+    "effects_raw": [], 
+    "effects": [
+      "Restore 10 (+0.3x, MP) MP split over 3 turns to one ally"
+    ], 
+    "rarity": 5, 
+    "skill_names": [
+      "\u30ea\u30d5\u30ec\u30b7\u30e5"
+    ], 
+    "magic_type": "White"
+  }, 
   "Tempered Shield": {
     "skill_names": [
       "Tempered Shield"
@@ -3458,17 +4246,9 @@
       {
         "unit_restriction": [
           401000205, 
-          401000206, 
-          401000207, 
           401000305, 
-          401000306, 
-          401000307, 
           401000404, 
-          401000405, 
-          401000406, 
-          401000503, 
-          401000504, 
-          401000505
+          401000503
         ], 
         "effects": [
           [
@@ -3647,8 +4427,8 @@
   }, 
   "Water Maiden Blessing": {
     "skill_names": [
-      "Water Maiden Blessing", 
-      "SPR +15%"
+      "SPR +15%", 
+      "Water Maiden Blessing"
     ], 
     "effects_raw": [
       {
@@ -3673,10 +4453,50 @@
     ], 
     "id": "1500000024", 
     "effects": [
-      "Restore 3000 (+8x, Heal) HP split over 3 turns to all allies", 
-      "Increase SPR by 15%"
+      "Increase SPR by 15%", 
+      "Restore 3000 (+8x, Heal) HP split over 3 turns to all allies"
     ], 
-    "rarity": 2
+    "rarity": 6
+  }, 
+  "Proof of Talent": {
+    "skill_names": [
+      "Proof of Talent"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              30, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            20, 
+            [
+              25
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504215360", 
+    "effects": [
+      "Increase MAG by 30%", 
+      "Increase chance of countering by 25%"
+    ], 
+    "rarity": 7
   }, 
   "MP +20%": {
     "skill_names": [
@@ -3783,6 +4603,46 @@
     ], 
     "rarity": 7
   }, 
+  "\u30e0\u30fc\u30c9\u30e1\u30fc\u30ab\u30fc": {
+    "skill_names": [
+      "\u30e0\u30fc\u30c9\u30e1\u30fc\u30ab\u30fc"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              30, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            56, 
+            [
+              505100
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504221550", 
+    "effects": [
+      "Increase HP by 30%", 
+      "Use \u30e0\u30fc\u30c9\u30e1\u30fc\u30ab\u30fc (505100) at the start of a battle"
+    ], 
+    "rarity": 8
+  }, 
   "HP +10%": {
     "skill_names": [
       "HP +10%"
@@ -3877,9 +4737,9 @@
     ], 
     "rarity": 5
   }, 
-  "Seal of Destruction": {
+  "\u307c\u3046\u3048\u3044\u307b\u3093\u306e\u3046": {
     "skill_names": [
-      "Seal of Destruction"
+      "\u307c\u3046\u3048\u3044\u307b\u3093\u306e\u3046"
     ], 
     "effects_raw": [
       {
@@ -3888,13 +4748,39 @@
           [
             1, 
             3, 
+            4, 
+            [
+              2, 
+              60, 
+              9000, 
+              50, 
+              0, 
+              -1
+            ]
+          ], 
+          [
+            1, 
+            3, 
+            4, 
+            [
+              4, 
+              60, 
+              9000, 
+              50, 
+              0, 
+              -1
+            ]
+          ], 
+          [
+            0, 
+            3, 
             1, 
             [
-              20, 
+              40, 
               0, 
-              20, 
               0, 
-              10, 
+              0, 
+              0, 
               0, 
               0
             ]
@@ -3902,11 +4788,44 @@
         ]
       }
     ], 
-    "id": "504201950", 
+    "id": "504206070", 
     "effects": [
-      "Increase ATK and MAG by 20% and HP by 10%"
+      "Increase DEF by 60% when HP drops below 50% (max 9000x)", 
+      "Increase SPR by 60% when HP drops below 50% (max 9000x)", 
+      "Increase ATK by 40%"
     ], 
-    "rarity": 6
+    "rarity": 8
+  }, 
+  "Spirit": {
+    "skill_names": [
+      "Spirit"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              10, 
+              0, 
+              10, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504217630", 
+    "effects": [
+      "Increase SPR and MP by 10%"
+    ], 
+    "rarity": 5
   }, 
   "Thundaga Blade": {
     "skill_names": [
@@ -4246,6 +5165,48 @@
     ], 
     "rarity": 3
   }, 
+  "\u7363\u4eba\u306e\u5fc3": {
+    "skill_names": [
+      "\u7363\u4eba\u306e\u5fc3"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            6, 
+            [
+              16, 
+              30, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            6, 
+            [
+              50, 
+              30, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504220280", 
+    "effects": [
+      "Increase ATK by 30% when equipped with a Fist", 
+      "Increase ATK by 30% when equipped with a Cloth"
+    ], 
+    "rarity": 8
+  }, 
   "Renewal": {
     "skill_names": [
       "Auto-Refresh"
@@ -4270,6 +5231,38 @@
       "Recover MP (5%) per turn"
     ], 
     "rarity": 5
+  }, 
+  "Fire Resistance +15%": {
+    "skill_names": [
+      "Fire Resistance +15%"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            3, 
+            [
+              15, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504216400", 
+    "effects": [
+      "Increase resistance to Fire by 15%"
+    ], 
+    "rarity": 2
   }, 
   "EVO MAG +10%": {
     "skill_names": [
@@ -4327,6 +5320,53 @@
     ], 
     "rarity": 2
   }, 
+  "Thunder Defense": {
+    "skill_names": [
+      "Thunder Defense"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              10, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            3, 
+            [
+              0, 
+              0, 
+              5, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504216380", 
+    "effects": [
+      "Increase HP by 10%", 
+      "Increase resistance to Lightning by 5%"
+    ], 
+    "rarity": 5
+  }, 
   "Stonra": {
     "id": "504020130", 
     "effects_raw": [], 
@@ -4352,36 +5392,36 @@
     ], 
     "magic_type": "Black"
   }, 
-  "Azure Armor": {
+  "Malboro's Whisper": {
     "skill_names": [
-      "Azure Armor"
+      "Malboro's Whisper"
     ], 
     "effects_raw": [
       {
         "unit_restriction": null, 
         "effects": [
           [
-            0, 
+            1, 
             3, 
             1, 
             [
               0, 
               0, 
+              30, 
               0, 
-              10, 
+              20, 
               0, 
-              5, 
               0
             ]
           ]
         ]
       }
     ], 
-    "id": "504206850", 
+    "id": "1500000019", 
     "effects": [
-      "Increase SPR by 10% and MP by 5%"
+      "Increase MAG by 30% and HP by 20%"
     ], 
-    "rarity": 5
+    "rarity": 8
   }, 
   "Great Earplugs": {
     "skill_names": [
@@ -4469,9 +5509,7 @@
       }, 
       {
         "unit_restriction": [
-          254001003, 
-          254001004, 
-          254001005
+          254001003
         ], 
         "effects": [
           [
@@ -4565,6 +5603,38 @@
       "Increase MAG by 10% and SPR by 5%"
     ], 
     "rarity": 5
+  }, 
+  "Null Disease": {
+    "skill_names": [
+      "Null Disease"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            2, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              100, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504216900", 
+    "effects": [
+      "Increase resistance to Disease by 100%"
+    ], 
+    "rarity": 3
   }, 
   "MAG +30%": {
     "skill_names": [
@@ -4794,6 +5864,110 @@
     ], 
     "rarity": 8
   }, 
+  "Powerful": {
+    "skill_names": [
+      "Powerful"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              10, 
+              0, 
+              0, 
+              0, 
+              0, 
+              10, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504215190", 
+    "effects": [
+      "Increase ATK and MP by 10%"
+    ], 
+    "rarity": 5
+  }, 
+  "\u30d0\u30c8\u30eb\u30c9\u30e9\u30f3\u30ab\u30fc": {
+    "skill_names": [
+      "\u30d0\u30c8\u30eb\u30c9\u30e9\u30f3\u30ab\u30fc"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              30, 
+              0, 
+              0, 
+              0, 
+              20, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504220140", 
+    "effects": [
+      "Increase ATK by 30% and HP by 20%"
+    ], 
+    "rarity": 8
+  }, 
+  "Aerora Blade": {
+    "skill_names": [
+      "Aerora Blade"
+    ], 
+    "effects_raw": [], 
+    "id": "504200650", 
+    "effects": [
+      "Hybrid wind damage (2.1x, ATK & MAG) to one enemy"
+    ], 
+    "rarity": 3
+  }, 
+  "HP+20%": {
+    "skill_names": [
+      "HP +20%"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              20, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504100020", 
+    "effects": [
+      "Increase HP by 20%"
+    ], 
+    "rarity": 3
+  }, 
   "Vengeful Wrath": {
     "skill_names": [
       "Vengeful Wrath"
@@ -5019,6 +6193,66 @@
     ], 
     "rarity": 4
   }, 
+  "Katana Mastery": {
+    "skill_names": [
+      "Katana Mastery"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            6, 
+            [
+              4, 
+              50, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504201670", 
+    "effects": [
+      "Increase ATK by 50% when equipped with a Katana"
+    ], 
+    "rarity": 6
+  }, 
+  "ATK +10%": {
+    "skill_names": [
+      "ATK +10%"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              10, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504100070", 
+    "effects": [
+      "Increase ATK by 10%"
+    ], 
+    "rarity": 1
+  }, 
   "\u3064\u306d\u306b\u3060\u3044\u307c\u3046\u304e\u3087": {
     "skill_names": [
       "\u3064\u306d\u306b\u3060\u3044\u307c\u3046\u304e\u3087"
@@ -5061,6 +6295,37 @@
       "Blindna"
     ], 
     "magic_type": "White"
+  }, 
+  "\u771f\u30fb\u76df\u4e3b\u3078\u306e\u8a93\u3044": {
+    "skill_names": [
+      "Shin-Follower's Oath"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              15, 
+              0, 
+              0, 
+              0, 
+              15, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504218980", 
+    "effects": [
+      "Increase ATK and HP by 15%"
+    ], 
+    "rarity": 4
   }, 
   "Darkra": {
     "id": "504020460", 
@@ -5173,17 +6438,32 @@
     ], 
     "rarity": 5
   }, 
-  "Barstonra": {
-    "id": "504030190", 
-    "effects_raw": [], 
-    "effects": [
-      "Increase resistance to Earth by 50% for 3 turns to all allies"
-    ], 
-    "rarity": 4, 
+  "Counter": {
     "skill_names": [
-      "Barstonra"
+      "Counter"
     ], 
-    "magic_type": "Green"
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            12, 
+            [
+              30, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504101200", 
+    "effects": [
+      "30% chance to counter a physical attack"
+    ], 
+    "rarity": 4
   }, 
   "Fighter": {
     "skill_names": [
@@ -5216,9 +6496,9 @@
     ], 
     "rarity": 5
   }, 
-  "Counter": {
+  "HP Stroll": {
     "skill_names": [
-      "Counter"
+      "HP Stroll"
     ], 
     "effects_raw": [
       {
@@ -5227,9 +6507,52 @@
           [
             1, 
             3, 
-            12, 
+            29, 
             [
-              30, 
+              3, 
+              5, 
+              0, 
+              0, 
+              3
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504101410", 
+    "effects": [
+      "During explorations, recover 5 HP every 3 steps"
+    ], 
+    "rarity": 4
+  }, 
+  "\u771f\u30fb\u53e1\u77e5\u306e\u7d50\u6676": {
+    "skill_names": [
+      "Shin-Shard of Genius"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            6, 
+            [
+              5, 
+              0, 
+              0, 
+              0, 
+              25
+            ]
+          ], 
+          [
+            1, 
+            3, 
+            6, 
+            [
+              53, 
+              0, 
+              25, 
               0, 
               0
             ]
@@ -5237,11 +6560,12 @@
         ]
       }
     ], 
-    "id": "504101200", 
+    "id": "504218970", 
     "effects": [
-      "30% chance to counter a physical attack"
+      "Increase SPR by 25% when equipped with a Staff", 
+      "Increase DEF by 25% when equipped with a Robe"
     ], 
-    "rarity": 4
+    "rarity": 8
   }, 
   "DEF +10%": {
     "skill_names": [
@@ -5273,6 +6597,142 @@
       "Increase DEF by 10%"
     ], 
     "rarity": 1
+  }, 
+  "Freezing Spirit": {
+    "skill_names": [
+      "Freezing Spirit"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              30, 
+              0, 
+              0, 
+              0, 
+              30, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            31, 
+            [
+              25
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504218380", 
+    "effects": [
+      "Increase ATK and HP by 30%", 
+      "Increase the limit burst gauge fill rate by 25%"
+    ], 
+    "rarity": 8
+  }, 
+  "Uncollapsing Will": {
+    "skill_names": [
+      "Uncollapsing Will"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            6, 
+            [
+              2, 
+              40, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            6, 
+            [
+              30, 
+              0, 
+              0, 
+              0, 
+              0, 
+              30, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504219820", 
+    "effects": [
+      "Increase ATK by 40% when equipped with a Sword", 
+      "Increase HP by 30% when equipped with a Light Shield"
+    ], 
+    "rarity": 7
+  }, 
+  "Dragoon's Pride": {
+    "skill_names": [
+      "Dragoon's Pride"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            6, 
+            [
+              10, 
+              30, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            6, 
+            [
+              41, 
+              30, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504216520", 
+    "effects": [
+      "Increase ATK by 30% when equipped with a Spear", 
+      "Increase ATK by 30% when equipped with a Helm"
+    ], 
+    "rarity": 8
   }, 
   "Dualcast": {
     "skill_names": [
@@ -5396,6 +6856,18 @@
     ], 
     "rarity": 1
   }, 
+  "Crazy Day": {
+    "skill_names": [
+      "Crazy Day"
+    ], 
+    "effects_raw": [], 
+    "id": "504216050", 
+    "effects": [
+      "Magic damage (4.5x, MAG) to one enemy (ignore cover and reflect)", 
+      "Reduce resistance to all elements by 35% for 3 turns to one enemy"
+    ], 
+    "rarity": 8
+  }, 
   "Death": {
     "id": "504020280", 
     "effects_raw": [], 
@@ -5518,9 +6990,7 @@
     "effects_raw": [
       {
         "unit_restriction": [
-          254000403, 
-          254000404, 
-          254000405
+          254000403
         ], 
         "effects": [
           [
@@ -5562,6 +7032,83 @@
     ], 
     "rarity": 5
   }, 
+  "\u30d8\u30f4\u30a3\u30ad\u30de\u30a4\u30e9": {
+    "skill_names": [
+      "\u30d8\u30f4\u30a3\u30ad\u30de\u30a4\u30e9"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            6, 
+            [
+              52, 
+              0, 
+              0, 
+              0, 
+              30, 
+              10
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504219940", 
+    "effects": [
+      "Increase SPR by 30% and HP by 10% when equipped with a Heavy Armor"
+    ], 
+    "rarity": 7
+  }, 
+  "Black Impulse": {
+    "skill_names": [
+      "Black Impulse"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              20, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            3, 
+            [
+              25, 
+              25, 
+              25, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504217350", 
+    "effects": [
+      "Increase MAG by 20%", 
+      "Increase resistance to Fire, Ice and Lightning by 25%"
+    ], 
+    "rarity": 6
+  }, 
   "Codex of Sword Master": {
     "skill_names": [
       "Codex of Sword Master"
@@ -5590,6 +7137,37 @@
       "Increase ATK and MAG by 20% when equipped with a Sword"
     ], 
     "rarity": 6
+  }, 
+  "Mana's Protection": {
+    "skill_names": [
+      "Mana's Protection"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              10, 
+              0, 
+              0, 
+              0, 
+              5, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504203810", 
+    "effects": [
+      "Increase DEF by 10% and MP by 5%"
+    ], 
+    "rarity": 5
   }, 
   "Evasiveness - Small": {
     "skill_names": [
@@ -5703,34 +7281,17 @@
     ], 
     "rarity": 8
   }, 
-  "Blade Mastery": {
-    "skill_names": [
-      "Blade Mastery"
-    ], 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            6, 
-            [
-              4, 
-              50, 
-              0, 
-              0, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "id": "504201670", 
+  "Curada": {
+    "id": "504010150", 
+    "effects_raw": [], 
     "effects": [
-      "Increase ATK by 50% when equipped with a Katana"
+      "Restore 800 (+3.4x, Heal) HP to target"
     ], 
-    "rarity": 6
+    "rarity": 5, 
+    "skill_names": [
+      "Curada"
+    ], 
+    "magic_type": "White"
   }, 
   "Action": {
     "skill_names": [
@@ -5875,16 +7436,43 @@
     ], 
     "magic_type": "White"
   }, 
-  "Manufacted Nethicite": {
+  "Defender": {
     "skill_names": [
-      "Manufacted Nethicite"
+      "Defender"
     ], 
-    "effects_raw": [], 
-    "id": "504209500", 
+    "effects_raw": [
+      {
+        "unit_restriction": [
+          213000105, 
+          213000204, 
+          213000304, 
+          213000403, 
+          213000504, 
+          213000603
+        ], 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              10, 
+              0, 
+              10, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504202500", 
     "effects": [
-      "Nullify next spell(s) for one turn on self"
+      "Increase DEF and SPR by 10%"
     ], 
-    "rarity": 7
+    "rarity": 5
   }, 
   "Here We Go": {
     "skill_names": [
@@ -5927,6 +7515,46 @@
       "Increase SPR by 20%"
     ], 
     "rarity": 3
+  }, 
+  "\u771f\u30fb\u4e0d\u7f88\u3078\u306e\u6c17\u7114": {
+    "skill_names": [
+      "Shin-Spirit of Freedom"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              20, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            22, 
+            [
+              15
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504219000", 
+    "effects": [
+      "Increase ATK by 20%", 
+      "15% chance of evading physical attacks"
+    ], 
+    "rarity": 7
   }, 
   "Plant Killer": {
     "skill_names": [
@@ -6122,6 +7750,54 @@
       "Reduce chance of being targeted by 50%"
     ], 
     "rarity": 8
+  }, 
+  "Dream Maiden's Oracle": {
+    "skill_names": [
+      "Dream Maiden's Oracle"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            6, 
+            [
+              6, 
+              0, 
+              0, 
+              20, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            6, 
+            [
+              5, 
+              0, 
+              0, 
+              0, 
+              20, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504215930", 
+    "effects": [
+      "Increase MAG by 20% when equipped with a Rod", 
+      "Increase SPR by 20% when equipped with a Staff"
+    ], 
+    "rarity": 7
   }, 
   "Magic Infuse": {
     "skill_names": [
@@ -6446,6 +8122,84 @@
     ], 
     "rarity": 1
   }, 
+  "Cold Defense": {
+    "skill_names": [
+      "Cold Defense"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              10, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            3, 
+            [
+              0, 
+              5, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504216370", 
+    "effects": [
+      "Increase HP by 10%", 
+      "Increase resistance to Ice by 5%"
+    ], 
+    "rarity": 5
+  }, 
+  "Toughness": {
+    "skill_names": [
+      "Toughness"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              10, 
+              10, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504215200", 
+    "effects": [
+      "Increase SPR and HP by 10%"
+    ], 
+    "rarity": 5
+  }, 
   "Null Paralysis": {
     "skill_names": [
       "Null Paralysis"
@@ -6509,6 +8263,37 @@
     ], 
     "rarity": 8
   }, 
+  "\u5c48\u5f37": {
+    "skill_names": [
+      "\u5c48\u5f37"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              10, 
+              0, 
+              0, 
+              0, 
+              5, 
+              5, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504220620", 
+    "effects": [
+      "Increase ATK by 10% and HP and MP by 5%"
+    ], 
+    "rarity": 5
+  }, 
   "ATK +30%": {
     "skill_names": [
       "ATK +30%"
@@ -6570,6 +8355,38 @@
       "Increase SPR by 20% and HP and MP by 15%"
     ], 
     "rarity": 7
+  }, 
+  "Ice Resistance +15%": {
+    "skill_names": [
+      "Ice Resistance +15%"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            3, 
+            [
+              0, 
+              15, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504215180", 
+    "effects": [
+      "Increase resistance to Ice by 15%"
+    ], 
+    "rarity": 2
   }, 
   "Earth Resistance +15%": {
     "skill_names": [
@@ -6684,6 +8501,35 @@
     ], 
     "magic_type": "Black"
   }, 
+  "Secret Hat": {
+    "skill_names": [
+      "Secret Hat"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            6, 
+            [
+              40, 
+              0, 
+              0, 
+              30, 
+              30
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504217650", 
+    "effects": [
+      "Increase MAG and SPR by 30% when equipped with a Hat"
+    ], 
+    "rarity": 6
+  }, 
   "Bladeblitz": {
     "skill_names": [
       "Bladeblitz"
@@ -6756,6 +8602,18 @@
     ], 
     "rarity": 5
   }, 
+  "Cradle of Horns": {
+    "skill_names": [
+      "Cradle of Horns"
+    ], 
+    "effects_raw": [], 
+    "id": "504219250", 
+    "effects": [
+      "Increase DEF and SPR by 100% for 2 turns to all allies", 
+      "Reduce damage received by 10% to all allies for 2 turns"
+    ], 
+    "rarity": 8
+  }, 
   "Fairy Wisdom": {
     "skill_names": [
       "Fairy Wisdom"
@@ -6795,6 +8653,37 @@
     "id": "504203800", 
     "effects": [
       "Increase ATK by 55% for 2 turns to one ally"
+    ], 
+    "rarity": 6
+  }, 
+  "Seal of Destruction": {
+    "skill_names": [
+      "Seal of Destruction"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              20, 
+              0, 
+              20, 
+              0, 
+              10, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504201950", 
+    "effects": [
+      "Increase ATK and MAG by 20% and HP by 10%"
     ], 
     "rarity": 6
   }, 
@@ -6956,9 +8845,7 @@
     "effects_raw": [
       {
         "unit_restriction": [
-          254000603, 
-          254000604, 
-          254000605
+          254000603
         ], 
         "effects": [
           [
@@ -7083,7 +8970,7 @@
     "effects_raw": [], 
     "id": "504204920", 
     "effects": [
-      "Cure Sleep, Silence, Poison, Paralyze, Disease, Confusion and Blind for all allies"
+      "Cure Poison, Blind, Sleep, Silence, Paralyze, Confusion and Disease for all allies"
     ], 
     "rarity": 6
   }, 
@@ -7233,34 +9120,52 @@
     ], 
     "magic_type": "Black"
   }, 
-  "Martial Arts Mastery": {
+  "\u30cf\u30fc\u30d5\u30a8\u30eb\u30d5\u306e\u5fc3": {
     "skill_names": [
-      "Martial Arts Mastery"
+      "\u30cf\u30fc\u30d5\u30a8\u30eb\u30d5\u306e\u5fc3"
     ], 
     "effects_raw": [
       {
         "unit_restriction": null, 
         "effects": [
           [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              20, 
+              0, 
+              20, 
+              20, 
+              0, 
+              0
+            ]
+          ], 
+          [
             0, 
             3, 
-            6, 
+            3, 
             [
-              16, 
-              50, 
               0, 
               0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              10, 
               0
             ]
           ]
         ]
       }
     ], 
-    "id": "504211340", 
+    "id": "504220290", 
     "effects": [
-      "Increase ATK by 50% when equipped with a Fist"
+      "Increase DEF, SPR and HP by 20%", 
+      "Increase resistance to Light by 10%"
     ], 
-    "rarity": 6
+    "rarity": 7
   }, 
   "MAG +20%": {
     "skill_names": [
@@ -7293,18 +9198,47 @@
     ], 
     "rarity": 3
   }, 
-  "Biora": {
-    "id": "504020180", 
-    "effects_raw": [], 
-    "effects": [
-      "Magic dark damage (1.25x, MAG) to all enemies", 
-      "Inflict Poison (15%) on all enemies"
-    ], 
-    "rarity": 5, 
+  "Power of Purification": {
     "skill_names": [
-      "Biora"
+      "Power of Purification"
     ], 
-    "magic_type": "Black"
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              10, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            11, 
+            [
+              12, 
+              20, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504219220", 
+    "effects": [
+      "Increase ATK by 10%", 
+      "Increase physical damage against Reapers by 20%"
+    ], 
+    "rarity": 5
   }, 
   "Bioga Blade": {
     "skill_names": [
@@ -7431,6 +9365,35 @@
     ], 
     "rarity": 2
   }, 
+  "Secret L Shield": {
+    "skill_names": [
+      "Secret L Shield"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            6, 
+            [
+              30, 
+              0, 
+              30, 
+              0, 
+              30
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504219260", 
+    "effects": [
+      "Increase DEF and SPR by 30% when equipped with a Light Shield"
+    ], 
+    "rarity": 6
+  }, 
   "Firaga": {
     "id": "504020200", 
     "effects_raw": [], 
@@ -7555,6 +9518,18 @@
     ], 
     "rarity": 5
   }, 
+  "Barstonra": {
+    "id": "504030190", 
+    "effects_raw": [], 
+    "effects": [
+      "Increase resistance to Earth by 50% for 3 turns to all allies"
+    ], 
+    "rarity": 4, 
+    "skill_names": [
+      "Barstonra"
+    ], 
+    "magic_type": "Green"
+  }, 
   "Meteor": {
     "id": "504020430", 
     "effects_raw": [], 
@@ -7605,7 +9580,7 @@
     "id": "504010110", 
     "effects_raw": [], 
     "effects": [
-      "Cure Sleep, Silence, Poison, Paralyze, Confusion and Blind for one ally"
+      "Cure Poison, Blind, Sleep, Silence, Paralyze and Confusion for one ally"
     ], 
     "rarity": 4, 
     "skill_names": [
@@ -7654,6 +9629,17 @@
     "id": "504211150", 
     "effects": [
       "Increase resistance to Petrify by 100%"
+    ], 
+    "rarity": 3
+  }, 
+  "Thundara Blade": {
+    "skill_names": [
+      "Thundara Blade"
+    ], 
+    "effects_raw": [], 
+    "id": "504200630", 
+    "effects": [
+      "Hybrid lightning damage (2.1x, ATK & MAG) to one enemy"
     ], 
     "rarity": 3
   }, 
@@ -8057,6 +10043,78 @@
     ], 
     "magic_type": "White"
   }, 
+  "\u771f\u30fb\u30cf\u30a4\u30c7\u30ea\u30f3\u306e\u52a0\u8b77": {
+    "skill_names": [
+      "Shin-Hydaelyn Guard"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            3, 
+            [
+              15, 
+              15, 
+              15, 
+              15, 
+              15, 
+              15, 
+              15, 
+              15
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504218990", 
+    "effects": [
+      "Increase resistance to all elements by 15%"
+    ], 
+    "rarity": 7
+  }, 
+  "Sage of Mysidia": {
+    "skill_names": [
+      "Sage of Mysidia"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              40, 
+              0, 
+              0, 
+              20, 
+              0
+            ]
+          ], 
+          [
+            1, 
+            3, 
+            33, 
+            [
+              200
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504219890", 
+    "effects": [
+      "Increase MAG by 40% and MP by 20%", 
+      "Increase LB gauge by 2 per turn"
+    ], 
+    "rarity": 8
+  }, 
   "Emperor's Majesty": {
     "skill_names": [
       "Emperor's Majesty"
@@ -8267,17 +10325,44 @@
     ], 
     "rarity": 5
   }, 
-  "Curada": {
-    "id": "504010150", 
+  "Gravity": {
+    "id": "504020150", 
     "effects_raw": [], 
     "effects": [
-      "Restore 800 (+3.4x, Heal) HP to target"
+      "50% HP damage to one enemy"
     ], 
-    "rarity": 5, 
+    "rarity": 4, 
     "skill_names": [
-      "Curada"
+      "Gravity"
     ], 
-    "magic_type": "White"
+    "magic_type": "Black"
+  }, 
+  "Regenerator": {
+    "skill_names": [
+      "Regenerator"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            49, 
+            [
+              20, 
+              3, 
+              910320
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "1500000021", 
+    "effects": [
+      "20% chance to counter physical attacks with Regenerator (910320) to self"
+    ], 
+    "rarity": 5
   }, 
   "Echidna's Kiss": {
     "skill_names": [
@@ -8344,6 +10429,37 @@
       "Sleep"
     ], 
     "magic_type": "Green"
+  }, 
+  "Loyal Warrior": {
+    "skill_names": [
+      "Loyal Warrior"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              30, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              20
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504216360", 
+    "effects": [
+      "Increase ATK by 30% and crit. chance by 20%"
+    ], 
+    "rarity": 7
   }, 
   "Warrior Lore": {
     "skill_names": [

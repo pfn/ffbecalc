@@ -228,6 +228,7 @@ object DataDecoders {
           case "SPR"     => EsperStatReward.spr(value)
           case "MAGIC"   => UnknownEsperSkill
           case "ABILITY" => EsperAbilityReward(value)
+          case _ => UnknownEsperSkill // WaterRes, FireRes, TODO
         }
       }
       Right(x.fold(_ => UnknownEsperSkill, identity))
