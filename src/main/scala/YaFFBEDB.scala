@@ -160,6 +160,8 @@ object YaFFBEDB extends JSApp {
     def skillsFromMat(equip: List[MateriaIndex]) =
       equip.flatMap(m => List(m.name -> m.effects.mkString("\n")))
 
+    def is2h(eqItem: Option[EquipIndex]): Boolean =
+      eqItem.exists(_.twohands)
     def typeOf(eqItem: Option[EquipIndex]): Int =
       eqItem.fold(-1)(_.tpe)
     def isSlot(slot: Int, eqItem: Option[EquipIndex]): Boolean =
@@ -182,6 +184,9 @@ object YaFFBEDB extends JSApp {
       info: Option[UnitData], effs: SkillEffect.CollatedEffect,
       sink: Subject[Option[String]], older: Boolean): String = {
       if (isSlot(2, r) && isSlot(2, l) && older) {
+        publishTo(sink, None)
+        EMPTY
+      } else if ((is2h(r) || is2h(l)) && older) {
         publishTo(sink, None)
         EMPTY
       } else if ((isSlot(1, r) && isSlot(1, l)) &&
