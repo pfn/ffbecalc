@@ -102,6 +102,14 @@ case class Stats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int, stat
     status, element
   )
 
+  def *(o: Passive2HEffect) = Stats(
+    hp, mp,
+    (atk * math.min(300, o.dh / 100.0)).toInt,
+    defs,
+    mag, spr,
+    status, element
+  )
+
   def *(o: PassiveSinglehandEffect) = Stats(
     (hp   * math.min(300, o.hp   / 100.0)).toInt,
     (mp   * math.min(300, o.mp   / 100.0)).toInt,

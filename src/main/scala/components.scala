@@ -1,7 +1,7 @@
 package yaffbedb
 
 import outwatch.dom._
-import rxscalajs.{Observable,Subject}
+import rxscalajs.Observable
 
 object components {
 
@@ -117,12 +117,13 @@ object components {
       tr(resists.map { r => td(s"$r%") }:_*)
     )
   }
+  case class Effective(stats: Stats, passives: PassiveStatEffect, dh: PassiveSinglehandEffect, tdh: Passive2HEffect, accuracy: Int, is1h: Boolean, is2h: Boolean)
   def unitStats(unitInfo: Observable[Option[UnitData]], unit: Observable[Option[UnitEntry]], stats: Observable[Option[BaseStats]], equipped: Observable[(Equipped,Abilities)], allPassives: Observable[SkillEffect.CollatedEffect], esper: Observable[Option[EsperStatInfo]], esperEntry: Observable[Option[EsperEntry]]) = {
     val effective = stats.combineLatest(esper.combineLatest(esperEntry), equipped, allPassives).map {
-      case (s,(e,ee),(eqs,abis),pasv) =>
+      case (s,(e,ee),(eqs,_),pasv) =>
         s.map { st =>
           val alleq = eqs.allEquipped
-          val passives = (pasv.stats + pasv.statFromEquips(alleq))
+          val passives = pasv.stats + pasv.statFromEquips(alleq)
 
           val is2h = alleq.exists(_.twohands)
           val isSW = alleq.count(_.slotId == 1) == 1 &&
@@ -134,24 +135,29 @@ object components {
           else if (is2h && isSW) Stats.zero
           else Stats.zero
 
-          (st.asStats * passives + e + eqstats + dhstats ++ ee, passives, pasv.dh, !is2h && isSW)
+          val tdhstats = if (is2h || isSW) eqstats * pasv.tdh
+          else Stats.zero
+
+          val accuracy = (if (is2h || isSW) pasv.tdh.accuracy else 0) + (if (!is2h && isSW) pasv.accuracy1h else 0)
+
+          Effective(st.asStats * passives + e + eqstats + dhstats + tdhstats ++ ee, passives, pasv.dh, pasv.tdh, accuracy, !is2h && isSW, isSW || is2h)
         }
     }
     table(cls := "unit-stats",
       caption("Effective Stats"),
       children <-- unit.combineLatest(unitInfo, allPassives, effective).combineLatest(equipped).map { case ((u,ui,pasv,eff),(eqs,abis)) =>
-      def st(f: Stats => Int) = eff.fold("???")(d => f(d._1).toString)
+      def st(f: Stats => Int) = eff.fold("???")(d => f(d.stats).toString)
         u.fold(List.empty[VNode]) { entry =>
           List(
             tr(td(List(colspan := 4) ++ renderEquippable(ui, pasv):_*)),
             tr(td(colspan := 4,
               renderResists(
-                (entry.statusResist + eff.fold(AilmentResist.zero)(_._1.status) + pasv.statusResists.asAilmentResist).asList.map(_._1),
+                (entry.statusResist + eff.fold(AilmentResist.zero)(_.stats.status) + pasv.statusResists.asAilmentResist).asList.map(_._1),
                 "status-table")
             )),
             tr(td(colspan := 4,
               renderResists(
-                (entry.elementResist + eff.fold(ElementResist.zero)(_._1.element) + pasv.elementResists.asElementResist).asList.map(_._1),
+                (entry.elementResist + eff.fold(ElementResist.zero)(_.stats.element) + pasv.elementResists.asElementResist).asList.map(_._1),
                 "elements-table")
             )),
           ) ++
@@ -183,10 +189,11 @@ object components {
             renderStat(statOf(eff, _.spr), "+SPR") ++
             renderStat(dhOf(eff, _.hp), "+Equip HP") ++
             renderStat(dhOf(eff, _.mp), "+Equip MP") ++
-            renderStat(dhOf(eff, _.atk), "+Equip ATK") ++
+            renderStat(dhOf(eff, _.atk) + tdhOf(eff), "+Equip ATK") ++
             renderStat(dhOf(eff, _.defs), "+Equip DEF") ++
             renderStat(dhOf(eff, _.mag), "+Equip MAG") ++
             renderStat(dhOf(eff, _.spr), "+Equip SPR") ++
+            renderStat(eff.fold(0)(_.accuracy), "Accuracy", max = 100) ++
             renderStat(statOf(eff, _.crit), "Crit chance", max = 100) ++
             renderDodge(pasv.dodge) ++
             renderKillers(pasv.killers) ++
@@ -194,7 +201,7 @@ object components {
             renderStat(pasv.lbfill / 100, "LB/turn", pct = false) ++
             renderStat(pasv.jump, "+Jump Damage") ++
             renderStat(pasv.evomag, "+EVO MAG") ++
-            renderStat((eff.fold(0)(_._1.mp) * (pasv.refresh / 100.0)).toInt,
+            renderStat((eff.fold(0)(_.stats.mp) * (pasv.refresh / 100.0)).toInt,
               pasv.refresh + "% MP/turn", pct = false) ++
             renderStat(pasv.attract, "Draw Attacks") ++
             renderStat(pasv.camouflage, "Camouflage")
@@ -210,8 +217,9 @@ object components {
     ))))
   }
 
-  def statOf(x: Option[(Stats,PassiveStatEffect,PassiveSinglehandEffect,Boolean)], f: PassiveStatEffect => Int): Int = x.fold(0)(d => f(d._2))
-  def dhOf(x: Option[(Stats,PassiveStatEffect,PassiveSinglehandEffect,Boolean)], f: PassiveSinglehandEffect => Int): Int = x.fold(0)(d => if (d._4) f(d._3) else 0)
+  def statOf(x: Option[Effective], f: PassiveStatEffect => Int): Int = x.fold(0)(d => f(d.passives))
+  def dhOf(x: Option[Effective], f: PassiveSinglehandEffect => Int): Int = x.fold(0)(d => if (d.is1h) f(d.dh) else 0)
+  def tdhOf(x: Option[Effective]): Int = x.fold(0)(d => if (d.is2h) d.tdh.dh else 0)
 
   def renderStat(stat: Int, label: String, max: Int = 300, pct: Boolean = true): List[VNode] = {
     if (stat != 0) {
@@ -254,7 +262,7 @@ object components {
           tr(fs.zip(colcls).map { case (f, c) => td(cls := c, f(a)) }: _*)
         }
 
-    table(((cls := tableCls) :: rows): _*)
+    table((cls := tableCls) :: rows: _*)
   }
 
   def effectiveStats(u: UnitData, equip: MateriaIndex, pasv: SkillEffect.CollatedEffect): PassiveStatEffect = {

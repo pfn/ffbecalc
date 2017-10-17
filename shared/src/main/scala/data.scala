@@ -112,12 +112,12 @@ case class EquipStats(
   statusEffects: Option[EquipAilments],
   element: List[String]) {
   override lazy val toString = {
-    val ss = ((if (atk != 0) List(s"ATK+${atk}") else Nil) ++
-    (if (defs != 0) List(s"DEF+${defs}") else Nil) ++
-    (if (mag != 0) List(s"MAG+${mag}") else Nil) ++
-    (if (spr != 0) List(s"SPR+${spr}") else Nil) ++
-    (if (hp != 0) List(s"HP+${hp}") else Nil) ++
-    (if (mp != 0) List(s"MP+${mp}") else Nil)).mkString(" ")
+    val ss = ((if (atk != 0) List(s"ATK+$atk") else Nil) ++
+    (if (defs != 0) List(s"DEF+$defs") else Nil) ++
+    (if (mag != 0) List(s"MAG+$mag") else Nil) ++
+    (if (spr != 0) List(s"SPR+$spr") else Nil) ++
+    (if (hp != 0) List(s"HP+$hp") else Nil) ++
+    (if (mp != 0) List(s"MP+$mp") else Nil)).mkString(" ")
     val status = statusResists.fold("")(_.asAilmentResist.toString)
     val eleres = elementResists.fold("")(_.asElementResist.toString)
     val ele = if (element.isEmpty) "" else "+" + element.mkString("/")
@@ -139,11 +139,11 @@ case class UnitEquipReq(id: Int) extends EquipReq {
 }
 case class Memo[A,B](f: A => B) extends Function1[A,B] {
   var memo = Map.empty[A,B]
-  def apply(a: A): B = memo.get(a).getOrElse {
+  def apply(a: A): B = memo.getOrElse(a, {
     val m = f(a)
     memo += a -> m
     m
-  }
+  })
 }
 case class EquipIndexData(
   id: Int, slotId: Int, twohands: Option[Boolean], skills: List[Int], tpe: Int, skilleffects: List[SkillEffect], skillEffects: Map[String,List[String]], stats: EquipStats, req: Option[EquipReq])
@@ -281,6 +281,8 @@ object SkillEffect {
     attract: Int,
     camouflage: Int,
     dh: PassiveSinglehandEffect,
+    tdh: Passive2HEffect,
+    accuracy1h: Int,
     dw: PassiveDualWieldEffect) {
 
     def statFromEquips(eqs: List[EquipIndex]): PassiveStatEffect = {
@@ -293,16 +295,14 @@ object SkillEffect {
         val usedele = eleused ++ weapele
         (ac + (if (!eqused(equip.tpe))
           equipStats.getOrElse(equip.tpe, PassiveStatEffect.zero)
-          else PassiveStatEffect.zero) + (
+          else PassiveStatEffect.zero) +
           weapele.foldLeft((PassiveStatEffect.zero,eleused)) {
-            case ((ac,used),e) =>
+            case ((_,used),e) =>
               val eff = if (used(e)) PassiveStatEffect.zero
               else weapEleStats.getOrElse(e, PassiveStatEffect.zero)
 
               (eff,used + e)
-          }._1
-        ),
-          usedeq, usedele
+          }._1, usedeq, usedele
         )
       }._1
     }
@@ -315,7 +315,7 @@ object SkillEffect {
       if (dw.all) "DualWield"
       else if (dw.weapons.nonEmpty) {
         val weaps = dw.weapons.toList.sorted.map(EQUIP.apply).mkString(", ")
-        s"""DualWield(${weaps})"""
+        s"""DualWield($weaps)"""
       } else ""
     }
 
@@ -325,12 +325,18 @@ object SkillEffect {
       pk ++ mk
     }.mkString(" ")
 
+    def tdhString = {
+      if (tdh.dh != 0) List( s"""${tdh.dh}% Equip ATK w/ 1h or 2h""", s"+${tdh.accuracy}% accuracy") else Nil
+    }.mkString(" ")
+
     def dhString = {
       val items = dh.asList.groupBy(_._1).toList.map { case (k,v) =>
         s"""$k% Equip ${v.map(_._2).mkString("/")}"""
       }
-      if (items.nonEmpty) items :+ "w/ 1h"
+      val dhs = if (items.nonEmpty) items :+ "w/ 1h"
       else items
+      val acc = if (accuracy1h > 0) List(s"+$accuracy1h% accuracy") else Nil
+      dhs ++ acc
     }.mkString(" ")
 
     def refreshString = if (refresh > 0) s"$refresh% Auto-Refresh" else ""
@@ -350,6 +356,7 @@ object SkillEffect {
     override lazy val toString = List(
       dwString,
       dhString,
+      tdhString,
       stats.toString,
       equipStatsString,
       dodgeString,
@@ -381,6 +388,8 @@ object SkillEffect {
       0,
       0,
       PassiveSinglehandEffect.zero,
+      Passive2HEffect.zero,
+      0,
       PassiveDualWieldEffect(Set.empty, false))
   }
 
@@ -418,8 +427,10 @@ object SkillEffect {
       case PassiveRefreshEffect(_, mod) => a.copy(refresh = a.refresh + mod)
       case sh@PassiveSinglehandEffect(_,_,_,_,_,_) =>
         a.copy(dh = a.dh + sh)
+      case Passive2HEffect(dh, acc) =>
+        a.copy(tdh = a.tdh.copy(dh = a.tdh.dh + dh, accuracy = a.tdh.accuracy + acc))
       case PassiveDoublehandEffect(dh, acc) =>
-        a.copy(dh = a.dh.copy(atk = a.dh.atk + dh))
+        a.copy(dh = a.dh.copy(atk = a.dh.atk + dh), accuracy1h = a.accuracy1h + acc)
       case PassiveDualWieldEffect(weaps, all) =>
         a.copy(dw = PassiveDualWieldEffect(a.dw.weapons ++ weaps, all || a.dw.all))
       case _ => a
@@ -558,6 +569,9 @@ object PassiveDoublehandEffect {
   }
 }
 case class Passive2HEffect(dh: Int, accuracy: Int) extends SkillEffect with NoRestrictions
+object Passive2HEffect {
+  def zero = Passive2HEffect(0, 0)
+}
 case class PassiveEquipStatEffect(
   cond: Int,
   hp:   Int,
