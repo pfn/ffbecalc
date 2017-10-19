@@ -198,7 +198,7 @@ object components {
             renderDodge(pasv.dodge) ++
             renderKillers(pasv.killers) ++
             renderStat(pasv.lbrate, "+LB fill") ++
-            renderStat(pasv.lbfill / 100, "LB/turn", pct = false) ++
+            renderStat(pasv.lbfill / 100, "LB/turn", pct = false, max = 12) ++
             renderStat(pasv.jump, "+Jump Damage") ++
             renderStat(pasv.evomag, "+EVO MAG") ++
             renderStat((eff.fold(0)(_.stats.mp) * (pasv.refresh / 100.0)).toInt,
