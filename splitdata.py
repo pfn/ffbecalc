@@ -74,6 +74,7 @@ for x in equip.keys():
           "effects": skills[str(skillid)]["effects_raw"]
         }]
       skillns[(skills[str(skillid)]["name"])] = skills[str(skillid)]["effects"]
+  is2h = "is_twohanded" in equip[x] and equip[x]["is_twohanded"]
   equipdex[name2] = {
     "id": x,
     "compid": compid,
@@ -84,6 +85,7 @@ for x in equip.keys():
     "skill_restriction": skillr,
     "reqs": reqs,
     "effects_raw": effr,
+    "is_twohanded": is2h,
     "skill_effects": skillns
   }
   equipnames.add(name)
@@ -119,8 +121,15 @@ for x in materia.keys():
     dex["skill_names"] = skillns
   json.dump(materia[x], file("json/materia/%s.json" % x, "w"))
 
+enhanceunits = {}
 for x in enhance.keys():
-  json.dump(enhance[x], file("json/enhance/%s.json" % x, "w"))
+  for u in enhance[x]['units']:
+    if u not in enhanceunits:
+      enhanceunits[u] = {}
+    enhanceunits[u][x] = enhance[x]
+
+for x in enhanceunits.keys():
+  json.dump(enhanceunits[x], file("json/enhance/%s.json" % x, "w"))
 
 for x in lb.keys():
   json.dump(lb[x], file("json/lb/%s.json" % x, "w"))

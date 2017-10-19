@@ -103,11 +103,10 @@ case class Stats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int, stat
   )
 
   def *(o: Passive2HEffect) = Stats(
-    hp, mp,
+    0, 0,
     (atk * math.min(300, o.dh / 100.0)).toInt,
-    defs,
-    mag, spr,
-    status, element
+    0, 0, 0,
+    AilmentResist.zero, ElementResist.zero
   )
 
   def *(o: PassiveSinglehandEffect) = Stats(
@@ -117,7 +116,17 @@ case class Stats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int, stat
     (defs * math.min(300, o.defs / 100.0)).toInt,
     (mag  * math.min(300, o.mag  / 100.0)).toInt,
     (spr  * math.min(300, o.spr  / 100.0)).toInt,
-    status, element
+    AilmentResist.zero, ElementResist.zero
+  )
+
+  def *(o: PassiveTDHEffect) = Stats(
+    (hp   * math.min(300, o.hp   / 100.0)).toInt,
+    (mp   * math.min(300, o.mp   / 100.0)).toInt,
+    (atk  * math.min(300, o.atk  / 100.0)).toInt,
+    (defs * math.min(300, o.defs / 100.0)).toInt,
+    (mag  * math.min(300, o.mag  / 100.0)).toInt,
+    (spr  * math.min(300, o.spr  / 100.0)).toInt,
+    AilmentResist.zero, ElementResist.zero
   )
 
   def +(o: Stats) = Stats(

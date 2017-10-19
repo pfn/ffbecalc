@@ -38,13 +38,13 @@ object Pickler {
       val out = n.dropRight(5) + ".pickle"
       pickle[Map[String,Enhancement],Map[String,Enhancement]](
         f, picklepath / "enhance" / out,
-        _.fold(e => sys.error("unit enhance data: " + e), identity))
+        _.fold(e => sys.error(s"unit enhance data $n: " + e), identity))
     }
     pickle[Map[String,EquipIndexData],List[EquipIndex]](
       equippath / "index.json", picklepath / "equip" / "index.pickle", {
         _.right.map { m =>
           m.toList.map { case (k,v) =>
-            EquipIndex(k, v.id, v.twohands.getOrElse(false), v.slotId,
+            EquipIndex(k, v.id, v.twohands, v.slotId,
               v.skills,
               v.tpe, v.skilleffects,
               v.skillEffects, v.stats, v.req)
@@ -56,7 +56,7 @@ object Pickler {
         _.right.map { m =>
           m.toList.map { case (k,v) =>
             UnitIndex(k, v.min, v.max, v.id)
-          }.sortBy(_.name).filter(u => u.max > 3)
+          }.filter(u => u.max > 3).sortBy(_.name)
         }.fold(e => sys.error("units " + e), identity)
       })
     pickle[Map[String,MateriaIndexData],List[MateriaIndex]](
@@ -98,8 +98,10 @@ object Pickler {
           _.toList.sortBy(_._1).collect { case (_,v) if v.reward != UnknownEsperSkill => v }))
     }
     //println(unpickle[List[EquipIndex]](picklepath / "equip" / "index.pickle"))
-    println(unpickle[List[EsperSlot]](picklepath / "esperboard" / "4.pickle"))
+    //println(unpickle[List[EsperSlot]](picklepath / "esperboard" / "4.pickle"))
+    println(unpickle[List[EquipIndex]](picklepath / "equip" / "index.pickle").find(_.id == 308002200))
     //println(unpickle[SkillInfo](picklepath / "skill" / "910274.pickle"))
+    println(unpickle[SkillInfo](picklepath / "skill" / "910523.pickle"))
   }
 
   val jsonFilter: String => Boolean = {

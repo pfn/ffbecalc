@@ -429,17 +429,16 @@
     ], 
     "rarity": 4
   }, 
-  "Blizzard": {
-    "id": "504020020", 
-    "effects_raw": [], 
-    "effects": [
-      "Magic ice damage (1.2x, MAG) to one enemy"
-    ], 
-    "rarity": 1, 
+  "Wave of Panic": {
     "skill_names": [
-      "Blizzard"
+      "Wave of Panic"
     ], 
-    "magic_type": "Black"
+    "effects_raw": [], 
+    "id": "504205660", 
+    "effects": [
+      "Reduce DEF and SPR by 30% and ATK and MAG by 35% for 3 turns to all enemies"
+    ], 
+    "rarity": 7
   }, 
   "Bug Killer": {
     "skill_names": [
@@ -646,49 +645,6 @@
     ], 
     "rarity": 8
   }, 
-  "\u8987\u8005\u306e\u95d8\u6c17": {
-    "skill_names": [
-      "Champion Spirit"
-    ], 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            0, 
-            3, 
-            35, 
-            [
-              10122
-            ]
-          ], 
-          [
-            0, 
-            3, 
-            32, 
-            [
-              10
-            ]
-          ], 
-          [
-            0, 
-            3, 
-            33, 
-            [
-              200
-            ]
-          ]
-        ]
-      }
-    ], 
-    "id": "504205650", 
-    "effects": [
-      "Gain Regen (Champion) (10122) at the start of a battle", 
-      "Recover MP (10%) per turn", 
-      "Increase LB gauge by 2 per turn"
-    ], 
-    "rarity": 8
-  }, 
   "Thunder Blade": {
     "skill_names": [
       "Thunder Blade"
@@ -738,7 +694,7 @@
     "effects_raw": [], 
     "id": "504200120", 
     "effects": [
-      "Increase DEF by 20% for 3 turns to self"
+      "Increase DEF by 20% for 3 turns to caster"
     ], 
     "rarity": 2
   }, 
@@ -1052,7 +1008,7 @@
     "effects_raw": [], 
     "id": "504209500", 
     "effects": [
-      "Nullify next spell(s) for one turn on self"
+      "Nullify next spell(s) for one turn on caster"
     ], 
     "rarity": 7
   }, 
@@ -1142,17 +1098,16 @@
     ], 
     "rarity": 6
   }, 
-  "Silence": {
-    "id": "504030100", 
-    "effects_raw": [], 
-    "effects": [
-      "Inflict Silence (40%) on one enemy"
-    ], 
-    "rarity": 2, 
+  "Scorch": {
     "skill_names": [
-      "Silence"
+      "Scorch"
     ], 
-    "magic_type": "Green"
+    "effects_raw": [], 
+    "id": "504205980", 
+    "effects": [
+      "Magic fire damage (2.8x, MAG) to all enemies"
+    ], 
+    "rarity": 8
   }, 
   "Azure Armor": {
     "skill_names": [
@@ -2367,6 +2322,37 @@
     ], 
     "rarity": 5
   }, 
+  "Tempered Shield": {
+    "skill_names": [
+      "Tempered Shield"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              10, 
+              0, 
+              0, 
+              5, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504204310", 
+    "effects": [
+      "Increase DEF by 10% and HP by 5%"
+    ], 
+    "rarity": 5
+  }, 
   "Stonra Blade": {
     "skill_names": [
       "Stonra Blade"
@@ -2418,6 +2404,18 @@
     "rarity": 4, 
     "skill_names": [
       "Drain"
+    ], 
+    "magic_type": "Black"
+  }, 
+  "Blizzard": {
+    "id": "504020020", 
+    "effects_raw": [], 
+    "effects": [
+      "Magic ice damage (1.2x, MAG) to one enemy"
+    ], 
+    "rarity": 1, 
+    "skill_names": [
+      "Blizzard"
     ], 
     "magic_type": "Black"
   }, 
@@ -2843,8 +2841,8 @@
     "id": "504218860", 
     "effects": [
       "Increase SPR and HP by 15%", 
-      "30% chance to counter physical attacks with Mechanical Heart (504080) to self", 
-      "30% chance to counter magic attacks with Mechanical Heart (504080) to self"
+      "30% chance to counter physical attacks with Mechanical Heart (504080) to caster", 
+      "30% chance to counter magic attacks with Mechanical Heart (504080) to caster"
     ], 
     "rarity": 6
   }, 
@@ -2944,7 +2942,10 @@
           401000205, 
           401000305, 
           401000404, 
-          401000503
+          401000503, 
+          401002005, 
+          401002104, 
+          401002204
         ], 
         "effects": [
           [
@@ -3091,17 +3092,6 @@
       "Inflict Sleep (30%) on all enemies"
     ], 
     "rarity": 1
-  }, 
-  "Medicate": {
-    "skill_names": [
-      "Medicate"
-    ], 
-    "effects_raw": [], 
-    "id": "504202370", 
-    "effects": [
-      "Cure Poison, Blind and Silence for self"
-    ], 
-    "rarity": 4
   }, 
   "Light Resistance +15%": {
     "skill_names": [
@@ -3438,40 +3428,6 @@
     ], 
     "rarity": 2
   }, 
-  "\u5c5e\u6027\u30c0\u30e1\u30fc\u30b8\u6e1b": {
-    "skill_names": [
-      "\u5c5e\u6027\u30c0\u30e1\u30fc\u30b8\u6e1b"
-    ], 
-    "effects_raw": [
-      {
-        "unit_restriction": [
-          306000204
-        ], 
-        "effects": [
-          [
-            1, 
-            3, 
-            3, 
-            [
-              30, 
-              30, 
-              30, 
-              30, 
-              30, 
-              30, 
-              30, 
-              30
-            ]
-          ]
-        ]
-      }
-    ], 
-    "id": "504206080", 
-    "effects": [
-      "Increase resistance to all elements by 30%"
-    ], 
-    "rarity": 6
-  }, 
   "Blind": {
     "id": "504030020", 
     "effects_raw": [], 
@@ -3734,7 +3690,7 @@
     ], 
     "id": "1500000022", 
     "effects": [
-      "20% chance to counter physical attacks with Reactive Defense (910321) to self"
+      "20% chance to counter physical attacks with Reactive Defense (910321) to caster"
     ], 
     "rarity": 7
   }, 
@@ -4148,7 +4104,7 @@
     "effects_raw": [], 
     "id": "504207770", 
     "effects": [
-      "Increase SPR by 100% for 5 turns to self"
+      "Increase SPR by 100% for 5 turns to caster"
     ], 
     "rarity": 6
   }, 
@@ -4207,24 +4163,50 @@
     ], 
     "magic_type": "White"
   }, 
-  "Tempered Shield": {
+  "Instinctual Guard": {
     "skill_names": [
-      "Tempered Shield"
+      "Instinctual Guard"
     ], 
     "effects_raw": [
       {
         "unit_restriction": null, 
         "effects": [
           [
+            1, 
+            3, 
+            4, 
+            [
+              2, 
+              60, 
+              9000, 
+              50, 
+              0, 
+              -1
+            ]
+          ], 
+          [
+            1, 
+            3, 
+            4, 
+            [
+              4, 
+              60, 
+              9000, 
+              50, 
+              0, 
+              -1
+            ]
+          ], 
+          [
             0, 
             3, 
             1, 
             [
+              40, 
               0, 
-              10, 
               0, 
               0, 
-              5, 
+              0, 
               0, 
               0
             ]
@@ -4232,11 +4214,13 @@
         ]
       }
     ], 
-    "id": "504204310", 
+    "id": "504206070", 
     "effects": [
-      "Increase DEF by 10% and HP by 5%"
+      "Increase DEF by 60% when HP drops below 50% (max 9000x)", 
+      "Increase SPR by 60% when HP drops below 50% (max 9000x)", 
+      "Increase ATK by 40%"
     ], 
-    "rarity": 5
+    "rarity": 8
   }, 
   "Chilling Aura": {
     "skill_names": [
@@ -4248,7 +4232,10 @@
           401000205, 
           401000305, 
           401000404, 
-          401000503
+          401000503, 
+          401002005, 
+          401002104, 
+          401002204
         ], 
         "effects": [
           [
@@ -4382,6 +4369,17 @@
       "Increase HP by 30% and ATK by 10%"
     ], 
     "rarity": 6
+  }, 
+  "Metal Slash": {
+    "skill_names": [
+      "Metal Slash"
+    ], 
+    "effects_raw": [], 
+    "id": "504205710", 
+    "effects": [
+      "Fixed damage (2000) to one enemy"
+    ], 
+    "rarity": 4
   }, 
   "Adventurer V": {
     "skill_names": [
@@ -4699,47 +4697,9 @@
     ], 
     "rarity": 5
   }, 
-  "Attacker": {
+  "ATK +20%": {
     "skill_names": [
-      "Attacker"
-    ], 
-    "effects_raw": [
-      {
-        "unit_restriction": [
-          213000105, 
-          213000204, 
-          213000304, 
-          213000403, 
-          213000504, 
-          213000603
-        ], 
-        "effects": [
-          [
-            0, 
-            3, 
-            1, 
-            [
-              10, 
-              0, 
-              10, 
-              0, 
-              0, 
-              0, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "id": "504202490", 
-    "effects": [
-      "Increase ATK and MAG by 10%"
-    ], 
-    "rarity": 5
-  }, 
-  "\u307c\u3046\u3048\u3044\u307b\u3093\u306e\u3046": {
-    "skill_names": [
-      "\u307c\u3046\u3048\u3044\u307b\u3093\u306e\u3046"
+      "ATK +20%"
     ], 
     "effects_raw": [
       {
@@ -4748,35 +4708,9 @@
           [
             1, 
             3, 
-            4, 
-            [
-              2, 
-              60, 
-              9000, 
-              50, 
-              0, 
-              -1
-            ]
-          ], 
-          [
-            1, 
-            3, 
-            4, 
-            [
-              4, 
-              60, 
-              9000, 
-              50, 
-              0, 
-              -1
-            ]
-          ], 
-          [
-            0, 
-            3, 
             1, 
             [
-              40, 
+              20, 
               0, 
               0, 
               0, 
@@ -4788,13 +4722,42 @@
         ]
       }
     ], 
-    "id": "504206070", 
+    "id": "504100080", 
     "effects": [
-      "Increase DEF by 60% when HP drops below 50% (max 9000x)", 
-      "Increase SPR by 60% when HP drops below 50% (max 9000x)", 
-      "Increase ATK by 40%"
+      "Increase ATK by 20%"
     ], 
-    "rarity": 8
+    "rarity": 3
+  }, 
+  "Seal of Destruction": {
+    "skill_names": [
+      "Seal of Destruction"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              20, 
+              0, 
+              20, 
+              0, 
+              10, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504201950", 
+    "effects": [
+      "Increase ATK and MAG by 20% and HP by 10%"
+    ], 
+    "rarity": 6
   }, 
   "Spirit": {
     "skill_names": [
@@ -4934,48 +4897,6 @@
       "Increase HP by 10% and MAG and SPR by 5%"
     ], 
     "rarity": 5
-  }, 
-  "Sworn Six's Pride - Fire": {
-    "skill_names": [
-      "Sworn Six's Pride - Fire"
-    ], 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            6, 
-            [
-              8, 
-              30, 
-              0, 
-              0, 
-              0
-            ]
-          ], 
-          [
-            1, 
-            3, 
-            6, 
-            [
-              52, 
-              30, 
-              0, 
-              0, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "id": "504210800", 
-    "effects": [
-      "Increase ATK by 30% when equipped with a Axe", 
-      "Increase ATK by 30% when equipped with a Heavy Armor"
-    ], 
-    "rarity": 8
   }, 
   "Poach": {
     "skill_names": [
@@ -5776,7 +5697,7 @@
     ], 
     "id": "504208090", 
     "effects": [
-      "20% chance to counter physical attacks with Protection of the Twelve (500520) to self"
+      "20% chance to counter physical attacks with Protection of the Twelve (500520) to caster"
     ], 
     "rarity": 5
   }, 
@@ -6252,37 +6173,6 @@
       "Increase ATK by 10%"
     ], 
     "rarity": 1
-  }, 
-  "\u3064\u306d\u306b\u3060\u3044\u307c\u3046\u304e\u3087": {
-    "skill_names": [
-      "\u3064\u306d\u306b\u3060\u3044\u307c\u3046\u304e\u3087"
-    ], 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            1, 
-            [
-              0, 
-              40, 
-              0, 
-              0, 
-              0, 
-              0, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "id": "504205880", 
-    "effects": [
-      "Increase DEF by 40%"
-    ], 
-    "rarity": 7
   }, 
   "Blindna": {
     "id": "504010030", 
@@ -6834,14 +6724,14 @@
     ], 
     "magic_type": "Black"
   }, 
-  "\u30cf\u30c3\u30b9\u30eb\u30c0\u30f3\u30b9": {
+  "Medicate": {
     "skill_names": [
-      "Hustle Dance"
+      "Medicate"
     ], 
     "effects_raw": [], 
-    "id": "504205990", 
+    "id": "504202370", 
     "effects": [
-      "Restore 400 (+3x, Heal) HP to all allies"
+      "Cure Poison, Blind and Silence for caster"
     ], 
     "rarity": 4
   }, 
@@ -6879,6 +6769,49 @@
       "Death"
     ], 
     "magic_type": "Black"
+  }, 
+  "Champion Spirit": {
+    "skill_names": [
+      "Champion Spirit"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            35, 
+            [
+              10122
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            32, 
+            [
+              10
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            33, 
+            [
+              200
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504205650", 
+    "effects": [
+      "Gain Regen (Champion) (10122) at the start of a battle", 
+      "Recover MP (10%) per turn", 
+      "Increase LB gauge by 2 per turn"
+    ], 
+    "rarity": 8
   }, 
   "Regen": {
     "id": "504010120", 
@@ -7194,6 +7127,18 @@
     ], 
     "rarity": 4
   }, 
+  "Silence": {
+    "id": "504030100", 
+    "effects_raw": [], 
+    "effects": [
+      "Inflict Silence (40%) on one enemy"
+    ], 
+    "rarity": 2, 
+    "skill_names": [
+      "Silence"
+    ], 
+    "magic_type": "Green"
+  }, 
   "Watera": {
     "id": "504020110", 
     "effects_raw": [], 
@@ -7481,7 +7426,7 @@
     "effects_raw": [], 
     "id": "504202480", 
     "effects": [
-      "Increase DEF and SPR by 50% for 3 turns to self"
+      "Increase DEF and SPR by 50% for 3 turns to caster"
     ], 
     "rarity": 6
   }, 
@@ -8530,16 +8475,74 @@
     ], 
     "rarity": 6
   }, 
-  "Bladeblitz": {
+  "Attacker": {
     "skill_names": [
-      "Bladeblitz"
+      "Attacker"
     ], 
-    "effects_raw": [], 
-    "id": "504200440", 
+    "effects_raw": [
+      {
+        "unit_restriction": [
+          213000105, 
+          213000204, 
+          213000304, 
+          213000403, 
+          213000504, 
+          213000603
+        ], 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              10, 
+              0, 
+              10, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504202490", 
     "effects": [
-      "Physical damage (1.4x, ATK) to all enemies"
+      "Increase ATK and MAG by 10%"
     ], 
     "rarity": 5
+  }, 
+  "Mighty Defense": {
+    "skill_names": [
+      "Mighty Defense"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              40, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504205880", 
+    "effects": [
+      "Increase DEF by 40%"
+    ], 
+    "rarity": 7
   }, 
   "Mirror of Equity": {
     "skill_names": [
@@ -8574,6 +8577,31 @@
     "id": "504100980", 
     "effects": [
       "Enable unit to equip Light Shields"
+    ], 
+    "rarity": 5
+  }, 
+  "Equip S Sword": {
+    "skill_names": [
+      "Equip S Sword"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            5, 
+            [
+              1
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504100760", 
+    "effects": [
+      "Enable unit to equip Daggers"
     ], 
     "rarity": 5
   }, 
@@ -8656,37 +8684,6 @@
     ], 
     "rarity": 6
   }, 
-  "Seal of Destruction": {
-    "skill_names": [
-      "Seal of Destruction"
-    ], 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            1, 
-            [
-              20, 
-              0, 
-              20, 
-              0, 
-              10, 
-              0, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "id": "504201950", 
-    "effects": [
-      "Increase ATK and MAG by 20% and HP by 10%"
-    ], 
-    "rarity": 6
-  }, 
   "Osmose Blade": {
     "skill_names": [
       "Osmose Blade"
@@ -8699,28 +8696,14 @@
     ], 
     "rarity": 5
   }, 
-  "Equip S Sword": {
+  "Bladeblitz": {
     "skill_names": [
-      "Equip S Sword"
+      "Bladeblitz"
     ], 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            5, 
-            [
-              1
-            ]
-          ]
-        ]
-      }
-    ], 
-    "id": "504100760", 
+    "effects_raw": [], 
+    "id": "504200440", 
     "effects": [
-      "Enable unit to equip Daggers"
+      "Physical damage (1.4x, ATK) to all enemies"
     ], 
     "rarity": 5
   }, 
@@ -8905,17 +8888,6 @@
     ], 
     "rarity": 2
   }, 
-  "\u30e1\u30bf\u30eb\u65ac\u308a": {
-    "skill_names": [
-      "Metal Slash"
-    ], 
-    "effects_raw": [], 
-    "id": "504205710", 
-    "effects": [
-      "Fixed damage (2000) to one enemy"
-    ], 
-    "rarity": 4
-  }, 
   "Silence Blade": {
     "skill_names": [
       "Silence Blade"
@@ -9002,17 +8974,6 @@
       "Increase MAG by 50% when equipped with a Rod"
     ], 
     "rarity": 6
-  }, 
-  "\u3084\u307f\u306e\u306f\u3069\u3046": {
-    "skill_names": [
-      "Wave of Panic"
-    ], 
-    "effects_raw": [], 
-    "id": "504205660", 
-    "effects": [
-      "Reduce DEF and SPR by 30% and ATK and MAG by 35% for 3 turns to all enemies"
-    ], 
-    "rarity": 7
   }, 
   "Fire": {
     "id": "504020010", 
@@ -9786,6 +9747,17 @@
     ], 
     "rarity": 5
   }, 
+  "Hustle Dance": {
+    "skill_names": [
+      "Hustle Dance"
+    ], 
+    "effects_raw": [], 
+    "id": "504205990", 
+    "effects": [
+      "Restore 400 (+3x, Heal) HP to all allies"
+    ], 
+    "rarity": 4
+  }, 
   "Gate of Destiny": {
     "skill_names": [
       "Gate of Destiny"
@@ -9808,9 +9780,9 @@
     ], 
     "rarity": 7
   }, 
-  "ATK +20%": {
+  "Sworn Six's Pride - Fire": {
     "skill_names": [
-      "ATK +20%"
+      "Sworn Six's Pride - Fire"
     ], 
     "effects_raw": [
       {
@@ -9819,12 +9791,22 @@
           [
             1, 
             3, 
-            1, 
+            6, 
             [
-              20, 
+              8, 
+              30, 
               0, 
               0, 
-              0, 
+              0
+            ]
+          ], 
+          [
+            1, 
+            3, 
+            6, 
+            [
+              52, 
+              30, 
               0, 
               0, 
               0
@@ -9833,11 +9815,12 @@
         ]
       }
     ], 
-    "id": "504100080", 
+    "id": "504210800", 
     "effects": [
-      "Increase ATK by 20%"
+      "Increase ATK by 30% when equipped with a Axe", 
+      "Increase ATK by 30% when equipped with a Heavy Armor"
     ], 
-    "rarity": 3
+    "rarity": 8
   }, 
   "Fire Blade": {
     "skill_names": [
@@ -9849,6 +9832,18 @@
       "Hybrid fire damage (1.8x, ATK & MAG) to one enemy"
     ], 
     "rarity": 1
+  }, 
+  "Baraero": {
+    "id": "504030070", 
+    "effects_raw": [], 
+    "effects": [
+      "Increase resistance to Wind by 30% for 3 turns to one ally"
+    ], 
+    "rarity": 2, 
+    "skill_names": [
+      "Baraero"
+    ], 
+    "magic_type": "Green"
   }, 
   "MAG +10%": {
     "skill_names": [
@@ -10186,17 +10181,6 @@
     ], 
     "rarity": 8
   }, 
-  "\u3057\u3083\u304f\u306d\u3064": {
-    "skill_names": [
-      "Scorch"
-    ], 
-    "effects_raw": [], 
-    "id": "504205980", 
-    "effects": [
-      "Magic fire damage (2.8x, MAG) to all enemies"
-    ], 
-    "rarity": 8
-  }, 
   "Aerora": {
     "id": "504020120", 
     "effects_raw": [], 
@@ -10360,7 +10344,7 @@
     ], 
     "id": "1500000021", 
     "effects": [
-      "20% chance to counter physical attacks with Regenerator (910320) to self"
+      "20% chance to counter physical attacks with Regenerator (910320) to caster"
     ], 
     "rarity": 5
   }, 
@@ -10395,17 +10379,39 @@
     ], 
     "rarity": 5
   }, 
-  "Baraero": {
-    "id": "504030070", 
-    "effects_raw": [], 
-    "effects": [
-      "Increase resistance to Wind by 30% for 3 turns to one ally"
-    ], 
-    "rarity": 2, 
+  "Elemental Damage Down": {
     "skill_names": [
-      "Baraero"
+      "Elemental Damage Down"
     ], 
-    "magic_type": "Green"
+    "effects_raw": [
+      {
+        "unit_restriction": [
+          306000204
+        ], 
+        "effects": [
+          [
+            1, 
+            3, 
+            3, 
+            [
+              30, 
+              30, 
+              30, 
+              30, 
+              30, 
+              30, 
+              30, 
+              30
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504206080", 
+    "effects": [
+      "Increase resistance to all elements by 30%"
+    ], 
+    "rarity": 6
   }, 
   "Fira Blade": {
     "skill_names": [

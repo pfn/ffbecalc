@@ -393,9 +393,10 @@ object YaFFBEDB extends JSApp {
 
       List(option(value := EMPTY, "Empty")) ++
         sortFor(eqs, sort, passives, u, base).map { e =>
+          val is2h = if (e.twohands) "(2h)" else ""
           option(value := e.id,
             selected := w.exists(_.id == e.id),
-            s"${e.name} \u27a1 ${e.stats} ${e.describeEffects(u)}")
+            s"${e.name} \u27a1 $is2h ${e.stats} ${e.describeEffects(u)}")
         }
     }
 

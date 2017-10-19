@@ -117,7 +117,7 @@ object components {
       tr(resists.map { r => td(s"$r%") }:_*)
     )
   }
-  case class Effective(stats: Stats, passives: PassiveStatEffect, dh: PassiveSinglehandEffect, tdh: Passive2HEffect, accuracy: Int, is1h: Boolean, is2h: Boolean)
+  case class Effective(stats: Stats, passives: PassiveStatEffect, dh: PassiveSinglehandEffect, tdh: Passive2HEffect, tdh2: PassiveTDHEffect, accuracy: Int, is1h: Boolean, is2h: Boolean)
   def unitStats(unitInfo: Observable[Option[UnitData]], unit: Observable[Option[UnitEntry]], stats: Observable[Option[BaseStats]], equipped: Observable[(Equipped,Abilities)], allPassives: Observable[SkillEffect.CollatedEffect], esper: Observable[Option[EsperStatInfo]], esperEntry: Observable[Option[EsperEntry]]) = {
     val effective = stats.combineLatest(esper.combineLatest(esperEntry), equipped, allPassives).map {
       case (s,(e,ee),(eqs,_),pasv) =>
@@ -132,15 +132,17 @@ object components {
             ac + equip.stats
           }
           val dhstats = if (!is2h && isSW) eqstats * pasv.dh
-          else if (is2h && isSW) Stats.zero
           else Stats.zero
 
           val tdhstats = if (is2h || isSW) eqstats * pasv.tdh
           else Stats.zero
 
+          val tdhstats2 = if (is2h || isSW) eqstats * pasv.tdh2
+          else Stats.zero
+
           val accuracy = (if (is2h || isSW) pasv.tdh.accuracy else 0) + (if (!is2h && isSW) pasv.accuracy1h else 0)
 
-          Effective(st.asStats * passives + e + eqstats + dhstats + tdhstats ++ ee, passives, pasv.dh, pasv.tdh, accuracy, !is2h && isSW, isSW || is2h)
+          Effective(st.asStats * passives + e + eqstats + dhstats + tdhstats + tdhstats2 ++ ee, passives, pasv.dh, pasv.tdh, pasv.tdh2, accuracy, !is2h && isSW, isSW || is2h)
         }
     }
     table(cls := "unit-stats",
@@ -187,12 +189,12 @@ object components {
             renderStat(statOf(eff, _.defs), "+DEF") ++
             renderStat(statOf(eff, _.mag), "+MAG") ++
             renderStat(statOf(eff, _.spr), "+SPR") ++
-            renderStat(dhOf(eff, _.hp), "+Equip HP") ++
-            renderStat(dhOf(eff, _.mp), "+Equip MP") ++
-            renderStat(dhOf(eff, _.atk) + tdhOf(eff), "+Equip ATK") ++
-            renderStat(dhOf(eff, _.defs), "+Equip DEF") ++
-            renderStat(dhOf(eff, _.mag), "+Equip MAG") ++
-            renderStat(dhOf(eff, _.spr), "+Equip SPR") ++
+            renderStat(dhOf(eff, _.hp) + tdhOf(eff, _.hp), "+Equip HP") ++
+            renderStat(dhOf(eff, _.mp) + tdhOf(eff, _.mp), "+Equip MP") ++
+            renderStat(dhOf(eff, _.atk) + tdhOf(eff) + tdhOf(eff, _.atk), "+Equip ATK") ++
+            renderStat(dhOf(eff, _.defs) + tdhOf(eff, _.defs), "+Equip DEF") ++
+            renderStat(dhOf(eff, _.mag) + tdhOf(eff, _.mag), "+Equip MAG") ++
+            renderStat(dhOf(eff, _.spr) + tdhOf(eff, _.spr), "+Equip SPR") ++
             renderStat(eff.fold(0)(_.accuracy), "Accuracy", max = 100) ++
             renderStat(statOf(eff, _.crit), "Crit chance", max = 100) ++
             renderDodge(pasv.dodge) ++
@@ -219,6 +221,7 @@ object components {
 
   def statOf(x: Option[Effective], f: PassiveStatEffect => Int): Int = x.fold(0)(d => f(d.passives))
   def dhOf(x: Option[Effective], f: PassiveSinglehandEffect => Int): Int = x.fold(0)(d => if (d.is1h) f(d.dh) else 0)
+  def tdhOf(x: Option[Effective], f: PassiveTDHEffect => Int): Int = x.fold(0)(d => if (d.is2h) f(d.tdh2) else 0)
   def tdhOf(x: Option[Effective]): Int = x.fold(0)(d => if (d.is2h) d.tdh.dh else 0)
 
   def renderStat(stat: Int, label: String, max: Int = 300, pct: Boolean = true): List[VNode] = {
