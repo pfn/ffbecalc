@@ -196,7 +196,7 @@ object components {
             renderStat(dhOf(eff, _.mag) + tdhOf(eff, _.mag), "+Equip MAG") ++
             renderStat(dhOf(eff, _.spr) + tdhOf(eff, _.spr), "+Equip SPR") ++
             renderStat(eff.fold(0)(_.accuracy), "Accuracy", max = 100) ++
-            renderStat(statOf(eff, _.crit), "Crit chance", max = 100) ++
+            renderStat(statOf(eff, _.crit) + 10, "Crit chance", max = 100) ++
             renderDodge(pasv.dodge) ++
             renderKillers(pasv.killers) ++
             renderStat(pasv.lbrate, "+LB fill") ++
