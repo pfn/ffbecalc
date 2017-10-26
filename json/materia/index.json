@@ -1294,7 +1294,7 @@
     "id": "504214990", 
     "effects": [
       "Increase equipment ATK by 100% when armed with a single weapon", 
-      "Increase Accuracy by 25%"
+      "Increase Accuracy by 25% when armed with a single weapon"
     ], 
     "rarity": 8
   }, 
@@ -2116,7 +2116,7 @@
     "id": "504101360", 
     "effects": [
       "Increase equipment ATK by 50% when armed with a single one-handed weapon", 
-      "Increase Accuracy by 25%"
+      "Increase Accuracy by 25% when armed with a single one-handed weapon"
     ], 
     "rarity": 8
   }, 

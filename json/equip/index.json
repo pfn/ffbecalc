@@ -1276,7 +1276,7 @@
     "skill_effects": {
       "Doublehand": [
         "Increase equipment ATK by 50% when armed with a single one-handed weapon", 
-        "Increase Accuracy by 25%"
+        "Increase Accuracy by 25% when armed with a single one-handed weapon"
       ]
     }, 
     "skill_restriction": [], 
@@ -21501,7 +21501,7 @@
     "skill_effects": {
       "Shin-Doublehand": [
         "Increase equipment ATK by 50% when armed with a single weapon", 
-        "Increase Accuracy by 25%"
+        "Increase Accuracy by 25% when armed with a single weapon"
       ], 
       "Aurora": [
         "Increase LB gauge by 2 per turn"
