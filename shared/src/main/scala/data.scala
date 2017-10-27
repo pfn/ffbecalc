@@ -248,7 +248,7 @@ object SkillEffect {
       case (0 | 1, 3, 10004) => PassiveWeapEleStatEffect.decode(xs)
       case (0 | 1, 3, 10003) => PassiveSinglehandEffect.decode(xs)
       case (0 | 1, 3, 6)     => PassiveEquipStatEffect.decode(xs)
-      case (0 | 1, 3, 11)    => PassiveKillerEffect.decode(xs)
+      case (0 | 1, 1 | 3, 11)    => PassiveKillerEffect.decode(xs)
       case (0 | 1, 3, 21)    => PassiveEvoMagEffect.decode(xs)
       case (0 | 1, 3, 22)    => PassiveDodgeEffect.decode(xs)
       case (0 | 1, 3, 54)    => PassiveDodgeEffect.decode(xs)
