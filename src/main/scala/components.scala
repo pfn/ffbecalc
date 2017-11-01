@@ -118,7 +118,11 @@ object components {
     )
   }
   case class Effective(stats: Stats, passives: PassiveStatEffect, dh: PassiveSinglehandEffect, tdh: Passive2HEffect, tdh2: PassiveTDHEffect, accuracy: Int, is1h: Boolean, is2h: Boolean)
-  def unitStats(unitInfo: Observable[Option[UnitData]], unit: Observable[Option[UnitEntry]], stats: Observable[Option[BaseStats]], equipped: Observable[(Equipped,Abilities)], allPassives: Observable[SkillEffect.CollatedEffect], esper: Observable[Option[EsperStatInfo]], esperEntry: Observable[Option[EsperEntry]]) = {
+
+  def unitStats(unitInfo: Observable[Option[UnitData]], unit: Observable[Option[UnitEntry]],
+                stats: Observable[Option[BaseStats]], equipped: Observable[(Equipped,Abilities)],
+                allPassives: Observable[SkillEffect.CollatedEffect],
+                esper: Observable[Option[EsperStatInfo]], esperEntry: Observable[Option[EsperEntry]]) = {
     val effective = stats.combineLatest(esper.combineLatest(esperEntry), equipped, allPassives).map {
       case (s,(e,ee),(eqs,_),pasv) =>
         s.map { st =>
