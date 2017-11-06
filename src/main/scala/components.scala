@@ -135,18 +135,20 @@ object components {
           val eqstats = alleq.foldLeft(Stats.zero) { (ac, equip) =>
             ac + equip.stats
           }
-          val dhstats = if (!is2h && isSW) eqstats * pasv.dh
-          else Stats.zero
+          val dh = if (!is2h && isSW) pasv.dh
+          else PassiveSinglehandEffect.zero
 
-          val tdhstats = if (is2h || isSW) eqstats * pasv.tdh
-          else Stats.zero
+          val tdh = if (is2h || isSW) pasv.tdh.asSingleHand
+          else PassiveSinglehandEffect.zero
 
-          val tdhstats2 = if (is2h || isSW) eqstats * pasv.tdh2
-          else Stats.zero
+          val tdh2 = if (is2h || isSW) pasv.tdh2.asSingleHand
+          else PassiveSinglehandEffect.zero
+
+          val alldh = dh + tdh + tdh2
 
           val accuracy = (if (is2h || isSW) pasv.tdh.accuracy else 0) + (if (!is2h && isSW) pasv.accuracy1h else 0)
 
-          Effective(st.asStats * passives + e + eqstats + dhstats + tdhstats + tdhstats2 ++ ee, passives, pasv.dh, pasv.tdh, pasv.tdh2, accuracy, !is2h && isSW, isSW || is2h)
+          Effective(st.asStats * passives + e + eqstats + (eqstats * alldh) ++ ee, passives, pasv.dh, pasv.tdh, pasv.tdh2, accuracy, !is2h && isSW, isSW || is2h)
         }
     }
     table(cls := "unit-stats",

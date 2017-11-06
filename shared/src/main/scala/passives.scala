@@ -302,7 +302,7 @@ object PassiveElementResist {
   def decode(restrict: Set[Int], xs: List[Int]): SkillEffect = xs match {
     case List(a, b, c, d, e, f, g, h) =>
       PassiveElementResist(restrict, a, b, c, d, e, f, g, h)
-    case List(a, b, c, d, e, f) =>
+    case List(_, _, _, _, _, _) =>
       // this seems to be a mistake from skill 501890
       // counter skill that's listed as !active but has active effects_raw
       //PassiveElementResist(restrict, a, b, c, d, e, f, 0, 0)
@@ -394,7 +394,7 @@ object PassiveEquipStatEffect {
       PassiveEquipStatEffect(a, hp, mp, atk, defs, mag, spr)
     case List(a, atk, defs, mag, spr, hp, mp, _, _) => // 9 args, last 2 are???
       PassiveEquipStatEffect(a, hp, mp, atk, defs, mag, spr)
-    case List(a, b, c, d, e, f, g, h) =>
+    case List(a, b, c, d, e, f, g, _) =>
       PassiveEquipStatEffect(a, f, g, b, c, d, e)
   }
 }
@@ -431,6 +431,8 @@ case class PassiveTDHEffect(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr
     mag  -> "MAG",
     spr  -> "SPR",
   ).filterNot(_._1 == 0)
+
+  def asSingleHand = PassiveSinglehandEffect(hp, mp, atk, defs, mag, spr)
 }
 object PassiveTDHEffect {
   def zero = PassiveTDHEffect(0, 0, 0, 0, 0, 0)
@@ -446,7 +448,9 @@ object PassiveDoublehandEffect {
       else PassiveDoublehandEffect(a, b)
   }
 }
-case class Passive2HEffect(dh: Int, accuracy: Int) extends SkillEffect with NoRestrictions
+case class Passive2HEffect(dh: Int, accuracy: Int) extends SkillEffect with NoRestrictions {
+  def asSingleHand = PassiveSinglehandEffect(0, 0, dh, 0, 0, 0)
+}
 object Passive2HEffect {
   def zero = Passive2HEffect(0, 0)
 }
@@ -526,7 +530,7 @@ case class PassiveEvoMagEffect(evomag: Int) extends SkillEffect with NoRestricti
 object PassiveDodgeEffect {
   def decode(xs: List[Int]): SkillEffect = xs match {
     case List(a) => PassiveDodgeEffect(a, 0)
-    case List(a, b) => PassiveDodgeEffect(0, b)
+    case List(_, b) => PassiveDodgeEffect(0, b)
   }
 }
 case class PassiveDodgeEffect(phys: Int, mag: Int) extends SkillEffect with NoRestrictions

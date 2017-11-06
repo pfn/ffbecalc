@@ -104,28 +104,28 @@ case class Stats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int, stat
 
   def *(o: Passive2HEffect) = Stats(
     0, 0,
-    (atk * math.min(300, o.dh / 100.0)).toInt,
+    (atk * math.min(3, o.dh / 100.0)).toInt,
     0, 0, 0,
     AilmentResist.zero, ElementResist.zero
   )
 
   def *(o: PassiveSinglehandEffect) = Stats(
-    (hp   * math.min(300, o.hp   / 100.0)).toInt,
-    (mp   * math.min(300, o.mp   / 100.0)).toInt,
-    (atk  * math.min(300, o.atk  / 100.0)).toInt,
-    (defs * math.min(300, o.defs / 100.0)).toInt,
-    (mag  * math.min(300, o.mag  / 100.0)).toInt,
-    (spr  * math.min(300, o.spr  / 100.0)).toInt,
+    (hp   * math.min(3, o.hp   / 100.0)).toInt,
+    (mp   * math.min(3, o.mp   / 100.0)).toInt,
+    (atk  * math.min(3, o.atk  / 100.0)).toInt,
+    (defs * math.min(3, o.defs / 100.0)).toInt,
+    (mag  * math.min(3, o.mag  / 100.0)).toInt,
+    (spr  * math.min(3, o.spr  / 100.0)).toInt,
     AilmentResist.zero, ElementResist.zero
   )
 
   def *(o: PassiveTDHEffect) = Stats(
-    (hp   * math.min(300, o.hp   / 100.0)).toInt,
-    (mp   * math.min(300, o.mp   / 100.0)).toInt,
-    (atk  * math.min(300, o.atk  / 100.0)).toInt,
-    (defs * math.min(300, o.defs / 100.0)).toInt,
-    (mag  * math.min(300, o.mag  / 100.0)).toInt,
-    (spr  * math.min(300, o.spr  / 100.0)).toInt,
+    (hp   * math.min(3, o.hp   / 100.0)).toInt,
+    (mp   * math.min(3, o.mp   / 100.0)).toInt,
+    (atk  * math.min(3, o.atk  / 100.0)).toInt,
+    (defs * math.min(3, o.defs / 100.0)).toInt,
+    (mag  * math.min(3, o.mag  / 100.0)).toInt,
+    (spr  * math.min(3, o.spr  / 100.0)).toInt,
     AilmentResist.zero, ElementResist.zero
   )
 
