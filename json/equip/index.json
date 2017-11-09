@@ -612,6 +612,30 @@
     ], 
     "slot_id": 3
   }, 
+  "Glass Mask": {
+    "type_id": 40, 
+    "compid": 90093, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "1100000089", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 35
+    }, 
+    "skills": null, 
+    "slot_id": 3
+  }, 
   "Wind Drake Horn": {
     "type_id": 60, 
     "compid": 491, 
@@ -1013,73 +1037,6 @@
     "skills": null, 
     "slot_id": 3
   }, 
-  "\u30c7\u30b9\u30b9\u30c8\u30ed\u30fc\u30af": {
-    "type_id": 1, 
-    "compid": 745, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            1, 
-            [
-              0, 
-              0, 
-              0, 
-              0, 
-              0, 
-              20, 
-              0
-            ]
-          ]
-        ]
-      }, 
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            31, 
-            [
-              100
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "High Tide": [
-        "Increase the limit burst gauge fill rate by 100%"
-      ], 
-      "MP +20%": [
-        "Increase MP by 20%"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "301002400", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 105, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 70, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": [
-      100050, 
-      101240
-    ], 
-    "slot_id": 1
-  }, 
   "Type-3 Fists": {
     "type_id": 16, 
     "compid": 707, 
@@ -1225,6 +1182,32 @@
     ], 
     "slot_id": 4
   }, 
+  "Holy Gloves": {
+    "type_id": 16, 
+    "compid": 746, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "309002100", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 92, 
+      "element_inflict": [
+        "Light"
+      ], 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": null, 
+    "slot_id": 1
+  }, 
   "Ice Lance": {
     "type_id": 10, 
     "compid": 330, 
@@ -1298,30 +1281,6 @@
     "skills": [
       101360
     ], 
-    "slot_id": 1
-  }, 
-  "Mana Blade": {
-    "type_id": 2, 
-    "compid": 342, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
-    "skill_restriction": [], 
-    "id": "302001900", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 101, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 8, 
-      "SPR": 8, 
-      "DEF": 8
-    }, 
-    "skills": null, 
     "slot_id": 1
   }, 
   "Platinum Long Sword": {
@@ -1511,29 +1470,29 @@
     ], 
     "slot_id": 1
   }, 
-  "Iron Gloves": {
-    "type_id": 60, 
-    "compid": 200, 
+  "Murasame+": {
+    "type_id": 4, 
+    "compid": 736, 
     "is_twohanded": false, 
     "reqs": null, 
     "effects_raw": [], 
     "skill_effects": {}, 
     "skill_restriction": [], 
-    "id": "409000100", 
+    "id": "304002100", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 0, 
+      "ATK": 111, 
       "element_inflict": null, 
       "MP": 0, 
-      "MAG": 0, 
+      "MAG": 14, 
       "SPR": 0, 
-      "DEF": 5
+      "DEF": 0
     }, 
     "skills": null, 
-    "slot_id": 5
+    "slot_id": 1
   }, 
   "Kodachi": {
     "type_id": 4, 
@@ -1808,6 +1767,48 @@
     ], 
     "slot_id": 5
   }, 
+  "Alexandrite Ring": {
+    "type_id": 60, 
+    "compid": 742, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "409016400", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": {
+        "Blind": -25, 
+        "Paralyze": -25, 
+        "Confusion": -25, 
+        "Disease": -25, 
+        "Poison": -25, 
+        "Sleep": -25, 
+        "Petrify": -25, 
+        "Silence": -25
+      }, 
+      "element_resist": {
+        "Dark": 15, 
+        "Fire": 15, 
+        "Light": 15, 
+        "Ice": 15, 
+        "Lightning": 15, 
+        "Water": 15, 
+        "Earth": 15, 
+        "Wind": 15
+      }, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 10, 
+      "DEF": 5
+    }, 
+    "skills": null, 
+    "slot_id": 5
+  }, 
   "Holy Wand - Replica": {
     "type_id": 5, 
     "compid": 700, 
@@ -1995,58 +1996,6 @@
       100010
     ], 
     "slot_id": 1
-  }, 
-  "\u57f7\u4e8b\u670d": {
-    "type_id": 50, 
-    "compid": 755, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            1, 
-            [
-              0, 
-              0, 
-              0, 
-              0, 
-              10, 
-              0, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "HP +10%": [
-        "Increase HP by 10%"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "405004300", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": {
-        "Ice": 10
-      }, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 38, 
-      "DEF": 21
-    }, 
-    "skills": [
-      100010
-    ], 
-    "slot_id": 4
   }, 
   "Sleep Sword": {
     "type_id": 2, 
@@ -2351,79 +2300,6 @@
       100730
     ], 
     "slot_id": 1
-  }, 
-  "\u30ea\u30fc\u30b9\u306e\u515c": {
-    "type_id": 41, 
-    "compid": 744, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            1, 
-            [
-              0, 
-              0, 
-              0, 
-              0, 
-              15, 
-              0, 
-              0
-            ]
-          ]
-        ]
-      }, 
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            0, 
-            3, 
-            1, 
-            [
-              0, 
-              0, 
-              0, 
-              0, 
-              0, 
-              15, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "MP + 15%": [
-        "Increase MP by 15%"
-      ], 
-      "HP +15%": [
-        "Increase HP by 15%"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "404002500", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 40, 
-      "DEF": 52
-    }, 
-    "skills": [
-      101500, 
-      203240
-    ], 
-    "slot_id": 3
   }, 
   "Frost Ring": {
     "type_id": 60, 
@@ -3455,6 +3331,30 @@
     ], 
     "slot_id": 1
   }, 
+  "Assist Suit": {
+    "type_id": 50, 
+    "compid": 763, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "405004400", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 150, 
+      "ATK": 5, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 24
+    }, 
+    "skills": null, 
+    "slot_id": 4
+  }, 
   "Bronze Knife": {
     "type_id": 1, 
     "compid": 1, 
@@ -3645,50 +3545,6 @@
     }, 
     "skills": null, 
     "slot_id": 4
-  }, 
-  "\u30de\u30e1\u30c3\u30c8\u30fb\u30a2\u30eb\u30d5\u30a3\u30ce": {
-    "type_id": 60, 
-    "compid": 735, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            32, 
-            [
-              5
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "Auto-Refresh": [
-        "Recover MP (5%) per turn"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "409016200", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": [
-      100740
-    ], 
-    "slot_id": 5
   }, 
   "Moogle Cape": {
     "type_id": 60, 
@@ -4408,50 +4264,6 @@
     ], 
     "slot_id": 5
   }, 
-  "\u30de\u30e1\u30c3\u30c8\u30fb\u30a4\u30c0": {
-    "type_id": 60, 
-    "compid": 733, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            35, 
-            [
-              30211
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "Auto-Bravery": [
-        "Gain Brave (Auto) (30211) at the start of a battle"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "409016000", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 20, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": [
-      202510
-    ], 
-    "slot_id": 5
-  }, 
   "Large Shield": {
     "type_id": 31, 
     "compid": 117, 
@@ -4503,6 +4315,33 @@
     }, 
     "skills": null, 
     "slot_id": 5
+  }, 
+  "Shadow Mail": {
+    "type_id": 52, 
+    "compid": 750, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "407002500", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": {
+        "Dark": 15, 
+        "Light": 15
+      }, 
+      "HP": 0, 
+      "ATK": 12, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 41
+    }, 
+    "skills": null, 
+    "slot_id": 4
   }, 
   "Broken Arm": {
     "type_id": 16, 
@@ -5495,52 +5334,6 @@
     "skills": null, 
     "slot_id": 4
   }, 
-  "\u7363\u738b\u306e\u65a7": {
-    "type_id": 8, 
-    "compid": 740, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            11, 
-            [
-              1, 
-              50, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "Beast Killer": [
-        "Increase physical damage against Beasts by 50%"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "305002100", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 102, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": [
-      101080
-    ], 
-    "slot_id": 1
-  }, 
   "Sledgehammer": {
     "type_id": 9, 
     "compid": 417, 
@@ -6235,54 +6028,28 @@
     ], 
     "slot_id": 4
   }, 
-  "\u30d0\u30ea\u30a2\u30f3\u30c8": {
+  "Platinum Musket": {
     "type_id": 14, 
-    "compid": 765, 
+    "compid": 693, 
     "is_twohanded": false, 
     "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            1, 
-            [
-              0, 
-              0, 
-              0, 
-              0, 
-              0, 
-              10, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "MP +10%": [
-        "Increase MP by 10%"
-      ]
-    }, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
     "skill_restriction": [], 
-    "id": "313003100", 
+    "id": "313002900", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 49, 
+      "ATK": 68, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
-      "SPR": 8, 
+      "SPR": 0, 
       "DEF": 0
     }, 
-    "skills": [
-      100040
-    ], 
+    "skills": null, 
     "slot_id": 1
   }, 
   "Gaia Gear": {
@@ -6533,6 +6300,30 @@
     "skills": null, 
     "slot_id": 4
   }, 
+  "Crown of Justice": {
+    "type_id": 40, 
+    "compid": 90070, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "1100000066", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 20, 
+      "DEF": 25
+    }, 
+    "skills": null, 
+    "slot_id": 3
+  }, 
   "Maester's Robe": {
     "type_id": 53, 
     "compid": 714, 
@@ -6633,6 +6424,57 @@
     }, 
     "skills": null, 
     "slot_id": 1
+  }, 
+  "Leichtpanzer": {
+    "type_id": 51, 
+    "compid": 640, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            6, 
+            [
+              7, 
+              30, 
+              0, 
+              0, 
+              30, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Archer's Method": [
+        "Increase ATK and SPR by 30% when equipped with a Bow"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "406002700", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 38
+    }, 
+    "skills": [
+      215430
+    ], 
+    "slot_id": 4
   }, 
   "Platinum Edge": {
     "type_id": 13, 
@@ -7037,30 +6879,6 @@
     "skills": null, 
     "slot_id": 1
   }, 
-  "\u7adc\u306e\u9aed\u30fb\u30ec\u30d7\u30ea\u30ab": {
-    "type_id": 10, 
-    "compid": 753, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
-    "skill_restriction": [], 
-    "id": "308003300", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 69, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": null, 
-    "slot_id": 1
-  }, 
   "Swordbreaker": {
     "type_id": 1, 
     "compid": 392, 
@@ -7156,50 +6974,6 @@
       203240
     ], 
     "slot_id": 4
-  }, 
-  "Dragoon's Gauntlet": {
-    "type_id": 60, 
-    "compid": 458, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            17, 
-            [
-              100
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "High Jump": [
-        "Increase damage dealt by jump attacks by 100%"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "409009700", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 10
-    }, 
-    "skills": [
-      101460
-    ], 
-    "slot_id": 5
   }, 
   "Lucky Bangles": {
     "type_id": 60, 
@@ -7357,29 +7131,78 @@
     "skills": null, 
     "slot_id": 1
   }, 
-  "Platinum Musket": {
-    "type_id": 14, 
-    "compid": 693, 
+  "Lise's Crown": {
+    "type_id": 41, 
+    "compid": 744, 
     "is_twohanded": false, 
     "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              15, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }, 
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              15, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "MP + 15%": [
+        "Increase MP by 15%"
+      ], 
+      "HP +15%": [
+        "Increase HP by 15%"
+      ]
+    }, 
     "skill_restriction": [], 
-    "id": "313002900", 
+    "id": "404002500", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 68, 
+      "ATK": 0, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
+      "SPR": 40, 
+      "DEF": 52
     }, 
-    "skills": null, 
-    "slot_id": 1
+    "skills": [
+      101500, 
+      203240
+    ], 
+    "slot_id": 3
   }, 
   "Twenty-sided Die": {
     "type_id": 60, 
@@ -7544,6 +7367,59 @@
     ], 
     "slot_id": 5
   }, 
+  "Cloak of Flames": {
+    "type_id": 60, 
+    "compid": 90100, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              30, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "SPR +30%": [
+        "Increase SPR by 30%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "1100000097", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": {
+        "Fire": 20, 
+        "Ice": 20
+      }, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 18
+    }, 
+    "skills": [
+      100180
+    ], 
+    "slot_id": 5
+  }, 
   "Wizard Rod": {
     "type_id": 6, 
     "compid": 266, 
@@ -7567,34 +7443,6 @@
     }, 
     "skills": null, 
     "slot_id": 1
-  }, 
-  "\u30de\u30e1\u30c3\u30c8\u30fb\u30ac\u30eb\u30fc\u30c0": {
-    "type_id": 60, 
-    "compid": 729, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
-    "skill_restriction": [], 
-    "id": "409015600", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": {
-        "Confusion": 100
-      }, 
-      "element_resist": {
-        "Wind": 30
-      }, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 30, 
-      "DEF": 0
-    }, 
-    "skills": null, 
-    "slot_id": 5
   }, 
   "Patches": {
     "type_id": 60, 
@@ -7989,106 +7837,6 @@
     ], 
     "slot_id": 5
   }, 
-  "\u30d7\u30ec\u30b5\u30a4\u30ba\u30e9\u30f3\u30b9": {
-    "type_id": 10, 
-    "compid": 762, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            0, 
-            3, 
-            1, 
-            [
-              0, 
-              0, 
-              0, 
-              0, 
-              0, 
-              0, 
-              10
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "\u30af\u30ea\u30c6\u30a3\u30ab\u30eb\u7387+10%": [
-        "Increase crit. chance by 10%"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "308003400", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 74, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": [
-      221540
-    ], 
-    "slot_id": 1
-  }, 
-  "\u66b4\u7363\u306e\u5c16\u89d2": {
-    "type_id": 60, 
-    "compid": 743, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            0, 
-            3, 
-            1, 
-            [
-              0, 
-              0, 
-              0, 
-              0, 
-              5, 
-              0, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "HP + 5%": [
-        "Increase HP by 5%"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "409016500", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 5, 
-      "SPR": 10, 
-      "DEF": 0
-    }, 
-    "skills": [
-      203250
-    ], 
-    "slot_id": 5
-  }, 
   "Rod of Judgment": {
     "type_id": 6, 
     "compid": 613, 
@@ -8196,73 +7944,6 @@
       30100
     ], 
     "slot_id": 1
-  }, 
-  "\u30de\u30e1\u30c3\u30c8\u30fb\u30b5\u30f3\u30af\u30ec\u30c3\u30c9": {
-    "type_id": 60, 
-    "compid": 731, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            1, 
-            [
-              0, 
-              0, 
-              0, 
-              0, 
-              15, 
-              0, 
-              0
-            ]
-          ]
-        ]
-      }, 
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            35, 
-            [
-              10121
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "HP +15%": [
-        "Increase HP by 15%"
-      ], 
-      "Auto-Regen": [
-        "Gain Regen (Auto) (10121) at the start of a battle"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "409015800", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": [
-      101500, 
-      100730
-    ], 
-    "slot_id": 5
   }, 
   "Soluna Band": {
     "type_id": 60, 
@@ -8702,6 +8383,36 @@
     "skills": null, 
     "slot_id": 1
   }, 
+  "Force Armor+": {
+    "type_id": 52, 
+    "compid": 738, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "407002400", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": {
+        "Fire": 20, 
+        "Earth": 20, 
+        "Wind": 20, 
+        "Ice": 20, 
+        "Lightning": 20
+      }, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 17, 
+      "DEF": 57
+    }, 
+    "skills": null, 
+    "slot_id": 4
+  }, 
   "Pod 153": {
     "type_id": 60, 
     "compid": 712, 
@@ -8829,84 +8540,57 @@
     ], 
     "slot_id": 1
   }, 
-  "\u6c37\u7d0b\u5200": {
-    "type_id": 4, 
-    "compid": 758, 
+  "Wizard's Hat": {
+    "type_id": 40, 
+    "compid": 126, 
     "is_twohanded": false, 
     "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            0, 
-            3, 
-            11, 
-            [
-              1, 
-              25, 
-              0
-            ]
-          ], 
-          [
-            0, 
-            3, 
-            11, 
-            [
-              2, 
-              25, 
-              0
-            ]
-          ], 
-          [
-            0, 
-            3, 
-            11, 
-            [
-              3, 
-              25, 
-              0
-            ]
-          ], 
-          [
-            0, 
-            3, 
-            11, 
-            [
-              11, 
-              25, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "\u51cd\u6c37\u306e\u7406": [
-        "Increase physical damage against Beasts by 25%", 
-        "Increase physical damage against Avians by 25%", 
-        "Increase physical damage against Aquatics by 25%", 
-        "Increase physical damage against Plantoids by 25%"
-      ]
-    }, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
     "skill_restriction": [], 
-    "id": "304002200", 
+    "id": "403040100", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 110, 
-      "element_inflict": [
-        "Ice"
-      ], 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 6
+    }, 
+    "skills": null, 
+    "slot_id": 3
+  }, 
+  "Savage Axe": {
+    "type_id": 8, 
+    "compid": 90063, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {
+      "Raise (Full)": [
+        "Revive one ally from KO (100% HP) / Insta-kill Reaper monster"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "1100000059", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 55, 
+      "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
       "SPR": 0, 
       "DEF": 0
     }, 
     "skills": [
-      220690
+      910182
     ], 
     "slot_id": 1
   }, 
@@ -9846,6 +9530,56 @@
     ], 
     "slot_id": 1
   }, 
+  "Charlotte's Cap": {
+    "type_id": 40, 
+    "compid": 747, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              20, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "SPR +20%": [
+        "Increase SPR by 20%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "403043700", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 12
+    }, 
+    "skills": [
+      100170
+    ], 
+    "slot_id": 3
+  }, 
   "Mirage Vest": {
     "type_id": 50, 
     "compid": 155, 
@@ -9926,9 +9660,9 @@
     ], 
     "slot_id": 5
   }, 
-  "\u7adc\u306e\u9aed": {
-    "type_id": 10, 
-    "compid": 752, 
+  "Glorious Armlet": {
+    "type_id": 60, 
+    "compid": 715, 
     "is_twohanded": false, 
     "reqs": null, 
     "effects_raw": [
@@ -9938,23 +9672,14 @@
           [
             1, 
             3, 
-            17, 
-            [
-              50
-            ]
-          ]
-        ]
-      }, 
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
             1, 
-            3, 
-            11, 
             [
-              7, 
-              50, 
+              0, 
+              0, 
+              0, 
+              0, 
+              10, 
+              0, 
               0
             ]
           ]
@@ -9962,32 +9687,28 @@
       }
     ], 
     "skill_effects": {
-      "\u7adc\u306e\u9aed": [
-        "Increase damage dealt by jump attacks by 50%"
-      ], 
-      "Dragon Killer": [
-        "Increase physical damage against Dragons by 50%"
+      "HP +10%": [
+        "Increase HP by 10%"
       ]
     }, 
     "skill_restriction": [], 
-    "id": "308003200", 
+    "id": "409015200", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 138, 
+      "ATK": 0, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
+      "SPR": 5, 
+      "DEF": 5
     }, 
     "skills": [
-      220670, 
-      101050
+      100010
     ], 
-    "slot_id": 1
+    "slot_id": 5
   }, 
   "Punisher": {
     "type_id": 6, 
@@ -10249,6 +9970,30 @@
     }, 
     "skills": null, 
     "slot_id": 2
+  }, 
+  "Sash of Restraint": {
+    "type_id": 60, 
+    "compid": 757, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "409016700", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 45, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": null, 
+    "slot_id": 5
   }, 
   "Yakei": {
     "type_id": 4, 
@@ -10614,100 +10359,28 @@
     "skills": null, 
     "slot_id": 2
   }, 
-  "\u30b7\u30e3\u30eb\u30ed\u30c3\u30c8\u306e\u5e3d\u5b50": {
-    "type_id": 40, 
-    "compid": 747, 
+  "Mana Blade": {
+    "type_id": 2, 
+    "compid": 342, 
     "is_twohanded": false, 
     "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            1, 
-            [
-              0, 
-              0, 
-              0, 
-              20, 
-              0, 
-              0, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "SPR +20%": [
-        "Increase SPR by 20%"
-      ]
-    }, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
     "skill_restriction": [], 
-    "id": "403043700", 
+    "id": "302001900", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 0, 
+      "ATK": 101, 
       "element_inflict": null, 
       "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 12
+      "MAG": 8, 
+      "SPR": 8, 
+      "DEF": 8
     }, 
-    "skills": [
-      100170
-    ], 
-    "slot_id": 3
-  }, 
-  "Mythril Bow": {
-    "type_id": 7, 
-    "compid": 291, 
-    "is_twohanded": true, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            11, 
-            [
-              2, 
-              50, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "Bird Killer": [
-        "Increase physical damage against Avians by 50%"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "312000300", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 38, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": [
-      101090
-    ], 
+    "skills": null, 
     "slot_id": 1
   }, 
   "Genji Blade": {
@@ -10952,6 +10625,50 @@
     "skills": null, 
     "slot_id": 1
   }, 
+  "Wind-up Yda": {
+    "type_id": 60, 
+    "compid": 733, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            35, 
+            [
+              30211
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Auto-Bravery": [
+        "Gain Brave (Auto) (30211) at the start of a battle"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "409016000", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 20, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      202510
+    ], 
+    "slot_id": 5
+  }, 
   "\u30b0\u30e9\u30b3\u30b9\u306e\u30e4\u30ea": {
     "type_id": 10, 
     "compid": 401, 
@@ -11122,6 +10839,56 @@
     "skills": null, 
     "slot_id": 3
   }, 
+  "Fury Ring": {
+    "type_id": 60, 
+    "compid": 741, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              30, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "ATK +30%": [
+        "Increase ATK by 30%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "409016300", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 3, 
+      "DEF": 3
+    }, 
+    "skills": [
+      100090
+    ], 
+    "slot_id": 5
+  }, 
   "\u30d0\u30f3\u30ae\u30b9\u30a2\u30fc\u30e0": {
     "type_id": 60, 
     "compid": 575, 
@@ -11280,29 +11047,103 @@
     "skills": null, 
     "slot_id": 1
   }, 
-  "Crown of Justice": {
-    "type_id": 40, 
-    "compid": 90070, 
+  "Valiant II": {
+    "type_id": 14, 
+    "compid": 760, 
     "is_twohanded": false, 
     "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              30, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "MP +30%": [
+        "Increase MP by 30%"
+      ]
+    }, 
     "skill_restriction": [], 
-    "id": "1100000066", 
+    "id": "313003000", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 0, 
+      "ATK": 98, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
-      "SPR": 20, 
-      "DEF": 25
+      "SPR": 21, 
+      "DEF": 0
     }, 
-    "skills": null, 
-    "slot_id": 3
+    "skills": [
+      100060
+    ], 
+    "slot_id": 1
+  }, 
+  "Gaia Hammer": {
+    "type_id": 9, 
+    "compid": 90096, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            11, 
+            [
+              6, 
+              50, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Machine Killer": [
+        "Increase physical damage against Machinas by 50%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "1100000092", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 90, 
+      "element_inflict": [
+        "Fire"
+      ], 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      101030
+    ], 
+    "slot_id": 1
   }, 
   "Protect Ring": {
     "type_id": 60, 
@@ -11651,6 +11492,32 @@
     ], 
     "slot_id": 4
   }, 
+  "Shadow Dragon Scales": {
+    "type_id": 60, 
+    "compid": 90097, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "1100000093", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": {
+        "Light": 30
+      }, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 30, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": null, 
+    "slot_id": 5
+  }, 
   "Black Robe": {
     "type_id": 53, 
     "compid": 183, 
@@ -11804,10 +11671,10 @@
     "skills": null, 
     "slot_id": 1
   }, 
-  "\u30d0\u30ea\u30a2\u30f3\u30c8\u2161": {
-    "type_id": 14, 
-    "compid": 760, 
-    "is_twohanded": false, 
+  "Mythril Bow": {
+    "type_id": 7, 
+    "compid": 291, 
+    "is_twohanded": true, 
     "reqs": null, 
     "effects_raw": [
       {
@@ -11816,14 +11683,10 @@
           [
             1, 
             3, 
-            1, 
+            11, 
             [
-              0, 
-              0, 
-              0, 
-              0, 
-              0, 
-              30, 
+              2, 
+              50, 
               0
             ]
           ]
@@ -11831,26 +11694,26 @@
       }
     ], 
     "skill_effects": {
-      "MP +30%": [
-        "Increase MP by 30%"
+      "Bird Killer": [
+        "Increase physical damage against Avians by 50%"
       ]
     }, 
     "skill_restriction": [], 
-    "id": "313003000", 
+    "id": "312000300", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 98, 
+      "ATK": 38, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
-      "SPR": 21, 
+      "SPR": 0, 
       "DEF": 0
     }, 
     "skills": [
-      100060
+      101090
     ], 
     "slot_id": 1
   }, 
@@ -11880,29 +11743,29 @@
     "skills": null, 
     "slot_id": 4
   }, 
-  "\u30a2\u30e9\u30cd\u30a2\u306e\u515c": {
-    "type_id": 41, 
-    "compid": 759, 
+  "Iron Gloves": {
+    "type_id": 60, 
+    "compid": 200, 
     "is_twohanded": false, 
     "reqs": null, 
     "effects_raw": [], 
     "skill_effects": {}, 
     "skill_restriction": [], 
-    "id": "404002600", 
+    "id": "409000100", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 20, 
+      "ATK": 0, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
-      "SPR": 24, 
-      "DEF": 24
+      "SPR": 0, 
+      "DEF": 5
     }, 
     "skills": null, 
-    "slot_id": 3
+    "slot_id": 5
   }, 
   "Aurora Scarf": {
     "type_id": 60, 
@@ -12329,103 +12192,31 @@
     "skills": null, 
     "slot_id": 2
   }, 
-  "\u30c9\u30e9\u30a6\u30d7\u30cb\u30eb": {
+  "Spark Ring": {
     "type_id": 60, 
-    "compid": 749, 
+    "compid": 225, 
     "is_twohanded": false, 
     "reqs": null, 
     "effects_raw": [], 
     "skill_effects": {}, 
     "skill_restriction": [], 
-    "id": "409016600", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 20, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 20, 
-      "SPR": 20, 
-      "DEF": 20
-    }, 
-    "skills": null, 
-    "slot_id": 5
-  }, 
-  "\u30de\u30e1\u30c3\u30c8\u30fb\u30e4\u30fb\u30b7\u30e5\u30c8\u30e9": {
-    "type_id": 60, 
-    "compid": 730, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            35, 
-            [
-              30141
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "Auto-Shell": [
-        "Gain Shell (Auto) (30141) at the start of a battle"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "409015700", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 30, 
-      "DEF": 0
-    }, 
-    "skills": [
-      100720
-    ], 
-    "slot_id": 5
-  }, 
-  "\u30d5\u30a9\u30fc\u30b9\u30a2\u30fc\u30de\u30fc\u30fb\u6539": {
-    "type_id": 52, 
-    "compid": 738, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
-    "skill_restriction": [], 
-    "id": "407002400", 
+    "id": "409002600", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": {
-        "Fire": 20, 
-        "Earth": 20, 
-        "Wind": 20, 
-        "Ice": 20, 
-        "Lightning": 20
+        "Lightning": 5
       }, 
       "HP": 0, 
       "ATK": 0, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
-      "SPR": 17, 
-      "DEF": 57
+      "SPR": 0, 
+      "DEF": 2
     }, 
     "skills": null, 
-    "slot_id": 4
+    "slot_id": 5
   }, 
   "Heavy Armor: B": {
     "type_id": 52, 
@@ -12552,6 +12343,50 @@
       213980
     ], 
     "slot_id": 1
+  }, 
+  "Wind-up Minfilia": {
+    "type_id": 60, 
+    "compid": 732, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            35, 
+            [
+              30091
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Auto-Protect": [
+        "Gain Protect (Auto) (30091) at the start of a battle"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "409015900", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 30
+    }, 
+    "skills": [
+      100710
+    ], 
+    "slot_id": 5
   }, 
   "Avenger": {
     "type_id": 1, 
@@ -12700,6 +12535,56 @@
     "skills": null, 
     "slot_id": 1
   }, 
+  "Precision Lance": {
+    "type_id": 10, 
+    "compid": 762, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              10
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "\u30af\u30ea\u30c6\u30a3\u30ab\u30eb\u7387+10%": [
+        "Increase crit. chance by 10%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "308003400", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 74, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      221540
+    ], 
+    "slot_id": 1
+  }, 
   "Bowie Knife": {
     "type_id": 1, 
     "compid": 427, 
@@ -12794,32 +12679,6 @@
     ], 
     "slot_id": 3
   }, 
-  "Spark Ring": {
-    "type_id": 60, 
-    "compid": 225, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
-    "skill_restriction": [], 
-    "id": "409002600", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": {
-        "Lightning": 5
-      }, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 2
-    }, 
-    "skills": null, 
-    "slot_id": 5
-  }, 
   "Judge Helm": {
     "type_id": 41, 
     "compid": 90090, 
@@ -12905,29 +12764,55 @@
     "skills": null, 
     "slot_id": 4
   }, 
-  "Cloud's Clothes": {
-    "type_id": 51, 
-    "compid": 636, 
+  "A1-Class Powershield": {
+    "type_id": 60, 
+    "compid": 761, 
     "is_twohanded": false, 
     "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              10, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "HP +10%": [
+        "Increase HP by 10%"
+      ]
+    }, 
     "skill_restriction": [], 
-    "id": "406002600", 
+    "id": "409016800", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
-      "HP": 500, 
-      "ATK": 15, 
+      "HP": 0, 
+      "ATK": 0, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
-      "SPR": 15, 
-      "DEF": 30
+      "SPR": 10, 
+      "DEF": 10
     }, 
-    "skills": null, 
-    "slot_id": 4
+    "skills": [
+      100010
+    ], 
+    "slot_id": 5
   }, 
   "Gungnir": {
     "type_id": 10, 
@@ -13305,9 +13190,9 @@
     ], 
     "slot_id": 5
   }, 
-  "\u6012\u308a\u306e\u6307\u8f2a": {
+  "Anniversary Ring": {
     "type_id": 60, 
-    "compid": 741, 
+    "compid": 524, 
     "is_twohanded": false, 
     "reqs": null, 
     "effects_raw": [
@@ -13315,43 +13200,37 @@
         "unit_restriction": null, 
         "effects": [
           [
-            1, 
+            0, 
             3, 
-            1, 
+            45, 
             [
-              30, 
-              0, 
-              0, 
-              0, 
-              0, 
-              0, 
-              0
+              30
             ]
           ]
         ]
       }
     ], 
     "skill_effects": {
-      "ATK +30%": [
-        "Increase ATK by 30%"
+      "EXP Boost x1.3": [
+        "Increase EXP gained by battles by 30%"
       ]
     }, 
     "skill_restriction": [], 
-    "id": "409016300", 
+    "id": "409011000", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 0, 
+      "ATK": 5, 
       "element_inflict": null, 
       "MP": 0, 
-      "MAG": 0, 
-      "SPR": 3, 
-      "DEF": 3
+      "MAG": 5, 
+      "SPR": 5, 
+      "DEF": 5
     }, 
     "skills": [
-      100090
+      210290
     ], 
     "slot_id": 5
   }, 
@@ -13418,36 +13297,6 @@
     }, 
     "skills": null, 
     "slot_id": 5
-  }, 
-  "\u30dc\u30fc\u30f3\u30ed\u30c3\u30c9": {
-    "type_id": 6, 
-    "compid": 739, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {
-      "Darkra": [
-        "Magic dark damage (1.4x, MAG) to all enemies"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "310003100", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 12, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 51, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": [
-      20460
-    ], 
-    "slot_id": 1
   }, 
   "Leather Hat": {
     "type_id": 40, 
@@ -13524,48 +13373,6 @@
     }, 
     "skills": [
       910182
-    ], 
-    "slot_id": 1
-  }, 
-  "\u30ea\u30e5\u30df\u30a8\u30fc\u30eb": {
-    "type_id": 2, 
-    "compid": 754, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {
-      "Waterga Blade": [
-        "Hybrid water damage (2.7x, ATK & MAG) to one enemy"
-      ], 
-      "Thundaga Blade": [
-        "Hybrid lightning damage (2.7x, ATK & MAG) to one enemy"
-      ], 
-      "Aeroga Blade": [
-        "Hybrid wind damage (2.7x, ATK & MAG) to one enemy"
-      ], 
-      "Firaga Blade": [
-        "Hybrid fire damage (2.7x, ATK & MAG) to one enemy"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "302004200", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 62, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 67, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": [
-      214180, 
-      200720, 
-      200730, 
-      200740
     ], 
     "slot_id": 1
   }, 
@@ -13656,6 +13463,32 @@
       "element_resist": null, 
       "HP": 0, 
       "ATK": 25, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": null, 
+    "slot_id": 1
+  }, 
+  "Hell Claws": {
+    "type_id": 16, 
+    "compid": 90095, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "1100000091", 
+    "stats": {
+      "status_inflict": {
+        "Poison": 30
+      }, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 79, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
@@ -14209,6 +14042,58 @@
     "skills": null, 
     "slot_id": 1
   }, 
+  "Butler's Uniform": {
+    "type_id": 50, 
+    "compid": 755, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              10, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "HP +10%": [
+        "Increase HP by 10%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "405004300", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": {
+        "Ice": 10
+      }, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 38, 
+      "DEF": 21
+    }, 
+    "skills": [
+      100010
+    ], 
+    "slot_id": 4
+  }, 
   "Water Drake's Rod": {
     "type_id": 6, 
     "compid": 569, 
@@ -14440,57 +14325,6 @@
     ], 
     "slot_id": 1
   }, 
-  "Raihito Panzer": {
-    "type_id": 51, 
-    "compid": 640, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            0, 
-            3, 
-            6, 
-            [
-              7, 
-              30, 
-              0, 
-              0, 
-              30, 
-              0, 
-              0, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "Archer's Method": [
-        "Increase ATK and SPR by 30% when equipped with a Bow"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "406002700", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 38
-    }, 
-    "skills": [
-      215430
-    ], 
-    "slot_id": 4
-  }, 
   "Buckler": {
     "type_id": 30, 
     "compid": 112, 
@@ -14537,6 +14371,63 @@
       "DEF": 0
     }, 
     "skills": null, 
+    "slot_id": 1
+  }, 
+  "Rusted Sword": {
+    "type_id": 2, 
+    "compid": 751, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": [
+          311000105
+        ], 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              50, 
+              0, 
+              0, 
+              0, 
+              20, 
+              20, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "\u30b8\u30a7\u30de\u306e\u899a\u9192": [
+        "Increase ATK by 50% and HP and MP by 20%"
+      ], 
+      "\u30a8\u30af\u30b9\u30ab\u30ea\u30d0\u30fc": [
+        "Physical light damage (5x, ATK) to one enemy", 
+        "Increase LB gauge by 1-3"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "302004100", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 20, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      220240, 
+      220250
+    ], 
     "slot_id": 1
   }, 
   "Cursed Mouthpiece": {
@@ -14825,6 +14716,69 @@
     ], 
     "slot_id": 3
   }, 
+  "Dragon's Hair": {
+    "type_id": 10, 
+    "compid": 752, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            17, 
+            [
+              50
+            ]
+          ]
+        ]
+      }, 
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            11, 
+            [
+              7, 
+              50, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "\u7adc\u306e\u9aed": [
+        "Increase damage dealt by jump attacks by 50%"
+      ], 
+      "Dragon Killer": [
+        "Increase physical damage against Dragons by 50%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "308003200", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 138, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      220670, 
+      101050
+    ], 
+    "slot_id": 1
+  }, 
   "Excalibur II": {
     "type_id": 3, 
     "compid": 686, 
@@ -14900,6 +14854,50 @@
     }, 
     "skills": null, 
     "slot_id": 4
+  }, 
+  "Second Knife": {
+    "type_id": 1, 
+    "compid": 90072, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            14, 
+            [
+              "none"
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Dual Wield": [
+        "Enable unit to equip two one-handed weapons"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "1100000068", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 5, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      101370
+    ], 
+    "slot_id": 1
   }, 
   "Goddess Bow": {
     "type_id": 7, 
@@ -15335,30 +15333,6 @@
     "skills": null, 
     "slot_id": 4
   }, 
-  "\u5fcd\u306e\u9b54\u529b\u5e2f": {
-    "type_id": 60, 
-    "compid": 757, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
-    "skill_restriction": [], 
-    "id": "409016700", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 45, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": null, 
-    "slot_id": 5
-  }, 
   "Cat Claws": {
     "type_id": 16, 
     "compid": 64, 
@@ -15709,50 +15683,6 @@
     ], 
     "slot_id": 1
   }, 
-  "\u30b7\u30e5\u30c8\u30fc\u30b9\u30b7\u30e5\u30da\u30fc\u30a2": {
-    "type_id": 10, 
-    "compid": 766, 
-    "is_twohanded": true, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            17, 
-            [
-              100
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "High Jump": [
-        "Increase damage dealt by jump attacks by 100%"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "308003500", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 140, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": [
-      101460
-    ], 
-    "slot_id": 1
-  }, 
   "Fixed Dice": {
     "type_id": 13, 
     "compid": 460, 
@@ -15776,6 +15706,56 @@
     }, 
     "skills": null, 
     "slot_id": 1
+  }, 
+  "Chobham Armor": {
+    "type_id": 51, 
+    "compid": 764, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              5, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "HP + 5%": [
+        "Increase HP by 5%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "406003000", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 42
+    }, 
+    "skills": [
+      203250
+    ], 
+    "slot_id": 4
   }, 
   "Werebuster": {
     "type_id": 15, 
@@ -15819,6 +15799,111 @@
       "DEF": 0
     }, 
     "skills": [
+      101080
+    ], 
+    "slot_id": 1
+  }, 
+  "Killer Bow+": {
+    "type_id": 7, 
+    "compid": 737, 
+    "is_twohanded": true, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            11, 
+            [
+              2, 
+              50, 
+              0
+            ]
+          ]
+        ]
+      }, 
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            11, 
+            [
+              11, 
+              50, 
+              0
+            ]
+          ]
+        ]
+      }, 
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            11, 
+            [
+              9, 
+              50, 
+              0
+            ]
+          ]
+        ]
+      }, 
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            11, 
+            [
+              1, 
+              50, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Plant Killer": [
+        "Increase physical damage against Plantoids by 50%"
+      ], 
+      "Bird Killer": [
+        "Increase physical damage against Avians by 50%"
+      ], 
+      "Beast Killer": [
+        "Increase physical damage against Beasts by 50%"
+      ], 
+      "Bug Killer": [
+        "Increase physical damage against Insects by 50%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "312001900", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 118, 
+      "element_inflict": [
+        "Dark"
+      ], 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      101090, 
+      101000, 
+      101020, 
       101080
     ], 
     "slot_id": 1
@@ -16764,29 +16849,33 @@
     "skills": null, 
     "slot_id": 3
   }, 
-  "Wizard's Hat": {
-    "type_id": 40, 
-    "compid": 126, 
+  "Wind-up Garuda": {
+    "type_id": 60, 
+    "compid": 729, 
     "is_twohanded": false, 
     "reqs": null, 
     "effects_raw": [], 
     "skill_effects": {}, 
     "skill_restriction": [], 
-    "id": "403040100", 
+    "id": "409015600", 
     "stats": {
       "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
+      "status_resist": {
+        "Confusion": 100
+      }, 
+      "element_resist": {
+        "Wind": 30
+      }, 
       "HP": 0, 
       "ATK": 0, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 6
+      "SPR": 30, 
+      "DEF": 0
     }, 
     "skills": null, 
-    "slot_id": 3
+    "slot_id": 5
   }, 
   "\u6a5f\u52d5\u88c5\u7532": {
     "type_id": 52, 
@@ -17487,50 +17576,6 @@
     ], 
     "slot_id": 1
   }, 
-  "\u30de\u30e1\u30c3\u30c8\u30fb\u30df\u30f3\u30d5\u30a3\u30ea\u30a2": {
-    "type_id": 60, 
-    "compid": 732, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            35, 
-            [
-              30091
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "Auto-Protect": [
-        "Gain Protect (Auto) (30091) at the start of a battle"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "409015900", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 30
-    }, 
-    "skills": [
-      100710
-    ], 
-    "slot_id": 5
-  }, 
   "Magical Egg": {
     "type_id": 60, 
     "compid": 90067, 
@@ -17992,49 +18037,31 @@
     ], 
     "slot_id": 3
   }, 
-  "Anniversary Ring": {
-    "type_id": 60, 
-    "compid": 524, 
+  "Gaia Blade": {
+    "type_id": 2, 
+    "compid": 467, 
     "is_twohanded": false, 
     "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            0, 
-            3, 
-            45, 
-            [
-              30
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "EXP Boost x1.3": [
-        "Increase EXP gained by battles by 30%"
-      ]
-    }, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
     "skill_restriction": [], 
-    "id": "409011000", 
+    "id": "302002900", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 5, 
-      "element_inflict": null, 
+      "ATK": 60, 
+      "element_inflict": [
+        "Earth"
+      ], 
       "MP": 0, 
-      "MAG": 5, 
-      "SPR": 5, 
-      "DEF": 5
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
     }, 
-    "skills": [
-      210290
-    ], 
-    "slot_id": 5
+    "skills": null, 
+    "slot_id": 1
   }, 
   "Force Armor": {
     "type_id": 52, 
@@ -18135,29 +18162,38 @@
     "skills": null, 
     "slot_id": 4
   }, 
-  "\u6751\u96e8\u30fb\u6539": {
-    "type_id": 4, 
-    "compid": 736, 
+  "Hairpin of Purity": {
+    "type_id": 40, 
+    "compid": 756, 
     "is_twohanded": false, 
     "reqs": null, 
     "effects_raw": [], 
     "skill_effects": {}, 
     "skill_restriction": [], 
-    "id": "304002100", 
+    "id": "403043800", 
     "stats": {
       "status_inflict": null, 
-      "status_resist": null, 
+      "status_resist": {
+        "Blind": 100, 
+        "Paralyze": 100, 
+        "Confusion": 100, 
+        "Disease": 100, 
+        "Poison": 100, 
+        "Sleep": 100, 
+        "Petrify": 100, 
+        "Silence": 100
+      }, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 111, 
+      "ATK": 0, 
       "element_inflict": null, 
       "MP": 0, 
-      "MAG": 14, 
-      "SPR": 0, 
-      "DEF": 0
+      "MAG": 24, 
+      "SPR": 51, 
+      "DEF": 10
     }, 
     "skills": null, 
-    "slot_id": 1
+    "slot_id": 3
   }, 
   "Mage's Habit": {
     "type_id": 50, 
@@ -18651,36 +18687,6 @@
     "skills": null, 
     "slot_id": 1
   }, 
-  "Savage Axe": {
-    "type_id": 8, 
-    "compid": 90063, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {
-      "Raise (Full)": [
-        "Revive one ally from KO (100% HP) / Insta-kill Reaper monster"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "1100000059", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 55, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": [
-      910182
-    ], 
-    "slot_id": 1
-  }, 
   "Bunny Mask (631)": {
     "type_id": 40, 
     "compid": 631, 
@@ -18708,50 +18714,28 @@
     "skills": null, 
     "slot_id": 3
   }, 
-  "Save the Queen (684)": {
-    "type_id": 3, 
-    "compid": 684, 
+  "Dragon's Hair - Replica": {
+    "type_id": 10, 
+    "compid": 753, 
     "is_twohanded": false, 
     "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            0, 
-            3, 
-            31, 
-            [
-              25
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "100 Man Killer": [
-        "Increase the limit burst gauge fill rate by 25%"
-      ]
-    }, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
     "skill_restriction": [], 
-    "id": "303003500", 
+    "id": "308003300", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
-      "element_resist": {
-        "Fire": 30
-      }, 
+      "element_resist": null, 
       "HP": 0, 
-      "ATK": 135, 
+      "ATK": 69, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
       "SPR": 0, 
       "DEF": 0
     }, 
-    "skills": [
-      217120
-    ], 
+    "skills": null, 
     "slot_id": 1
   }, 
   "Flametongue": {
@@ -18779,6 +18763,30 @@
     }, 
     "skills": null, 
     "slot_id": 1
+  }, 
+  "Draupnir": {
+    "type_id": 60, 
+    "compid": 749, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "409016600", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 20, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 20, 
+      "SPR": 20, 
+      "DEF": 20
+    }, 
+    "skills": null, 
+    "slot_id": 5
   }, 
   "Samurai Princess's Armor": {
     "type_id": 51, 
@@ -19060,6 +19068,50 @@
     }, 
     "skills": null, 
     "slot_id": 1
+  }, 
+  "Wind-up Y'shtola": {
+    "type_id": 60, 
+    "compid": 730, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            35, 
+            [
+              30141
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Auto-Shell": [
+        "Gain Shell (Auto) (30141) at the start of a battle"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "409015700", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 30, 
+      "DEF": 0
+    }, 
+    "skills": [
+      100720
+    ], 
+    "slot_id": 5
   }, 
   "Lamia's Scythe": {
     "type_id": 10, 
@@ -20601,6 +20653,30 @@
     ], 
     "slot_id": 5
   }, 
+  "Aranea's Helm": {
+    "type_id": 41, 
+    "compid": 759, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "404002600", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 20, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 24, 
+      "DEF": 24
+    }, 
+    "skills": null, 
+    "slot_id": 3
+  }, 
   "Dreamwaker": {
     "type_id": 5, 
     "compid": 366, 
@@ -20920,9 +20996,9 @@
     ], 
     "slot_id": 1
   }, 
-  "Second Knife": {
-    "type_id": 1, 
-    "compid": 90072, 
+  "Save the Queen (684)": {
+    "type_id": 3, 
+    "compid": 684, 
     "is_twohanded": false, 
     "reqs": null, 
     "effects_raw": [
@@ -20930,29 +21006,31 @@
         "unit_restriction": null, 
         "effects": [
           [
-            1, 
+            0, 
             3, 
-            14, 
+            31, 
             [
-              "none"
+              25
             ]
           ]
         ]
       }
     ], 
     "skill_effects": {
-      "Dual Wield": [
-        "Enable unit to equip two one-handed weapons"
+      "100 Man Killer": [
+        "Increase the limit burst gauge fill rate by 25%"
       ]
     }, 
     "skill_restriction": [], 
-    "id": "1100000068", 
+    "id": "303003500", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
-      "element_resist": null, 
+      "element_resist": {
+        "Fire": 30
+      }, 
       "HP": 0, 
-      "ATK": 5, 
+      "ATK": 135, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
@@ -20960,7 +21038,7 @@
       "DEF": 0
     }, 
     "skills": [
-      101370
+      217120
     ], 
     "slot_id": 1
   }, 
@@ -21084,6 +21162,63 @@
     ], 
     "slot_id": 5
   }, 
+  "Fashionable Dancewear": {
+    "type_id": 50, 
+    "compid": 90101, 
+    "is_twohanded": false, 
+    "reqs": [
+      "SEX", 
+      2
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": [
+          401002304
+        ], 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              20, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "HP +20%": [
+        "Increase HP by 20%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "1100000098", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": {
+        "Paralyze": 100
+      }, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 28, 
+      "DEF": 28
+    }, 
+    "skills": [
+      910384
+    ], 
+    "slot_id": 4
+  }, 
   "Override": {
     "type_id": 16, 
     "compid": 477, 
@@ -21127,39 +21262,6 @@
       209220
     ], 
     "slot_id": 1
-  }, 
-  "\u7d14\u5fc3\u306e\u9aea\u98fe\u308a": {
-    "type_id": 40, 
-    "compid": 756, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
-    "skill_restriction": [], 
-    "id": "403043800", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": {
-        "Blind": 100, 
-        "Paralyze": 100, 
-        "Confusion": 100, 
-        "Disease": 100, 
-        "Poison": 100, 
-        "Sleep": 100, 
-        "Petrify": 100, 
-        "Silence": 100
-      }, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 24, 
-      "SPR": 51, 
-      "DEF": 10
-    }, 
-    "skills": null, 
-    "slot_id": 3
   }, 
   "\u30a2\u30b7\u30e9\u30d8\u30eb\u30e0": {
     "type_id": 41, 
@@ -22018,6 +22120,32 @@
     "skills": null, 
     "slot_id": 5
   }, 
+  "Diamond Shield": {
+    "type_id": 31, 
+    "compid": 90094, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "1100000090", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": {
+        "Lightning": 10
+      }, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 25, 
+      "DEF": 30
+    }, 
+    "skills": null, 
+    "slot_id": 2
+  }, 
   "Muscle Belt": {
     "type_id": 60, 
     "compid": 261, 
@@ -22193,6 +22321,50 @@
     ], 
     "slot_id": 5
   }, 
+  "Stoss Spear": {
+    "type_id": 10, 
+    "compid": 766, 
+    "is_twohanded": true, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            17, 
+            [
+              100
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "High Jump": [
+        "Increase damage dealt by jump attacks by 100%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "308003500", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 140, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      101460
+    ], 
+    "slot_id": 1
+  }, 
   "Feathered Cap": {
     "type_id": 40, 
     "compid": 125, 
@@ -22318,6 +22490,98 @@
     "skills": null, 
     "slot_id": 3
   }, 
+  "Loren's Insignia": {
+    "type_id": 60, 
+    "compid": 90115, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              15, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }, 
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              15, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }, 
+      {
+        "unit_restriction": [
+          100009105
+        ], 
+        "effects": [
+          [
+            0, 
+            3, 
+            32, 
+            [
+              5
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "ATK +15%": [
+        "Increase ATK by 15%"
+      ], 
+      "HP +15%": [
+        "Increase HP by 15%"
+      ], 
+      "Knight of Grandshelt": [
+        "Recover MP (5%) per turn"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "1100000112", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 3
+    }, 
+    "skills": [
+      101500, 
+      101600, 
+      910540
+    ], 
+    "slot_id": 5
+  }, 
   "Barbut": {
     "type_id": 41, 
     "compid": 142, 
@@ -22393,56 +22657,6 @@
       100010
     ], 
     "slot_id": 1
-  }, 
-  "\u58eb\u5b98\u7528\u7279A\u7d1a\u30b7\u30fc\u30eb\u30c9": {
-    "type_id": 60, 
-    "compid": 761, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            1, 
-            [
-              0, 
-              0, 
-              0, 
-              0, 
-              10, 
-              0, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "HP +10%": [
-        "Increase HP by 10%"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "409016800", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 10, 
-      "DEF": 10
-    }, 
-    "skills": [
-      100010
-    ], 
-    "slot_id": 5
   }, 
   "Master's Hammer": {
     "type_id": 9, 
@@ -22650,6 +22864,30 @@
     "skills": null, 
     "slot_id": 5
   }, 
+  "Cloud's Uniform": {
+    "type_id": 51, 
+    "compid": 636, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "406002600", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 500, 
+      "ATK": 15, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 15, 
+      "DEF": 30
+    }, 
+    "skills": null, 
+    "slot_id": 4
+  }, 
   "Tabby Suit": {
     "type_id": 50, 
     "compid": 461, 
@@ -22723,30 +22961,6 @@
       100010, 
       100040
     ], 
-    "slot_id": 4
-  }, 
-  "\u30a2\u30b7\u30b9\u30c8\u30b9\u30fc\u30c4": {
-    "type_id": 50, 
-    "compid": 763, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
-    "skill_restriction": [], 
-    "id": "405004400", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 150, 
-      "ATK": 5, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 24
-    }, 
-    "skills": null, 
     "slot_id": 4
   }, 
   "Reaver": {
@@ -22871,6 +23085,73 @@
     }, 
     "skills": null, 
     "slot_id": 4
+  }, 
+  "Deathstroke": {
+    "type_id": 1, 
+    "compid": 745, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              20, 
+              0
+            ]
+          ]
+        ]
+      }, 
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            31, 
+            [
+              100
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "High Tide": [
+        "Increase the limit burst gauge fill rate by 100%"
+      ], 
+      "MP +20%": [
+        "Increase MP by 20%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "301002400", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 105, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 70, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      100050, 
+      101240
+    ], 
+    "slot_id": 1
   }, 
   "Rod of Gravity": {
     "type_id": 6, 
@@ -23744,56 +24025,6 @@
     ], 
     "slot_id": 5
   }, 
-  "\u30c1\u30e7\u30d0\u30e0\u30a2\u30fc\u30de\u30fc": {
-    "type_id": 51, 
-    "compid": 764, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            0, 
-            3, 
-            1, 
-            [
-              0, 
-              0, 
-              0, 
-              0, 
-              5, 
-              0, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "HP + 5%": [
-        "Increase HP by 5%"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "406003000", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 42
-    }, 
-    "skills": [
-      203250
-    ], 
-    "slot_id": 4
-  }, 
   "Reincarnation": {
     "type_id": 7, 
     "compid": 504, 
@@ -23942,6 +24173,56 @@
     ], 
     "slot_id": 4
   }, 
+  "Valiant": {
+    "type_id": 14, 
+    "compid": 765, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              10, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "MP +10%": [
+        "Increase MP by 10%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "313003100", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 49, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 8, 
+      "DEF": 0
+    }, 
+    "skills": [
+      100040
+    ], 
+    "slot_id": 1
+  }, 
   "White Cape": {
     "type_id": 60, 
     "compid": 212, 
@@ -24079,30 +24360,50 @@
     ], 
     "slot_id": 5
   }, 
-  "Gaia Blade": {
-    "type_id": 2, 
-    "compid": 467, 
+  "King of Beasts": {
+    "type_id": 8, 
+    "compid": 740, 
     "is_twohanded": false, 
     "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            11, 
+            [
+              1, 
+              50, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Beast Killer": [
+        "Increase physical damage against Beasts by 50%"
+      ]
+    }, 
     "skill_restriction": [], 
-    "id": "302002900", 
+    "id": "305002100", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 60, 
-      "element_inflict": [
-        "Earth"
-      ], 
+      "ATK": 102, 
+      "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
       "SPR": 0, 
       "DEF": 0
     }, 
-    "skills": null, 
+    "skills": [
+      101080
+    ], 
     "slot_id": 1
   }, 
   "Tactician Magician's Coat": {
@@ -24457,63 +24758,6 @@
     ], 
     "slot_id": 5
   }, 
-  "\u3055\u3073\u305f\u3064\u308b\u304e": {
-    "type_id": 2, 
-    "compid": 751, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": [
-          311000105
-        ], 
-        "effects": [
-          [
-            0, 
-            3, 
-            1, 
-            [
-              50, 
-              0, 
-              0, 
-              0, 
-              20, 
-              20, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "\u30b8\u30a7\u30de\u306e\u899a\u9192": [
-        "Increase ATK by 50% and HP and MP by 20%"
-      ], 
-      "\u30a8\u30af\u30b9\u30ab\u30ea\u30d0\u30fc": [
-        "Physical light damage (5x, ATK) to one enemy", 
-        "Increase LB gauge by 1-3"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "302004100", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 20, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": [
-      220240, 
-      220250
-    ], 
-    "slot_id": 1
-  }, 
   "Siren's Robe": {
     "type_id": 53, 
     "compid": 430, 
@@ -24541,49 +24785,29 @@
     "skills": null, 
     "slot_id": 4
   }, 
-  "\u30de\u30e1\u30c3\u30c8\u30fb\u30d1\u30d1\u30ea\u30e2": {
-    "type_id": 60, 
-    "compid": 734, 
-    "is_twohanded": false, 
+  "Platinum Bell": {
+    "type_id": 11, 
+    "compid": 526, 
+    "is_twohanded": true, 
     "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            35, 
-            [
-              30221
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "Auto-Faith": [
-        "Gain Faith (Auto) (30221) at the start of a battle"
-      ]
-    }, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
     "skill_restriction": [], 
-    "id": "409016100", 
+    "id": "316000800", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 0, 
+      "ATK": 38, 
       "element_inflict": null, 
       "MP": 0, 
-      "MAG": 20, 
-      "SPR": 0, 
+      "MAG": 30, 
+      "SPR": 21, 
       "DEF": 0
     }, 
-    "skills": [
-      217620
-    ], 
-    "slot_id": 5
+    "skills": null, 
+    "slot_id": 1
   }, 
   "\u661f\u8fb0\u306e\u93a7": {
     "type_id": 51, 
@@ -25188,33 +25412,6 @@
     "skills": null, 
     "slot_id": 4
   }, 
-  "\u30b7\u30e3\u30c9\u30a6\u30e1\u30a4\u30eb": {
-    "type_id": 52, 
-    "compid": 750, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
-    "skill_restriction": [], 
-    "id": "407002500", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": {
-        "Dark": 15, 
-        "Light": 15
-      }, 
-      "HP": 0, 
-      "ATK": 12, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 41
-    }, 
-    "skills": null, 
-    "slot_id": 4
-  }, 
   "Mystery Veil": {
     "type_id": 40, 
     "compid": 136, 
@@ -25530,10 +25727,10 @@
     "skills": null, 
     "slot_id": 1
   }, 
-  "\u30ad\u30e9\u30fc\u30dc\u30a6\u30fb\u6539": {
-    "type_id": 7, 
-    "compid": 737, 
-    "is_twohanded": true, 
+  "Wind-up Papalymo": {
+    "type_id": 60, 
+    "compid": 734, 
+    "is_twohanded": false, 
     "reqs": null, 
     "effects_raw": [
       {
@@ -25542,98 +25739,37 @@
           [
             1, 
             3, 
-            11, 
+            35, 
             [
-              2, 
-              50, 
-              0
-            ]
-          ]
-        ]
-      }, 
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            11, 
-            [
-              11, 
-              50, 
-              0
-            ]
-          ]
-        ]
-      }, 
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            11, 
-            [
-              9, 
-              50, 
-              0
-            ]
-          ]
-        ]
-      }, 
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            11, 
-            [
-              1, 
-              50, 
-              0
+              30221
             ]
           ]
         ]
       }
     ], 
     "skill_effects": {
-      "Plant Killer": [
-        "Increase physical damage against Plantoids by 50%"
-      ], 
-      "Bird Killer": [
-        "Increase physical damage against Avians by 50%"
-      ], 
-      "Beast Killer": [
-        "Increase physical damage against Beasts by 50%"
-      ], 
-      "Bug Killer": [
-        "Increase physical damage against Insects by 50%"
+      "Auto-Faith": [
+        "Gain Faith (Auto) (30221) at the start of a battle"
       ]
     }, 
     "skill_restriction": [], 
-    "id": "312001900", 
+    "id": "409016100", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 118, 
-      "element_inflict": [
-        "Dark"
-      ], 
+      "ATK": 0, 
+      "element_inflict": null, 
       "MP": 0, 
-      "MAG": 0, 
+      "MAG": 20, 
       "SPR": 0, 
       "DEF": 0
     }, 
     "skills": [
-      101090, 
-      101000, 
-      101020, 
-      101080
+      217620
     ], 
-    "slot_id": 1
+    "slot_id": 5
   }, 
   "Cleric's Robes": {
     "type_id": 53, 
@@ -25731,31 +25867,49 @@
     "skills": null, 
     "slot_id": 4
   }, 
-  "\u30db\u30fc\u30ea\u30fc\u30b0\u30ed\u30fc\u30d6": {
-    "type_id": 16, 
-    "compid": 746, 
+  "Dragoon's Gauntlet": {
+    "type_id": 60, 
+    "compid": 458, 
     "is_twohanded": false, 
     "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            17, 
+            [
+              100
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "High Jump": [
+        "Increase damage dealt by jump attacks by 100%"
+      ]
+    }, 
     "skill_restriction": [], 
-    "id": "309002100", 
+    "id": "409009700", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 92, 
-      "element_inflict": [
-        "Light"
-      ], 
+      "ATK": 0, 
+      "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
       "SPR": 0, 
-      "DEF": 0
+      "DEF": 10
     }, 
-    "skills": null, 
-    "slot_id": 1
+    "skills": [
+      101460
+    ], 
+    "slot_id": 5
   }, 
   "Ifrit's Claw": {
     "type_id": 60, 
@@ -25837,9 +25991,9 @@
     "skills": null, 
     "slot_id": 5
   }, 
-  "Glorious Armlet": {
+  "Feral Horn": {
     "type_id": 60, 
-    "compid": 715, 
+    "compid": 743, 
     "is_twohanded": false, 
     "reqs": null, 
     "effects_raw": [
@@ -25847,7 +26001,7 @@
         "unit_restriction": null, 
         "effects": [
           [
-            1, 
+            0, 
             3, 
             1, 
             [
@@ -25855,7 +26009,7 @@
               0, 
               0, 
               0, 
-              10, 
+              5, 
               0, 
               0
             ]
@@ -25864,12 +26018,12 @@
       }
     ], 
     "skill_effects": {
-      "HP +10%": [
-        "Increase HP by 10%"
+      "HP + 5%": [
+        "Increase HP by 5%"
       ]
     }, 
     "skill_restriction": [], 
-    "id": "409015200", 
+    "id": "409016500", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
@@ -25878,12 +26032,12 @@
       "ATK": 0, 
       "element_inflict": null, 
       "MP": 0, 
-      "MAG": 0, 
-      "SPR": 5, 
-      "DEF": 5
+      "MAG": 5, 
+      "SPR": 10, 
+      "DEF": 0
     }, 
     "skills": [
-      100010
+      203250
     ], 
     "slot_id": 5
   }, 
@@ -25935,6 +26089,111 @@
     "skills": null, 
     "slot_id": 1
   }, 
+  "Hawk's Clothes": {
+    "type_id": 50, 
+    "compid": 748, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "405004200", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 10, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 15, 
+      "SPR": 0, 
+      "DEF": 34
+    }, 
+    "skills": null, 
+    "slot_id": 4
+  }, 
+  "Himonto": {
+    "type_id": 4, 
+    "compid": 758, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            11, 
+            [
+              1, 
+              25, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            11, 
+            [
+              2, 
+              25, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            11, 
+            [
+              3, 
+              25, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            11, 
+            [
+              11, 
+              25, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "\u51cd\u6c37\u306e\u7406": [
+        "Increase physical damage against Beasts by 25%", 
+        "Increase physical damage against Avians by 25%", 
+        "Increase physical damage against Aquatics by 25%", 
+        "Increase physical damage against Plantoids by 25%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "304002200", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 110, 
+      "element_inflict": [
+        "Ice"
+      ], 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      220690
+    ], 
+    "slot_id": 1
+  }, 
   "Glauca's Greatsword": {
     "type_id": 3, 
     "compid": 608, 
@@ -25978,6 +26237,48 @@
     }, 
     "skills": [
       100730
+    ], 
+    "slot_id": 1
+  }, 
+  "Ryumiel": {
+    "type_id": 2, 
+    "compid": 754, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {
+      "Waterga Blade": [
+        "Hybrid water damage (2.7x, ATK & MAG) to one enemy"
+      ], 
+      "Thundaga Blade": [
+        "Hybrid lightning damage (2.7x, ATK & MAG) to one enemy"
+      ], 
+      "Aeroga Blade": [
+        "Hybrid wind damage (2.7x, ATK & MAG) to one enemy"
+      ], 
+      "Firaga Blade": [
+        "Hybrid fire damage (2.7x, ATK & MAG) to one enemy"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "302004200", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 62, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 67, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      214180, 
+      200720, 
+      200730, 
+      200740
     ], 
     "slot_id": 1
   }, 
@@ -26176,48 +26477,6 @@
       100010
     ], 
     "slot_id": 1
-  }, 
-  "\u30a2\u30ec\u30ad\u30b5\u30f3\u30c9\u30e9\u30a4\u30c8\u306e\u6307\u8f2a": {
-    "type_id": 60, 
-    "compid": 742, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
-    "skill_restriction": [], 
-    "id": "409016400", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": {
-        "Blind": -25, 
-        "Paralyze": -25, 
-        "Confusion": -25, 
-        "Disease": -25, 
-        "Poison": -25, 
-        "Sleep": -25, 
-        "Petrify": -25, 
-        "Silence": -25
-      }, 
-      "element_resist": {
-        "Dark": 15, 
-        "Fire": 15, 
-        "Light": 15, 
-        "Ice": 15, 
-        "Lightning": 15, 
-        "Water": 15, 
-        "Earth": 15, 
-        "Wind": 15
-      }, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 10, 
-      "DEF": 5
-    }, 
-    "skills": null, 
-    "slot_id": 5
   }, 
   "Training Clothes": {
     "type_id": 50, 
@@ -26760,6 +27019,73 @@
       100070, 
       100100, 
       101370
+    ], 
+    "slot_id": 5
+  }, 
+  "Wind-up Thancred": {
+    "type_id": 60, 
+    "compid": 731, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              15, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }, 
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            35, 
+            [
+              10121
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "HP +15%": [
+        "Increase HP by 15%"
+      ], 
+      "Auto-Regen": [
+        "Gain Regen (Auto) (10121) at the start of a battle"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "409015800", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      101500, 
+      100730
     ], 
     "slot_id": 5
   }, 
@@ -27343,29 +27669,49 @@
     "skills": null, 
     "slot_id": 1
   }, 
-  "Platinum Bell": {
-    "type_id": 11, 
-    "compid": 526, 
-    "is_twohanded": true, 
+  "Wind-up Alphinaud": {
+    "type_id": 60, 
+    "compid": 735, 
+    "is_twohanded": false, 
     "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            32, 
+            [
+              5
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Auto-Refresh": [
+        "Recover MP (5%) per turn"
+      ]
+    }, 
     "skill_restriction": [], 
-    "id": "316000800", 
+    "id": "409016200", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 38, 
+      "ATK": 0, 
       "element_inflict": null, 
       "MP": 0, 
-      "MAG": 30, 
-      "SPR": 21, 
+      "MAG": 0, 
+      "SPR": 0, 
       "DEF": 0
     }, 
-    "skills": null, 
-    "slot_id": 1
+    "skills": [
+      100740
+    ], 
+    "slot_id": 5
   }, 
   "Great Axe": {
     "type_id": 8, 
@@ -27571,62 +27917,35 @@
     "skills": null, 
     "slot_id": 4
   }, 
-  "Fashionable Dancewear": {
-    "type_id": 50, 
-    "compid": 90101, 
+  "Bone Rod": {
+    "type_id": 6, 
+    "compid": 739, 
     "is_twohanded": false, 
-    "reqs": [
-      "SEX", 
-      2
-    ], 
-    "effects_raw": [
-      {
-        "unit_restriction": [
-          401002304
-        ], 
-        "effects": [
-          [
-            1, 
-            3, 
-            1, 
-            [
-              0, 
-              0, 
-              0, 
-              0, 
-              20, 
-              0, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
+    "reqs": null, 
+    "effects_raw": [], 
     "skill_effects": {
-      "HP +20%": [
-        "Increase HP by 20%"
+      "Darkra": [
+        "Magic dark damage (1.4x, MAG) to all enemies"
       ]
     }, 
     "skill_restriction": [], 
-    "id": "1100000098", 
+    "id": "310003100", 
     "stats": {
       "status_inflict": null, 
-      "status_resist": {
-        "Paralyze": 100
-      }, 
+      "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 0, 
+      "ATK": 12, 
       "element_inflict": null, 
       "MP": 0, 
-      "MAG": 0, 
-      "SPR": 28, 
-      "DEF": 28
+      "MAG": 51, 
+      "SPR": 0, 
+      "DEF": 0
     }, 
     "skills": [
-      910384
+      20460
     ], 
-    "slot_id": 4
+    "slot_id": 1
   }, 
   "Sparkly Pom Pom": {
     "type_id": 60, 
@@ -29089,30 +29408,6 @@
     }, 
     "skills": null, 
     "slot_id": 1
-  }, 
-  "\u30db\u30fc\u30af\u30a2\u30a4\u306e\u670d": {
-    "type_id": 50, 
-    "compid": 748, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
-    "skill_restriction": [], 
-    "id": "405004200", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 10, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 15, 
-      "SPR": 0, 
-      "DEF": 34
-    }, 
-    "skills": null, 
-    "slot_id": 4
   }, 
   "Ribbon": {
     "type_id": 60, 
