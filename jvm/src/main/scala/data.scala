@@ -9,6 +9,33 @@ object DataDecoders {
   }
   def array(a: ACursor): Stream[ACursor] =
     a #:: array(a.right).takeWhile(_.succeeded)
+  implicit val decodeActiveEffects: Decoder[List[ActiveEffect]] = new Decoder[List[ActiveEffect]] {
+    def decodeSkillEffect(c: ACursor): List[ActiveEffect] = {
+        val active = c.up.up.downField("active").as[Boolean].toOption.getOrElse(false)
+        if (active) decodeEffect(Nil, c.downArray).fold(_ => Nil, x => List(x))
+        else Nil
+    }
+    def decodeEffect(restrict: List[Int], c: ACursor): Decoder.Result[ActiveEffect] = {
+      for {
+        x <- c.first.as[Int]
+        y <- c.right.as[Int]
+        z <- c.right.right.as[Int]
+      } yield {
+        val a = c.right.right.right
+        val isString = (for {
+          y <- a.values
+          z <- y.headOption
+        } yield z.isString).getOrElse(false)
+        ActiveEffects(x, y, z,
+          if (isString) Nil else a.as[List[Int]].fold(_ => Nil, identity))
+      }
+    }
+    def apply(c: HCursor): Decoder.Result[List[ActiveEffect]] = {
+      val self = c.downArray
+      val effects = array(self).map(decodeSkillEffect).toList.flatten.filterNot(_ == UnknownActiveEffect)
+      Right(effects)
+    }
+  }
   implicit val decodeSkillEffects: Decoder[List[SkillEffect]] = new Decoder[List[SkillEffect]] {
 
     def apply(c: HCursor): Decoder.Result[List[SkillEffect]] = {
@@ -149,13 +176,14 @@ object DataDecoders {
       "reqs"
     )(EquipIndexData.apply)
   implicit val decodeSkillInfo: Decoder[SkillInfo] =
-    Decoder.forProduct8(
+    Decoder.forProduct9(
       "id",
       "name",
       "active",
       "type",
       "magic_type",
       "mp_cost",
+      "effects_raw",
       "effects_raw",
       "effects")(SkillInfo.apply)
   implicit val decodeUnitStrings: Decoder[UnitStrings] =
