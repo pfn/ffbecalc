@@ -2914,6 +2914,73 @@
     ], 
     "slot_id": 4
   }, 
+  "Pink Striped Float": {
+    "type_id": 30, 
+    "compid": 90121, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              15, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }, 
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            24, 
+            [
+              15
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "SPR +15%": [
+        "Increase SPR by 15%"
+      ], 
+      "Focus Attention": [
+        "Increase chance of being targeted by 15%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "1100000118", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 25
+    }, 
+    "skills": [
+      208980, 
+      910549
+    ], 
+    "slot_id": 2
+  }, 
   "Skull Crusher": {
     "type_id": 15, 
     "compid": 354, 
@@ -6805,6 +6872,33 @@
     ], 
     "slot_id": 3
   }, 
+  "Sparkling Heels": {
+    "type_id": 60, 
+    "compid": 90119, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "1100000116", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": {
+        "Fire": 10, 
+        "Wind": 10
+      }, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 10
+    }, 
+    "skills": null, 
+    "slot_id": 5
+  }, 
   "\u30a2\u30b7\u30e9\u30e1\u30a4\u30eb": {
     "type_id": 51, 
     "compid": 579, 
@@ -7764,6 +7858,32 @@
       "MP": 0, 
       "MAG": 0, 
       "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": null, 
+    "slot_id": 1
+  }, 
+  "Evil Pipe": {
+    "type_id": 11, 
+    "compid": 90120, 
+    "is_twohanded": true, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "1100000117", 
+    "stats": {
+      "status_inflict": {
+        "Paralyze": 20
+      }, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 10, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 38, 
+      "SPR": 30, 
       "DEF": 0
     }, 
     "skills": null, 
@@ -12562,7 +12682,7 @@
       }
     ], 
     "skill_effects": {
-      "\u30af\u30ea\u30c6\u30a3\u30ab\u30eb\u7387+10%": [
+      "Critical +10%": [
         "Increase crit. chance by 10%"
       ]
     }, 
@@ -12763,6 +12883,76 @@
     }, 
     "skills": null, 
     "slot_id": 4
+  }, 
+  "Luxurious Feather Boa": {
+    "type_id": 60, 
+    "compid": 90122, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              30, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }, 
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            50, 
+            [
+              30, 
+              3, 
+              910551, 
+              1
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "SPR +30%": [
+        "Increase SPR by 30%"
+      ], 
+      "Sweet Sorrow": [
+        "30% chance to counter magic attacks with Sweet Sorrow (910551) to caster"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "1100000119", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      100180, 
+      910550
+    ], 
+    "slot_id": 5
   }, 
   "A1-Class Powershield": {
     "type_id": 60, 
@@ -14402,12 +14592,12 @@
       }
     ], 
     "skill_effects": {
-      "\u30b8\u30a7\u30de\u306e\u899a\u9192": [
-        "Increase ATK by 50% and HP and MP by 20%"
-      ], 
-      "\u30a8\u30af\u30b9\u30ab\u30ea\u30d0\u30fc": [
+      "Excalibur": [
         "Physical light damage (5x, ATK) to one enemy", 
         "Increase LB gauge by 1-3"
+      ], 
+      "Gemma's Awakening": [
+        "Increase ATK by 50% and HP and MP by 20%"
       ]
     }, 
     "skill_restriction": [], 
@@ -14752,7 +14942,7 @@
       }
     ], 
     "skill_effects": {
-      "\u7adc\u306e\u9aed": [
+      "Dragon's Mane": [
         "Increase damage dealt by jump attacks by 50%"
       ], 
       "Dragon Killer": [
@@ -18162,6 +18352,79 @@
     "skills": null, 
     "slot_id": 4
   }, 
+  "Hibiscus Hairpin": {
+    "type_id": 40, 
+    "compid": 90116, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              20, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }, 
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              15, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "MP + 15%": [
+        "Increase MP by 15%"
+      ], 
+      "MAG +20%": [
+        "Increase MAG by 20%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "1100000113", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 10
+    }, 
+    "skills": [
+      100110, 
+      203240
+    ], 
+    "slot_id": 3
+  }, 
   "Hairpin of Purity": {
     "type_id": 40, 
     "compid": 756, 
@@ -19825,6 +20088,32 @@
     "skills": [
       100710
     ], 
+    "slot_id": 4
+  }, 
+  "Cloak of Resentment": {
+    "type_id": 50, 
+    "compid": 90118, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "1100000115", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": {
+        "Silence": 100
+      }, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 5, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 25, 
+      "DEF": 25
+    }, 
+    "skills": null, 
     "slot_id": 4
   }, 
   "Earth Ring": {
@@ -25097,6 +25386,33 @@
     "skills": null, 
     "slot_id": 1
   }, 
+  "Kitty Headband": {
+    "type_id": 40, 
+    "compid": 90117, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "1100000114", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": {
+        "Water": 15, 
+        "Light": 15
+      }, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 20, 
+      "SPR": 20, 
+      "DEF": 5
+    }, 
+    "skills": null, 
+    "slot_id": 3
+  }, 
   "Rubber Suit": {
     "type_id": 50, 
     "compid": 602, 
@@ -26166,7 +26482,7 @@
       }
     ], 
     "skill_effects": {
-      "\u51cd\u6c37\u306e\u7406": [
+      "Frozen Law": [
         "Increase physical damage against Beasts by 25%", 
         "Increase physical damage against Avians by 25%", 
         "Increase physical damage against Aquatics by 25%", 
