@@ -4,6 +4,7 @@ lazy val jvm = project.in(file("jvm")).settings(
   libraryDependencies ++=
     "io.circe" %% "circe-core" % "0.8.0" ::
     "io.circe" %% "circe-parser" % "0.8.0" ::
+    "io.circe" %% "circe-optics" % "0.8.0" ::
     "io.suzaku" %% "boopickle" % "1.2.6" ::
     Nil
 ).dependsOn(sharedJS)

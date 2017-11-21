@@ -268,6 +268,16 @@ case class ElementResist(
   light: Int,
   dark: Int) {
   def +(o: ElementResist) = ElementResist(fire + o.fire, ice + o.ice, lightning + o.lightning, water + o.water, wind + o.wind, earth + o.earth, light + o.light, dark + o.dark)
+  def asMap = Map(
+    1 -> fire,
+    2 -> ice,
+    3 -> lightning,
+    4 -> water,
+    5 -> wind,
+    6 -> earth,
+    7 -> light,
+    8 -> dark
+  )
   def asList = List(
     fire      -> "Fire",
     ice       -> "Ice",

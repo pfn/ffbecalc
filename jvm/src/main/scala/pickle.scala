@@ -13,6 +13,7 @@ import java.nio.file.StandardOpenOption
 import DataDecoders._
 
 object Pickler {
+  implicit val picklerworkaround = implicitly[Pickler[List[ActiveEffect]]]
   implicit class RichFile(val f: File) extends AnyVal {
     def /(path: String) = new File(f, path)
 
