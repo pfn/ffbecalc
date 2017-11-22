@@ -2338,6 +2338,38 @@
     ], 
     "rarity": 5
   }, 
+  "Staff Mastery": {
+    "skill_names": [
+      "Staff Mastery"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            6, 
+            [
+              5, 
+              0, 
+              0, 
+              0, 
+              50, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504216060", 
+    "effects": [
+      "Increase SPR by 50% when equipped with a Staff"
+    ], 
+    "rarity": 6
+  }, 
   "Twinspell": {
     "skill_names": [
       "Twinspell"
@@ -3600,38 +3632,6 @@
     "effects": [
       "Increase ATK by 15%", 
       "10% chance of evading physical attacks"
-    ], 
-    "rarity": 6
-  }, 
-  "Cane Mastery": {
-    "skill_names": [
-      "Cane Mastery"
-    ], 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            0, 
-            3, 
-            6, 
-            [
-              5, 
-              0, 
-              0, 
-              0, 
-              50, 
-              0, 
-              0, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "id": "504216060", 
-    "effects": [
-      "Increase SPR by 50% when equipped with a Staff"
     ], 
     "rarity": 6
   }, 
@@ -10563,7 +10563,7 @@
   }, 
   "Lunarian's Hate": {
     "skill_names": [
-      "Lunarians Hate"
+      "Lunarian's Hate"
     ], 
     "effects_raw": [
       {

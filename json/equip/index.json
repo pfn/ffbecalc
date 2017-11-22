@@ -6773,8 +6773,8 @@
             49, 
             [
               25, 
-              2, 
-              10280
+              3, 
+              502080
             ]
           ], 
           [
@@ -6786,9 +6786,53 @@
             ]
           ]
         ]
+      }, 
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              30, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }, 
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              30, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ]
       }
     ], 
     "skill_effects": {
+      "MAG +30%": [
+        "Increase MAG by 30%"
+      ], 
+      "ATK +30%": [
+        "Increase ATK by 30%"
+      ], 
       "Death": [
         "Instant KO (30%) to one enemy", 
         "Magic dark damage (0.8x) as HP drain (30%) to one enemy"
@@ -6797,7 +6841,7 @@
         "Magic damage (6.8x, MAG) to all enemies (ignore cover and reflect)"
       ], 
       "Holy": [
-        "25% chance to counter physical attacks with Holy (10280) to the attacker", 
+        "25% chance to counter physical attacks with Holy (502080) to caster", 
         "25% chance of evading physical attacks"
       ]
     }, 
@@ -6818,7 +6862,9 @@
     "skills": [
       20480, 
       20490, 
-      212390
+      212390, 
+      100090, 
+      100120
     ], 
     "slot_id": 5
   }, 
@@ -11625,7 +11671,7 @@
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": {
-        "Light": 30
+        "Dark": 30
       }, 
       "HP": 0, 
       "ATK": 0, 
