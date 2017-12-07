@@ -342,7 +342,7 @@ object YaFFBEDB extends JSApp {
 
     val unitDescription = unitInfo.map { i =>
       i.fold("")(_.entries.values.toList.sortBy(
-        _.rarity).lastOption.fold("Unknown")(_.strings.description.headOption.getOrElse("Unknown")))
+        _.rarity).lastOption.fold("Unknown")(_.strings.description.headOption.flatten.getOrElse("Unknown")))
     }
 
     def effectiveStats(u: UnitData, base: BaseStats, equip: EquipIndex, pasv: SkillEffect.CollatedEffect): Stats = {

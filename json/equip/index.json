@@ -939,52 +939,6 @@
     ], 
     "slot_id": 1
   }, 
-  "S\u30de\u30b7\u30f3\u30bd\u30fc\u30c9": {
-    "type_id": 2, 
-    "compid": 379, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            11, 
-            [
-              6, 
-              50, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "Machine Killer": [
-        "Increase physical damage against Machinas by 50%"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "302002100", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 105, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": [
-      101030
-    ], 
-    "slot_id": 1
-  }, 
   "Demon Mail": {
     "type_id": 52, 
     "compid": 363, 
@@ -2221,6 +2175,73 @@
     }, 
     "skills": null, 
     "slot_id": 4
+  }, 
+  "Pocket Watch": {
+    "type_id": 60, 
+    "compid": 90123, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              15, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }, 
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            22, 
+            [
+              10
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Gears of Time": [
+        "10% chance of evading physical attacks"
+      ], 
+      "HP +15%": [
+        "Increase HP by 15%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "1100000120", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 3
+    }, 
+    "skills": [
+      101500, 
+      910638
+    ], 
+    "slot_id": 5
   }, 
   "Rod of Lightning": {
     "type_id": 6, 
@@ -3516,50 +3537,6 @@
     "skills": null, 
     "slot_id": 1
   }, 
-  "\u5927\u304a\u3084\u3076\u3093\u306e\u76fe": {
-    "type_id": 31, 
-    "compid": 404, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            35, 
-            [
-              30141
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "Auto-Shell": [
-        "Gain Shell (Auto) (30141) at the start of a battle"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "402001500", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 40
-    }, 
-    "skills": [
-      100720
-    ], 
-    "slot_id": 2
-  }, 
   "Power Vest": {
     "type_id": 50, 
     "compid": 148, 
@@ -3612,6 +3589,32 @@
     }, 
     "skills": null, 
     "slot_id": 4
+  }, 
+  "Staff of Antimagic": {
+    "type_id": 5, 
+    "compid": 382, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "311001800", 
+    "stats": {
+      "status_inflict": {
+        "Silence": 30
+      }, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 50, 
+      "DEF": 0
+    }, 
+    "skills": null, 
+    "slot_id": 1
   }, 
   "Moogle Cape": {
     "type_id": 60, 
@@ -4251,30 +4254,6 @@
     }, 
     "skills": null, 
     "slot_id": 5
-  }, 
-  "\u3066\u3064\u306e\u30aa\u30ce": {
-    "type_id": 8, 
-    "compid": 381, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
-    "skill_restriction": [], 
-    "id": "305001400", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 44, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": null, 
-    "slot_id": 1
   }, 
   "Rune Axe": {
     "type_id": 8, 
@@ -5427,50 +5406,6 @@
     "skills": null, 
     "slot_id": 1
   }, 
-  "\u306f\u3084\u3076\u3055\u306e\u30c4\u30e1": {
-    "type_id": 16, 
-    "compid": 402, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            0, 
-            3, 
-            44, 
-            [
-              2
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "Two-Hit Combo": [
-        "Normal attacks hit 2 times"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "309001100", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 36, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": [
-      400120
-    ], 
-    "slot_id": 1
-  }, 
   "Concealing Cloth": {
     "type_id": 60, 
     "compid": 698, 
@@ -5718,52 +5653,6 @@
     }, 
     "skills": null, 
     "slot_id": 2
-  }, 
-  "\u306f\u3058\u3083\u306e\u3064\u308b\u304e": {
-    "type_id": 2, 
-    "compid": 383, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            11, 
-            [
-              4, 
-              50, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "Demon Killer": [
-        "Increase physical damage against Demons by 50%"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "302002200", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 78, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": [
-      101070
-    ], 
-    "slot_id": 1
   }, 
   "Scion Thaumaturge's Monocle": {
     "type_id": 60, 
@@ -6414,6 +6303,50 @@
     }, 
     "skills": null, 
     "slot_id": 4
+  }, 
+  "Big Boss Shield": {
+    "type_id": 31, 
+    "compid": 404, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            35, 
+            [
+              30141
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Auto-Shell": [
+        "Gain Shell (Auto) (30141) at the start of a battle"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "402001500", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 40
+    }, 
+    "skills": [
+      100720
+    ], 
+    "slot_id": 2
   }, 
   "Mystical Skull": {
     "type_id": 60, 
@@ -9046,37 +8979,6 @@
     "skills": null, 
     "slot_id": 5
   }, 
-  "\u30e1\u30bf\u30b9\u30e9\u30c8\u30ec\u30a4": {
-    "type_id": 30, 
-    "compid": 403, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
-    "skill_restriction": [], 
-    "id": "401001200", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": {
-        "Paralyze": 100, 
-        "Confusion": 100, 
-        "Disease": 100, 
-        "Poison": 100, 
-        "Sleep": 100, 
-        "Petrify": 100
-      }, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 49
-    }, 
-    "skills": null, 
-    "slot_id": 2
-  }, 
   "Leucos Voulge": {
     "type_id": 8, 
     "compid": 508, 
@@ -10549,6 +10451,52 @@
     "skills": null, 
     "slot_id": 1
   }, 
+  "Cautery Sword": {
+    "type_id": 2, 
+    "compid": 383, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            11, 
+            [
+              4, 
+              50, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Demon Killer": [
+        "Increase physical damage against Demons by 50%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "302002200", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 78, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      101070
+    ], 
+    "slot_id": 1
+  }, 
   "Genji Blade": {
     "type_id": 4, 
     "compid": 378, 
@@ -10687,32 +10635,6 @@
     "skills": null, 
     "slot_id": 1
   }, 
-  "\u30e0\u30fc\u30f3\u30a2\u30c3\u30af\u30b9": {
-    "type_id": 8, 
-    "compid": 400, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
-    "skill_restriction": [], 
-    "id": "305001500", 
-    "stats": {
-      "status_inflict": {
-        "Confusion": 30
-      }, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 110, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": null, 
-    "slot_id": 1
-  }, 
   "Platinum Mace": {
     "type_id": 15, 
     "compid": 489, 
@@ -10835,52 +10757,28 @@
     ], 
     "slot_id": 5
   }, 
-  "\u30b0\u30e9\u30b3\u30b9\u306e\u30e4\u30ea": {
-    "type_id": 10, 
-    "compid": 401, 
+  "Excalipoor": {
+    "type_id": 3, 
+    "compid": 348, 
     "is_twohanded": false, 
     "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            11, 
-            [
-              3, 
-              50, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "Aquan Killer": [
-        "Increase physical damage against Aquatics by 50%"
-      ]
-    }, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
     "skill_restriction": [], 
-    "id": "308001800", 
+    "id": "303001600", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 76, 
-      "element_inflict": [
-        "Ice"
-      ], 
+      "ATK": 1, 
+      "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
       "SPR": 0, 
       "DEF": 0
     }, 
-    "skills": [
-      101110
-    ], 
+    "skills": null, 
     "slot_id": 1
   }, 
   "ZD Helmet": {
@@ -11260,6 +11158,56 @@
     }, 
     "skills": [
       100060
+    ], 
+    "slot_id": 1
+  }, 
+  "Crown Staff": {
+    "type_id": 5, 
+    "compid": 646, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              10, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "HP +10%": [
+        "Increase HP by 10%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "311002400", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 18, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 36, 
+      "SPR": 36, 
+      "DEF": 0
+    }, 
+    "skills": [
+      100010
     ], 
     "slot_id": 1
   }, 
@@ -12358,31 +12306,51 @@
     "skills": null, 
     "slot_id": 2
   }, 
-  "Spark Ring": {
-    "type_id": 60, 
-    "compid": 225, 
+  "S Machine Sword": {
+    "type_id": 2, 
+    "compid": 379, 
     "is_twohanded": false, 
     "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            11, 
+            [
+              6, 
+              50, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Machine Killer": [
+        "Increase physical damage against Machinas by 50%"
+      ]
+    }, 
     "skill_restriction": [], 
-    "id": "409002600", 
+    "id": "302002100", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
-      "element_resist": {
-        "Lightning": 5
-      }, 
+      "element_resist": null, 
       "HP": 0, 
-      "ATK": 0, 
+      "ATK": 105, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
       "SPR": 0, 
-      "DEF": 2
+      "DEF": 0
     }, 
-    "skills": null, 
-    "slot_id": 5
+    "skills": [
+      101030
+    ], 
+    "slot_id": 1
   }, 
   "Heavy Armor: B": {
     "type_id": 52, 
@@ -12482,7 +12450,7 @@
     ], 
     "skill_effects": {
       "Dual White Magic": [
-        "Enable unit to use white magic 2x in one turn"
+        "Enable unit to cast 2 white magic spells"
       ], 
       "Holy": [
         "Magic light damage (2.3x, SPR) to one enemy"
@@ -12596,6 +12564,54 @@
     }, 
     "skills": [
       211740
+    ], 
+    "slot_id": 1
+  }, 
+  "Gracos's Trident": {
+    "type_id": 10, 
+    "compid": 401, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            11, 
+            [
+              3, 
+              50, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Aquan Killer": [
+        "Increase physical damage against Aquatics by 50%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "308001800", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 76, 
+      "element_inflict": [
+        "Ice"
+      ], 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      101110
     ], 
     "slot_id": 1
   }, 
@@ -12844,6 +12860,32 @@
       100010
     ], 
     "slot_id": 3
+  }, 
+  "Spark Ring": {
+    "type_id": 60, 
+    "compid": 225, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "409002600", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": {
+        "Lightning": 5
+      }, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 2
+    }, 
+    "skills": null, 
+    "slot_id": 5
   }, 
   "Judge Helm": {
     "type_id": 41, 
@@ -13294,30 +13336,6 @@
     ], 
     "slot_id": 5
   }, 
-  "\u30ed\u30c8\u306e\u3064\u308b\u304e": {
-    "type_id": 3, 
-    "compid": 380, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
-    "skill_restriction": [], 
-    "id": "303001800", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 125, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": null, 
-    "slot_id": 1
-  }, 
   "Crimson Slayer": {
     "type_id": 51, 
     "compid": 90044, 
@@ -13734,31 +13752,36 @@
     "skills": null, 
     "slot_id": 1
   }, 
-  "Ruby Ring": {
-    "type_id": 60, 
-    "compid": 662, 
+  "Metal Slime Tray": {
+    "type_id": 30, 
+    "compid": 403, 
     "is_twohanded": false, 
     "reqs": null, 
     "effects_raw": [], 
     "skill_effects": {}, 
     "skill_restriction": [], 
-    "id": "409014100", 
+    "id": "401001200", 
     "stats": {
       "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": {
-        "Fire": 15
+      "status_resist": {
+        "Paralyze": 100, 
+        "Confusion": 100, 
+        "Disease": 100, 
+        "Poison": 100, 
+        "Sleep": 100, 
+        "Petrify": 100
       }, 
+      "element_resist": null, 
       "HP": 0, 
-      "ATK": 5, 
+      "ATK": 0, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
-      "SPR": 10, 
-      "DEF": 0
+      "SPR": 0, 
+      "DEF": 49
     }, 
     "skills": null, 
-    "slot_id": 5
+    "slot_id": 2
   }, 
   "Evening Glove (630)": {
     "type_id": 60, 
@@ -14664,6 +14687,32 @@
       220240, 
       220250
     ], 
+    "slot_id": 1
+  }, 
+  "Moon Axe": {
+    "type_id": 8, 
+    "compid": 400, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "305001500", 
+    "stats": {
+      "status_inflict": {
+        "Confusion": 30
+      }, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 110, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": null, 
     "slot_id": 1
   }, 
   "Cursed Mouthpiece": {
@@ -17419,6 +17468,50 @@
       "DEF": 0
     }, 
     "skills": null, 
+    "slot_id": 1
+  }, 
+  "Crow's Claws": {
+    "type_id": 16, 
+    "compid": 402, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            44, 
+            [
+              2
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Two-Hit Combo": [
+        "Normal attacks hit 2 times"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "309001100", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 36, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      400120
+    ], 
     "slot_id": 1
   }, 
   "Black Garb": {
@@ -20627,55 +20720,31 @@
     ], 
     "slot_id": 5
   }, 
-  "Apollo Harp": {
-    "type_id": 11, 
-    "compid": 550, 
-    "is_twohanded": true, 
+  "Ruby Ring": {
+    "type_id": 60, 
+    "compid": 662, 
+    "is_twohanded": false, 
     "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            0, 
-            3, 
-            11, 
-            [
-              7, 
-              75, 
-              75
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "Hero's Rime": [
-        "Increase all stats by 40% for 3 turns to all allies while singing"
-      ], 
-      "Dragon Killer+": [
-        "Increase physical and magic damage against Dragons by 75%"
-      ]
-    }, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
     "skill_restriction": [], 
-    "id": "316040300", 
+    "id": "409014100", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
-      "element_resist": null, 
+      "element_resist": {
+        "Fire": 15
+      }, 
       "HP": 0, 
-      "ATK": 34, 
+      "ATK": 5, 
       "element_inflict": null, 
       "MP": 0, 
-      "MAG": 110, 
-      "SPR": 30, 
+      "MAG": 0, 
+      "SPR": 10, 
       "DEF": 0
     }, 
-    "skills": [
-      202200, 
-      211360
-    ], 
-    "slot_id": 1
+    "skills": null, 
+    "slot_id": 5
   }, 
   "Holy Rod": {
     "type_id": 6, 
@@ -21229,6 +21298,30 @@
     "skills": null, 
     "slot_id": 4
   }, 
+  "Iron Axe": {
+    "type_id": 8, 
+    "compid": 381, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "305001400", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 44, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": null, 
+    "slot_id": 1
+  }, 
   "Unsui Clothes": {
     "type_id": 50, 
     "compid": 560, 
@@ -21598,6 +21691,56 @@
     ], 
     "slot_id": 1
   }, 
+  "Apollo Harp": {
+    "type_id": 11, 
+    "compid": 550, 
+    "is_twohanded": true, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            11, 
+            [
+              7, 
+              75, 
+              75
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Hero's Rime": [
+        "Increase all stats by 40% for 3 turns to all allies while singing"
+      ], 
+      "Dragon Killer+": [
+        "Increase physical and magic damage against Dragons by 75%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "316040300", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 34, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 110, 
+      "SPR": 30, 
+      "DEF": 0
+    }, 
+    "skills": [
+      202200, 
+      211360
+    ], 
+    "slot_id": 1
+  }, 
   "\u30a2\u30b7\u30e9\u30d8\u30eb\u30e0": {
     "type_id": 41, 
     "compid": 576, 
@@ -21963,32 +22106,6 @@
       215150
     ], 
     "slot_id": 5
-  }, 
-  "\u307e\u3075\u3046\u3058\u306e\u6756": {
-    "type_id": 5, 
-    "compid": 382, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
-    "skill_restriction": [], 
-    "id": "311001800", 
-    "stats": {
-      "status_inflict": {
-        "Silence": 30
-      }, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 50, 
-      "DEF": 0
-    }, 
-    "skills": null, 
-    "slot_id": 1
   }, 
   "Variable Mog": {
     "type_id": 6, 
@@ -25555,30 +25672,6 @@
     "skills": null, 
     "slot_id": 1
   }, 
-  "Excalipoor": {
-    "type_id": 3, 
-    "compid": 348, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [], 
-    "skill_effects": {}, 
-    "skill_restriction": [], 
-    "id": "303001600", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 1, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": null, 
-    "slot_id": 1
-  }, 
   "Mythril Armor": {
     "type_id": 52, 
     "compid": 169, 
@@ -26790,54 +26883,28 @@
     "skills": null, 
     "slot_id": 4
   }, 
-  "Crown Staff": {
-    "type_id": 5, 
-    "compid": 646, 
+  "Erdrick's Sword": {
+    "type_id": 3, 
+    "compid": 380, 
     "is_twohanded": false, 
     "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            1, 
-            [
-              0, 
-              0, 
-              0, 
-              0, 
-              10, 
-              0, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "HP +10%": [
-        "Increase HP by 10%"
-      ]
-    }, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
     "skill_restriction": [], 
-    "id": "311002400", 
+    "id": "303001800", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 18, 
+      "ATK": 125, 
       "element_inflict": null, 
       "MP": 0, 
-      "MAG": 36, 
-      "SPR": 36, 
+      "MAG": 0, 
+      "SPR": 0, 
       "DEF": 0
     }, 
-    "skills": [
-      100010
-    ], 
+    "skills": null, 
     "slot_id": 1
   }, 
   "Training Clothes": {

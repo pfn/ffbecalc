@@ -4,11 +4,11 @@ case class UnitIndex(name: String, min: Int, max: Int, id: String)
 case class UnitIndexData(min: Int, max: Int, id: String)
 case class UnitSkill(rarity: Int, level: Int, tpe: String, id: Int)
 case class UnitStrings(
-  description: List[String],
-  summon: List[String],
-  evolution: List[String],
-  affinity: List[String],
-  fusion: List[String])
+  description: List[Option[String]],
+  summon: List[Option[String]],
+  evolution: List[Option[String]],
+  affinity: List[Option[String]],
+  fusion: List[Option[String]])
 case class UnitEntry(
   rarity: Int,
   stats: StatInfo,
