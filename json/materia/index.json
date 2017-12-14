@@ -4277,6 +4277,35 @@
     ], 
     "rarity": 8
   }, 
+  "Hat Arts": {
+    "skill_names": [
+      "Hat Arts"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            6, 
+            [
+              40, 
+              0, 
+              0, 
+              30, 
+              30
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504217650", 
+    "effects": [
+      "Increase MAG and SPR by 30% when equipped with a Hat"
+    ], 
+    "rarity": 6
+  }, 
   "Chilling Aura": {
     "skill_names": [
       "Chilling Aura"
@@ -8559,35 +8588,6 @@
     ], 
     "magic_type": "Black"
   }, 
-  "Secret Hat": {
-    "skill_names": [
-      "Secret Hat"
-    ], 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            0, 
-            3, 
-            6, 
-            [
-              40, 
-              0, 
-              0, 
-              30, 
-              30
-            ]
-          ]
-        ]
-      }
-    ], 
-    "id": "504217650", 
-    "effects": [
-      "Increase MAG and SPR by 30% when equipped with a Hat"
-    ], 
-    "rarity": 6
-  }, 
   "Yohtoh Lore": {
     "skill_names": [
       "Yohtoh Lore"
@@ -8904,6 +8904,35 @@
       "Enable unit to equip Daggers"
     ], 
     "rarity": 5
+  }, 
+  "L Shield Arts": {
+    "skill_names": [
+      "L Shield Arts"
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            0, 
+            3, 
+            6, 
+            [
+              30, 
+              0, 
+              30, 
+              0, 
+              30
+            ]
+          ]
+        ]
+      }
+    ], 
+    "id": "504219260", 
+    "effects": [
+      "Increase DEF and SPR by 30% when equipped with a Light Shield"
+    ], 
+    "rarity": 6
   }, 
   "Barwater": {
     "id": "504030060", 
@@ -9545,35 +9574,6 @@
       "Increase HP by 15%"
     ], 
     "rarity": 2
-  }, 
-  "Secret L Shield": {
-    "skill_names": [
-      "Secret L Shield"
-    ], 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            0, 
-            3, 
-            6, 
-            [
-              30, 
-              0, 
-              30, 
-              0, 
-              30
-            ]
-          ]
-        ]
-      }
-    ], 
-    "id": "504219260", 
-    "effects": [
-      "Increase DEF and SPR by 30% when equipped with a Light Shield"
-    ], 
-    "rarity": 6
   }, 
   "Firaga": {
     "id": "504020200", 

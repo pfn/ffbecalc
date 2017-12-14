@@ -11161,56 +11161,6 @@
     ], 
     "slot_id": 1
   }, 
-  "Crown Staff": {
-    "type_id": 5, 
-    "compid": 646, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            1, 
-            [
-              0, 
-              0, 
-              0, 
-              0, 
-              10, 
-              0, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "HP +10%": [
-        "Increase HP by 10%"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "311002400", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 18, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 36, 
-      "SPR": 36, 
-      "DEF": 0
-    }, 
-    "skills": [
-      100010
-    ], 
-    "slot_id": 1
-  }, 
   "Gaia Hammer": {
     "type_id": 9, 
     "compid": 90096, 
@@ -12860,6 +12810,69 @@
       100010
     ], 
     "slot_id": 3
+  }, 
+  "Dragon Whisker": {
+    "type_id": 10, 
+    "compid": 752, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            17, 
+            [
+              50
+            ]
+          ]
+        ]
+      }, 
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            11, 
+            [
+              7, 
+              50, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Dragon's Mane": [
+        "Increase damage dealt by jump attacks by 50%"
+      ], 
+      "Dragon Killer": [
+        "Increase physical damage against Dragons by 50%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "308003200", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 138, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      220670, 
+      101050
+    ], 
+    "slot_id": 1
   }, 
   "Spark Ring": {
     "type_id": 60, 
@@ -14632,6 +14645,56 @@
     "skills": null, 
     "slot_id": 1
   }, 
+  "Clown Staff": {
+    "type_id": 5, 
+    "compid": 646, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              10, 
+              0, 
+              0
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "HP +10%": [
+        "Increase HP by 10%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "311002400", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 18, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 36, 
+      "SPR": 36, 
+      "DEF": 0
+    }, 
+    "skills": [
+      100010
+    ], 
+    "slot_id": 1
+  }, 
   "Rusted Sword": {
     "type_id": 2, 
     "compid": 751, 
@@ -15000,69 +15063,6 @@
       203240
     ], 
     "slot_id": 3
-  }, 
-  "Dragon's Hair": {
-    "type_id": 10, 
-    "compid": 752, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            17, 
-            [
-              50
-            ]
-          ]
-        ]
-      }, 
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            11, 
-            [
-              7, 
-              50, 
-              0
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "Dragon's Mane": [
-        "Increase damage dealt by jump attacks by 50%"
-      ], 
-      "Dragon Killer": [
-        "Increase physical damage against Dragons by 50%"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "308003200", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 138, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": [
-      220670, 
-      101050
-    ], 
-    "slot_id": 1
   }, 
   "Excalibur II": {
     "type_id": 3, 
@@ -22773,50 +22773,6 @@
     ], 
     "slot_id": 5
   }, 
-  "Stoss Spear": {
-    "type_id": 10, 
-    "compid": 766, 
-    "is_twohanded": true, 
-    "reqs": null, 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "effects": [
-          [
-            1, 
-            3, 
-            17, 
-            [
-              100
-            ]
-          ]
-        ]
-      }
-    ], 
-    "skill_effects": {
-      "High Jump": [
-        "Increase damage dealt by jump attacks by 100%"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "308003500", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 140, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": [
-      101460
-    ], 
-    "slot_id": 1
-  }, 
   "Feathered Cap": {
     "type_id": 40, 
     "compid": 125, 
@@ -27996,6 +27952,50 @@
       213760
     ], 
     "slot_id": 5
+  }, 
+  "Shock Spear": {
+    "type_id": 10, 
+    "compid": 766, 
+    "is_twohanded": true, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "effects": [
+          [
+            1, 
+            3, 
+            17, 
+            [
+              100
+            ]
+          ]
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "High Jump": [
+        "Increase damage dealt by jump attacks by 100%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "308003500", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 140, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      101460
+    ], 
+    "slot_id": 1
   }, 
   "Main Gauche": {
     "type_id": 1, 
