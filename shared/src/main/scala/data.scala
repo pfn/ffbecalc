@@ -91,6 +91,7 @@ case class SkillInfo(
   name: String,
   active: Boolean,
   tpe: String,
+  icon: String,
   magicType: Option[String],
   mpCost: Int,
   actives: List[ActiveEffect],

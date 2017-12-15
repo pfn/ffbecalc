@@ -787,11 +787,12 @@ object DataDecoders {
       "reqs"
     )(EquipIndexData.apply)
   implicit val decodeSkillInfo: Decoder[SkillInfo] =
-    Decoder.forProduct9(
+    Decoder.forProduct10(
       "id",
       "name",
       "active",
       "type",
+      "icon",
       "magic_type",
       "mp_cost",
       "effects_raw",

@@ -101,6 +101,12 @@ table.unit-resists {
   width: 100%;
 }
 td.unit-trait-rarity { width: 5%; }
+td.unit-skill-rarity > div,
+td.unit-trait-rarity > div { white-space: nowrap; }
+td.unit-skill-rarity img,
+td.unit-trait-rarity img { vertical-align: middle; width: 56px; height: 56px; }
+td.unit-skill-rarity > div > span,
+td.unit-trait-rarity > div > span { vertical-align: middle; }
 td.unit-trait-level { width: 5%; }
 td.unit-trait-name { width: 20%; }
 td.unit-trait-desc { width: 70%; }

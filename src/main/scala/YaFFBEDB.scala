@@ -253,7 +253,7 @@ object YaFFBEDB extends JSApp {
           List("unit-skill-rarity", "unit-skill-level",
             "unit-skill-name", "unit-skill-desc", "unit-skill-cost"))(
           List(
-            a => span(s"${a._1.rarity}\u2605"),
+            a => div(img(src := s"http://exviusdb.com/static/img/assets/ability/${a._2.icon}"), span(s"${a._1.rarity}\u2605")),
             a => span(a._1.level.toString),
             deco { (us, info, enhs) =>
               enhancementsOf(info.id, enhs).fold {
@@ -310,7 +310,7 @@ object YaFFBEDB extends JSApp {
           List("Rarity", "Level", "Name", "Description"),
           List("unit-trait-rarity", "unit-trait-level",
             "unit-trait-name", "unit-trait-desc"))(List(
-            a => span(s"${a._1.rarity}\u2605"),
+            a => div(img(src := s"http://exviusdb.com/static/img/assets/ability/${a._2.icon}"), span(s"${a._1.rarity}\u2605")),
             a => span(a._1.level.toString),
             deco { (us, info, enhs) =>
               enhancementsOf(info.id, enhs).fold {
@@ -335,6 +335,7 @@ object YaFFBEDB extends JSApp {
       "skills-equip",
       List("Name", "Description"),
       List("unit-equip-name", "unit-equip-desc"))(List(
+        //a => div((img(src := s"http://exviusdb.com/static/img/assets/ability/${a._2.icon}") +: a._1.split("\n").map(e => div(e)):_*)),
         a => div(a._1.split("\n").map(e => div(e)):_*),
         a => div(a._2.split("\n").map(e => div(e)):_*)
       ))
@@ -418,7 +419,7 @@ object YaFFBEDB extends JSApp {
           i.map(_.id), sts, eqs, abis, e.map(x => es(x.names.head)),
           util.Try(rarity.toInt).getOrElse(1), training)
         if (i.nonEmpty) {
-          val pstr = Data.toString(ps)
+          val pstr = ps.toString
           if (document.location.hash.drop(1) != pstr)
             window.history.pushState(0, i.fold("ffbecalc")(_.name), "#" + pstr)
         }
@@ -487,7 +488,10 @@ object YaFFBEDB extends JSApp {
           )
         ),
         div(hidden <-- unitId.map(_.isEmpty),
-        p(child <-- unitDescription.orElse(Observable.just(""))),
+        p(children <-- unitDescription.combineLatest(unitInfo).map { case (d,i) =>
+          val eid = i.flatMap(_.entries.toList.sortBy(_._2.rarity).lastOption.map(_._1)).getOrElse("0")
+          List(img(src := s"http://exviusdb.com/static/img/assets/unit/unit_ills_$eid.png", align := "right"), p(d))
+        }),
         h3("Base Stats"),
         div(child <-- components.unitBaseStats(unitEntry, unitStats, pots)),
         h3("Equipment"),
