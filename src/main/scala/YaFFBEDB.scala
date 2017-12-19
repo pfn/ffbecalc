@@ -1,15 +1,17 @@
 package yaffbedb
 
-import scala.scalajs.js.JSApp
+import scalajs.js.annotation.JSExportTopLevel
 import org.scalajs.dom.document
 import org.scalajs.dom.window
 
 import outwatch.dom._
 import rxscalajs.{Observable,Subject}
+import rxscalajs.subjects.{BehaviorSubject,ReplaySubject}
 import boopickle.Default._
 import scala.concurrent.duration.{span => _, _}
 
-object YaFFBEDB extends JSApp {
+object YaFFBEDB {
+
   case class PageState(
     unit:  Option[Int],
     rhand: Option[Int],
@@ -23,15 +25,67 @@ object YaFFBEDB extends JSApp {
     mat3:  Option[Int],
     mat4:  Option[Int],
     pots:  Pots,
+    enhs:  Map[Int,Int],
     esper: Option[Int],
     esperRarity: Int,
     esperSkills: Map[Int,Boolean]
-  )
+  ) {
+    override def toString = {
+      val ue = unit.map { u =>
+        esper.fold(u.toString)(esp => u.toString + "," + esp + "," + esperRarity)
+      }
+
+      val mats =
+        List(mat1, mat2, mat3, mat4).map(_.fold("")(_.toString)).mkString(",")
+      val eqs =
+        List(rhand, lhand, head, body, acc1, acc2).map(_.fold("")(_.toString)).mkString(",")
+      val enh = enhs.toList.map(kv => kv._1 + "=" + kv._2).mkString(",")
+
+      ue.fold("")(_ => List(ue.getOrElse(""), mats, eqs, enh).mkString("/"))
+    }
+  }
   object PageState {
+    import util.Try
+    def strId(s: Option[String]): Option[Int] =
+      s.flatMap(x => Try(x.toInt).toOption)
+    def or0(s: Option[String]): Int = strId(s).getOrElse(0)
     def idOfEq(e: (Option[EquipIndex],Double)) = e._1.map(_.id)
     def idOfMat(e: (Option[MateriaIndex],Double)) = e._1.map(_.id)
+    def empty = PageState(None,
+      None, None, None, None, None, None,
+      None, None, None, None,
+      Pots.none, Map.empty, None, 1, Map.empty)
+    def from(s: String): PageState = {
+      val parts = s.split("/").map(_.split(",")).zipWithIndex
+      parts.foldLeft(PageState.empty) { case (ac,(ps,i)) =>
+        if (i == 0) {
+          val u = strId(ps.headOption)
+          val e = strId(ps.drop(1).headOption)
+          val r = strId(ps.drop(2).headOption)
+          ac.copy(unit = u, esper = e, esperRarity = r.getOrElse(1))
+        } else if (i == 1) {
+          ac.copy(mat1 = strId(ps.headOption),
+            mat2 = strId(ps.drop(1).headOption),
+            mat3 = strId(ps.drop(2).headOption),
+            mat4 = strId(ps.drop(3).headOption))
+        } else if (i == 2) {
+          ac.copy(rhand = strId(ps.headOption),
+            lhand = strId(ps.drop(1).headOption),
+            head = strId(ps.drop(2).headOption),
+            body = strId(ps.drop(3).headOption),
+            acc1 = strId(ps.drop(4).headOption),
+            acc2 = strId(ps.drop(5).headOption))
+        } else if (i == 3) {
+          val es = ps.map(_.split("=")).foldLeft(Map.empty[Int,Int]) { case (ac,xs) =>
+            ac + ((xs(0).toInt,xs(1).toInt))
+          }
+          ac.copy(enhs = es)
+        } else
+          ac
+      }
+    }
     def from(unitId: Option[Int], stats: Option[BaseStats],
-      eqs: Equipped, abis: Abilities,
+      eqs: Equipped, abis: Abilities, enhs: Map[Int,Int],
       esper: Option[Int], esperR: Int,
       esperSkills: Map[Int,Boolean]) = PageState(
       unitId,
@@ -40,12 +94,13 @@ object YaFFBEDB extends JSApp {
       idOfEq(eqs.acc1),       idOfEq(eqs.acc2),
       idOfMat(abis.ability1), idOfMat(abis.ability2),
       idOfMat(abis.ability3), idOfMat(abis.ability4),
-      stats.fold(Pots.none)(_.pots),
+      stats.fold(Pots.none)(_.pots), enhs,
       esper, esperR,
       esperSkills)
   }
-  def main(): Unit = {
-    val unitIdSubject = Subject[Option[String]]()
+  @JSExportTopLevel("yaffbedb.YaFFBEDB.main")
+  def main(args: Array[String]): Unit = {
+    val unitIdSubject = BehaviorSubject[Option[String]](None)
     val unitIdSink = createIdHandler(None)
     val unitId = unitIdSubject.merge(unitIdSink).distinctUntilChanged
 
@@ -90,7 +145,8 @@ object YaFFBEDB extends JSApp {
       }))
     }
 
-    val esperIdSubject = Subject[Option[String]]()
+    val esperIdSubject = BehaviorSubject[Option[String]](None)
+    val esperRaritySubject = ReplaySubject.withSize[Int](1)
     val esperStats = createHandler[Option[EsperStatInfo]](None)
     val esperSkills = createHandler[List[(String,List[String],List[SkillEffect])]](Nil)
     val esper = createHandler[Option[EsperData]](None)
@@ -103,22 +159,22 @@ object YaFFBEDB extends JSApp {
       ms.find(_.id == id.flatMap(i => util.Try(i.toInt).toOption).getOrElse(0))
     }
     val rhandId = createIdHandler(None)
-    val rhandSubject = Subject[Option[String]]()
+    val rhandSubject = ReplaySubject.withSize[Option[String]](1)
     val rhand = equipFor(rhandId.merge(rhandSubject).distinctUntilChanged)
     val lhandId = createIdHandler(None)
-    val lhandSubject = Subject[Option[String]]()
+    val lhandSubject = ReplaySubject.withSize[Option[String]](1)
     val lhand = equipFor(lhandId.merge(lhandSubject).distinctUntilChanged)
     val headId = createIdHandler(None)
-    val headSubject = Subject[Option[String]]()
+    val headSubject = ReplaySubject.withSize[Option[String]](1)
     val headEquip = equipFor(headId.merge(headSubject).distinctUntilChanged)
     val bodyId = createIdHandler(None)
-    val bodySubject = Subject[Option[String]]()
+    val bodySubject = ReplaySubject.withSize[Option[String]](1)
     val bodyEquip = equipFor(bodyId.merge(bodySubject).distinctUntilChanged)
     val acc1Id = createIdHandler(None)
-    val acc1Subject = Subject[Option[String]]()
+    val acc1Subject = ReplaySubject.withSize[Option[String]](1)
     val acc1 = equipFor(acc1Id.merge(acc1Subject).distinctUntilChanged)
     val acc2Id = createIdHandler(None)
-    val acc2Subject = Subject[Option[String]]()
+    val acc2Subject = ReplaySubject.withSize[Option[String]](1)
     val acc2 = equipFor(acc2Id.merge(acc2Subject).distinctUntilChanged)
 
     val equippedGear = withStamp(rhand).combineLatest(
@@ -189,11 +245,11 @@ object YaFFBEDB extends JSApp {
       } else if ((is2h(r) || is2h(l)) && older) {
         publishTo(sink, None)
         EMPTY
-      } else if ((isSlot(1, r) && isSlot(1, l)) &&
+      } else if ((isSlot(1, r) && isSlot(1, l)) && info.nonEmpty && !effs.isEmpty &&
         ((!effs.canDualWield(typeOf(r)) || !effs.canDualWield(typeOf(l))) && older)) {
         publishTo(sink, None)
         EMPTY
-      } else if (r.nonEmpty && !effs.canEquip(typeOf(r), info)) {
+      } else if (r.nonEmpty && info.nonEmpty && !effs.canEquip(typeOf(r), info)) {
         publishTo(sink, None)
         EMPTY
       } else r.fold(EMPTY)(_.id.toString)
@@ -203,7 +259,7 @@ object YaFFBEDB extends JSApp {
       e: Option[EquipIndex],
       info: Option[UnitData],
       effs: SkillEffect.CollatedEffect, sink: Subject[Option[String]]): String = {
-      if (e.nonEmpty && !effs.canEquip(typeOf(e), info)) {
+      if (e.nonEmpty && info.nonEmpty && !effs.canEquip(typeOf(e), info)) {
         publishTo(sink, None)
         EMPTY
       } else e.fold(EMPTY)(_.id.toString)
@@ -222,12 +278,15 @@ object YaFFBEDB extends JSApp {
         equipValidator(f(eqs)._1, info, effs, sink)
     }
 
-    def enhancementsOf(id: Int, enhs: Map[Int,SkillInfo]):
-    Option[(SkillInfo,SkillInfo)] =
-      for {
-        p1 <- enhs.get(id)
-        p2 <- enhs.get(p1.id)
-      } yield (p1, p2)
+    val enhSink = createHandler[(Int,Int)]()
+    val enhSubject = Subject[(Int,Int)]()
+    val enhMap = enhSink.merge(enhSubject).scan(Map.empty[Int,Int]) { (ac, e) =>
+      ac + e
+    }.distinctUntilChanged.startWith(Map.empty).publishReplay(1).refCount
+    def hasEnh(base: SkillInfo, target: SkillInfo) =
+      selected <-- enhMap.map { es =>
+        es.getOrElse(base.id, base.id) == target.id
+      }
 
     def enhancedInfo[A](info: SkillInfo, enhanced: Option[Int], enhs: Map[Int,SkillInfo], f: SkillInfo => A): A = {
       enhanced.fold(f(info)) { en =>
@@ -240,10 +299,6 @@ object YaFFBEDB extends JSApp {
     }
     def deco[A,B,C](f: (A,B,C) => VNode): ((A,B,C)) => VNode = f.tupled(_)
     val activesTable = {
-      val enhSink = createHandler[(Int,Int)]()
-      val enhMap = enhSink.scan(Map.empty[Int,Int]) { (ac, e) =>
-        ac + e
-      }.distinctUntilChanged.startWith(Map.empty).publishReplay(1).refCount
 
       unitSkills.combineLatest(enhancedSkills).map( a =>
         a._1.filter(_._2.active).map(b => (b._1, b._2, a._2))).map { ss =>
@@ -260,9 +315,9 @@ object YaFFBEDB extends JSApp {
                 span(info.name)
               } { enh =>
                 select(inputString(i => info.id -> i.toInt) --> enhSink,
-                  option(value := info.id, info.name),
-                  option(value := enh._1.id, "+1 " + info.name),
-                  option(value := enh._2.id, "+2 " + info.name)
+                  option(value := info.id, info.name, hasEnh(info, info)),
+                  option(value := enh._1.id, "+1 " + info.name, hasEnh(info, enh._1)),
+                  option(value := enh._2.id, "+2 " + info.name, hasEnh(info, enh._2))
                 )
               }
             },
@@ -278,10 +333,6 @@ object YaFFBEDB extends JSApp {
     }
 
     val traitsTable = {
-      val enhSink = createHandler[(Int,Int)]()
-      val enhMap = enhSink.scan(Map.empty[Int,Int]) { (ac, e) =>
-        ac + e
-      }.distinctUntilChanged.startWith(Map.empty).publishReplay(1).refCount
       // a double-subscription occurs below (???) --> workaround  :-(
       var subscription = Option.empty[rxscalajs.subscription.AnonymousSubscription]
 
@@ -301,10 +352,6 @@ object YaFFBEDB extends JSApp {
             }.orElse(enhs.get(rid)).toList
           }
         })
-        def hasEnh(base: SkillInfo, target: SkillInfo) =
-          selected <-- enhMap.map { es =>
-            es.getOrElse(base.id, base.id) == target.id
-          }
         components.dataTable(ss,
           "skills-trait",
           List("Rarity", "Level", "Name", "Description"),
@@ -409,62 +456,49 @@ object YaFFBEDB extends JSApp {
     }
 
     val esperTraining = createHandler[Map[Int,Boolean]](Map.empty)
-    val esperTrainingSubject = Subject[Map[Int,Boolean]]()
-    val esperRarity = createStringHandler("1")
+    val esperTrainingSubject = BehaviorSubject[Map[Int,Boolean]](Map.empty)
+    val esperRaritySink = createStringHandler()
+    val esperRarity = esperRaritySubject.map(_.toString).merge(esperRaritySink).startWith("1")
 
-    def subscribeChanges = equipped.combineLatest(unitStats,unitInfo).combineLatest(espers, esper).combineLatest(esperRarity, esperTraining).bufferTime(1.second).map(_.lastOption) {
-      case Some((((((eqs,abis),sts,i),es, e)),rarity, training)) =>
-      /*
-        val ps = PageState.from(
-          i.map(_.id), sts, eqs, abis, e.map(x => es(x.names.head)),
+    val pageState: Observable[PageState] = equipped.combineLatest(unitStats,unitInfo).combineLatest(espers, esper).combineLatest(esperRarity, esperTraining, enhMap).map {
+      case (((((eqs,abis),sts,i),es, e)),rarity, training, enhs) =>
+        PageState.from(
+          i.map(_.id), sts, eqs, abis, enhs, e.map(x => es(x.names.head)),
           util.Try(rarity.toInt).getOrElse(1), training)
-        if (i.nonEmpty) {
-          val pstr = ps.toString
-          if (document.location.hash.drop(1) != pstr)
-            window.history.pushState(0, i.fold("ffbecalc")(_.name), "#" + pstr)
-        }
-        */
-        val update = i.map { u =>
-          e.fold(u.id.toString)(esp => u.id.toString + "," + es(esp.names.head))
-        }
+    }.publishReplay(1).refCount
 
-        if (document.location.hash != update.getOrElse(""))
-          document.location.hash = update.getOrElse("")
+    def subscribeChanges = pageState.bufferTime(1.second).map(_.lastOption) {
+      case Some(ps) =>
+        if (ps.unit.nonEmpty) {
+          val pstr = ps.toString
+          if (pstr.isEmpty)
+            document.location.hash = ""
+          else if (document.location.hash.drop(1) != pstr)
+            window.history.pushState(0, ps.unit.fold("ffbecalc")("ffbecalc" + _), "#" + pstr)
+        }
       case None =>
-      }
+    }
 
     def loadFromHash(): Unit = {
-      val hash = document.location.hash.drop(1).split(",")
-      val unitid = hash.headOption.filter(_.nonEmpty)
+      val ps = PageState.from(document.location.hash.drop(1))
 
-      unitIdSubject.next(unitid)
-      if (hash.size > 1)
-        esperIdSubject.next(hash.lastOption.filter(_.nonEmpty))
+      unitIdSubject.next(ps.unit.map(_.toString))
+      esperIdSubject.next(ps.esper.map(_.toString))
+      esperRaritySubject.next(ps.esperRarity)
 
-      /*
-      val hash = document.location.hash.drop(1)
-      val ps = util.Try(Data.fromString[PageState](hash)).toOption
       def s(i: Option[Int]): Option[String] = i.map(_.toString)
-      for {
-        state <- ps
-        unit <- state.unit
-      } {
-        unitIdSubject.next(Some(unit.toString))
-        pots.next(state.pots)
-        abilitySubjects.a1.next(s(state.mat1))
-        abilitySubjects.a2.next(s(state.mat2))
-        abilitySubjects.a3.next(s(state.mat3))
-        abilitySubjects.a4.next(s(state.mat4))
-        acc1Subject.next(s(state.acc1))
-        acc2Subject.next(s(state.acc2))
-        headSubject.next(s(state.head))
-        bodySubject.next(s(state.body))
-        rhandSubject.next(s(state.rhand))
-        lhandSubject.next(s(state.lhand))
-        esperIdSubject.next(s(state.esper))
-        esperTrainingSubject.next(state.esperSkills)
-      }
-      */
+      abilitySubjects.a1.next(s(ps.mat1))
+      abilitySubjects.a2.next(s(ps.mat2))
+      abilitySubjects.a3.next(s(ps.mat3))
+      abilitySubjects.a4.next(s(ps.mat4))
+      acc1Subject.next(s(ps.acc1))
+      acc2Subject.next(s(ps.acc2))
+      headSubject.next(s(ps.head))
+      bodySubject.next(s(ps.body))
+      rhandSubject.next(s(ps.rhand))
+      lhandSubject.next(s(ps.lhand))
+
+      ps.enhs.toList.foreach(enhSubject.next)
     }
 
     val onLoad = outwatch.Sink.create[org.scalajs.dom.raw.Element] { e =>
@@ -479,18 +513,24 @@ object YaFFBEDB extends JSApp {
       subscription = Some(subscribeChanges)
     }
 
+    val resetClick = createHandler[Unit]()
+    resetClick { _ =>
+      window.history.pushState(0, "reload", "#")
+      document.location.reload()
+    }
     OutWatch.render("#content",
       div(insert --> onLoad,
         div(id := "unit-info",
           select(children <-- unitIndex, inputId --> unitIdSink),
           div(hidden <-- unitId.map(_.isEmpty),
-            components.unitStats(unitInfo, unitEntry, unitStats, equipped, allPassives.map(_._2), esperStats, esperEntry),
+            components.unitStats(unitInfo, unitEntry, unitStats, equipped, allPassives.map(_._2), esper, esperStats, esperEntry, enhancedSkills, enhMap), button("Reset", click(()) --> resetClick)
           )
         ),
         div(hidden <-- unitId.map(_.isEmpty),
         p(children <-- unitDescription.combineLatest(unitInfo).map { case (d,i) =>
-          val eid = i.flatMap(_.entries.toList.sortBy(_._2.rarity).lastOption.map(_._1)).getOrElse("0")
-          List(img(src := s"http://exviusdb.com/static/img/assets/unit/unit_ills_$eid.png", align := "right"), p(d))
+          val eid = i.flatMap(_.entries.toList.sortBy(_._2.rarity).lastOption.map(_._1))
+          eid.toList.map(id =>
+            img(src := s"http://exviusdb.com/static/img/assets/unit/unit_ills_$id.png", align := "right")) ++ List(p(d))
         }),
         h3("Base Stats"),
         div(child <-- components.unitBaseStats(unitEntry, unitStats, pots)),
@@ -515,7 +555,7 @@ object YaFFBEDB extends JSApp {
           children <-- abilitySlots,
         ),
         h3("Esper"),
-        Esper.esperInfo(esper, esperEntry, esperRarity, espers, esperIdSubject, esperStats, esperSkills, esperTraining, esperTrainingSubject),
+        Esper.esperInfo(esper, esperEntry, esperRaritySink, espers, esperIdSubject, esperRaritySubject, esperStats, esperSkills, esperTraining, esperTrainingSubject),
         h3("Abilities & Spells"),
         div(child <-- activesTable),
         h3("Traits"),

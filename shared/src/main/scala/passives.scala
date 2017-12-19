@@ -98,7 +98,6 @@ object SkillEffect {
     }
   }
 
-  // not yet collated camo, refresh, lb rate, lb fill
   case class CollatedEffect(
                              elementResists: PassiveElementResist,
                              statusResists: PassiveStatusResist,
@@ -122,6 +121,7 @@ object SkillEffect {
                              accuracy1h: Int,
                              dw: PassiveDualWieldEffect) {
 
+    def isEmpty = this == CollatedEffect.empty
     def statFromEquips(eqs: List[EquipIndex]): PassiveStatEffect = {
       val ifUnarmed = if (eqs.forall(_.slotId != 1)) unarmed else PassiveStatEffect.zero
 
@@ -221,7 +221,7 @@ object SkillEffect {
     ).filter(_.trim.nonEmpty).mkString(", ")
   }
   object CollatedEffect {
-    def apply(): CollatedEffect = CollatedEffect(
+    def empty: CollatedEffect = CollatedEffect(
       PassiveElementResist(Set.empty, 0, 0, 0, 0, 0, 0, 0, 0),
       PassiveStatusResist(Set.empty, 0, 0, 0, 0, 0, 0, 0, 0),
       PassiveStatEffect.zero,
@@ -246,7 +246,7 @@ object SkillEffect {
   }
 
   def collateEffects(unit: Option[UnitData], xs: List[SkillEffect]) = {
-    xs.filter(e => unit.forall(e.canUse)).foldLeft(CollatedEffect()) { (a, eff) => eff match {
+    xs.filter(e => unit.forall(e.canUse)).foldLeft(CollatedEffect.empty) { (a, eff) => eff match {
       case e@PassiveElementResist(_,_, _, _, _, _, _, _, _) =>
         a.copy(elementResists = a.elementResists + e)
       case e@PassiveStatusResist(_,_,_,_,_,_,_,_,_) =>

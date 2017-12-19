@@ -86,7 +86,7 @@ object Esper {
       )
     }
   }
-  def esperInfo(esper: Handler[Option[EsperData]], esperEntry: Handler[Option[EsperEntry]], esperRaritySink: Handler[String], espers: Observable[Map[String,Int]], esperIdSubject: Subject[Option[String]], esperStats: Handler[Option[EsperStatInfo]], esperSkills: Handler[List[(String,List[String],List[SkillEffect])]], esperTraining: outwatch.Sink[Map[Int,Boolean]], trainingSubject: Subject[Map[Int,Boolean]]) = {
+  def esperInfo(esper: Handler[Option[EsperData]], esperEntry: Handler[Option[EsperEntry]], esperRaritySink: Handler[String], espers: Observable[Map[String,Int]], esperIdSubject: Subject[Option[String]], esperRaritySubject: Subject[Int], esperStats: Handler[Option[EsperStatInfo]], esperSkills: Handler[List[(String,List[String],List[SkillEffect])]], esperTraining: outwatch.Sink[Map[Int,Boolean]], trainingSubject: Subject[Map[Int,Boolean]]) = {
     val esperSink = createStringHandler()
     val esperId = esperSink.map(maybeId).merge(esperIdSubject).share
     esper <-- esperId.flatMap { e =>
@@ -110,9 +110,7 @@ object Esper {
         }
       }
     }.share
-    val esperRarity = esperRaritySink.map(r =>
-      util.Try(r.toInt).toOption.getOrElse(1)
-    )
+    val esperRarity = esperRaritySubject.map(_.toString).merge(esperRaritySink).startWith("1").map(r => util.Try(r.toInt).toOption.getOrElse(1))
     esperEntry <-- esper.combineLatest(esperRarity).map { case (e,r) =>
       e.map(_.entries(r))
     }
@@ -164,9 +162,9 @@ object Esper {
           names.map(n => option(value := es(n), n))
       }, inputString --> esperSink, value <-- espers.combineLatest(esperIdSubject).map(_._2).map(_.getOrElse(EMPTY)).startWith(EMPTY)),
       span(hidden <-- esper.map(_.isEmpty), "\u00a0",
-        select(children <-- esper.map { e =>
+        select(children <-- esper.combineLatest(esperRaritySubject.startWith(1)).map { case(e,r) =>
           e.fold(List.empty[VNode])(_.entries.zipWithIndex.map { case (_, i) =>
-            option(value := i, s"${i+1} \u2605", selected := i == 1)
+            option(value := i, s"${i+1} \u2605", selected := i == r)
           })
           },
           inputString --> esperRaritySink),

@@ -23,3 +23,7 @@ libraryDependencies += "io.suzaku" %%% "boopickle" % "1.2.6"
 
 refreshBrowsers :=
   (refreshBrowsers triggeredBy (webpack in fastOptJS in Compile)).value
+
+webpackBundlingMode := BundlingMode.LibraryOnly()
+
+scalaJSUseMainModuleInitializer := true

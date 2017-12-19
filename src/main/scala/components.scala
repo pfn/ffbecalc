@@ -31,6 +31,9 @@ object components {
   def unitBaseStats(unit: Observable[Option[UnitEntry]], stats: outwatch.Sink[Option[BaseStats]], sub: PotSubjects) = {
     def potsFor(unit: Option[UnitEntry], f: StatInfo => StatRange): Int =
       unit.fold(0)(e => f(e.stats).pots)
+    def statOf(unit: Option[UnitEntry],
+      f: StatInfo => StatRange): Int =
+        unit.fold(0)(e => f(e.stats).maxpots)
     def maxstat(unit: Option[UnitEntry],
       withPots: Observable[Int], f: StatInfo => StatRange) =
       withPots.map { p =>
@@ -117,14 +120,18 @@ object components {
       tr(resists.map { r => td(s"$r%") }:_*)
     )
   }
-  case class Effective(stats: Stats, passives: PassiveStatEffect, dh: PassiveSinglehandEffect, tdh: Passive2HEffect, tdh2: PassiveTDHEffect, accuracy: Int, is1h: Boolean, is2h: Boolean)
+  case class Effective(stats: Stats, passives: PassiveStatEffect, dh: PassiveSinglehandEffect, tdh: Passive2HEffect, tdh2: PassiveTDHEffect, accuracy: Int, is1h: Boolean, is2h: Boolean, ed: Option[EsperData], e: Option[EsperStatInfo], ee: Option[EsperEntry])
 
   def unitStats(unitInfo: Observable[Option[UnitData]], unit: Observable[Option[UnitEntry]],
                 stats: Observable[Option[BaseStats]], equipped: Observable[(Equipped,Abilities)],
                 allPassives: Observable[SkillEffect.CollatedEffect],
-                esper: Observable[Option[EsperStatInfo]], esperEntry: Observable[Option[EsperEntry]]) = {
-    val effective = stats.combineLatest(esper.combineLatest(esperEntry), equipped, allPassives).map {
-      case (s,(e,ee),(eqs,_),pasv) =>
+                esperD: Observable[Option[EsperData]],
+                esper: Observable[Option[EsperStatInfo]],
+                esperEntry: Observable[Option[EsperEntry]],
+                enhs: Observable[Map[Int,SkillInfo]],
+                enhm: Observable[Map[Int,Int]]) = {
+    val effective = stats.combineLatest(esper.combineLatest(esperD, esperEntry), equipped, allPassives).map {
+      case (s,(e,ed,ee),(eqs,_),pasv) =>
         s.map { st =>
           val alleq = eqs.allEquipped
           val passives = pasv.stats + pasv.statFromEquips(alleq)
@@ -148,12 +155,12 @@ object components {
 
           val accuracy = (if (is2h || isSW) pasv.tdh.accuracy else 0) + (if (!is2h && isSW) pasv.accuracy1h else 0)
 
-          Effective(st.asStats * passives + e + eqstats + (eqstats * alldh) ++ ee, passives, pasv.dh, pasv.tdh, pasv.tdh2, accuracy, !is2h && isSW, isSW || is2h)
+          Effective(st.asStats * passives + e + eqstats + (eqstats * alldh) ++ ee, passives, pasv.dh, pasv.tdh, pasv.tdh2, accuracy, !is2h && isSW, isSW || is2h, ed, e, ee)
         }
     }
     table(cls := "unit-stats",
       caption("Effective Stats"),
-      children <-- unit.combineLatest(unitInfo, allPassives, effective).combineLatest(equipped).map { case ((u,ui,pasv,eff),(eqs,abis)) =>
+      children <-- unit.combineLatest(unitInfo, allPassives, effective).combineLatest(equipped).combineLatest(enhs, enhm).map { case (((u,ui,pasv,eff),(eqs,abis)),es,em) =>
       def st(f: Stats => Int) = eff.fold("???")(d => f(d.stats).toString)
         u.fold(List.empty[VNode]) { entry =>
           List(
@@ -189,6 +196,8 @@ object components {
             td(cls := "unit-stat-data", st(_.spr))
           )) ++
             renderEquipped(ui, eqs.allEquipped, abis.allEquipped) ++
+            renderEsper(eff) ++
+            renderEnhancements(es, em) ++
             renderStat(statOf(eff, _.hp), "+HP") ++
             renderStat(statOf(eff, _.mp), "+MP") ++
             renderStat(statOf(eff, _.atk), "+ATK") ++
@@ -219,10 +228,27 @@ object components {
   }
 
   def renderEquipped(u: Option[UnitData], eqs: List[EquipIndex], abis: List[MateriaIndex]) = {
-    List(tr(td(colspan := 4, ul(
+    List(tr(td(colspan := 4, div(
       (eqs.map(e => s"${e.name}: ${e.stats} ${e.describeEffects(u)}") ++
-        abis.map(e => s"${e.name}: ${e.describeEffects(u)}")).map(n => li(n)):_*
+        abis.map(e => s"${e.name}: ${e.describeEffects(u)}")).map(n => div(n)):_*
     ))))
+
+  }
+  def renderEnhancements(enhs: Map[Int,SkillInfo], enhm: Map[Int,Int]): List[VNode] = {
+    val es = enhm.toList.foldLeft(List.empty[String]) { case (ac, (x, y)) =>
+      enhancementsOf(x, enhs).fold(ac) { case (p1, p2) =>
+        if (p1.id == y) {
+          (p1.name + " +1") :: ac
+        } else if (p2.id == y) {
+          (p2.name + " +2") :: ac
+        } else {
+          ac
+        }
+      }
+    }
+
+    if (es.isEmpty) Nil
+    else List(tr(td(colspan := 4, div(es.map(div(_)):_*))))
   }
 
   def statOf(x: Option[Effective], f: PassiveStatEffect => Int): Int = x.fold(0)(d => f(d.passives))
@@ -241,6 +267,23 @@ object components {
         )
       )
     } else Nil
+  }
+  def renderEsper(eff: Option[Effective]): List[VNode] = {
+    (for {
+      ef <- eff
+      d <- ef.ed
+      s <- ef.e
+      e <- ef.ee
+    } yield {
+      val idx = d.entries.indexOf(e)
+      List(
+        tr(
+          td(colspan := 4, div("Esper: " + d.names.headOption.getOrElse("") + " " + (idx+1) + "\u2605": String),
+            div(cls := "esper-stats", s"${s.hp.max}HP ${s.mp.max}MP ${s.atk.max}ATK ${s.defs.max}DEF ${s.mag.max}MAG ${s.spr.max}SPR")
+          )
+        ),
+      )
+    }).getOrElse(Nil)
   }
 
   def renderKillers(killers: Map[Int,(Int,Int)]): List[VNode] = {
@@ -336,7 +379,7 @@ object components {
     (ability1, ability2, ability3, ability4) + 
     unitInfo.combineLatest(unitEntry,m).map { case (u, e, ms) =>
 
-      val slots = e.fold(0)(_.abilitySlots)
+      val slots = e.fold(-1)(_.abilitySlots)
 
       def materiaList(w: MaybeMateria) = materiaOption(ms, up, u, e, sorting, w)
       val m1s = materiaList(ability1)
@@ -344,7 +387,9 @@ object components {
       val m3s = materiaList(ability3)
       val m4s = materiaList(ability4)
 
-      if (slots == 0) {
+      if (slots == -1) {
+        Nil
+      } else if (slots == 0) {
         subject.a1.next(None)
         subject.a2.next(None)
         subject.a3.next(None)

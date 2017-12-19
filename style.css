@@ -22,6 +22,7 @@ div#unit-info > div {
 }
 div#esper-container { margin: 16px; }
 div#esper-stats { margin-top: 16px; }
+div.esper-stats { font-size: smaller; }
 button#esper-skills { margin-left: 16px }
 body { font-family: sans-serif; }
 table {

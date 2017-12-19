@@ -1,4 +1,5 @@
 import rxscalajs.{Observable,Subject}
+import rxscalajs.subjects.ReplaySubject
 import java.util.UUID
 
 package object yaffbedb {
@@ -27,6 +28,13 @@ package object yaffbedb {
 
   def maybeId(id: String): Option[String] =
     if (id == EMPTY) None else Some(id)
+
+  def enhancementsOf(id: Int, enhs: Map[Int,SkillInfo]):
+  Option[(SkillInfo,SkillInfo)] =
+    for {
+      p1 <- enhs.get(id)
+      p2 <- enhs.get(p1.id)
+    } yield (p1, p2)
 }
 
 package yaffbedb {
@@ -61,7 +69,7 @@ object PotSubjects {
 case class Pots(hp: Int, mp: Int,
   atk: Int, defs: Int, mag: Int, spr: Int)
 object Pots {
-  def none = Pots(0,0,0,0,0,0)
+  def none = Pots(-1, -1, -1, -1, -1, -1)
 }
 case class BaseStats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int, pots: Pots) {
   def asStats = Stats(hp, mp, atk, defs, mag, spr, AilmentResist.zero, ElementResist.zero)
@@ -196,7 +204,7 @@ object Sort {
 }
 
 object AbilitySubjects {
-  def apply(): AbilitySubjects = AbilitySubjects(Subject[Option[String]](), Subject[Option[String]](), Subject[Option[String]](), Subject[Option[String]]())
+  def apply(): AbilitySubjects = AbilitySubjects(ReplaySubject.withSize[Option[String]](1), ReplaySubject.withSize[Option[String]](1), ReplaySubject.withSize[Option[String]](1), ReplaySubject.withSize[Option[String]](1))
 }
 case class AbilitySubjects(a1: Subject[Option[String]], a2: Subject[Option[String]], a3: Subject[Option[String]], a4: Subject[Option[String]])
 }
