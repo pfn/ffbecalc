@@ -115,9 +115,10 @@ object SkillEffect {
                              attract: Int,
                              camouflage: Int,
                              unarmed: PassiveStatEffect,
-                             dh: PassiveSinglehandEffect,
+                             dh: PassiveDoublehandEffect,
+                             dhGE: PassiveSinglehandEffect,
                              tdh: Passive2HEffect,
-                             tdh2: PassiveTDHEffect,
+                             tdhGE: PassiveTDHEffect,
                              accuracy1h: Int,
                              dw: PassiveDualWieldEffect) {
 
@@ -165,11 +166,15 @@ object SkillEffect {
     }.mkString(" ")
 
     def tdhString = {
-      if (tdh.dh != 0) List( s"""${tdh.dh}% Equip ATK w/ 1h or 2h""", s"+${tdh.accuracy}% accuracy") else Nil
+      if (tdh.dh != 0) List(s"""${tdh.dh}% Equip ATK w/ 1h or 2h""", s"+${tdh.accuracy}% accuracy") else Nil
     }.mkString(" ")
 
     def dhString = {
-      val items = dh.asList.groupBy(_._1).toList.map { case (k,v) =>
+      if (dh.dh != 0) List(s"""${dh.dh}% Equip ATK w/ 1h""", s"+${dh.accuracy}% accuracy") else Nil
+    }.mkString(" ")
+
+    def dhGEString = {
+      val items = dhGE.asList.groupBy(_._1).toList.map { case (k,v) =>
         s"""$k% Equip ${v.map(_._2).mkString("/")}"""
       }
       val dhs = if (items.nonEmpty) items :+ "w/ 1h"
@@ -178,8 +183,8 @@ object SkillEffect {
       dhs ++ acc
     }.mkString(" ")
 
-    def tdh2String = {
-      val items = tdh2.asList.groupBy(_._1).toList.map { case (k,v) =>
+    def tdhGEString = {
+      val items = tdhGE.asList.groupBy(_._1).toList.map { case (k,v) =>
         s"""$k% Equip ${v.map(_._2).mkString("/")}"""
       }
       val dhs = if (items.nonEmpty) items :+ "w/ 1h or 2h"
@@ -205,8 +210,9 @@ object SkillEffect {
     override lazy val toString = List(
       dwString,
       dhString,
-      tdh2String,
       tdhString,
+      dhGEString,
+      tdhGEString,
       stats.toString,
       equipStatsString,
       dodgeString,
@@ -238,6 +244,7 @@ object SkillEffect {
       0,
       0,
       PassiveStatEffect.zero,
+      PassiveDoublehandEffect.zero,
       PassiveSinglehandEffect.zero,
       Passive2HEffect.zero,
       PassiveTDHEffect.zero,
@@ -277,12 +284,12 @@ object SkillEffect {
       case PassiveLimitBurstRateEffect(mod) => a.copy(lbrate = a.lbrate + mod)
       case PassiveCamouflageEffect(_, mod) => a.copy(camouflage = a.camouflage + mod)
       case PassiveRefreshEffect(_, mod) => a.copy(refresh = a.refresh + mod)
-      case sh@PassiveSinglehandEffect(_,_,_,_,_,_) => a.copy(dh = a.dh + sh)
-      case sh@PassiveTDHEffect(_,_,_,_,_,_) => a.copy(tdh2 = a.tdh2 + sh)
+      case sh@PassiveSinglehandEffect(_,_,_,_,_,_) => a.copy(dhGE = a.dhGE + sh)
+      case sh@PassiveTDHEffect(_,_,_,_,_,_) => a.copy(tdhGE = a.tdhGE + sh)
       case Passive2HEffect(dh, acc) =>
         a.copy(tdh = a.tdh.copy(dh = a.tdh.dh + dh, accuracy = a.tdh.accuracy + acc))
-      case PassiveDoublehandEffect(dh, acc) =>
-        a.copy(dh = a.dh.copy(atk = a.dh.atk + dh), accuracy1h = a.accuracy1h + acc)
+      case dh@PassiveDoublehandEffect(_, _) =>
+        a.copy(dh = a.dh + dh)
       case PassiveDualWieldEffect(weaps, all) =>
         a.copy(dw = PassiveDualWieldEffect(a.dw.weapons ++ weaps, all || a.dw.all))
       case PassiveUnarmedEffect(sts) =>
@@ -438,8 +445,13 @@ object PassiveTDHEffect {
   def zero = PassiveTDHEffect(0, 0, 0, 0, 0, 0)
 }
 
-case class PassiveDoublehandEffect(dh: Int, accuracy: Int) extends SkillEffect with NoRestrictions
+case class PassiveDoublehandEffect(dh: Int, accuracy: Int) extends SkillEffect with NoRestrictions {
+  def +(o: PassiveDoublehandEffect) =
+    PassiveDoublehandEffect(dh + o.dh, accuracy + o.accuracy)
+  def asSingleHand = PassiveSinglehandEffect(0, 0, dh, 0, 0, 0)
+}
 object PassiveDoublehandEffect {
+  def zero = PassiveDoublehandEffect(0, 0)
   def decode(xs: List[Int]): SkillEffect = xs match {
     case List(a) => PassiveDoublehandEffect(a, 0)
     // TODO handle b and c: accuracy, c == 2 => 2h
