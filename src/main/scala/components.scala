@@ -40,7 +40,10 @@ object components {
         unit.fold(0)(e => f(e.stats).max + p).toString
       }
 
-    unit.map { u =>
+    // unit.map followed by stats <-- unit.combineLatest causes a
+    // desync/bad subscription
+    var subscription = Option.empty[rxscalajs.subscription.AnonymousSubscription]
+    unit.filter(_.nonEmpty).map { u =>
       val potClicks = createHandler[Unit](())
       val showPots = potClicks.scan(false) { (show,_) => !show }
       def createIntHandler(x: Int) = createHandler[Int](x)
@@ -50,20 +53,21 @@ object components {
       val defPots = createIntHandler(potsFor(u, _.defs))
       val magPots = createIntHandler(potsFor(u, _.mag))
       val sprPots = createIntHandler(potsFor(u, _.spr))
-      stats <-- unit.combineLatest(hpPots.merge(sub.hp).combineLatest(mpPots.merge(sub.mp)).combineLatest(atkPots.merge(sub.atk).combineLatest(defPots.merge(sub.defs), magPots.merge(sub.mag), sprPots.merge(sub.spr)))).map {
+      subscription.foreach(_.unsubscribe())
+      subscription = Some(stats <-- unit.combineLatest(hpPots.merge(sub.hp).combineLatest(mpPots.merge(sub.mp)).combineLatest(atkPots.merge(sub.atk).combineLatest(defPots.merge(sub.defs), magPots.merge(sub.mag), sprPots.merge(sub.spr)))).map {
         case (entry, ((hp,mp),(atk,defs,mag,spr))) =>
-        entry.map { e =>
-          BaseStats(
-            e.stats.hp.max + hp,
-            e.stats.mp.max + mp,
-            e.stats.atk.max + atk,
-            e.stats.defs.max + defs,
-            e.stats.mag.max + mag,
-            e.stats.spr.max + spr,
-            Pots(hp, mp, atk, defs, mag, spr)
-          )
-        }
-      }
+        for {
+          e <- entry.orElse(u)
+        } yield BaseStats(
+          e.stats.hp.max + hp,
+          e.stats.mp.max + mp,
+          e.stats.atk.max + atk,
+          e.stats.defs.max + defs,
+          e.stats.mag.max + mag,
+          e.stats.spr.max + spr,
+          Pots(hp, mp, atk, defs, mag, spr)
+        )
+      }.filter(_.nonEmpty))
       div(cls := "unit-stats",
         div(
           div("HP " , child <-- maxstat(u, hpPots, _.hp)),
@@ -120,7 +124,7 @@ object components {
       tr(resists.map { r => td(s"$r%") }:_*)
     )
   }
-  case class Effective(stats: Stats, passives: PassiveStatEffect, dh: PassiveSinglehandEffect, tdh: Passive2HEffect, tdh2: PassiveTDHEffect, accuracy: Int, is1h: Boolean, is2h: Boolean, ed: Option[EsperData], e: Option[EsperStatInfo], ee: Option[EsperEntry])
+  case class Effective(base: BaseStats, stats: Stats, passives: PassiveStatEffect, dh: PassiveSinglehandEffect, tdh: Passive2HEffect, tdh2: PassiveTDHEffect, accuracy: Int, is1h: Boolean, is2h: Boolean, ed: Option[EsperData], e: Option[EsperStatInfo], ee: Option[EsperEntry])
 
   def unitStats(unitInfo: Observable[Option[UnitData]], unit: Observable[Option[UnitEntry]],
                 stats: Observable[Option[BaseStats]], equipped: Observable[(Equipped,Abilities)],
@@ -155,7 +159,7 @@ object components {
 
           val accuracy = (if (is2h || isSW) pasv.tdh.accuracy else 0) + (if (!is2h && isSW) pasv.accuracy1h else 0)
 
-          Effective(st.asStats * passives + e + eqstats + (eqstats * alldh) ++ ee, passives, pasv.dh, pasv.tdh, pasv.tdh2, accuracy, !is2h && isSW, isSW || is2h, ed, e, ee)
+          Effective(st, st.asStats * passives + e + eqstats + (eqstats * alldh) ++ ee, passives, pasv.dh, pasv.tdh, pasv.tdh2, accuracy, !is2h && isSW, isSW || is2h, ed, e, ee)
         }
     }
     table(cls := "unit-stats",
@@ -195,6 +199,7 @@ object components {
             td(cls := "unit-stat-name", "SPR"),
             td(cls := "unit-stat-data", st(_.spr))
           )) ++
+            renderPots(eff) ++
             renderEquipped(ui, eqs.allEquipped, abis.allEquipped) ++
             renderEsper(eff) ++
             renderEnhancements(es, em) ++
@@ -233,6 +238,14 @@ object components {
         abis.map(e => s"${e.name}: ${e.describeEffects(u)}")).map(n => div(n)):_*
     ))))
 
+  }
+  def renderPots(eff: Option[Effective]): List[VNode] = {
+    def st(f: Pots => Int) = eff.fold("???")(d => f(d.base.pots).toString)
+    List(
+      tr(
+        td(colspan := 4, div(s"Pots: ${st(_.hp)}HP ${st(_.mp)}MP ${st(_.atk)}ATK ${st(_.defs)}DEF ${st(_.mag)}MAG ${st(_.spr)}SPR"))
+      )
+    )
   }
   def renderEnhancements(enhs: Map[Int,SkillInfo], enhm: Map[Int,Int]): List[VNode] = {
     val es = enhm.toList.foldLeft(List.empty[String]) { case (ac, (x, y)) =>
