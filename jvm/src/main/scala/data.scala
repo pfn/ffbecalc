@@ -609,7 +609,14 @@ object ActiveDecoders {
         MultiAbilityEffect(skills, count)
       }
     },
+    1007 -> {
+      (t, a, c) => {
+        val xs = listInt(c)
+        StackingPhysicalEffect(xs(2), xs(3), xs(5), t, a)
+      }
+    },
     1011 -> { (t, a, c) => SkipTurnsEffect(listInt(c)(0), t) },
+    1012 -> { (t, a, c) => HexDebuffAttackEffect(t, a) },
   )
 }
 

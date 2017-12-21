@@ -195,6 +195,7 @@ sealed trait Healing {
   }
 }
 
+case class HexDebuffAttackEffect(target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class InvokeSkillEffect(skill: Int) extends ActiveEffect with NoTarget
 case class EntrustEffect(target: SkillTarget) extends ActiveEffect
 case class EsperFillEffect(min: Int, max: Int, target: SkillTarget) extends ActiveEffect
@@ -252,6 +253,7 @@ case class EsunaEffect(poison: Boolean, blind: Boolean, sleep: Boolean, silence:
 case class StatusAilmentEffect(poison: Int, blind: Int, sleep: Int, silence: Int, paralyze: Int, confusion: Int, disease: Int, petrify: Int, target: SkillTarget) extends ActiveEffect
 case class RandomAilmentEffect(poison: Int, blind: Int, sleep: Int, silence: Int, paralyze: Int, confusion: Int, disease: Int, petrify: Int, count: Int, target: SkillTarget) extends ActiveEffect
 case class AilmentResistEffect(poison: Int, blind: Int, sleep: Int, silence: Int, paralyze: Int, confusion: Int, disease: Int, petrify: Int, turns: Int, target: SkillTarget) extends ActiveEffect
+case class StackingPhysicalEffect(first: Int, stack: Int, max: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class StackingMagicalEffect(first: Int, stack: Int, max: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class MagicalEffect(ratio: Int, its: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class SingingBuffEffect(atk: Int, defs: Int, mag: Int, spr: Int, turns: Int, target: SkillTarget) extends ActiveEffect
