@@ -84,6 +84,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101600, 
         "effects": [
@@ -102,9 +103,12 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": [
+          209001105
+        ], 
         "unique": false, 
         "id": 217130, 
         "effects": [
@@ -138,9 +142,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          209001105
-        ]
+        "icon": "ability_19.png"
       }
     ], 
     "skill_effects": {
@@ -179,6 +181,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100110, 
         "effects": [
@@ -197,9 +200,12 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": [
+          401002304
+        ], 
         "unique": false, 
         "id": 910386, 
         "effects": [
@@ -212,9 +218,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          401002304
-        ]
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -276,6 +280,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101230, 
         "effects": [
@@ -288,7 +293,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_75.png"
       }
     ], 
     "skill_effects": {
@@ -405,6 +410,9 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": [
+          401002304
+        ], 
         "unique": false, 
         "id": 910385, 
         "effects": [
@@ -423,9 +431,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          401002304
-        ]
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -511,6 +517,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101240, 
         "effects": [
@@ -523,7 +530,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_78.png"
       }
     ], 
     "skill_effects": {
@@ -581,6 +588,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100100, 
         "effects": [
@@ -599,7 +607,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -763,6 +771,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100750, 
         "effects": [
@@ -775,7 +784,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -911,6 +920,10 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": [
+          100000202, 
+          100011705
+        ], 
         "unique": false, 
         "id": 210230, 
         "effects": [
@@ -929,10 +942,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          100000202, 
-          100011705
-        ]
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -1044,6 +1054,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101200, 
         "effects": [
@@ -1058,7 +1069,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_68.png"
       }
     ], 
     "skill_effects": {
@@ -1118,6 +1129,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101230, 
         "effects": [
@@ -1130,7 +1142,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_75.png"
       }
     ], 
     "skill_effects": {
@@ -1219,6 +1231,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101360, 
         "effects": [
@@ -1233,7 +1246,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_76.png"
       }
     ], 
     "skill_effects": {
@@ -1294,6 +1307,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101060, 
         "effects": [
@@ -1308,7 +1322,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -1346,6 +1360,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 216170, 
         "effects": [
@@ -1360,9 +1375,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_68.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101500, 
         "effects": [
@@ -1381,7 +1397,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -1419,6 +1435,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 400120, 
         "effects": [
@@ -1431,7 +1448,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_54.png"
       }
     ], 
     "skill_effects": {
@@ -1566,6 +1583,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203250, 
         "effects": [
@@ -1584,9 +1602,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 206910, 
         "effects": [
@@ -1605,7 +1624,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -1697,6 +1716,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100070, 
         "effects": [
@@ -1715,9 +1735,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101070, 
         "effects": [
@@ -1732,7 +1753,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -1872,6 +1893,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 400080, 
         "effects": [
@@ -1889,7 +1911,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -1952,6 +1974,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -1970,7 +1993,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -2030,6 +2053,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 208970, 
         "effects": [
@@ -2048,9 +2072,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 208980, 
         "effects": [
@@ -2069,9 +2094,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100720, 
         "effects": [
@@ -2084,7 +2110,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -2126,6 +2152,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101090, 
         "effects": [
@@ -2140,7 +2167,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -2237,6 +2264,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101500, 
         "effects": [
@@ -2255,9 +2283,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 910638, 
         "effects": [
@@ -2270,7 +2299,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_97.png"
       }
     ], 
     "skill_effects": {
@@ -2343,6 +2372,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100730, 
         "effects": [
@@ -2355,7 +2385,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -2415,6 +2445,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203240, 
         "effects": [
@@ -2433,9 +2464,13 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": [
+          100000302, 
+          100011805
+        ], 
         "unique": false, 
         "id": 210280, 
         "effects": [
@@ -2448,10 +2483,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          100000302, 
-          100011805
-        ]
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -2489,6 +2521,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100020, 
         "effects": [
@@ -2507,9 +2540,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100050, 
         "effects": [
@@ -2528,9 +2562,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100080, 
         "effects": [
@@ -2549,9 +2584,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100110, 
         "effects": [
@@ -2570,7 +2606,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -2690,6 +2726,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100020, 
         "effects": [
@@ -2708,9 +2745,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100130, 
         "effects": [
@@ -2729,9 +2767,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100160, 
         "effects": [
@@ -2750,7 +2789,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -2792,6 +2831,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203250, 
         "effects": [
@@ -2810,9 +2850,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 206910, 
         "effects": [
@@ -2831,7 +2872,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -2902,6 +2943,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101090, 
         "effects": [
@@ -2916,7 +2958,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -2953,6 +2995,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101500, 
         "effects": [
@@ -2971,9 +3014,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203240, 
         "effects": [
@@ -2992,7 +3036,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -3030,6 +3074,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 208980, 
         "effects": [
@@ -3048,9 +3093,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 910549, 
         "effects": [
@@ -3063,7 +3109,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_83.png"
       }
     ], 
     "skill_effects": {
@@ -3125,6 +3171,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 216410, 
         "effects": [
@@ -3137,7 +3184,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_83.png"
       }
     ], 
     "skill_effects": {
@@ -3174,6 +3221,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -3192,9 +3240,13 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": [
+          100000302, 
+          100011805
+        ], 
         "unique": false, 
         "id": 210270, 
         "effects": [
@@ -3214,10 +3266,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          100000302, 
-          100011805
-        ]
+        "icon": "ability_19.png"
       }
     ], 
     "skill_effects": {
@@ -3281,6 +3330,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100100, 
         "effects": [
@@ -3299,7 +3349,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -3461,6 +3511,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101090, 
         "effects": [
@@ -3475,9 +3526,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101060, 
         "effects": [
@@ -3492,7 +3544,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -3578,6 +3630,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100720, 
         "effects": [
@@ -3590,7 +3643,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -3729,6 +3782,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 211320, 
         "effects": [
@@ -3756,9 +3810,12 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_97.png"
       }, 
       {
+        "unit_restriction": [
+          100008804
+        ], 
         "unique": false, 
         "id": 211332, 
         "effects": [
@@ -3777,9 +3834,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          100008804
-        ]
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -3947,6 +4002,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100050, 
         "effects": [
@@ -3965,7 +4021,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -3999,6 +4055,10 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": [
+          100000202, 
+          100011705
+        ], 
         "unique": false, 
         "id": 210240, 
         "effects": [
@@ -4018,10 +4078,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          100000202, 
-          100011705
-        ]
+        "icon": "ability_19.png"
       }
     ], 
     "skill_effects": {
@@ -4135,6 +4192,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -4153,9 +4211,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100040, 
         "effects": [
@@ -4174,7 +4233,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -4284,6 +4343,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 211310, 
         "effects": [
@@ -4296,9 +4356,12 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }, 
       {
+        "unit_restriction": [
+          100008804
+        ], 
         "unique": false, 
         "id": 211330, 
         "effects": [
@@ -4317,9 +4380,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          100008804
-        ]
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -4542,6 +4603,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101060, 
         "effects": [
@@ -4556,7 +4618,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -4645,6 +4707,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -4663,9 +4726,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100040, 
         "effects": [
@@ -4684,9 +4748,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100070, 
         "effects": [
@@ -4705,9 +4770,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100100, 
         "effects": [
@@ -4726,7 +4792,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -4772,6 +4838,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203250, 
         "effects": [
@@ -4790,7 +4857,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -4903,6 +4970,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -4921,9 +4989,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100040, 
         "effects": [
@@ -4942,7 +5011,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -5006,6 +5075,9 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": [
+          100008804
+        ], 
         "unique": false, 
         "id": 211331, 
         "effects": [
@@ -5024,9 +5096,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          100008804
-        ]
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -5110,6 +5180,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100710, 
         "effects": [
@@ -5122,7 +5193,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -5158,6 +5229,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100050, 
         "effects": [
@@ -5176,7 +5248,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -5210,6 +5282,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203240, 
         "effects": [
@@ -5228,7 +5301,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -5262,6 +5335,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101090, 
         "effects": [
@@ -5276,7 +5350,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -5338,6 +5412,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100120, 
         "effects": [
@@ -5356,9 +5431,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100180, 
         "effects": [
@@ -5377,7 +5453,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -5565,6 +5641,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101350, 
         "effects": [
@@ -5577,7 +5654,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_84.png"
       }
     ], 
     "skill_effects": {
@@ -5618,6 +5695,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100730, 
         "effects": [
@@ -5630,7 +5708,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -5723,6 +5801,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100740, 
         "effects": [
@@ -5735,7 +5814,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -5822,6 +5901,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203250, 
         "effects": [
@@ -5840,9 +5920,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 206910, 
         "effects": [
@@ -5861,7 +5942,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -5899,6 +5980,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100080, 
         "effects": [
@@ -5917,9 +5999,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100140, 
         "effects": [
@@ -5938,7 +6021,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -6029,6 +6112,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100140, 
         "effects": [
@@ -6047,7 +6131,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -6111,6 +6195,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 208730, 
         "effects": [
@@ -6127,7 +6212,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -6269,6 +6354,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100740, 
         "effects": [
@@ -6281,7 +6367,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -6318,6 +6404,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 217620, 
         "effects": [
@@ -6330,9 +6417,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100050, 
         "effects": [
@@ -6351,7 +6439,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -6487,6 +6575,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100720, 
         "effects": [
@@ -6499,7 +6588,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -6533,6 +6622,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 209790, 
         "effects": [
@@ -6553,7 +6643,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -6612,6 +6702,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 215430, 
         "effects": [
@@ -6631,7 +6722,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -6665,6 +6756,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101090, 
         "effects": [
@@ -6679,7 +6771,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -6763,6 +6855,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101600, 
         "effects": [
@@ -6781,9 +6874,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101700, 
         "effects": [
@@ -6802,7 +6896,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -6840,6 +6934,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 208810, 
         "effects": [
@@ -6852,7 +6947,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_72.png"
       }
     ], 
     "skill_effects": {
@@ -6888,6 +6983,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 212390, 
         "effects": [
@@ -6910,9 +7006,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_5.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100090, 
         "effects": [
@@ -6931,9 +7028,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100120, 
         "effects": [
@@ -6952,7 +7050,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -7004,6 +7102,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101700, 
         "effects": [
@@ -7022,7 +7121,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -7157,6 +7256,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": true, 
         "id": 206170, 
         "effects": [
@@ -7169,7 +7269,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_97.png"
       }
     ], 
     "skill_effects": {
@@ -7203,6 +7303,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203240, 
         "effects": [
@@ -7221,7 +7322,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -7257,6 +7358,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 910254, 
         "effects": [
@@ -7278,7 +7380,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_97.png"
       }
     ], 
     "skill_effects": {
@@ -7313,6 +7415,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101600, 
         "effects": [
@@ -7331,9 +7434,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100040, 
         "effects": [
@@ -7352,7 +7456,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -7419,6 +7523,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101500, 
         "effects": [
@@ -7437,9 +7542,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203240, 
         "effects": [
@@ -7458,7 +7564,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -7496,6 +7602,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": true, 
         "id": 202450, 
         "effects": [
@@ -7508,9 +7615,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_97.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 202460, 
         "effects": [
@@ -7529,7 +7637,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -7567,6 +7675,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203190, 
         "effects": [
@@ -7579,7 +7688,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_97.png"
       }
     ], 
     "skill_effects": {
@@ -7615,6 +7724,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203250, 
         "effects": [
@@ -7633,7 +7743,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -7667,6 +7777,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100180, 
         "effects": [
@@ -7685,7 +7796,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -7746,6 +7857,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 910172, 
         "effects": [
@@ -7770,7 +7882,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_68.png"
       }
     ], 
     "skill_effects": {
@@ -7805,6 +7917,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101080, 
         "effects": [
@@ -7819,7 +7932,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -7853,6 +7966,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101500, 
         "effects": [
@@ -7871,7 +7985,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -7980,6 +8094,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203250, 
         "effects": [
@@ -7998,9 +8113,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 206910, 
         "effects": [
@@ -8019,7 +8135,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -8107,6 +8223,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 910446, 
         "effects": [
@@ -8141,7 +8258,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -8177,6 +8294,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100050, 
         "effects": [
@@ -8195,7 +8313,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -8311,6 +8429,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100020, 
         "effects": [
@@ -8329,9 +8448,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100140, 
         "effects": [
@@ -8350,7 +8470,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -8391,6 +8511,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100090, 
         "effects": [
@@ -8409,9 +8530,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100120, 
         "effects": [
@@ -8430,9 +8552,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101230, 
         "effects": [
@@ -8445,9 +8568,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_75.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 218370, 
         "effects": [
@@ -8460,7 +8584,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_72.png"
       }
     ], 
     "skill_effects": {
@@ -8506,6 +8630,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101080, 
         "effects": [
@@ -8520,7 +8645,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -8554,6 +8679,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101090, 
         "effects": [
@@ -8568,7 +8694,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -8642,6 +8768,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101700, 
         "effects": [
@@ -8660,9 +8787,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100160, 
         "effects": [
@@ -8681,7 +8809,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -8799,6 +8927,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 218790, 
         "effects": [
@@ -8812,7 +8941,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_88.png"
       }
     ], 
     "skill_effects": {
@@ -8882,6 +9011,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 910229, 
         "effects": [
@@ -8896,7 +9026,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -9066,6 +9196,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101050, 
         "effects": [
@@ -9080,9 +9211,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 205480, 
         "effects": [
@@ -9139,7 +9271,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -9206,6 +9338,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100720, 
         "effects": [
@@ -9218,7 +9351,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -9417,6 +9550,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203240, 
         "effects": [
@@ -9435,7 +9569,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -9519,6 +9653,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100080, 
         "effects": [
@@ -9537,9 +9672,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100980, 
         "effects": [
@@ -9552,7 +9688,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_96.png"
       }
     ], 
     "skill_effects": {
@@ -9590,6 +9726,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203240, 
         "effects": [
@@ -9608,7 +9745,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -9666,6 +9803,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": true, 
         "id": 206170, 
         "effects": [
@@ -9678,7 +9816,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_97.png"
       }
     ], 
     "skill_effects": {
@@ -9832,6 +9970,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -9850,9 +9989,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100040, 
         "effects": [
@@ -9871,7 +10011,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -9909,6 +10049,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100170, 
         "effects": [
@@ -9927,7 +10068,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -9991,6 +10132,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101500, 
         "effects": [
@@ -10009,7 +10151,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -10043,6 +10185,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -10061,7 +10204,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -10286,6 +10429,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101080, 
         "effects": [
@@ -10300,7 +10444,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -10456,6 +10600,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -10474,7 +10619,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -10582,6 +10727,9 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": [
+          100005304
+        ], 
         "unique": false, 
         "id": 910188, 
         "effects": [
@@ -10594,9 +10742,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          100005304
-        ]
+        "icon": "ability_84.png"
       }
     ], 
     "skill_effects": {
@@ -10630,6 +10776,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101040, 
         "effects": [
@@ -10644,7 +10791,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -10680,6 +10827,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100730, 
         "effects": [
@@ -10692,7 +10840,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -10778,6 +10926,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101070, 
         "effects": [
@@ -10792,7 +10941,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -10850,6 +10999,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100730, 
         "effects": [
@@ -10862,7 +11012,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -10896,6 +11046,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101090, 
         "effects": [
@@ -10910,7 +11061,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -11046,6 +11197,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 202510, 
         "effects": [
@@ -11058,7 +11210,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -11166,6 +11318,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101050, 
         "effects": [
@@ -11180,7 +11333,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -11240,6 +11393,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100090, 
         "effects": [
@@ -11258,7 +11412,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -11292,6 +11446,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 213190, 
         "effects": [
@@ -11316,7 +11471,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -11378,6 +11533,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203250, 
         "effects": [
@@ -11396,7 +11552,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -11454,6 +11610,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100060, 
         "effects": [
@@ -11472,7 +11629,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -11506,6 +11663,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101030, 
         "effects": [
@@ -11520,7 +11678,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -11556,6 +11714,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 400070, 
         "effects": [
@@ -11573,7 +11732,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -11631,6 +11790,9 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": [
+          100000102
+        ], 
         "unique": false, 
         "id": 210200, 
         "effects": [
@@ -11649,9 +11811,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          100000102
-        ]
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -11744,6 +11904,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 206910, 
         "effects": [
@@ -11762,9 +11923,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203250, 
         "effects": [
@@ -11783,9 +11945,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101600, 
         "effects": [
@@ -11804,9 +11967,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101700, 
         "effects": [
@@ -11825,7 +11989,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -11871,6 +12035,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101150, 
         "effects": [
@@ -11883,7 +12048,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_70.png"
       }
     ], 
     "skill_effects": {
@@ -11991,6 +12156,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100110, 
         "effects": [
@@ -12009,7 +12175,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -12122,6 +12288,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101090, 
         "effects": [
@@ -12136,7 +12303,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -12220,6 +12387,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 400120, 
         "effects": [
@@ -12232,7 +12400,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_54.png"
       }
     ], 
     "skill_effects": {
@@ -12321,6 +12489,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101230, 
         "effects": [
@@ -12333,7 +12502,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_75.png"
       }
     ], 
     "skill_effects": {
@@ -12367,6 +12536,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 214730, 
         "effects": [
@@ -12379,7 +12549,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -12448,6 +12618,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100710, 
         "effects": [
@@ -12460,9 +12631,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100720, 
         "effects": [
@@ -12475,7 +12647,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -12587,6 +12759,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 202510, 
         "effects": [
@@ -12599,7 +12772,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -12657,6 +12830,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101030, 
         "effects": [
@@ -12671,7 +12845,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -12779,6 +12953,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 213980, 
         "effects": [
@@ -12793,7 +12968,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_5.png"
       }
     ], 
     "skill_effects": {
@@ -12833,6 +13008,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100710, 
         "effects": [
@@ -12845,7 +13021,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -12879,6 +13055,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 211740, 
         "effects": [
@@ -12892,7 +13069,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_41.png"
       }
     ], 
     "skill_effects": {
@@ -12926,6 +13103,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101110, 
         "effects": [
@@ -12940,7 +13118,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -13002,6 +13180,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101500, 
         "effects": [
@@ -13020,7 +13199,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -13080,6 +13259,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 221540, 
         "effects": [
@@ -13098,7 +13278,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -13132,6 +13312,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101370, 
         "effects": [
@@ -13144,7 +13325,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_72.png"
       }
     ], 
     "skill_effects": {
@@ -13178,6 +13359,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -13196,7 +13378,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -13230,6 +13412,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 220670, 
         "effects": [
@@ -13242,9 +13425,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_80.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101050, 
         "effects": [
@@ -13259,7 +13443,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -13408,6 +13592,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100180, 
         "effects": [
@@ -13426,9 +13611,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 910550, 
         "effects": [
@@ -13444,7 +13630,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_68.png"
       }
     ], 
     "skill_effects": {
@@ -13482,6 +13668,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -13500,7 +13687,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -13582,6 +13769,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 400070, 
         "effects": [
@@ -13599,7 +13787,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -13636,6 +13824,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -13654,9 +13843,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100040, 
         "effects": [
@@ -13675,7 +13865,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -13713,6 +13903,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 400070, 
         "effects": [
@@ -13730,9 +13921,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 400080, 
         "effects": [
@@ -13750,7 +13942,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -13788,6 +13980,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 910092, 
         "effects": [
@@ -13804,7 +13997,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -13840,6 +14033,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100050, 
         "effects": [
@@ -13858,7 +14052,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -13900,6 +14094,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 210290, 
         "effects": [
@@ -13912,7 +14107,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_81.png"
       }
     ], 
     "skill_effects": {
@@ -14114,6 +14309,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 910390, 
         "effects": [
@@ -14128,7 +14324,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -14246,6 +14442,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101700, 
         "effects": [
@@ -14264,9 +14461,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100160, 
         "effects": [
@@ -14285,7 +14483,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -14351,6 +14549,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101050, 
         "effects": [
@@ -14365,7 +14564,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -14399,6 +14598,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101060, 
         "effects": [
@@ -14413,7 +14613,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -14498,6 +14698,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -14516,9 +14717,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100040, 
         "effects": [
@@ -14537,7 +14739,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -14575,6 +14777,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -14593,7 +14796,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -14775,6 +14978,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -14793,7 +14997,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -14829,6 +15033,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100040, 
         "effects": [
@@ -14847,7 +15052,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -14937,6 +15142,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101500, 
         "effects": [
@@ -14955,9 +15161,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 213270, 
         "effects": [
@@ -14976,7 +15183,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -15016,6 +15223,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -15034,7 +15242,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -15116,6 +15324,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -15134,7 +15343,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -15168,6 +15377,9 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": [
+          311000105
+        ], 
         "unique": false, 
         "id": 220240, 
         "effects": [
@@ -15186,9 +15398,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          311000105
-        ]
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -15253,6 +15463,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 910447, 
         "effects": [
@@ -15267,7 +15478,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -15489,6 +15700,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203240, 
         "effects": [
@@ -15507,7 +15719,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -15619,6 +15831,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101370, 
         "effects": [
@@ -15631,7 +15844,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_72.png"
       }
     ], 
     "skill_effects": {
@@ -15665,6 +15878,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101090, 
         "effects": [
@@ -15679,7 +15893,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -15742,6 +15956,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -15760,9 +15975,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100070, 
         "effects": [
@@ -15781,7 +15997,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -15870,6 +16086,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100030, 
         "effects": [
@@ -15888,9 +16105,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100060, 
         "effects": [
@@ -15909,9 +16127,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 206860, 
         "effects": [
@@ -15930,9 +16149,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 206870, 
         "effects": [
@@ -15951,9 +16171,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 206880, 
         "effects": [
@@ -15972,9 +16193,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 206890, 
         "effects": [
@@ -15993,7 +16215,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -16047,6 +16269,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101230, 
         "effects": [
@@ -16059,7 +16282,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_75.png"
       }
     ], 
     "skill_effects": {
@@ -16143,6 +16366,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 216030, 
         "effects": [
@@ -16162,7 +16386,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_19.png"
       }
     ], 
     "skill_effects": {
@@ -16222,6 +16446,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101090, 
         "effects": [
@@ -16236,7 +16461,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -16322,6 +16547,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101090, 
         "effects": [
@@ -16336,7 +16562,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -16370,6 +16596,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101090, 
         "effects": [
@@ -16384,7 +16611,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -16418,6 +16645,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100050, 
         "effects": [
@@ -16436,7 +16664,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -16503,6 +16731,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203250, 
         "effects": [
@@ -16521,7 +16750,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -16555,6 +16784,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101080, 
         "effects": [
@@ -16569,7 +16799,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -16603,6 +16833,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101090, 
         "effects": [
@@ -16617,9 +16848,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101000, 
         "effects": [
@@ -16634,9 +16866,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101020, 
         "effects": [
@@ -16651,9 +16884,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101080, 
         "effects": [
@@ -16668,7 +16902,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -16716,6 +16950,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203240, 
         "effects": [
@@ -16734,7 +16969,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -16768,6 +17003,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100070, 
         "effects": [
@@ -16786,9 +17022,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100130, 
         "effects": [
@@ -16807,7 +17044,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -16930,6 +17167,9 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": [
+          203000105
+        ], 
         "unique": false, 
         "id": 211730, 
         "effects": [
@@ -16949,9 +17189,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          203000105
-        ]
+        "icon": "ability_19.png"
       }
     ], 
     "skill_effects": {
@@ -16985,6 +17223,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 910186, 
         "effects": [
@@ -16997,7 +17236,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -17059,6 +17298,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 400090, 
         "effects": [
@@ -17076,7 +17316,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -17269,6 +17509,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101110, 
         "effects": [
@@ -17283,7 +17524,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -17421,6 +17662,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101090, 
         "effects": [
@@ -17435,7 +17677,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -17498,6 +17740,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101410, 
         "effects": [
@@ -17514,7 +17757,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_73.png"
       }
     ], 
     "skill_effects": {
@@ -17751,6 +17994,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 910147, 
         "effects": [
@@ -17767,7 +18011,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -17886,6 +18130,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100160, 
         "effects": [
@@ -17904,7 +18149,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -18015,6 +18260,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 400120, 
         "effects": [
@@ -18027,7 +18273,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_54.png"
       }
     ], 
     "skill_effects": {
@@ -18111,6 +18357,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -18129,7 +18376,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -18163,6 +18410,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 218930, 
         "effects": [
@@ -18219,7 +18467,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -18256,6 +18504,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203250, 
         "effects": [
@@ -18274,7 +18523,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -18308,6 +18557,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100070, 
         "effects": [
@@ -18326,9 +18576,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100100, 
         "effects": [
@@ -18347,7 +18598,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -18418,6 +18669,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100710, 
         "effects": [
@@ -18430,7 +18682,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -18464,6 +18716,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100100, 
         "effects": [
@@ -18482,9 +18735,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100160, 
         "effects": [
@@ -18503,7 +18757,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -18541,6 +18795,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100070, 
         "effects": [
@@ -18559,9 +18814,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100130, 
         "effects": [
@@ -18580,9 +18836,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100100, 
         "effects": [
@@ -18601,9 +18858,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100160, 
         "effects": [
@@ -18622,7 +18880,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -18724,6 +18982,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -18742,7 +19001,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -18780,6 +19039,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100740, 
         "effects": [
@@ -18792,9 +19052,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100750, 
         "effects": [
@@ -18807,7 +19068,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -18897,6 +19158,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101210, 
         "effects": [
@@ -18911,7 +19173,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_68.png"
       }
     ], 
     "skill_effects": {
@@ -18999,6 +19261,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101290, 
         "effects": [
@@ -19012,7 +19275,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_82.png"
       }
     ], 
     "skill_effects": {
@@ -19072,6 +19335,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100110, 
         "effects": [
@@ -19090,9 +19354,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203240, 
         "effects": [
@@ -19111,7 +19376,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -19330,6 +19595,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101600, 
         "effects": [
@@ -19348,9 +19614,13 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": [
+          100000202, 
+          100011705
+        ], 
         "unique": false, 
         "id": 210250, 
         "effects": [
@@ -19363,10 +19633,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          100000202, 
-          100011705
-        ]
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -19431,6 +19698,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -19449,9 +19717,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100040, 
         "effects": [
@@ -19470,7 +19739,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -19584,6 +19853,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -19602,7 +19872,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -19935,6 +20205,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 910337, 
         "effects": [
@@ -19959,7 +20230,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -20068,6 +20339,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100720, 
         "effects": [
@@ -20080,7 +20352,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -20114,6 +20386,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203240, 
         "effects": [
@@ -20132,9 +20405,12 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": [
+          254001403
+        ], 
         "unique": false, 
         "id": 910200, 
         "effects": [
@@ -20161,9 +20437,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          254001403
-        ]
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -20228,6 +20502,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203250, 
         "effects": [
@@ -20246,7 +20521,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -20312,6 +20587,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101500, 
         "effects": [
@@ -20330,7 +20606,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -20412,6 +20688,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 218920, 
         "effects": [
@@ -20424,7 +20701,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_80.png"
       }
     ], 
     "skill_effects": {
@@ -20461,6 +20738,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100050, 
         "effects": [
@@ -20479,7 +20757,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -20565,6 +20843,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100170, 
         "effects": [
@@ -20583,9 +20862,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 400040, 
         "effects": [
@@ -20604,7 +20884,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -20642,6 +20922,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 202390, 
         "effects": [
@@ -20658,7 +20939,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -20696,6 +20977,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100130, 
         "effects": [
@@ -20714,9 +20996,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100160, 
         "effects": [
@@ -20735,7 +21018,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -20806,6 +21089,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100710, 
         "effects": [
@@ -20818,7 +21102,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -20933,6 +21217,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 202510, 
         "effects": [
@@ -20945,7 +21230,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -21003,6 +21288,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 400010, 
         "effects": [
@@ -21015,7 +21301,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_81.png"
       }
     ], 
     "skill_effects": {
@@ -21049,6 +21335,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -21067,7 +21354,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -21129,6 +21416,9 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": [
+          254001204
+        ], 
         "unique": false, 
         "id": 910199, 
         "effects": [
@@ -21147,9 +21437,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          254001204
-        ]
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -21237,6 +21525,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101050, 
         "effects": [
@@ -21251,7 +21540,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -21309,6 +21598,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 400110, 
         "effects": [
@@ -21321,7 +21611,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_71.png"
       }
     ], 
     "skill_effects": {
@@ -21381,6 +21671,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203240, 
         "effects": [
@@ -21399,7 +21690,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -21435,6 +21726,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101500, 
         "effects": [
@@ -21453,7 +21745,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -21548,6 +21840,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -21566,9 +21859,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100040, 
         "effects": [
@@ -21587,7 +21881,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -21655,6 +21949,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101290, 
         "effects": [
@@ -21668,7 +21963,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_82.png"
       }
     ], 
     "skill_effects": {
@@ -21726,6 +22021,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203240, 
         "effects": [
@@ -21744,7 +22040,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -21828,6 +22124,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": true, 
         "id": 210660, 
         "effects": [
@@ -21840,7 +22137,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_97.png"
       }
     ], 
     "skill_effects": {
@@ -21874,6 +22171,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101000, 
         "effects": [
@@ -21888,7 +22186,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -22002,6 +22300,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -22020,9 +22319,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100130, 
         "effects": [
@@ -22041,7 +22341,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -22079,6 +22379,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 217120, 
         "effects": [
@@ -22091,7 +22392,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_78.png"
       }
     ], 
     "skill_effects": {
@@ -22178,6 +22479,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100070, 
         "effects": [
@@ -22196,9 +22498,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101080, 
         "effects": [
@@ -22213,7 +22516,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -22254,6 +22557,9 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": [
+          401002304
+        ], 
         "unique": false, 
         "id": 910384, 
         "effects": [
@@ -22272,9 +22578,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          401002304
-        ]
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -22310,6 +22614,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 209220, 
         "effects": [
@@ -22322,7 +22627,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_78.png"
       }
     ], 
     "skill_effects": {
@@ -22356,6 +22661,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 211360, 
         "effects": [
@@ -22370,7 +22676,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -22710,6 +23016,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 215000, 
         "effects": [
@@ -22724,9 +23031,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_76.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 215150, 
         "effects": [
@@ -22739,7 +23047,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -22778,6 +23086,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100040, 
         "effects": [
@@ -22796,9 +23105,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100160, 
         "effects": [
@@ -22817,7 +23127,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -22855,6 +23165,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -22873,7 +23184,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -22934,6 +23245,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 216040, 
         "effects": [
@@ -22953,7 +23265,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_99.png"
       }
     ], 
     "skill_effects": {
@@ -22987,6 +23299,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100730, 
         "effects": [
@@ -22999,7 +23312,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -23107,6 +23420,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 202460, 
         "effects": [
@@ -23125,7 +23439,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -23159,6 +23473,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 910655, 
         "effects": [
@@ -23174,7 +23489,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_68.png"
       }
     ], 
     "skill_effects": {
@@ -23234,6 +23549,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 210670, 
         "effects": [
@@ -23246,7 +23562,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_83.png"
       }
     ], 
     "skill_effects": {
@@ -23332,6 +23648,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -23350,7 +23667,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -23413,6 +23730,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -23431,9 +23749,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100110, 
         "effects": [
@@ -23452,9 +23771,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100040, 
         "effects": [
@@ -23473,7 +23793,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -23515,6 +23835,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101460, 
         "effects": [
@@ -23527,7 +23848,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_80.png"
       }
     ], 
     "skill_effects": {
@@ -23611,6 +23932,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": true, 
         "id": 216020, 
         "effects": [
@@ -23623,7 +23945,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -23688,6 +24010,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101500, 
         "effects": [
@@ -23706,9 +24029,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101600, 
         "effects": [
@@ -23727,9 +24051,12 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": [
+          100009105
+        ], 
         "unique": false, 
         "id": 910540, 
         "effects": [
@@ -23742,9 +24069,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          100009105
-        ]
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -23810,6 +24135,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -23828,7 +24154,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -23890,6 +24216,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101090, 
         "effects": [
@@ -23904,7 +24231,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -23938,6 +24265,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 208980, 
         "effects": [
@@ -23956,9 +24284,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100730, 
         "effects": [
@@ -23971,9 +24300,12 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }, 
       {
+        "unit_restriction": [
+          209000705
+        ], 
         "unique": false, 
         "id": 217180, 
         "effects": [
@@ -24007,9 +24339,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          209000705
-        ]
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -24102,6 +24432,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -24120,9 +24451,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100040, 
         "effects": [
@@ -24141,7 +24473,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -24181,6 +24513,9 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": [
+          401002005
+        ], 
         "unique": false, 
         "id": 910512, 
         "effects": [
@@ -24193,9 +24528,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          401002005
-        ]
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -24306,6 +24639,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100050, 
         "effects": [
@@ -24324,9 +24658,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101240, 
         "effects": [
@@ -24339,7 +24674,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_78.png"
       }
     ], 
     "skill_effects": {
@@ -24407,6 +24742,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 900012, 
         "effects": [
@@ -24425,9 +24761,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101700, 
         "effects": [
@@ -24446,7 +24783,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -24569,6 +24906,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100710, 
         "effects": [
@@ -24581,9 +24919,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100720, 
         "effects": [
@@ -24596,7 +24935,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -24634,6 +24973,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": true, 
         "id": 210180, 
         "effects": [
@@ -24646,7 +24986,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_97.png"
       }
     ], 
     "skill_effects": {
@@ -24738,6 +25078,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101090, 
         "effects": [
@@ -24752,9 +25093,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101000, 
         "effects": [
@@ -24769,9 +25111,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101020, 
         "effects": [
@@ -24786,7 +25129,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -24830,6 +25173,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101090, 
         "effects": [
@@ -24844,7 +25188,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -24950,6 +25294,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 209580, 
         "effects": [
@@ -24964,7 +25309,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -25030,6 +25375,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100060, 
         "effects": [
@@ -25048,7 +25394,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -25086,6 +25432,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": true, 
         "id": 206170, 
         "effects": [
@@ -25098,9 +25445,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_97.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101200, 
         "effects": [
@@ -25115,7 +25463,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_68.png"
       }
     ], 
     "skill_effects": {
@@ -25231,6 +25579,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100710, 
         "effects": [
@@ -25243,7 +25592,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -25277,6 +25626,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101090, 
         "effects": [
@@ -25291,9 +25641,13 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }, 
       {
+        "unit_restriction": [
+          100000302, 
+          100011805
+        ], 
         "unique": false, 
         "id": 210260, 
         "effects": [
@@ -25312,10 +25666,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          100000302, 
-          100011805
-        ]
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -25377,6 +25728,9 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": [
+          203000105
+        ], 
         "unique": false, 
         "id": 211720, 
         "effects": [
@@ -25395,9 +25749,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          203000105
-        ]
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -25431,6 +25783,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100040, 
         "effects": [
@@ -25449,7 +25802,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -25542,6 +25895,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100710, 
         "effects": [
@@ -25554,9 +25908,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100720, 
         "effects": [
@@ -25569,9 +25924,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100730, 
         "effects": [
@@ -25584,7 +25940,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -25626,6 +25982,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101080, 
         "effects": [
@@ -25640,7 +25997,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -25677,6 +26034,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -25695,9 +26053,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100040, 
         "effects": [
@@ -25716,7 +26075,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -25854,6 +26213,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100710, 
         "effects": [
@@ -25866,9 +26226,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100720, 
         "effects": [
@@ -25881,7 +26242,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -25967,6 +26328,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100020, 
         "effects": [
@@ -25985,9 +26347,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 213250, 
         "effects": [
@@ -26000,7 +26363,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_78.png"
       }
     ], 
     "skill_effects": {
@@ -26185,6 +26548,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101500, 
         "effects": [
@@ -26203,9 +26567,12 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": [
+          100000102
+        ], 
         "unique": false, 
         "id": 210220, 
         "effects": [
@@ -26218,9 +26585,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          100000102
-        ]
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -26258,6 +26623,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203240, 
         "effects": [
@@ -26276,9 +26642,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101700, 
         "effects": [
@@ -26297,7 +26664,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -26335,6 +26702,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101040, 
         "effects": [
@@ -26349,7 +26717,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -26464,6 +26832,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100720, 
         "effects": [
@@ -26476,7 +26845,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -26610,6 +26979,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203250, 
         "effects": [
@@ -26628,9 +26998,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 206910, 
         "effects": [
@@ -26649,7 +27020,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -26791,6 +27162,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101040, 
         "effects": [
@@ -26805,7 +27177,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -26935,6 +27307,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203240, 
         "effects": [
@@ -26953,7 +27326,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -27086,6 +27459,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 217620, 
         "effects": [
@@ -27098,7 +27472,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -27228,6 +27602,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101460, 
         "effects": [
@@ -27240,7 +27615,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_80.png"
       }
     ], 
     "skill_effects": {
@@ -27274,6 +27649,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -27292,7 +27668,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -27356,6 +27732,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203250, 
         "effects": [
@@ -27374,7 +27751,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -27480,6 +27857,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 220690, 
         "effects": [
@@ -27524,7 +27902,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -27563,6 +27941,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100730, 
         "effects": [
@@ -27575,7 +27954,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -27725,6 +28104,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 208970, 
         "effects": [
@@ -27743,7 +28123,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -27828,6 +28208,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100050, 
         "effects": [
@@ -27846,7 +28227,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -27906,6 +28287,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 210190, 
         "effects": [
@@ -27918,7 +28300,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -27976,6 +28358,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 202440, 
         "effects": [
@@ -27992,7 +28375,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -28050,6 +28433,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100110, 
         "effects": [
@@ -28068,9 +28452,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100170, 
         "effects": [
@@ -28089,7 +28474,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -28209,6 +28594,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101700, 
         "effects": [
@@ -28227,7 +28613,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -28291,6 +28677,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100070, 
         "effects": [
@@ -28309,9 +28696,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100100, 
         "effects": [
@@ -28330,9 +28718,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101370, 
         "effects": [
@@ -28345,7 +28734,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_72.png"
       }
     ], 
     "skill_effects": {
@@ -28387,6 +28776,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101500, 
         "effects": [
@@ -28405,9 +28795,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100730, 
         "effects": [
@@ -28420,7 +28811,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -28725,6 +29116,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100100, 
         "effects": [
@@ -28743,7 +29135,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -28777,6 +29169,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100040, 
         "effects": [
@@ -28795,9 +29188,12 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": [
+          100000102
+        ], 
         "unique": false, 
         "id": 210210, 
         "effects": [
@@ -28817,9 +29213,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          100000102
-        ]
+        "icon": "ability_19.png"
       }
     ], 
     "skill_effects": {
@@ -28881,6 +29275,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 213750, 
         "effects": [
@@ -28894,9 +29289,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_88.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 213760, 
         "effects": [
@@ -28909,7 +29305,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_84.png"
       }
     ], 
     "skill_effects": {
@@ -28974,6 +29370,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100020, 
         "effects": [
@@ -28992,7 +29389,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -29050,6 +29447,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100740, 
         "effects": [
@@ -29062,7 +29460,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -29146,6 +29544,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100730, 
         "effects": [
@@ -29158,9 +29557,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100050, 
         "effects": [
@@ -29179,7 +29579,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -29219,6 +29619,9 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": [
+          254000905
+        ], 
         "unique": false, 
         "id": 910198, 
         "effects": [
@@ -29245,9 +29648,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          254000905
-        ]
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -29336,6 +29737,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203240, 
         "effects": [
@@ -29354,9 +29756,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100170, 
         "effects": [
@@ -29375,7 +29778,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -29417,6 +29820,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101500, 
         "effects": [
@@ -29435,7 +29839,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -29528,6 +29932,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203250, 
         "effects": [
@@ -29546,9 +29951,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 206910, 
         "effects": [
@@ -29567,7 +29973,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -29629,6 +30035,9 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": [
+          209000404
+        ], 
         "unique": false, 
         "id": 217290, 
         "effects": [
@@ -29647,9 +30056,7 @@
             ]
           ]
         ], 
-        "unit_restriction": [
-          209000404
-        ]
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -29710,6 +30117,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101090, 
         "effects": [
@@ -29724,7 +30132,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -29787,6 +30195,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 204830, 
         "effects": [
@@ -29799,7 +30208,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_97.png"
       }
     ], 
     "skill_effects": {
@@ -29833,6 +30242,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100050, 
         "effects": [
@@ -29851,7 +30261,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -29909,6 +30319,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 202510, 
         "effects": [
@@ -29921,7 +30332,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_91.png"
       }
     ], 
     "skill_effects": {
@@ -29957,6 +30368,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": true, 
         "id": 206170, 
         "effects": [
@@ -29969,7 +30381,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_97.png"
       }
     ], 
     "skill_effects": {
@@ -30029,6 +30441,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101050, 
         "effects": [
@@ -30043,7 +30456,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -30103,6 +30516,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101500, 
         "effects": [
@@ -30121,9 +30535,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203240, 
         "effects": [
@@ -30142,9 +30557,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100160, 
         "effects": [
@@ -30163,7 +30579,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -30232,6 +30648,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100060, 
         "effects": [
@@ -30250,9 +30667,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100120, 
         "effects": [
@@ -30271,7 +30689,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -30311,6 +30729,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100010, 
         "effects": [
@@ -30329,7 +30748,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -30464,6 +30883,7 @@
     ], 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101500, 
         "effects": [
@@ -30482,9 +30902,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 203240, 
         "effects": [
@@ -30503,7 +30924,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
@@ -30572,6 +30993,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 101050, 
         "effects": [
@@ -30586,7 +31008,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_79.png"
       }
     ], 
     "skill_effects": {
@@ -30646,6 +31068,7 @@
     "reqs": null, 
     "effects_raw": [
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 100050, 
         "effects": [
@@ -30664,9 +31087,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 207390, 
         "effects": [
@@ -30685,9 +31109,10 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }, 
       {
+        "unit_restriction": null, 
         "unique": false, 
         "id": 207400, 
         "effects": [
@@ -30706,7 +31131,7 @@
             ]
           ]
         ], 
-        "unit_restriction": null
+        "icon": "ability_77.png"
       }
     ], 
     "skill_effects": {
