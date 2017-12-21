@@ -65,11 +65,16 @@ for x in equip.keys():
     reqs = equip[x]["requirements"]
   if "skills" in equip[x] and equip[x]["skills"] is not None:
     for skillid in equip[x]["skills"]:
+      unique = False
       restriction = None
+      if "unique" in skills[str(skillid)]:
+        unique = skills[str(skillid)]["unique"]
       if "active" not in skills[str(skillid)] or not skills[str(skillid)]["active"]:
         if "unit_restriction" in skills[str(skillid)]:
           restriction = skills[str(skillid)]["unit_restriction"]
         effr += [{
+          "unique": unique,
+          "id": skillid,
           "unit_restriction": restriction,
           "effects": skills[str(skillid)]["effects_raw"]
         }]
@@ -105,9 +110,14 @@ for x in materia.keys():
       eff += skills[skid]["effects"]
       if "active" not in skills[str(skillid)] or not skills[str(skillid)]["active"]:
         restriction = None
+        unique = False
         if "unit_restriction" in skills[str(skid)]:
           restriction = skills[str(skid)]["unit_restriction"]
+        if "unique" in skills[str(skid)]:
+          unique = skills[str(skid)]["unique"]
         effr += [{
+          "unique": unique,
+          "id": skid,
           "unit_restriction": restriction,
           "effects": skills[skid]["effects_raw"]
         }]
