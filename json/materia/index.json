@@ -17,7 +17,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100800", 
         "effects": [
           [
             1, 
@@ -27,7 +28,8 @@
               5
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100800", 
@@ -42,7 +44,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "218970", 
         "effects": [
           [
             1, 
@@ -68,7 +71,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504218970", 
@@ -108,7 +112,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910387", 
         "effects": [
           [
             1, 
@@ -124,7 +129,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000025", 
@@ -139,7 +145,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "211100", 
         "effects": [
           [
             0, 
@@ -156,7 +163,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504211100", 
@@ -171,7 +179,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "204590", 
         "effects": [
           [
             1, 
@@ -197,7 +206,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504204590", 
@@ -213,7 +223,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910568", 
         "effects": [
           [
             1, 
@@ -237,7 +248,8 @@
               11
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000033", 
@@ -253,7 +265,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "205430", 
         "effects": [
           [
             1, 
@@ -284,7 +297,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504205430", 
@@ -300,7 +314,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "208100", 
         "effects": [
           [
             1, 
@@ -326,7 +341,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504208100", 
@@ -342,7 +358,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910230", 
         "effects": [
           [
             1, 
@@ -358,7 +375,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000013", 
@@ -385,7 +403,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910096", 
         "effects": [
           [
             1, 
@@ -399,7 +418,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504212570", 
@@ -414,7 +434,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "202760", 
         "effects": [
           [
             0, 
@@ -430,7 +451,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504202760", 
@@ -456,7 +478,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "203190", 
         "effects": [
           [
             0, 
@@ -466,7 +489,8 @@
               5
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504203190", 
@@ -492,7 +516,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101020", 
         "effects": [
           [
             1, 
@@ -504,7 +529,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101020", 
@@ -530,7 +556,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "213420", 
         "effects": [
           [
             0, 
@@ -562,7 +589,8 @@
               5
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504213420", 
@@ -579,7 +607,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "210680", 
         "effects": [
           [
             0, 
@@ -596,7 +625,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504210660", 
@@ -611,7 +641,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "213200", 
         "effects": [
           [
             0, 
@@ -628,7 +659,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504213200", 
@@ -655,7 +687,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "210720", 
         "effects": [
           [
             1, 
@@ -681,7 +714,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504210720", 
@@ -708,7 +742,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "210650", 
         "effects": [
           [
             0, 
@@ -724,7 +759,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504210650", 
@@ -750,7 +786,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "217640", 
         "effects": [
           [
             0, 
@@ -766,7 +803,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504217640", 
@@ -803,7 +841,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "204270", 
         "effects": [
           [
             0, 
@@ -819,7 +858,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504204270", 
@@ -846,7 +886,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100070", 
         "effects": [
           [
             1, 
@@ -862,7 +903,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100070", 
@@ -877,7 +919,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910233", 
         "effects": [
           [
             1, 
@@ -893,7 +936,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000017", 
@@ -908,7 +952,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100920", 
         "effects": [
           [
             1, 
@@ -918,7 +963,8 @@
               50
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100920", 
@@ -933,7 +979,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100940", 
         "effects": [
           [
             1, 
@@ -943,7 +990,8 @@
               52
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100940", 
@@ -970,7 +1018,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "218390", 
         "effects": [
           [
             1, 
@@ -986,7 +1035,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504218390", 
@@ -1034,7 +1084,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910231", 
         "effects": [
           [
             1, 
@@ -1050,7 +1101,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000015", 
@@ -1089,7 +1141,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "205460", 
         "effects": [
           [
             1, 
@@ -1105,7 +1158,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504205460", 
@@ -1131,7 +1185,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "206850", 
         "effects": [
           [
             0, 
@@ -1147,7 +1202,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504206850", 
@@ -1162,7 +1218,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101080", 
         "effects": [
           [
             1, 
@@ -1174,7 +1231,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101080", 
@@ -1202,9 +1260,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": [
-          254000503
-        ], 
+        "unique": false, 
+        "id": "910134", 
         "effects": [
           [
             1, 
@@ -1220,6 +1277,9 @@
               0
             ]
           ]
+        ], 
+        "unit_restriction": [
+          254000503
         ]
       }
     ], 
@@ -1236,7 +1296,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100830", 
         "effects": [
           [
             1, 
@@ -1246,7 +1307,8 @@
               8
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100830", 
@@ -1261,7 +1323,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "213530", 
         "effects": [
           [
             1, 
@@ -1277,7 +1340,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504213530", 
@@ -1292,7 +1356,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "217950", 
         "effects": [
           [
             0, 
@@ -1308,7 +1373,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504217950", 
@@ -1348,7 +1414,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "207410", 
         "effects": [
           [
             0, 
@@ -1362,7 +1429,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504207410", 
@@ -1377,7 +1445,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "211680", 
         "effects": [
           [
             0, 
@@ -1408,7 +1477,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504211680", 
@@ -1424,7 +1494,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "215440", 
         "effects": [
           [
             0, 
@@ -1441,7 +1512,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504215440", 
@@ -1456,7 +1528,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "208120", 
         "effects": [
           [
             1, 
@@ -1473,7 +1546,8 @@
               10
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504208120", 
@@ -1488,7 +1562,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "216040", 
         "effects": [
           [
             0, 
@@ -1505,7 +1580,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504216040", 
@@ -1520,7 +1596,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "203370", 
         "effects": [
           [
             0, 
@@ -1536,7 +1613,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504203370", 
@@ -1563,7 +1641,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "219880", 
         "effects": [
           [
             0, 
@@ -1580,7 +1659,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504219880", 
@@ -1607,7 +1687,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "204320", 
         "effects": [
           [
             0, 
@@ -1623,7 +1704,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504204320", 
@@ -1638,7 +1720,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "215170", 
         "effects": [
           [
             0, 
@@ -1655,7 +1738,8 @@
               100
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504215170", 
@@ -1670,7 +1754,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "208740", 
         "effects": [
           [
             0, 
@@ -1694,7 +1779,8 @@
               100
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504208740", 
@@ -1710,7 +1796,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101230", 
         "effects": [
           [
             1, 
@@ -1720,7 +1807,8 @@
               10
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101230", 
@@ -1735,7 +1823,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "211690", 
         "effects": [
           [
             0, 
@@ -1766,7 +1855,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504211690", 
@@ -1782,7 +1872,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "207690", 
         "effects": [
           [
             1, 
@@ -1798,7 +1889,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504207690", 
@@ -1813,7 +1905,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "214990", 
         "effects": [
           [
             0, 
@@ -1825,7 +1918,8 @@
               2
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504214990", 
@@ -1841,7 +1935,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "217040", 
         "effects": [
           [
             0, 
@@ -1857,7 +1952,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504217040", 
@@ -1896,7 +1992,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100060", 
         "effects": [
           [
             1, 
@@ -1912,7 +2009,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100060", 
@@ -1939,7 +2037,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "210110", 
         "effects": [
           [
             0, 
@@ -1967,7 +2066,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504210110", 
@@ -1983,7 +2083,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101360", 
         "effects": [
           [
             1, 
@@ -1995,7 +2096,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101360", 
@@ -2011,7 +2113,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "203380", 
         "effects": [
           [
             0, 
@@ -2025,7 +2128,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504203380", 
@@ -2040,7 +2144,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "214930", 
         "effects": [
           [
             1, 
@@ -2057,7 +2162,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504214930", 
@@ -2072,7 +2178,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100720", 
         "effects": [
           [
             1, 
@@ -2082,7 +2189,8 @@
               30141
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100720", 
@@ -2097,7 +2205,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "206750", 
         "effects": [
           [
             0, 
@@ -2113,7 +2222,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504206750", 
@@ -2150,7 +2260,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "208490", 
         "effects": [
           [
             0, 
@@ -2166,7 +2277,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504208490", 
@@ -2181,7 +2293,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "204310", 
         "effects": [
           [
             0, 
@@ -2197,7 +2310,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504204310", 
@@ -2223,7 +2337,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "203820", 
         "effects": [
           [
             0, 
@@ -2239,7 +2354,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504203820", 
@@ -2254,7 +2370,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "220680", 
         "effects": [
           [
             0, 
@@ -2286,7 +2403,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504220680", 
@@ -2338,7 +2456,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "219950", 
         "effects": [
           [
             0, 
@@ -2355,7 +2474,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504219950", 
@@ -2370,7 +2490,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "219230", 
         "effects": [
           [
             0, 
@@ -2396,7 +2517,8 @@
               20
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504219230", 
@@ -2412,7 +2534,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "216060", 
         "effects": [
           [
             0, 
@@ -2429,7 +2552,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504216060", 
@@ -2444,7 +2568,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "203200", 
         "effects": [
           [
             0, 
@@ -2460,7 +2585,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504203200", 
@@ -2475,7 +2601,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "211700", 
         "effects": [
           [
             0, 
@@ -2506,7 +2633,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504211700", 
@@ -2547,11 +2675,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": [
-          203000704, 
-          203000705, 
-          203000706
-        ], 
+        "unique": false, 
+        "id": "910388", 
         "effects": [
           [
             1, 
@@ -2565,10 +2690,16 @@
               70
             ]
           ]
+        ], 
+        "unit_restriction": [
+          203000704, 
+          203000705, 
+          203000706
         ]
       }, 
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101500", 
         "effects": [
           [
             1, 
@@ -2584,7 +2715,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000023", 
@@ -2600,7 +2732,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101100", 
         "effects": [
           [
             1, 
@@ -2612,7 +2745,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101100", 
@@ -2627,7 +2761,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "213720", 
         "effects": [
           [
             0, 
@@ -2658,7 +2793,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504213720", 
@@ -2674,7 +2810,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "205260", 
         "effects": [
           [
             1, 
@@ -2700,7 +2837,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504205260", 
@@ -2716,7 +2854,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "221550", 
         "effects": [
           [
             0, 
@@ -2740,7 +2879,8 @@
               505100
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504221550", 
@@ -2767,7 +2907,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100780", 
         "effects": [
           [
             1, 
@@ -2777,7 +2918,8 @@
               3
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100780", 
@@ -2804,7 +2946,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "218860", 
         "effects": [
           [
             1, 
@@ -2840,7 +2983,8 @@
               504080
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504218860", 
@@ -2857,7 +3001,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "218980", 
         "effects": [
           [
             1, 
@@ -2873,7 +3018,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504218980", 
@@ -2900,7 +3046,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "210640", 
         "effects": [
           [
             0, 
@@ -2916,7 +3063,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504210640", 
@@ -2931,7 +3079,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910391", 
         "effects": [
           [
             1, 
@@ -2947,7 +3096,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000026", 
@@ -2974,15 +3124,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": [
-          401000205, 
-          401000305, 
-          401000404, 
-          401000503, 
-          401002005, 
-          401002104, 
-          401002204
-        ], 
+        "unique": false, 
+        "id": "900011", 
         "effects": [
           [
             1, 
@@ -2998,6 +3141,15 @@
               0
             ]
           ]
+        ], 
+        "unit_restriction": [
+          401000205, 
+          401000305, 
+          401000404, 
+          401000503, 
+          401002005, 
+          401002104, 
+          401002204
         ]
       }
     ], 
@@ -3013,7 +3165,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "206680", 
         "effects": [
           [
             1, 
@@ -3023,7 +3176,8 @@
               7
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504206680", 
@@ -3038,7 +3192,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101370", 
         "effects": [
           [
             1, 
@@ -3048,7 +3203,8 @@
               "none"
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101370", 
@@ -3063,7 +3219,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101420", 
         "effects": [
           [
             0, 
@@ -3077,7 +3234,8 @@
               5
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504213730", 
@@ -3092,7 +3250,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "213700", 
         "effects": [
           [
             0, 
@@ -3109,7 +3268,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504213700", 
@@ -3135,7 +3295,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "208900", 
         "effects": [
           [
             0, 
@@ -3152,7 +3313,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504208900", 
@@ -3202,7 +3364,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "220630", 
         "effects": [
           [
             0, 
@@ -3218,7 +3381,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504220630", 
@@ -3257,7 +3421,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "206320", 
         "effects": [
           [
             1, 
@@ -3288,7 +3453,8 @@
               20
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504206320", 
@@ -3327,7 +3493,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "204900", 
         "effects": [
           [
             1, 
@@ -3351,7 +3518,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504204900", 
@@ -3379,7 +3547,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "207710", 
         "effects": [
           [
             1, 
@@ -3395,7 +3564,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504207710", 
@@ -3410,7 +3580,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101170", 
         "effects": [
           [
             1, 
@@ -3424,7 +3595,8 @@
               5
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101170", 
@@ -3439,7 +3611,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "220650", 
         "effects": [
           [
             0, 
@@ -3456,7 +3629,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504220650", 
@@ -3471,7 +3645,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "208980", 
         "effects": [
           [
             0, 
@@ -3487,7 +3662,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504208980", 
@@ -3514,7 +3690,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "216730", 
         "effects": [
           [
             0, 
@@ -3545,7 +3722,8 @@
               15
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504216730", 
@@ -3597,7 +3775,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "206390", 
         "effects": [
           [
             0, 
@@ -3651,7 +3830,8 @@
               -1
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504206390", 
@@ -3669,7 +3849,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": true, 
+        "id": "216990", 
         "effects": [
           [
             0, 
@@ -3693,7 +3874,8 @@
               10
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504216990", 
@@ -3709,7 +3891,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100020", 
         "effects": [
           [
             1, 
@@ -3725,7 +3908,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100020", 
@@ -3740,7 +3924,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910314", 
         "effects": [
           [
             0, 
@@ -3752,7 +3937,8 @@
               910321
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000022", 
@@ -3767,7 +3953,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101060", 
         "effects": [
           [
             1, 
@@ -3779,7 +3966,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101060", 
@@ -3794,7 +3982,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100910", 
         "effects": [
           [
             0, 
@@ -3804,7 +3993,8 @@
               16
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100910", 
@@ -3819,7 +4009,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "203260", 
         "effects": [
           [
             1, 
@@ -3831,7 +4022,8 @@
               75
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504219910", 
@@ -3846,7 +4038,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "204940", 
         "effects": [
           [
             1, 
@@ -3866,7 +4059,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504204940", 
@@ -3893,7 +4087,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "209350", 
         "effects": [
           [
             1, 
@@ -3924,7 +4119,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504209350", 
@@ -3940,7 +4136,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "204280", 
         "effects": [
           [
             0, 
@@ -3956,7 +4153,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504204280", 
@@ -3971,7 +4169,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "219240", 
         "effects": [
           [
             0, 
@@ -3988,7 +4187,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504219240", 
@@ -4003,7 +4203,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100860", 
         "effects": [
           [
             1, 
@@ -4013,7 +4214,8 @@
               11
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100860", 
@@ -4051,7 +4253,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "211360", 
         "effects": [
           [
             0, 
@@ -4063,7 +4266,8 @@
               75
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504211360", 
@@ -4090,7 +4294,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "219080", 
         "effects": [
           [
             0, 
@@ -4114,7 +4319,8 @@
               10
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504219080", 
@@ -4130,7 +4336,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "219270", 
         "effects": [
           [
             0, 
@@ -4154,7 +4361,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504219270", 
@@ -4193,7 +4401,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "206630", 
         "effects": [
           [
             0, 
@@ -4209,7 +4418,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504206630", 
@@ -4224,7 +4434,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "206070", 
         "effects": [
           [
             1, 
@@ -4266,7 +4477,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504206070", 
@@ -4283,7 +4495,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "217650", 
         "effects": [
           [
             0, 
@@ -4297,7 +4510,8 @@
               30
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504217650", 
@@ -4312,15 +4526,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": [
-          401000205, 
-          401000305, 
-          401000404, 
-          401000503, 
-          401002005, 
-          401002104, 
-          401002204
-        ], 
+        "unique": false, 
+        "id": "900010", 
         "effects": [
           [
             1, 
@@ -4336,6 +4543,15 @@
               0
             ]
           ]
+        ], 
+        "unit_restriction": [
+          401000205, 
+          401000305, 
+          401000404, 
+          401000503, 
+          401002005, 
+          401002104, 
+          401002204
         ]
       }
     ], 
@@ -4351,7 +4567,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "204600", 
         "effects": [
           [
             1, 
@@ -4382,7 +4599,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504204600", 
@@ -4398,7 +4616,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "208970", 
         "effects": [
           [
             0, 
@@ -4414,7 +4633,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504208970", 
@@ -4429,7 +4649,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "205350", 
         "effects": [
           [
             1, 
@@ -4445,7 +4666,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504205350", 
@@ -4471,7 +4693,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910234", 
         "effects": [
           [
             1, 
@@ -4487,7 +4710,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000018", 
@@ -4513,7 +4737,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "220140", 
         "effects": [
           [
             0, 
@@ -4529,7 +4754,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504220140", 
@@ -4544,7 +4770,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": true, 
+        "id": "215360", 
         "effects": [
           [
             0, 
@@ -4568,7 +4795,8 @@
               25
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504215360", 
@@ -4584,7 +4812,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100050", 
         "effects": [
           [
             1, 
@@ -4600,7 +4829,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100050", 
@@ -4615,7 +4845,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "220290", 
         "effects": [
           [
             1, 
@@ -4646,7 +4877,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504220290", 
@@ -4662,7 +4894,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "205470", 
         "effects": [
           [
             1, 
@@ -4678,7 +4911,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504205470", 
@@ -4693,7 +4927,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "201680", 
         "effects": [
           [
             1, 
@@ -4719,7 +4954,8 @@
               10121
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504201680", 
@@ -4736,7 +4972,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100010", 
         "effects": [
           [
             1, 
@@ -4752,7 +4989,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100010", 
@@ -4767,7 +5005,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "220620", 
         "effects": [
           [
             0, 
@@ -4783,7 +5022,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504220620", 
@@ -4798,14 +5038,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": [
-          213000105, 
-          213000204, 
-          213000304, 
-          213000403, 
-          213000504, 
-          213000603
-        ], 
+        "unique": false, 
+        "id": "202490", 
         "effects": [
           [
             0, 
@@ -4821,6 +5055,14 @@
               0
             ]
           ]
+        ], 
+        "unit_restriction": [
+          213000105, 
+          213000204, 
+          213000304, 
+          213000403, 
+          213000504, 
+          213000603
         ]
       }
     ], 
@@ -4836,7 +5078,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "201950", 
         "effects": [
           [
             1, 
@@ -4852,7 +5095,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504201950", 
@@ -4867,7 +5111,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "217630", 
         "effects": [
           [
             0, 
@@ -4883,7 +5128,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504217630", 
@@ -4923,7 +5169,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101700", 
         "effects": [
           [
             0, 
@@ -4939,10 +5186,12 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }, 
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100010", 
         "effects": [
           [
             1, 
@@ -4958,7 +5207,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000011", 
@@ -4969,34 +5219,52 @@
     ], 
     "rarity": 1
   }, 
-  "Mage's Monograph": {
+  "Joyful Spirit": {
     "skill_names": [
-      "Mage's Monograph"
+      "Joyful Spirit"
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910775", 
         "effects": [
           [
             0, 
+            3, 
+            2, 
+            [
+              0, 
+              0, 
+              50, 
+              0, 
+              50, 
+              50, 
+              0, 
+              50
+            ]
+          ], 
+          [
+            1, 
             3, 
             1, 
             [
               0, 
               0, 
-              5, 
-              5, 
+              0, 
+              0, 
               10, 
               0, 
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
-    "id": "504209490", 
+    "id": "1500000035", 
     "effects": [
-      "Increase HP by 10% and MAG and SPR by 5%"
+      "Increase resistance to Sleep, Paralyze, Confusion and Petrify by 50%", 
+      "Increase HP by 10%"
     ], 
     "rarity": 5
   }, 
@@ -5006,7 +5274,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "210800", 
         "effects": [
           [
             1, 
@@ -5032,7 +5301,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504210800", 
@@ -5048,7 +5318,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "204930", 
         "effects": [
           [
             1, 
@@ -5100,7 +5371,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504204930", 
@@ -5119,7 +5391,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "209940", 
         "effects": [
           [
             0, 
@@ -5136,7 +5409,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504209940", 
@@ -5151,7 +5425,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "203240", 
         "effects": [
           [
             0, 
@@ -5167,7 +5442,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504203240", 
@@ -5182,7 +5458,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "203830", 
         "effects": [
           [
             0, 
@@ -5198,7 +5475,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504203830", 
@@ -5236,7 +5514,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100740", 
         "effects": [
           [
             1, 
@@ -5246,7 +5525,8 @@
               5
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000014", 
@@ -5261,7 +5541,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "216400", 
         "effects": [
           [
             0, 
@@ -5278,7 +5559,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504216400", 
@@ -5293,7 +5575,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100190", 
         "effects": [
           [
             1, 
@@ -5303,7 +5586,8 @@
               10
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100190", 
@@ -5318,7 +5602,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101600", 
         "effects": [
           [
             0, 
@@ -5334,7 +5619,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101600", 
@@ -5349,7 +5635,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "216380", 
         "effects": [
           [
             0, 
@@ -5380,7 +5667,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504216380", 
@@ -5421,7 +5709,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910338", 
         "effects": [
           [
             1, 
@@ -5437,7 +5726,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000019", 
@@ -5452,7 +5742,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "213230", 
         "effects": [
           [
             0, 
@@ -5483,7 +5774,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504213230", 
@@ -5500,7 +5792,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101470", 
         "effects": [
           [
             1, 
@@ -5528,12 +5821,12 @@
               -1
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }, 
       {
-        "unit_restriction": [
-          254001003
-        ], 
+        "unique": false, 
+        "id": "910133", 
         "effects": [
           [
             1, 
@@ -5549,6 +5842,9 @@
               0
             ]
           ]
+        ], 
+        "unit_restriction": [
+          254001003
         ]
       }
     ], 
@@ -5566,7 +5862,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100750", 
         "effects": [
           [
             1, 
@@ -5576,7 +5873,8 @@
               100
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100750", 
@@ -5602,7 +5900,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "205440", 
         "effects": [
           [
             1, 
@@ -5618,7 +5917,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504205440", 
@@ -5633,7 +5933,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "216900", 
         "effects": [
           [
             0, 
@@ -5650,7 +5951,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504216900", 
@@ -5665,7 +5967,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100120", 
         "effects": [
           [
             1, 
@@ -5681,7 +5984,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100120", 
@@ -5708,7 +6012,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "207680", 
         "effects": [
           [
             0, 
@@ -5762,7 +6067,8 @@
               -1
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504207680", 
@@ -5780,7 +6086,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "220660", 
         "effects": [
           [
             1, 
@@ -5804,7 +6111,8 @@
               5
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504220660", 
@@ -5820,9 +6128,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": [
-          214000304
-        ], 
+        "unique": false, 
+        "id": "208090", 
         "effects": [
           [
             0, 
@@ -5834,6 +6141,9 @@
               500520
             ]
           ]
+        ], 
+        "unit_restriction": [
+          214000304
         ]
       }
     ], 
@@ -5849,7 +6159,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "201970", 
         "effects": [
           [
             1, 
@@ -5866,7 +6177,8 @@
               100
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504201970", 
@@ -5881,7 +6193,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "205130", 
         "effects": [
           [
             1, 
@@ -5905,7 +6218,8 @@
               10
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504205130", 
@@ -5933,7 +6247,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "215190", 
         "effects": [
           [
             0, 
@@ -5949,7 +6264,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504215190", 
@@ -5975,7 +6291,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "218870", 
         "effects": [
           [
             1, 
@@ -6004,7 +6321,8 @@
               3
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504218870", 
@@ -6020,7 +6338,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100990", 
         "effects": [
           [
             1, 
@@ -6030,7 +6349,8 @@
               31
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100990", 
@@ -6056,7 +6376,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100140", 
         "effects": [
           [
             1, 
@@ -6072,7 +6393,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100140", 
@@ -6087,7 +6409,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "212380", 
         "effects": [
           [
             1, 
@@ -6113,7 +6436,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504212380", 
@@ -6129,7 +6453,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "212340", 
         "effects": [
           [
             0, 
@@ -6146,7 +6471,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504212340", 
@@ -6173,7 +6499,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101070", 
         "effects": [
           [
             1, 
@@ -6185,7 +6512,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101070", 
@@ -6200,7 +6528,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "201670", 
         "effects": [
           [
             1, 
@@ -6214,7 +6543,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504201670", 
@@ -6253,7 +6583,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "204250", 
         "effects": [
           [
             0, 
@@ -6269,7 +6600,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504204250", 
@@ -6296,7 +6628,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "206840", 
         "effects": [
           [
             0, 
@@ -6312,7 +6645,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504206840", 
@@ -6327,7 +6661,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100850", 
         "effects": [
           [
             0, 
@@ -6337,7 +6672,8 @@
               10
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100850", 
@@ -6352,7 +6688,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910569", 
         "effects": [
           [
             1, 
@@ -6368,7 +6705,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000032", 
@@ -6395,7 +6733,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "205450", 
         "effects": [
           [
             1, 
@@ -6411,7 +6750,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504205450", 
@@ -6426,7 +6766,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101410", 
         "effects": [
           [
             1, 
@@ -6440,7 +6781,8 @@
               3
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101410", 
@@ -6455,7 +6797,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101200", 
         "effects": [
           [
             1, 
@@ -6467,7 +6810,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101200", 
@@ -6482,7 +6826,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100130", 
         "effects": [
           [
             1, 
@@ -6498,7 +6843,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100130", 
@@ -6513,7 +6859,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "218380", 
         "effects": [
           [
             0, 
@@ -6537,7 +6884,8 @@
               25
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504218380", 
@@ -6553,7 +6901,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "219820", 
         "effects": [
           [
             0, 
@@ -6585,7 +6934,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504219820", 
@@ -6601,7 +6951,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "216520", 
         "effects": [
           [
             0, 
@@ -6633,7 +6984,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504216520", 
@@ -6660,7 +7012,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "213800", 
         "effects": [
           [
             1, 
@@ -6718,7 +7071,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504213800", 
@@ -6795,7 +7149,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "205650", 
         "effects": [
           [
             0, 
@@ -6821,7 +7176,8 @@
               200
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504205650", 
@@ -6850,7 +7206,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "202780", 
         "effects": [
           [
             0, 
@@ -6866,7 +7223,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504202780", 
@@ -6904,7 +7262,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "213210", 
         "effects": [
           [
             1, 
@@ -6914,7 +7273,8 @@
               10121
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504213210", 
@@ -6941,9 +7301,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": [
-          254000403
-        ], 
+        "unique": false, 
+        "id": "910067", 
         "effects": [
           [
             1, 
@@ -6974,6 +7333,9 @@
               20
             ]
           ]
+        ], 
+        "unit_restriction": [
+          254000403
         ]
       }
     ], 
@@ -6990,7 +7352,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "217350", 
         "effects": [
           [
             0, 
@@ -7021,7 +7384,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504217350", 
@@ -7037,7 +7401,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910336", 
         "effects": [
           [
             1, 
@@ -7051,7 +7416,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000030", 
@@ -7066,7 +7432,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "203810", 
         "effects": [
           [
             0, 
@@ -7082,7 +7449,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504203810", 
@@ -7097,7 +7465,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "213220", 
         "effects": [
           [
             1, 
@@ -7107,7 +7476,8 @@
               5
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504213220", 
@@ -7134,7 +7504,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "220280", 
         "effects": [
           [
             0, 
@@ -7160,7 +7531,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504220280", 
@@ -7188,7 +7560,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "210690", 
         "effects": [
           [
             0, 
@@ -7204,7 +7577,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504210670", 
@@ -7219,7 +7593,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "219010", 
         "effects": [
           [
             0, 
@@ -7235,7 +7610,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504219010", 
@@ -7262,7 +7638,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "203180", 
         "effects": [
           [
             0, 
@@ -7279,7 +7656,8 @@
               100
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504203180", 
@@ -7306,7 +7684,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "204260", 
         "effects": [
           [
             0, 
@@ -7316,7 +7695,8 @@
               50
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504204260", 
@@ -7332,7 +7712,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "208980", 
         "effects": [
           [
             0, 
@@ -7348,7 +7729,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000024", 
@@ -7364,7 +7746,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "201960", 
         "effects": [
           [
             1, 
@@ -7380,7 +7763,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504201960", 
@@ -7395,7 +7779,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101110", 
         "effects": [
           [
             1, 
@@ -7407,7 +7792,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101110", 
@@ -7433,7 +7819,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100710", 
         "effects": [
           [
             1, 
@@ -7443,7 +7830,8 @@
               30091
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100710", 
@@ -7482,14 +7870,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": [
-          213000105, 
-          213000204, 
-          213000304, 
-          213000403, 
-          213000504, 
-          213000603
-        ], 
+        "unique": false, 
+        "id": "202500", 
         "effects": [
           [
             0, 
@@ -7505,6 +7887,14 @@
               0
             ]
           ]
+        ], 
+        "unit_restriction": [
+          213000105, 
+          213000204, 
+          213000304, 
+          213000403, 
+          213000504, 
+          213000603
         ]
       }
     ], 
@@ -7531,7 +7921,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100170", 
         "effects": [
           [
             1, 
@@ -7547,7 +7938,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100170", 
@@ -7562,7 +7954,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101000", 
         "effects": [
           [
             1, 
@@ -7574,7 +7967,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101000", 
@@ -7589,7 +7983,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "209690", 
         "effects": [
           [
             1, 
@@ -7620,7 +8015,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504209690", 
@@ -7636,7 +8032,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "204030", 
         "effects": [
           [
             0, 
@@ -7658,7 +8055,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504204030", 
@@ -7674,7 +8072,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "212350", 
         "effects": [
           [
             0, 
@@ -7691,7 +8090,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504212350", 
@@ -7717,7 +8117,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "218990", 
         "effects": [
           [
             1, 
@@ -7734,7 +8135,8 @@
               15
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504218990", 
@@ -7749,7 +8151,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "212360", 
         "effects": [
           [
             1, 
@@ -7773,7 +8176,8 @@
               50
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504212360", 
@@ -7789,7 +8193,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "215930", 
         "effects": [
           [
             0, 
@@ -7821,7 +8226,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504215930", 
@@ -7848,7 +8254,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "214350", 
         "effects": [
           [
             0, 
@@ -7874,7 +8281,8 @@
               200
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504214350", 
@@ -7903,7 +8311,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "211160", 
         "effects": [
           [
             1, 
@@ -7919,7 +8328,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504211160", 
@@ -7934,7 +8344,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "208480", 
         "effects": [
           [
             0, 
@@ -7950,7 +8361,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504208480", 
@@ -7989,7 +8401,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "214360", 
         "effects": [
           [
             1, 
@@ -8005,7 +8418,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504214360", 
@@ -8020,7 +8434,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "213710", 
         "effects": [
           [
             0, 
@@ -8051,7 +8466,8 @@
               5
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504213710", 
@@ -8067,7 +8483,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "214720", 
         "effects": [
           [
             0, 
@@ -8081,7 +8498,8 @@
               15
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504214720", 
@@ -8096,7 +8514,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "220270", 
         "effects": [
           [
             0, 
@@ -8112,7 +8531,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504220270", 
@@ -8149,7 +8569,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "208110", 
         "effects": [
           [
             1, 
@@ -8165,7 +8586,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504208110", 
@@ -8191,7 +8613,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "216370", 
         "effects": [
           [
             0, 
@@ -8222,7 +8645,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504216370", 
@@ -8238,7 +8662,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "215200", 
         "effects": [
           [
             0, 
@@ -8254,7 +8679,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504215200", 
@@ -8269,7 +8695,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "208990", 
         "effects": [
           [
             0, 
@@ -8286,7 +8713,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504208990", 
@@ -8301,7 +8729,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "213740", 
         "effects": [
           [
             0, 
@@ -8317,7 +8746,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504213740", 
@@ -8332,7 +8762,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100090", 
         "effects": [
           [
             1, 
@@ -8348,7 +8779,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100090", 
@@ -8363,7 +8795,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910045", 
         "effects": [
           [
             1, 
@@ -8379,7 +8812,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000004", 
@@ -8394,7 +8828,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "215180", 
         "effects": [
           [
             0, 
@@ -8411,7 +8846,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504215180", 
@@ -8426,7 +8862,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "209550", 
         "effects": [
           [
             0, 
@@ -8443,7 +8880,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504209550", 
@@ -8458,7 +8896,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "219940", 
         "effects": [
           [
             0, 
@@ -8473,7 +8912,8 @@
               10
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504219940", 
@@ -8488,7 +8928,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101030", 
         "effects": [
           [
             1, 
@@ -8500,7 +8941,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101030", 
@@ -8515,7 +8957,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100740", 
         "effects": [
           [
             1, 
@@ -8525,7 +8968,8 @@
               5
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100740", 
@@ -8551,7 +8995,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100040", 
         "effects": [
           [
             1, 
@@ -8567,7 +9012,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100040", 
@@ -8594,7 +9040,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "219930", 
         "effects": [
           [
             1, 
@@ -8608,7 +9055,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504219930", 
@@ -8634,7 +9082,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "205880", 
         "effects": [
           [
             1, 
@@ -8650,7 +9099,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504205880", 
@@ -8665,7 +9115,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910396", 
         "effects": [
           [
             1, 
@@ -8696,7 +9147,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000028", 
@@ -8723,7 +9175,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100980", 
         "effects": [
           [
             0, 
@@ -8733,7 +9186,8 @@
               30
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100980", 
@@ -8748,7 +9202,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910395", 
         "effects": [
           [
             1, 
@@ -8779,7 +9234,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000027", 
@@ -8795,7 +9251,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100960", 
         "effects": [
           [
             1, 
@@ -8805,7 +9262,8 @@
               40
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100960", 
@@ -8832,7 +9290,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "203840", 
         "effects": [
           [
             0, 
@@ -8848,7 +9307,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504203840", 
@@ -8886,7 +9346,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100760", 
         "effects": [
           [
             1, 
@@ -8896,7 +9357,8 @@
               1
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100760", 
@@ -8911,7 +9373,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "219260", 
         "effects": [
           [
             0, 
@@ -8925,7 +9388,8 @@
               30
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504219260", 
@@ -8952,7 +9416,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101700", 
         "effects": [
           [
             0, 
@@ -8968,7 +9433,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101700", 
@@ -8983,7 +9449,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100160", 
         "effects": [
           [
             1, 
@@ -8999,7 +9466,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100160", 
@@ -9014,7 +9482,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101120", 
         "effects": [
           [
             0, 
@@ -9027,7 +9496,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101120", 
@@ -9054,9 +9524,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": [
-          254000603
-        ], 
+        "unique": false, 
+        "id": "910066", 
         "effects": [
           [
             1, 
@@ -9080,6 +9549,9 @@
               10121
             ]
           ]
+        ], 
+        "unit_restriction": [
+          254000603
         ]
       }
     ], 
@@ -9096,7 +9568,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "211290", 
         "effects": [
           [
             1, 
@@ -9106,7 +9579,8 @@
               50
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504211290", 
@@ -9179,7 +9653,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "208590", 
         "effects": [
           [
             0, 
@@ -9193,7 +9668,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504208510", 
@@ -9243,7 +9719,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101040", 
         "effects": [
           [
             1, 
@@ -9255,7 +9732,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101040", 
@@ -9270,7 +9748,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100030", 
         "effects": [
           [
             1, 
@@ -9286,7 +9765,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100030", 
@@ -9314,7 +9794,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "211340", 
         "effects": [
           [
             0, 
@@ -9328,7 +9809,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504211340", 
@@ -9343,7 +9825,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100110", 
         "effects": [
           [
             1, 
@@ -9359,7 +9842,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100110", 
@@ -9374,7 +9858,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "219220", 
         "effects": [
           [
             0, 
@@ -9400,7 +9885,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504219220", 
@@ -9428,7 +9914,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "201750", 
         "effects": [
           [
             1, 
@@ -9445,7 +9932,8 @@
               20
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504201750", 
@@ -9460,7 +9948,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": true, 
+        "id": "219000", 
         "effects": [
           [
             0, 
@@ -9484,7 +9973,8 @@
               15
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504219000", 
@@ -9523,7 +10013,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101010", 
         "effects": [
           [
             1, 
@@ -9535,7 +10026,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101010", 
@@ -9550,7 +10042,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101500", 
         "effects": [
           [
             1, 
@@ -9566,7 +10059,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101500", 
@@ -9605,7 +10099,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100810", 
         "effects": [
           [
             0, 
@@ -9615,7 +10110,8 @@
               6
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100810", 
@@ -9630,7 +10126,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "207720", 
         "effects": [
           [
             0, 
@@ -9647,7 +10144,8 @@
               15
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504207720", 
@@ -9674,7 +10172,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "203160", 
         "effects": [
           [
             0, 
@@ -9690,12 +10189,46 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504203160", 
     "effects": [
       "Increase MAG and SPR by 20%"
+    ], 
+    "rarity": 5
+  }, 
+  "Mage's Monograph": {
+    "skill_names": [
+      "Mage's Monograph"
+    ], 
+    "effects_raw": [
+      {
+        "unique": false, 
+        "id": "209490", 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              5, 
+              5, 
+              10, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "unit_restriction": null
+      }
+    ], 
+    "id": "504209490", 
+    "effects": [
+      "Increase HP by 10% and MAG and SPR by 5%"
     ], 
     "rarity": 5
   }, 
@@ -9775,7 +10308,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "211150", 
         "effects": [
           [
             0, 
@@ -9792,7 +10326,8 @@
               100
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504211150", 
@@ -9818,7 +10353,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "204950", 
         "effects": [
           [
             1, 
@@ -9832,7 +10368,8 @@
               3
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504204950", 
@@ -9858,7 +10395,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910232", 
         "effects": [
           [
             1, 
@@ -9874,7 +10412,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000016", 
@@ -9889,7 +10428,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "211710", 
         "effects": [
           [
             0, 
@@ -9920,7 +10460,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504211710", 
@@ -9936,7 +10477,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100820", 
         "effects": [
           [
             1, 
@@ -9946,7 +10488,8 @@
               7
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100820", 
@@ -9994,7 +10537,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100080", 
         "effects": [
           [
             1, 
@@ -10010,7 +10554,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100080", 
@@ -10048,7 +10593,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100100", 
         "effects": [
           [
             1, 
@@ -10064,7 +10610,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504100100", 
@@ -10079,7 +10626,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "207700", 
         "effects": [
           [
             1, 
@@ -10095,7 +10643,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504207700", 
@@ -10122,7 +10671,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910311", 
         "effects": [
           [
             1, 
@@ -10151,7 +10701,8 @@
               3
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000020", 
@@ -10167,7 +10718,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "212370", 
         "effects": [
           [
             1, 
@@ -10189,7 +10741,8 @@
               25
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504212370", 
@@ -10235,13 +10788,72 @@
     ], 
     "magic_type": "White"
   }, 
+  "Magic Sanctuary": {
+    "skill_names": [
+      "Magic Sanctuary"
+    ], 
+    "effects_raw": [
+      {
+        "unique": false, 
+        "id": "910606", 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              15, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            1, 
+            3, 
+            3, 
+            [
+              25, 
+              25, 
+              25, 
+              25, 
+              25, 
+              25, 
+              25, 
+              25
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            33, 
+            [
+              100
+            ]
+          ]
+        ], 
+        "unit_restriction": null
+      }
+    ], 
+    "id": "1500000034", 
+    "effects": [
+      "Increase SPR by 15%", 
+      "Increase resistance to all elements by 25%", 
+      "Increase LB gauge by 1 per turn"
+    ], 
+    "rarity": 8
+  }, 
   "Sage of Mysidia": {
     "skill_names": [
       "Sage of Mysidia"
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "219890", 
         "effects": [
           [
             1, 
@@ -10265,7 +10877,8 @@
               200
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504219890", 
@@ -10281,7 +10894,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "206270", 
         "effects": [
           [
             0, 
@@ -10305,7 +10919,8 @@
               3
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504206270", 
@@ -10321,7 +10936,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "203150", 
         "effects": [
           [
             0, 
@@ -10337,7 +10953,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504203150", 
@@ -10352,7 +10969,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910436", 
         "effects": [
           [
             1, 
@@ -10408,7 +11026,8 @@
               50
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000031", 
@@ -10451,7 +11070,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "203170", 
         "effects": [
           [
             0, 
@@ -10461,7 +11081,8 @@
               200
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504203170", 
@@ -10476,7 +11097,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101050", 
         "effects": [
           [
             1, 
@@ -10488,7 +11110,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101050", 
@@ -10503,7 +11126,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101090", 
         "effects": [
           [
             1, 
@@ -10515,7 +11139,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101090", 
@@ -10530,7 +11155,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "101350", 
         "effects": [
           [
             1, 
@@ -10540,7 +11166,8 @@
               50
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504101350", 
@@ -10567,7 +11194,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910397", 
         "effects": [
           [
             1, 
@@ -10583,7 +11211,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000029", 
@@ -10598,7 +11227,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "910313", 
         "effects": [
           [
             0, 
@@ -10610,7 +11240,8 @@
               910320
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000021", 
@@ -10625,7 +11256,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "100120", 
         "effects": [
           [
             1, 
@@ -10641,7 +11273,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "1500000012", 
@@ -10656,9 +11289,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": [
-          306000204
-        ], 
+        "unique": false, 
+        "id": "206080", 
         "effects": [
           [
             1, 
@@ -10675,6 +11307,9 @@
               30
             ]
           ]
+        ], 
+        "unit_restriction": [
+          306000204
         ]
       }
     ], 
@@ -10713,7 +11348,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "216360", 
         "effects": [
           [
             1, 
@@ -10729,7 +11365,8 @@
               20
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504216360", 
@@ -10744,7 +11381,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "209480", 
         "effects": [
           [
             0, 
@@ -10760,7 +11398,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504209480", 
@@ -10787,7 +11426,8 @@
     ], 
     "effects_raw": [
       {
-        "unit_restriction": null, 
+        "unique": false, 
+        "id": "210890", 
         "effects": [
           [
             1, 
@@ -10813,7 +11453,8 @@
               0
             ]
           ]
-        ]
+        ], 
+        "unit_restriction": null
       }
     ], 
     "id": "504210890", 
