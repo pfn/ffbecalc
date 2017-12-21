@@ -501,6 +501,15 @@ object YaFFBEDB {
       ps.enhs.toList.foreach(enhSubject.next)
     }
 
+    def updateCheck(): Observable[String] = {
+      import scala.concurrent.ExecutionContext.Implicits.global
+      import org.scalajs.dom.ext.Ajax
+      // a query string to bypass cdn
+      val tag = System.currentTimeMillis / (5 * 60 * 1000)
+      Observable.from(Ajax.get(url = s"versionCode?$tag",
+        responseType = "text",
+        headers = Map("Content-Type" -> "text/plain"))).map(_.responseText.trim)
+    }
     val onLoad = outwatch.Sink.create[org.scalajs.dom.raw.Element] { e =>
       var subscription = Option.empty[rxscalajs.subscription.Subscription]
       window.addEventListener("popstate",
@@ -511,6 +520,21 @@ object YaFFBEDB {
         }, true)
       loadFromHash()
       subscription = Some(subscribeChanges)
+
+      Observable.just(1).concat(Observable.interval(5.minutes)).flatMap(_ =>
+        updateCheck()).dropWhile { (s,_) =>
+          BuildInfo.versionCode == s }.take(1) { _ =>
+        val reloadClick = createHandler[Unit]()
+        reloadClick { _ =>
+          document.location.reload(true)
+          val node = document.getElementById("new-update")
+          node.parentNode.removeChild(node)
+        }
+        OutWatch.render("#content",
+          div(id := "new-update",
+            span("A new version of ffbecalc is available"),
+            button("REFRESH", click(()) --> reloadClick)))
+      }
     }
 
     val resetClick = createHandler[Unit]()

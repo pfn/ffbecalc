@@ -4,6 +4,33 @@
 @media (max-width: 70em) {
   div#content { max-width: 48em; margin: 0 15% 0 23em; }
 }
+
+#new-update {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 64px;
+  line-height: 64px;
+  background: #0277bd;
+  vertical-align: middle;
+}
+
+#new-update > span {
+  display: inline-block;
+  margin-left: 16px;
+  height: 16px;
+  color: #eeeeee;
+}
+
+#new-update > button {
+  margin-right: 16px;
+  height: 32px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  float: right;
+}
+
 div#unit-info {
   position: fixed;
   left: 0;

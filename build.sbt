@@ -10,16 +10,37 @@ lazy val jvm = project.in(file("jvm")).settings(
 ).dependsOn(sharedJS)
 
 lazy val root = project.in(file(".")).dependsOn(sharedJS)
+
+val versionCode = taskKey[String]("generate version code")
+val versionFile = taskKey[File]("generate version file from version code")
+
+versionCode := {
+  val sdf = new java.text.SimpleDateFormat("yyyyMMddHHmm")
+  sdf.format(System.currentTimeMillis)
+}
+
 enablePlugins(ScalaJSPlugin)
 enablePlugins(WorkbenchPlugin)
 enablePlugins(ScalaJSBundlerPlugin)
+enablePlugins(BuildInfoPlugin)
 
 name := "yaffbedb"
+
+buildInfoKeys := Seq[BuildInfoKey](versionCode)
+buildInfoPackage := "yaffbedb"
 
 scalaVersion in Global := "2.12.3"
 
 libraryDependencies += "io.github.outwatch" %%% "outwatch" % "0.10.2"
 libraryDependencies += "io.suzaku" %%% "boopickle" % "1.2.6"
+
+versionFile := {
+  val f = baseDirectory.value / "versionCode"
+  IO.writeLines(f, versionCode.value :: Nil)
+  f
+}
+
+versionFile := (versionFile triggeredBy (buildInfo in Compile)).value
 
 refreshBrowsers :=
   (refreshBrowsers triggeredBy (webpack in fastOptJS in Compile)).value
