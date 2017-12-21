@@ -73,8 +73,9 @@ for x in equip.keys():
         if "unit_restriction" in skills[str(skillid)]:
           restriction = skills[str(skillid)]["unit_restriction"]
         effr += [{
-          "unique": unique,
           "id": skillid,
+          "unique": unique,
+          "icon": skills[str(skillid)]["icon"],
           "unit_restriction": restriction,
           "effects": skills[str(skillid)]["effects_raw"]
         }]
@@ -116,8 +117,9 @@ for x in materia.keys():
         if "unique" in skills[str(skid)]:
           unique = skills[str(skid)]["unique"]
         effr += [{
-          "unique": unique,
           "id": skid,
+          "unique": unique,
+          "icon": skills[str(skid)]["icon"],
           "unit_restriction": restriction,
           "effects": skills[skid]["effects_raw"]
         }]
