@@ -202,22 +202,22 @@ object YaFFBEDB {
       Equipped.tupled.apply(a._1 + a._2)
     }.combineLatest(abilities).distinctUntilChanged
 
-    def passivesFromAll(equips: List[EquipIndex],
-      abilities: List[MateriaIndex]) : List[SkillEffect] = {
-      passivesFrom(equips ++ abilities)
-    }
     def skillsFromAll(equips: List[EquipIndex],
       abilities: List[MateriaIndex]): List[(String,String)] = {
       skillsFrom(equips ++ abilities).map(i => i.name -> i.effects.mkString("\n"))
     }
 
-    def passivesFrom(equip: List[SkillIndex]) = for {
-      es <- equip
-      is <- es.skillInfo
-      ps <- is.passives
-    } yield ps
+    def passivesFrom(equip: List[SkillIndex]) =
+      skillsFrom(equip).flatMap(_.passives)
+
     def skillsFrom(equip: List[SkillIndex]): List[IndexSkillInfo] =
-      equip.flatMap(_.skillInfo)
+      equip.flatMap(_.skillInfo).foldLeft(Set.empty[Int] -> List.empty[IndexSkillInfo]) { case ((us, xs),x) =>
+        val uniqs = if (x.unique) us + x.id else us
+
+        val list = if (us(x.id)) xs else x :: xs
+
+        uniqs -> list
+    }._2
 
     def is2h(eqItem: Option[EquipIndex]): Boolean =
       eqItem.exists(_.twohands)
@@ -228,7 +228,7 @@ object YaFFBEDB {
 
     val allPassives = unitInfo.combineLatest(unitPassives, equipped, esperSkills).map {
       case (info, passives,(eqs,abis), fromEsper) =>
-      info -> SkillEffect.collateEffects(info, passivesFromAll(eqs.allEquipped, abis.allEquipped) ++ passives ++ fromEsper.flatMap(_.passives))
+      info -> SkillEffect.collateEffects(info, passivesFrom(eqs.allEquipped ++ abis.allEquipped) ++ passives ++ fromEsper.flatMap(_.passives))
     }
 
     val equipSkills: Observable[List[(String,String)]] = equipped.combineLatest(esperSkills).map {
