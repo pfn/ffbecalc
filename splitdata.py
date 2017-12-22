@@ -128,6 +128,7 @@ for x in materia.keys():
         dex["magic_type"] = skills[skid]["magic_type"]
 
     dex["effects_raw"] = effr
+    dex["unique"] = materia[x]["unique"]
   json.dump(materia[x], file("json/materia/%s.json" % x, "w"))
 
 enhanceunits = {}

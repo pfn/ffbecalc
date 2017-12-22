@@ -393,7 +393,7 @@ object components {
     id <- idOb
   } yield ms.find(_.id == id.flatMap(i => util.Try(i.toInt).toOption).getOrElse(0))
   type MaybeMateria = Observable[Option[MateriaIndex]]
-  def abilitySlots(m: Observable[List[MateriaIndex]], unitInfo: Observable[Option[UnitData]], up: Observable[Seq[SkillEffect]], unitEntry: Observable[Option[UnitEntry]], sorting: Observable[Sort], subject: AbilitySubjects): (MaybeMateria,MaybeMateria,MaybeMateria,MaybeMateria,Observable[List[VNode]]) = {
+  def abilitySlots(m: Observable[List[MateriaIndex]], unitInfo: Observable[Option[UnitData]], up: Observable[Seq[SkillEffect]], unitEntry: Observable[Option[UnitEntry]], sorting: Observable[Sort], subject: AbilitySubjects, validators: AbilitySubjects): (MaybeMateria,MaybeMateria,MaybeMateria,MaybeMateria,Observable[List[VNode]]) = {
     val ability1Id = createIdHandler(None)
     val ability1 = materiaFor(m, ability1Id.merge(subject.a1).distinctUntilChanged).publishReplay(1).refCount
     val ability2Id = createIdHandler(None)
@@ -426,34 +426,34 @@ object components {
         subject.a3.next(None)
         subject.a4.next(None)
         List(tr(
-          mslot("Ability 1", m1s, ability1Id)
+          mslot("Ability 1", m1s, ability1Id, validators.a1)
         ))
       } else if (slots == 2) {
         subject.a3.next(None)
         subject.a4.next(None)
         List(tr(
-          mslot("Ability 1", m1s, ability1Id),
-          mslot("Ability 2", m2s, ability2Id)))
+          mslot("Ability 1", m1s, ability1Id, validators.a1),
+          mslot("Ability 2", m2s, ability2Id, validators.a2)))
       } else if (slots == 3) {
         subject.a4.next(None)
         List(
           tr(
-            mslot("Ability 1", m1s, ability1Id),
-            mslot("Ability 2", m2s, ability2Id)),
-          tr(mslot("Ability 3", m3s, ability3Id)))
+            mslot("Ability 1", m1s, ability1Id, validators.a1),
+            mslot("Ability 2", m2s, ability2Id, validators.a2)),
+          tr(mslot("Ability 3", m3s, ability3Id, validators.a3)))
       } else {
         List(
           tr(
-            mslot("Ability 1", m1s, ability1Id),
-            mslot("Ability 2", m2s, ability2Id)),
+            mslot("Ability 1", m1s, ability1Id, validators.a1),
+            mslot("Ability 2", m2s, ability2Id, validators.a2)),
           tr(
-            mslot("Ability 3", m3s, ability3Id),
-            mslot("Ability 4", m4s, ability4Id)))
+            mslot("Ability 3", m3s, ability3Id, validators.a3),
+            mslot("Ability 4", m4s, ability4Id, validators.a4)))
       }
     }
   }
 
-  def mslot(name: String, cs: Observable[List[VNode]], sink: outwatch.Sink[Option[String]]): VNode =
-    td(label(name, select(cls := "equip-slot", children <-- cs, inputId --> sink)))
+  def mslot(name: String, cs: Observable[List[VNode]], sink: outwatch.Sink[Option[String]], subject: rxscalajs.Subject[Option[String]]): VNode =
+    td(label(name, select(cls := "equip-slot", children <-- cs, inputId --> sink, value <-- subject.map(_.getOrElse(EMPTY)).startWith(EMPTY))))
 
 }

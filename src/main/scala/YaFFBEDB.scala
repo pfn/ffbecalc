@@ -187,11 +187,16 @@ object YaFFBEDB {
     val _sorting = createHandler[Sort](Sort.AZ)
     val sorting = _sorting.publishReplay(1).refCount
     val abilitySubjects = AbilitySubjects()
+    val abilityValidatorSubjects = AbilitySubjects()
     val (ability1, ability2, ability3, ability4, abilitySlots) =
-      components.abilitySlots(materia, unitInfo, unitPassives, unitEntry, sorting, abilitySubjects)
+      components.abilitySlots(materia, unitInfo, unitPassives, unitEntry, sorting, abilitySubjects, abilityValidatorSubjects)
     val abilities = withStamp(ability1).combineLatest(
       withStamp(ability2), withStamp(ability3),
       withStamp(ability4)).map(Abilities.tupled.apply)
+
+    abilities { ab =>
+      ab.validateUnique(abilitySubjects, abilityValidatorSubjects)
+    }
 
     val equipped = equippedGear.combineLatest(accs).map { a =>
       Equipped.tupled.apply(a._1 + a._2)
@@ -233,6 +238,7 @@ object YaFFBEDB {
     }
 
     def publishTo[A](sink: Subject[A], value: A): Unit = sink.next(value)
+
     def handValidator(
       r: Option[EquipIndex], l: Option[EquipIndex],
       info: Option[UnitData], effs: SkillEffect.CollatedEffect,

@@ -10,8 +10,9 @@ package object yaffbedb {
 
   type EqStamp = (Option[EquipIndex],Double)
   type MatStamp = (Option[MateriaIndex],Double)
+  def stamp = scalajs.js.Date.now()
   def withStamp[A](ob: Observable[A]): Observable[(A,Double)] =
-    ob.map(_ -> scalajs.js.Date.now())
+    ob.map(_ -> stamp)
 
   val EMPTY = "--empty--"
   val forId = outwatch.dom.forLabel
@@ -50,6 +51,30 @@ case class Abilities(
   ability3: MatStamp, ability4: MatStamp) {
   def allEquipped: List[MateriaIndex] =
     (ability1._1 ++ ability2._1 ++ ability3._1 ++ ability4._1).toList
+  def validateUnique(sinks: AbilitySubjects, validators: AbilitySubjects) = {
+    val uniqs = List(ability1, ability2, ability3, ability4).foldLeft(
+      Map.empty[Int,Double]) { case (ac, (e,ts)) =>
+        e.fold(ac) { m =>
+          if (m.unique) ac + ((m.id, math.max(ts, ac.getOrElse(m.id, ts))))
+          else ac
+        }
+    }
+    val entries = List(ability1 -> (sinks.a1, validators.a1),
+      ability2 -> (sinks.a2, validators.a2),
+      ability3 -> (sinks.a3, validators.a3),
+      ability4 -> (sinks.a4, validators.a4))
+    for {
+      (k,vers)       <- uniqs
+      ((a,ts),(s,v)) <- entries
+      m              <- a
+    } {
+      if (m.id == k && ts < vers) {
+        s.next(None)
+        v.next(None)
+      } else if (m.id == k)
+        v.next(Some(m.id.toString))
+    }
+  }
 }
 
 case class PotSubjects(hp: Subject[Int], mp: Subject[Int], atk: Subject[Int], defs: Subject[Int], mag: Subject[Int], spr: Subject[Int]) {
