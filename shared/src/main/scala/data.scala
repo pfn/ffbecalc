@@ -105,7 +105,7 @@ case class SkillInfo(
   magicType: Option[String],
   mpCost: Int,
   actives: List[ActiveEffect],
-  skilleffects: List[SkillEffect],
+  passives: List[SkillEffect],
   effects: List[String])
 case class EnhancementStrings(name: List[String], desc: List[String])
 case class Enhancement(oldSkill: Int, newSkill: Int, strings: EnhancementStrings)

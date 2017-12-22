@@ -183,7 +183,7 @@ object YaFFBEDB {
 
     val unitStats = createHandler[Option[BaseStats]](None)
     val selectedTraits = createHandler[List[SkillInfo]]()
-    val unitPassives = selectedTraits.map(_.flatMap(_.skilleffects)).publishReplay(1).refCount
+    val unitPassives = selectedTraits.map(_.flatMap(_.passives)).publishReplay(1).refCount
     val _sorting = createHandler[Sort](Sort.AZ)
     val sorting = _sorting.publishReplay(1).refCount
     val abilitySubjects = AbilitySubjects()
@@ -223,7 +223,7 @@ object YaFFBEDB {
 
     val allPassives = unitInfo.combineLatest(unitPassives, equipped, esperSkills).map {
       case (info, passives,(eqs,abis), fromEsper) =>
-      info -> SkillEffect.collateEffects(info, passivesFromAll(eqs.allEquipped, abis.allEquipped) ++ passives ++ fromEsper.flatMap(_.skilleffects))
+      info -> SkillEffect.collateEffects(info, passivesFromAll(eqs.allEquipped, abis.allEquipped) ++ passives ++ fromEsper.flatMap(_.passives))
     }
 
     val equipSkills: Observable[List[(String,String)]] = equipped.combineLatest(esperSkills).map {
