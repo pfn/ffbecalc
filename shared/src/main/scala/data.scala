@@ -58,7 +58,7 @@ object EsperStatReward {
   def spr(x: Int)  = EsperStatReward(0, 0, 0, 0, 0, x)
 }
 case class EsperAbilityReward(skill: Int) extends EsperSkill
-case class EsperSkillEffectReward(name: String, desc: List[String], effects: List[SkillEffect]) extends EsperSkill
+case class EsperSkillEffectReward(skillInfo: SkillInfo) extends EsperSkill
 case class EsperStatReward(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int) extends EsperSkill {
   def maybeHP  = if (hp   > 0) Some(hp)   else None
   def maybeMP  = if (mp   > 0) Some(mp)   else None
@@ -86,9 +86,19 @@ case class EsperStatRange(min: Int, max: Int) {
   def effectiveMax = max / 100
   def +(o: Int) = EsperStatRange(min + o, max + o)
 }
+case class IndexSkillInfo(
+  id: Int,
+  name: String,
+  unique: Boolean,
+  icon: String,
+  effects: List[String],
+  actives: List[ActiveEffect],
+  passives: List[SkillEffect]
+)
 case class SkillInfo(
   id: Int,
   name: String,
+  unique: Boolean,
   active: Boolean,
   tpe: String,
   icon: String,
@@ -99,10 +109,11 @@ case class SkillInfo(
   effects: List[String])
 case class EnhancementStrings(name: List[String], desc: List[String])
 case class Enhancement(oldSkill: Int, newSkill: Int, strings: EnhancementStrings)
-case class MateriaIndexData(id: String, effects: List[String], rarity: Int, magicType: Option[String], skilleffects: List[SkillEffect])
-case class MateriaIndex(name: String, id: Int, effects: List[String], rarity: Int, magicType: Option[String], skilleffects: List[SkillEffect]) {
+sealed trait SkillIndex { def skillInfo: List[IndexSkillInfo] }
+case class MateriaIndexData(id: String, unique: Boolean, rarity: Int, magicType: Option[String], skillInfo: List[IndexSkillInfo])
+case class MateriaIndex(name: String, id: Int, unique: Boolean, rarity: Int, magicType: Option[String], skillInfo: List[IndexSkillInfo]) extends SkillIndex {
   val memo = Memo { a: Option[UnitData] =>
-    SkillEffect.collateEffects(a, skilleffects).toString
+    SkillEffect.collateEffects(a, skillInfo.flatMap(_.passives)).toString
   }
 
   def describeEffects(unit: Option[UnitData]) = memo(unit)
@@ -148,12 +159,12 @@ case class Memo[A,B](f: A => B) extends Function1[A,B] {
   })
 }
 case class EquipIndexData(
-  id: Int, slotId: Int, twohands: Boolean, skills: List[Int], tpe: Int, skilleffects: List[SkillEffect], skillEffects: Map[String,List[String]], stats: EquipStats, req: Option[EquipReq])
+  id: Int, slotId: Int, twohands: Boolean, skills: List[Int], tpe: Int, stats: EquipStats, req: Option[EquipReq], skillInfo: List[IndexSkillInfo])
 case class EquipIndex(
-  name: String, id: Int, twohands: Boolean, slotId: Int, skills: List[Int], tpe: Int, skilleffects: List[SkillEffect], skillEffects: Map[String,List[String]], stats: EquipStats, req: Option[EquipReq]) {
+  name: String, id: Int, twohands: Boolean, slotId: Int, skills: List[Int], tpe: Int, stats: EquipStats, req: Option[EquipReq], skillInfo: List[IndexSkillInfo]) extends SkillIndex {
 
   val memo = Memo { a: Option[UnitData] =>
-    SkillEffect.collateEffects(a, skilleffects).toString
+    SkillEffect.collateEffects(a, skillInfo.flatMap(_.passives)).toString
   }
 
   def describeEffects(unit: Option[UnitData]) = memo(unit)

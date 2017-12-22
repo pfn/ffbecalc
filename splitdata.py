@@ -58,27 +58,28 @@ for x in equip.keys():
       del equipdex[name]
   skillns = {}
   skillr = []
-  eff = []
   effr = []
   reqs = []
   if "requirements" in equip[x]:
     reqs = equip[x]["requirements"]
   if "skills" in equip[x] and equip[x]["skills"] is not None:
     for skillid in equip[x]["skills"]:
-      unique = False
       restriction = None
+      unique = False
       if "unique" in skills[str(skillid)]:
         unique = skills[str(skillid)]["unique"]
-      if "active" not in skills[str(skillid)] or not skills[str(skillid)]["active"]:
-        if "unit_restriction" in skills[str(skillid)]:
-          restriction = skills[str(skillid)]["unit_restriction"]
-        effr += [{
-          "id": skillid,
-          "unique": unique,
-          "icon": skills[str(skillid)]["icon"],
-          "unit_restriction": restriction,
-          "effects": skills[str(skillid)]["effects_raw"]
-        }]
+      if "unit_restriction" in skills[str(skillid)]:
+        restriction = skills[str(skillid)]["unit_restriction"]
+      effr += [{
+        "id": skillid,
+        "name": skills[str(skillid)]["name"],
+        "active": skills[str(skillid)]["active"],
+        "desc": skills[str(skillid)]["effects"],
+        "unique": unique,
+        "icon": skills[str(skillid)]["icon"],
+        "unit_restriction": restriction,
+        "effects": skills[str(skillid)]["effects_raw"]
+      }]
       skillns[(skills[str(skillid)]["name"])] = skills[str(skillid)]["effects"]
   is2h = "is_twohanded" in equip[x] and equip[x]["is_twohanded"]
   equipdex[name2] = {
@@ -103,34 +104,30 @@ for x in materia.keys():
   }
   materiadex[materia[x]['name']] = dex
   if "skills" in materia[x]:
-    eff = []
     effr = []
-    skillns = []
     for skillid in materia[x]["skills"]:
       skid = str(skillid)
-      eff += skills[skid]["effects"]
-      if "active" not in skills[str(skillid)] or not skills[str(skillid)]["active"]:
-        restriction = None
-        unique = False
-        if "unit_restriction" in skills[str(skid)]:
-          restriction = skills[str(skid)]["unit_restriction"]
-        if "unique" in skills[str(skid)]:
-          unique = skills[str(skid)]["unique"]
-        effr += [{
-          "id": skid,
-          "unique": unique,
-          "icon": skills[str(skid)]["icon"],
-          "unit_restriction": restriction,
-          "effects": skills[skid]["effects_raw"]
-        }]
-      skillns += [skills[skid]["name"]]
+      restriction = None
+      if "unit_restriction" in skills[str(skid)]:
+        restriction = skills[str(skid)]["unit_restriction"]
+      unique = False
+      if "unique" in skills[skid]:
+        unique = skills[str(skid)]["unique"]
+      effr += [{
+        "id": skid,
+        "name": skills[skid]["name"],
+        "active": skills[skid]["active"],
+        "desc": skills[skid]["effects"],
+        "unique": unique,
+        "icon": skills[str(skid)]["icon"],
+        "unit_restriction": restriction,
+        "effects": skills[skid]["effects_raw"]
+      }]
       dex["rarity"] = skills[skid]["rarity"]
       if "magic_type" in skills[skid]:
         dex["magic_type"] = skills[skid]["magic_type"]
 
-    dex["effects"] = eff
     dex["effects_raw"] = effr
-    dex["skill_names"] = skillns
   json.dump(materia[x], file("json/materia/%s.json" % x, "w"))
 
 enhanceunits = {}

@@ -148,7 +148,7 @@ object YaFFBEDB {
     val esperIdSubject = BehaviorSubject[Option[String]](None)
     val esperRaritySubject = ReplaySubject.withSize[Int](1)
     val esperStats = createHandler[Option[EsperStatInfo]](None)
-    val esperSkills = createHandler[List[(String,List[String],List[SkillEffect])]](Nil)
+    val esperSkills = createHandler[List[SkillInfo]](Nil)
     val esper = createHandler[Option[EsperData]](None)
     val esperEntry = createHandler[Option[EsperEntry]](None)
 
@@ -199,22 +199,20 @@ object YaFFBEDB {
 
     def passivesFromAll(equips: List[EquipIndex],
       abilities: List[MateriaIndex]) : List[SkillEffect] = {
-      passivesFromEq(equips) ++ passivesFromMat(abilities)
+      passivesFrom(equips ++ abilities)
     }
     def skillsFromAll(equips: List[EquipIndex],
       abilities: List[MateriaIndex]): List[(String,String)] = {
-      skillsFromEq(equips) ++ skillsFromMat(abilities)
+      skillsFrom(equips ++ abilities).map(i => i.name -> i.effects.mkString("\n"))
     }
 
-    def passivesFromEq(equip: List[EquipIndex]) = equip.flatMap(_.skilleffects)
-    def passivesFromMat(equip: List[MateriaIndex]) =
-      equip.flatMap(_.skilleffects)
-    def skillsFromEq(equip: List[EquipIndex]) =
-      equip.flatMap(e =>
-        e.skillEffects.toList.map { case (k,v) => k -> v.mkString("\n") }
-      )
-    def skillsFromMat(equip: List[MateriaIndex]) =
-      equip.flatMap(m => List(m.name -> m.effects.mkString("\n")))
+    def passivesFrom(equip: List[SkillIndex]) = for {
+      es <- equip
+      is <- es.skillInfo
+      ps <- is.passives
+    } yield ps
+    def skillsFrom(equip: List[SkillIndex]): List[IndexSkillInfo] =
+      equip.flatMap(_.skillInfo)
 
     def is2h(eqItem: Option[EquipIndex]): Boolean =
       eqItem.exists(_.twohands)
@@ -225,13 +223,13 @@ object YaFFBEDB {
 
     val allPassives = unitInfo.combineLatest(unitPassives, equipped, esperSkills).map {
       case (info, passives,(eqs,abis), fromEsper) =>
-      info -> SkillEffect.collateEffects(info, passivesFromAll(eqs.allEquipped, abis.allEquipped) ++ passives ++ fromEsper.flatMap(_._3))
+      info -> SkillEffect.collateEffects(info, passivesFromAll(eqs.allEquipped, abis.allEquipped) ++ passives ++ fromEsper.flatMap(_.skilleffects))
     }
 
     val equipSkills: Observable[List[(String,String)]] = equipped.combineLatest(esperSkills).map {
       case ((eqs, abis), fromE) =>
       skillsFromAll(eqs.allEquipped, abis.allEquipped) ++
-        fromE.map { case (n,d,e) => n -> d.mkString("\n") }
+        fromE.map { e => e.name -> e.effects.mkString("\n") }
     }
 
     def publishTo[A](sink: Subject[A], value: A): Unit = sink.next(value)
@@ -401,7 +399,7 @@ object YaFFBEDB {
         pasv.weapEleStats.getOrElse(e, PassiveStatEffect.zero))
       val eqstats = pasv.equipStats.getOrElse(equip.tpe, PassiveStatEffect.zero)
       val s = Stats.fromEquipStats(equip.stats)
-      val innates = SkillEffect.collateEffects(Some(u), equip.skilleffects)
+      val innates = SkillEffect.collateEffects(Some(u), equip.skillInfo.flatMap(_.passives))
 
       val innatestats = innates.stats :: innates.equipStats.keys.toList.flatMap {
         k => if (pasv.canEquip(k, Some(u))) List(innates.equipStats(k)) else Nil

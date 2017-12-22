@@ -19,14 +19,14 @@ object Esper {
     allCheck: Observable[Boolean],
     checker: Observable[Map[Int,Boolean]]) = {
     val (nodes, sinks) = board.zipWithIndex.collect {
-      case (EsperSlot(r@EsperSkillEffectReward(name, desc, effs), cost), i)
+      case (EsperSlot(r@EsperSkillEffectReward(info), cost), i)
         if inRarity(rarity, cost) =>
         val checkSink = createHandler[(Int, EsperSkillEffectReward, Boolean)]((i, r, true))
 
         val node = span(label(
           input(tpe := "checkbox", inputChecked(b => (i, r, b)) --> checkSink,
             prop("checked") <-- checkCheck(i, checker, allCheck)
-          ), "\u00a0", name.replaceAll(" ", "\u00a0")))
+          ), "\u00a0", r.skillInfo.name.replaceAll(" ", "\u00a0")))
         node -> checkSink.merge(allCheck.map { b => (i,r,b) })
     }.unzip
 
@@ -86,7 +86,7 @@ object Esper {
       )
     }
   }
-  def esperInfo(esper: Handler[Option[EsperData]], esperEntry: Handler[Option[EsperEntry]], esperRaritySink: Handler[String], espers: Observable[Map[String,Int]], esperIdSubject: Subject[Option[String]], esperRaritySubject: Subject[Int], esperStats: Handler[Option[EsperStatInfo]], esperSkills: Handler[List[(String,List[String],List[SkillEffect])]], esperTraining: outwatch.Sink[Map[Int,Boolean]], trainingSubject: Subject[Map[Int,Boolean]]) = {
+  def esperInfo(esper: Handler[Option[EsperData]], esperEntry: Handler[Option[EsperEntry]], esperRaritySink: Handler[String], espers: Observable[Map[String,Int]], esperIdSubject: Subject[Option[String]], esperRaritySubject: Subject[Int], esperStats: Handler[Option[EsperStatInfo]], esperSkills: Handler[List[SkillInfo]], esperTraining: outwatch.Sink[Map[Int,Boolean]], trainingSubject: Subject[Map[Int,Boolean]]) = {
     val esperSink = createStringHandler()
     val esperId = esperSink.map(maybeId).merge(esperIdSubject).share
     esper <-- esperId.flatMap { e =>
@@ -102,7 +102,7 @@ object Esper {
               case u@EsperSlot(EsperAbilityReward(id), cost) =>
                 Data.get[SkillInfo](s"pickle/skill/$id.pickle").flatMap { s =>
                   if (s.active) Observable.just(EsperSlot(UnknownEsperSkill, 100))
-                  else Observable.just(EsperSlot(EsperSkillEffectReward(s.name, s.effects, s.skilleffects), cost))
+                  else Observable.just(EsperSlot(EsperSkillEffectReward(s), cost))
                 }.catchError(_ => Observable.just(u))
               case x => Observable.just(x)
             }
@@ -144,9 +144,7 @@ object Esper {
     }.share
     esperStats <-- modifiedStats
     esperSkills <-- skillSink.map { m =>
-      m.values.toList.collect { case (esr, b) if b =>
-        (esr.name, esr.desc, esr.effects)
-      }
+      m.values.toList.collect { case (esr, b) if b => esr.skillInfo }
     }
     def esperStat(stat: String, f: EsperStatInfo => Int) =
       modifiedStats.map { 
