@@ -582,7 +582,7 @@ object YaFFBEDB {
         table(id := "materia-slots",
           children <-- abilitySlots,
         ),
-        h3("Esper"),
+        h3("Esper: refresh if trained stats do not appear (bug)"),
         Esper.esperInfo(esper, esperEntry, esperRaritySink, espers, esperIdSubject, esperRaritySubject, esperStats, esperSkills, esperTraining, esperTrainingSubject),
         h3("Abilities & Spells"),
         div(child <-- activesTable),
