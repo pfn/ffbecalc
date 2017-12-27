@@ -30,10 +30,12 @@ object Esper {
         node -> checkSink.merge(allCheck.map { b => (i,r,b) })
     }.unzip
 
-    sink <-- Observable.combineLatest(sinks).map {
-      _.foldLeft(Map.empty[Int,(EsperSkillEffectReward,Boolean)]) {
-        case (ac, (i,r,b)) =>
-        ac + ((i,(r,b)))
+    if (sinks.nonEmpty) { // empty combineLatest completes all subs (unsubs)
+      sink <-- Observable.combineLatest(sinks).map {
+        _.foldLeft(Map.empty[Int,(EsperSkillEffectReward,Boolean)]) {
+          case (ac, (i,r,b)) =>
+          ac + ((i,(r,b)))
+        }
       }
     }
     nodes
@@ -69,10 +71,12 @@ object Esper {
         node -> checkSink.merge(allCheck.map { b => (i,r,b) })
     }.unzip
 
-    sink <-- Observable.combineLatest(sinks).map {
-      _.foldLeft(Map.empty[Int,(EsperStatReward,Boolean)]) {
-        case (ac, (i,r,b)) =>
-        ac + ((i,(r,b)))
+    if (sinks.nonEmpty) {
+      sink <-- Observable.combineLatest(sinks).map {
+        _.foldLeft(Map.empty[Int,(EsperStatReward,Boolean)]) {
+          case (ac, (i,r,b)) =>
+          ac + ((i,(r,b)))
+        }
       }
     }
     nodes
@@ -113,7 +117,7 @@ object Esper {
     val esperRarity = esperRaritySubject.map(_.toString).merge(esperRaritySink).startWith("1").map(r => util.Try(r.toInt).toOption.getOrElse(1))
     esperEntry <-- esper.combineLatest(esperRarity).map { case (e,r) =>
       e.map(_.entries(r))
-    }
+    }.share
 
     def createStatSink()  =
       createHandler[Map[Int,(EsperStatReward,Boolean)]](Map.empty)
@@ -131,6 +135,7 @@ object Esper {
           ac ++ (m.map { case (k,v) => k -> v._2 })
         }
     }
+
     val selStats = allSink.map {
       _.foldLeft(List.empty[(Int,EsperStatReward)]) {
         case (ac, maps) =>

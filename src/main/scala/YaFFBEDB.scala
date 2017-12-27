@@ -27,8 +27,7 @@ object YaFFBEDB {
     pots:  Pots,
     enhs:  Map[Int,Int],
     esper: Option[Int],
-    esperRarity: Int,
-    esperSkills: Map[Int,Boolean]
+    esperRarity: Int
   ) {
     override def toString = {
       val ue = unit.map { u =>
@@ -54,7 +53,7 @@ object YaFFBEDB {
     def empty = PageState(None,
       None, None, None, None, None, None,
       None, None, None, None,
-      Pots.none, Map.empty, None, 1, Map.empty)
+      Pots.none, Map.empty, None, 1)
     def from(s: String): PageState = {
       val parts = s.split("/").map(_.split(",")).zipWithIndex
       parts.foldLeft(PageState.empty) { case (ac,(ps,i)) =>
@@ -86,8 +85,7 @@ object YaFFBEDB {
     }
     def from(unitId: Option[Int], stats: Option[BaseStats],
       eqs: Equipped, abis: Abilities, enhs: Map[Int,Int],
-      esper: Option[Int], esperR: Int,
-      esperSkills: Map[Int,Boolean]) = PageState(
+      esper: Option[Int], esperR: Int) = PageState(
       unitId,
       idOfEq(eqs.rhand),      idOfEq(eqs.lhand),
       idOfEq(eqs.head),       idOfEq(eqs.body),
@@ -95,8 +93,7 @@ object YaFFBEDB {
       idOfMat(abis.ability1), idOfMat(abis.ability2),
       idOfMat(abis.ability3), idOfMat(abis.ability4),
       stats.fold(Pots.none)(_.pots), enhs,
-      esper, esperR,
-      esperSkills)
+      esper, esperR)
   }
   @JSExportTopLevel("yaffbedb.YaFFBEDB.main")
   def main(args: Array[String]): Unit = {
@@ -464,11 +461,11 @@ object YaFFBEDB {
     val esperRaritySink = createStringHandler()
     val esperRarity = esperRaritySubject.map(_.toString).merge(esperRaritySink).startWith("1")
 
-    val pageState: Observable[PageState] = equipped.combineLatest(unitStats,unitInfo).combineLatest(espers, esper).combineLatest(esperRarity, esperTraining, enhMap).map {
-      case (((((eqs,abis),sts,i),es, e)),rarity, training, enhs) =>
+    val pageState: Observable[PageState] = equipped.combineLatest(unitStats,unitInfo).combineLatest(espers, esper).combineLatest(esperRarity, enhMap).map {
+      case (((((eqs,abis),sts,i),es, e)),rarity, enhs) =>
         PageState.from(
           i.map(_.id), sts, eqs, abis, enhs, e.map(x => es(x.names.head)),
-          util.Try(rarity.toInt).getOrElse(1), training)
+          util.Try(rarity.toInt).getOrElse(1))
     }.publishReplay(1).refCount
 
     def subscribeChanges = pageState.bufferTime(1.second).map(_.lastOption) {
@@ -582,7 +579,7 @@ object YaFFBEDB {
         table(id := "materia-slots",
           children <-- abilitySlots,
         ),
-        h3("Esper: refresh if trained stats do not appear (bug)"),
+        h3("Esper"),
         Esper.esperInfo(esper, esperEntry, esperRaritySink, espers, esperIdSubject, esperRaritySubject, esperStats, esperSkills, esperTraining, esperTrainingSubject),
         h3("Abilities & Spells"),
         div(child <-- activesTable),

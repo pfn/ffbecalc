@@ -47,6 +47,10 @@ div#unit-info > div {
   height: calc(100% - 2.25rem - 16px);
   overflow-y: auto;
 }
+
+div#unit-info > div > button {
+  margin-top: 16px;
+}
 div#esper-container { margin: 16px; }
 div#esper-stats { margin-top: 16px; }
 div.esper-stats { font-size: smaller; }
