@@ -47,6 +47,8 @@ for x in units.keys():
       json.dump(units[x], file("json/unit/%s.json" % x, "w"))
 
 for x in equip.keys():
+  if equip[x]["icon"] is None:
+    continue
   name = equip[x]["name"]
   name2 = name
   compid = equip[x]["compendium_id"]
@@ -85,6 +87,7 @@ for x in equip.keys():
   equipdex[name2] = {
     "id": x,
     "compid": compid,
+    "icon": equip[x]["icon"],
     "type_id": equip[x]["type_id"],
     "slot_id": equip[x]["slot_id"],
     "stats": equip[x]["stats"],
@@ -101,6 +104,7 @@ for x in equip.keys():
 for x in materia.keys():
   dex = {
     "id": x,
+    "icon": materia[x]["icon"],
   }
   materiadex[materia[x]['name']] = dex
   if "skills" in materia[x]:
