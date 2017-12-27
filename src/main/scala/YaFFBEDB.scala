@@ -199,11 +199,6 @@ object YaFFBEDB {
       Equipped.tupled.apply(a._1 + a._2)
     }.combineLatest(abilities).distinctUntilChanged
 
-    def skillsFromAll(equips: List[EquipIndex],
-      abilities: List[MateriaIndex]): List[(String,String)] = {
-      skillsFrom(equips ++ abilities).map(i => i.name -> i.effects.mkString("\n"))
-    }
-
     def passivesFrom(equip: List[SkillIndex]) =
       skillsFrom(equip).flatMap(_.passives)
 
@@ -228,10 +223,10 @@ object YaFFBEDB {
       info -> SkillEffect.collateEffects(info, passivesFrom(eqs.allEquipped ++ abis.allEquipped) ++ passives ++ fromEsper.flatMap(_.passives))
     }
 
-    val equipSkills: Observable[List[(String,String)]] = equipped.combineLatest(esperSkills).map {
+    val equipSkills: Observable[List[IndexSkillInfo]] = equipped.combineLatest(esperSkills).map {
       case ((eqs, abis), fromE) =>
-      skillsFromAll(eqs.allEquipped, abis.allEquipped) ++
-        fromE.map { e => e.name -> e.effects.mkString("\n") }
+      skillsFrom(eqs.allEquipped ++ abis.allEquipped) ++
+        fromE.map(_.asIndexSkillInfo)
     }
 
     def publishTo[A](sink: Subject[A], value: A): Unit = sink.next(value)
@@ -381,13 +376,45 @@ object YaFFBEDB {
 
     val equippedTable = equipSkills.map(es => components.dataTable(es,
       "skills-equip",
-      List("Name", "Description"),
-      List("unit-equip-name", "unit-equip-desc"))(List(
-        //a => div((img(src := s"http://exviusdb.com/static/img/assets/ability/${a._2.icon}") +: a._1.split("\n").map(e => div(e)):_*)),
-        a => div(a._1.split("\n").map(e => div(e)):_*),
-        a => div(a._2.split("\n").map(e => div(e)):_*)
+      List("", "Name", "Description"),
+      List("unit-equip-icon", "unit-equip-name", "unit-equip-desc"))(List(
+        a => img(src := s"http://exviusdb.com/static/img/assets/ability/${a.icon}"),
+        a => div(a.name.split("\n").map(e => div(e)):_*),
+        a => div(a.effects.map(e => div(e)):_*)
       ))
     )
+    val trustTable = unitInfo.flatMap { u => (for {
+      i <- u
+      t <- i.tmr
+    } yield t).fold(Observable.just(Option.empty[VNode])) {
+      case EquipTrust(x)   => equips.map(_.find(_.id == x).map { e =>
+        components.dataTable(List(e),
+          "tmr",
+          List("", "Name", "Effects"),
+          List("tmr-icon", "tmr-name", "tmr-desc"))(List(
+            a => img(src := s"http://exviusdb.com/static/img/assets/item/${a.icon}"),
+            a => div(a.name),
+            a => {
+              val is2h = if (e.twohands) "2h" else ""
+              div(div(s"$is2h ${SkillEffect.EQUIP(a.tpe)}: ${a.stats} ${a.describeEffects(None)}") :: a.skillInfo.map(s =>
+                div(s"${s.name} \u27a1 ${s.effects.mkString(", ")}")): _*)
+            }
+          ))
+      })
+      case MateriaTrust(x) => materia.map(_.find(_.id == x).map { m =>
+        components.dataTable(List(m),
+          "tmr",
+          List("", "Name", "Effects"),
+          List("tmr-icon", "tmr-name", "tmr-desc"))(List(
+            a => img(src := s"http://exviusdb.com/static/img/assets/ability/${a.icon}"),
+            a => div(a.name),
+            a => {
+              div(a.skillInfo.map(s =>
+                div(s"${s.name} \u27a1 ${s.effects.mkString(", ")}")): _*)
+            }
+          ))
+      })
+    }}.map(_.getOrElse(div("nope")))
 
     val unitDescription = unitInfo.map { i =>
       i.fold("")(_.entries.values.toList.sortBy(
@@ -588,6 +615,10 @@ object YaFFBEDB {
         div(hidden <-- equipSkills.map(_.isEmpty),
           h3("Equipped"),
           div(child <-- equippedTable),
+        ),
+        div(hidden <-- unitInfo.map(_.forall(_.tmr.isEmpty)),
+          h3("Trust Mastery Reward"),
+          div(child <-- trustTable),
         ),
         ),
       )

@@ -157,11 +157,12 @@ object DataDecoders {
   implicit val decodeMateriaIndexData: Decoder[MateriaIndexData] = c => {
     for {
       id       <- c.downField("id").as[String]
+      icon     <- c.downField("icon").as[String]
       uniq     <- c.downField("unique").as[Boolean].left.flatMap(_ => Right(false))
       rarity   <- c.downField("rarity").as[Int]
       mtpe     <- c.downField("magic_type").as[Option[String]]
       skills   <- c.downField("effects_raw").as[List[IndexSkillInfo]]
-    } yield MateriaIndexData(id, uniq, rarity, mtpe, skills)
+    } yield MateriaIndexData(id, icon, uniq, rarity, mtpe, skills)
   }
 
   implicit val decodeEquipStats: Decoder[EquipStats] = Decoder.forProduct10(
@@ -169,6 +170,17 @@ object DataDecoders {
     "element_resist", "status_resist", "status_inflict", "element_inflict"
   )(EquipStats.apply)
 
+  implicit val decodeTMR: Decoder[TMR] = c => {
+    for {
+      x <- c.downArray.as[String]
+      y <- c.downArray.right.as[Int]
+    } yield {
+      x match {
+        case "MATERIA" => MateriaTrust(y)
+        case "EQUIP"   => EquipTrust(y)
+      }
+    }
+  }
   implicit val decodeEquipReq: Decoder[EquipReq] = c => {
     for {
       x <- c.downArray.as[String]
@@ -181,8 +193,9 @@ object DataDecoders {
     }
   }
   implicit val decodeEquipIndexData: Decoder[EquipIndexData] =
-    Decoder.forProduct8(
+    Decoder.forProduct9(
       "id",
+      "icon",
       "slot_id",
       "is_twohanded",
       "skills",
@@ -232,8 +245,8 @@ object DataDecoders {
       "status_resist",
       "strings")(UnitEntry.apply)
   implicit val decodeUnitData: Decoder[UnitData] =
-    Decoder.forProduct7(
-      "name", "id", "job", "sex", "equip", "entries", "skills")(UnitData.apply)
+    Decoder.forProduct8(
+      "name", "id", "job", "sex", "TMR", "equip", "entries", "skills")(UnitData.apply)
   implicit val decodeEsperStatRange: Decoder[EsperStatRange] = c => {
     for {
       min <- c.downArray.first.as[Int]

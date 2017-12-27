@@ -9,6 +9,14 @@ case class UnitStrings(
   evolution: List[Option[String]],
   affinity: List[Option[String]],
   fusion: List[Option[String]])
+sealed trait TMR { def id: Int }
+sealed trait Equipment {
+  def id: Int
+  def name: String
+  def icon: String
+}
+case class MateriaTrust(id: Int) extends TMR
+case class EquipTrust(id: Int) extends TMR
 case class UnitEntry(
   rarity: Int,
   stats: StatInfo,
@@ -31,6 +39,7 @@ case class UnitData(
   id: Int,
   job: String,
   sex: String,
+  tmr: Option[TMR],
   equip: List[Int],
   entries: Map[String,UnitEntry],
   skills: List[UnitSkill]) {
@@ -106,12 +115,15 @@ case class SkillInfo(
   mpCost: Int,
   actives: List[ActiveEffect],
   passives: List[SkillEffect],
-  effects: List[String])
+  effects: List[String]) {
+  def asIndexSkillInfo =
+    IndexSkillInfo(id, name, unique, icon, effects, actives, passives)
+}
 case class EnhancementStrings(name: List[String], desc: List[String])
 case class Enhancement(oldSkill: Int, newSkill: Int, strings: EnhancementStrings)
 sealed trait SkillIndex { def skillInfo: List[IndexSkillInfo] }
-case class MateriaIndexData(id: String, unique: Boolean, rarity: Int, magicType: Option[String], skillInfo: List[IndexSkillInfo])
-case class MateriaIndex(name: String, id: Int, unique: Boolean, rarity: Int, magicType: Option[String], skillInfo: List[IndexSkillInfo]) extends SkillIndex {
+case class MateriaIndexData(id: String, icon: String, unique: Boolean, rarity: Int, magicType: Option[String], skillInfo: List[IndexSkillInfo])
+case class MateriaIndex(name: String, id: Int, icon: String, unique: Boolean, rarity: Int, magicType: Option[String], skillInfo: List[IndexSkillInfo]) extends Equipment with SkillIndex {
   val memo = Memo { a: Option[UnitData] =>
     SkillEffect.collateEffects(a, skillInfo.flatMap(_.passives)).toString
   }
@@ -159,9 +171,9 @@ case class Memo[A,B](f: A => B) extends Function1[A,B] {
   })
 }
 case class EquipIndexData(
-  id: Int, slotId: Int, twohands: Boolean, skills: List[Int], tpe: Int, stats: EquipStats, req: Option[EquipReq], skillInfo: List[IndexSkillInfo])
+  id: Int, icon: String, slotId: Int, twohands: Boolean, skills: List[Int], tpe: Int, stats: EquipStats, req: Option[EquipReq], skillInfo: List[IndexSkillInfo])
 case class EquipIndex(
-  name: String, id: Int, twohands: Boolean, slotId: Int, skills: List[Int], tpe: Int, stats: EquipStats, req: Option[EquipReq], skillInfo: List[IndexSkillInfo]) extends SkillIndex {
+  name: String, id: Int, icon: String, twohands: Boolean, slotId: Int, skills: List[Int], tpe: Int, stats: EquipStats, req: Option[EquipReq], skillInfo: List[IndexSkillInfo]) extends Equipment with SkillIndex {
 
   val memo = Memo { a: Option[UnitData] =>
     SkillEffect.collateEffects(a, skillInfo.flatMap(_.passives)).toString

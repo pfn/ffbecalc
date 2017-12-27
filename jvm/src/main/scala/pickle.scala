@@ -45,7 +45,7 @@ object Pickler {
       equippath / "index.json", picklepath / "equip" / "index.pickle", {
         _.right.map { m =>
           m.toList.map { case (k,v) =>
-            EquipIndex(k, v.id, v.twohands, v.slotId,
+            EquipIndex(k, v.id, v.icon, v.twohands, v.slotId,
               v.skills,
               v.tpe, v.stats, v.req, v.skillInfo)
           }.sortBy(_.name)
@@ -64,7 +64,7 @@ object Pickler {
         _.right.map { m =>
           m.toList.map { case (k,v) =>
             MateriaIndex(k, util.Try(v.id.toInt).toOption.getOrElse(0),
-              v.unique, v.rarity, v.magicType, v.skillInfo)
+              v.icon, v.unique, v.rarity, v.magicType, v.skillInfo)
           }.sortBy(_.name)
         }.fold(e => sys.error("materias: " + e), identity)
       })
@@ -75,7 +75,7 @@ object Pickler {
       val n = f.getName
       val out = n.dropRight(5) + ".pickle"
       pickle[UnitData,UnitData](f, picklepath / "unit" / out,
-        _.fold(e => sys.error("unit data: " + e), identity))
+        _.fold(e => sys.error(s"unit data $n: " + e), identity))
     }
     (skillpath * jsonFilter).foreach { f =>
       val n = f.getName
@@ -99,8 +99,8 @@ object Pickler {
     }
     //println(unpickle[List[EquipIndex]](picklepath / "equip" / "index.pickle"))
     //println(unpickle[List[EsperSlot]](picklepath / "esperboard" / "4.pickle"))
-    asserteq(unpickle[List[EquipIndex]](picklepath / "equip" / "index.pickle").find(_.id == 301001500), "Some(EquipIndex(Swordbreaker,301001500,false,1,List(206170),1,ATK+43,None,List(IndexSkillInfo(206170,Swordbreaker,true,ability_97.png,List(5% chance of evading physical attacks),List(),List(PassiveDodgeEffect(5,0))))))")
-    asserteq(unpickle[List[EquipIndex]](picklepath / "equip" / "index.pickle").find(_.id == 302003300), "Some(EquipIndex(Onion Sword,302003300,false,1,List(200440, 211500),2,ATK+135,None,List(IndexSkillInfo(200440,Bladeblitz,false,ability_53.png,List(Physical damage (1.4x, ATK) to all enemies),List(PhysicalEffect(140,0,SkillTarget(AoE,Enemy),ActiveData(List(),------,List(),List(),List(),None,0,0))),List()), IndexSkillInfo(211500,Onion Cutter,false,ability_54.png,List(Physical damage (5.2x, ATK) to one enemy),List(PhysicalEffect(520,0,SkillTarget(Single,Enemy),ActiveData(List(),------,List(),List(),List(),None,0,0))),List()))))")
+    asserteq(unpickle[List[EquipIndex]](picklepath / "equip" / "index.pickle").find(_.id == 301001500), "Some(EquipIndex(Swordbreaker,301001500,item_10110.png,false,1,List(206170),1,ATK+43,None,List(IndexSkillInfo(206170,Swordbreaker,true,ability_97.png,List(5% chance of evading physical attacks),List(),List(PassiveDodgeEffect(5,0))))))")
+    asserteq(unpickle[List[EquipIndex]](picklepath / "equip" / "index.pickle").find(_.id == 302003300), "Some(EquipIndex(Onion Sword,302003300,item_10230.png,false,1,List(200440, 211500),2,ATK+135,None,List(IndexSkillInfo(200440,Bladeblitz,false,ability_53.png,List(Physical damage (1.4x, ATK) to all enemies),List(PhysicalEffect(140,0,SkillTarget(AoE,Enemy),ActiveData(List(),------,List(),List(),List(),None,0,0))),List()), IndexSkillInfo(211500,Onion Cutter,false,ability_54.png,List(Physical damage (5.2x, ATK) to one enemy),List(PhysicalEffect(520,0,SkillTarget(Single,Enemy),ActiveData(List(),------,List(),List(),List(),None,0,0))),List()))))")
     //println(unpickle[SkillInfo](picklepath / "skill" / "910274.pickle"))
     asserteq(unpickle[SkillInfo](picklepath / "skill" / "910523.pickle"), "SkillInfo(910523,Enigmatic,false,false,ABILITY,ability_76.png,None,0,List(),List(PassiveTDHEffect(0,0,0,0,100,100)),List(Increase equipment MAG and SPR (100%) when armed with a single weapon))")
     asserteq(unpickle[SkillInfo](picklepath / "skill" / "20200.pickle"), "SkillInfo(20200,Firaga,false,true,MAGIC,ability_21.png,Some(Black),20,List(MagicalEffect(180,0,SkillTarget(AoE,Enemy),ActiveData(List(Fire),MAGIC,List(List(150)),List(List(100)),List(1),Magic,0,0))),List(),List(Magic fire damage (1.8x, MAG) to all enemies))")

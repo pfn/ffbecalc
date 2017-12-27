@@ -64,9 +64,11 @@ label { white-space: nowrap; }
 table#esper-training { width: calc(100% - 32px); margin: 16px }
 #esper-training th { text-align: left; width: 20%; }
 #esper-training span { margin-left: 16px; }
+table.tmr,
 table.skills-equip,
 table.skills-active,
 table.skills-trait { width: calc(100% - 32px); margin: 16px; }
+table.tmr tr,
 table.skills-equip tr,
 table.skills-trait tr,
 table.skills-active tr { border: solid thin; }
@@ -135,6 +137,8 @@ table.unit-resists {
 td.unit-trait-rarity { width: 5%; }
 td.unit-skill-rarity > div,
 td.unit-trait-rarity > div { white-space: nowrap; }
+td.tmr-icon img,
+td.unit-equip-icon img,
 td.unit-skill-rarity img,
 td.unit-trait-rarity img { vertical-align: middle; width: 56px; height: 56px; }
 td.unit-skill-rarity > div > span,
