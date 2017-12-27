@@ -13,6 +13,7 @@ lazy val root = project.in(file(".")).dependsOn(sharedJS)
 
 val versionCode = taskKey[String]("generate version code")
 val versionFile = taskKey[File]("generate version file from version code")
+val verifyVersion = taskKey[Unit]("verify versionFile+buildInfo")
 
 versionCode := {
   val sdf = new java.text.SimpleDateFormat("yyyyMMddHHmm")
@@ -40,7 +41,15 @@ versionFile := {
   f
 }
 
+verifyVersion := {
+  val vc = IO.readLines(versionFile.value).head.trim
+  val hasVC = IO.readLines((buildInfo in Compile).value.head).exists(
+    _.contains(vc))
+  if (!hasVC) throw new MessageOnlyException(s"buildInfo does not contain $vc")
+}
+
 versionFile := (versionFile triggeredBy (buildInfo in Compile)).value
+verifyVersion := (verifyVersion triggeredBy (buildInfo in Compile)).value
 
 refreshBrowsers :=
   (refreshBrowsers triggeredBy (webpack in fastOptJS in Compile)).value
