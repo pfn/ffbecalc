@@ -74,6 +74,11 @@ case class Abilities(
       } else if (m.id == k)
         v.next(Some(m.id.toString))
     }
+
+    entries.collect {
+      case ((Some(a), _), (_,v)) if !a.unique => v.next(Some(a.id.toString))
+      case ((None,    _), (_,v))              => v.next(None)
+    }
   }
 }
 
