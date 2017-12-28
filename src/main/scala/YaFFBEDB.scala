@@ -76,7 +76,7 @@ object YaFFBEDB {
             acc2 = strId(ps.drop(5).headOption))
         } else if (i == 3) {
           val es = ps.map(_.split("=")).foldLeft(Map.empty[Int,Int]) { case (ac,xs) =>
-            ac + ((xs(0).toInt,xs(1).toInt))
+            if (xs(0) != xs(1)) ac + ((xs(0).toInt,xs(1).toInt)) else ac
           }
           ac.copy(enhs = es)
         } else
@@ -488,10 +488,10 @@ object YaFFBEDB {
     val esperRaritySink = createStringHandler()
     val esperRarity = esperRaritySubject.map(_.toString).merge(esperRaritySink).startWith("1")
 
-    val pageState: Observable[PageState] = equipped.combineLatest(unitStats,unitInfo).combineLatest(espers, esper).combineLatest(esperRarity, enhMap).map {
-      case (((((eqs,abis),sts,i),es, e)),rarity, enhs) =>
+    val pageState: Observable[PageState] = equipped.combineLatest(unitStats,unitInfo).combineLatest(espers, esper).combineLatest(esperRarity, enhMap, enhancedSkills).map {
+      case (((((eqs,abis),sts,i),es, e)),rarity, enhm, enhs) =>
         PageState.from(
-          i.map(_.id), sts, eqs, abis, enhs, e.map(x => es(x.names.head)),
+          i.map(_.id), sts, eqs, abis, enhm.filter { case (k,v) => enhs.contains(k) }, e.map(x => es(x.names.head)),
           util.Try(rarity.toInt).getOrElse(1))
     }.publishReplay(1).refCount
 
