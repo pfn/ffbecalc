@@ -1,5 +1,29 @@
 package yaffbedb
 
+object ActiveUtils {
+  def turns(ts: Int) = ts match {
+    case 1 => "one turn"
+    case x => s"$x turns"
+  }
+
+  def collate(xs: List[(Int,String)],
+    fmt: String,
+    delim: String = ", ",
+    delim2: String = "/",
+    filter: ((Int,String)) => Boolean = _._1 != 0) = {
+    xs.filter(filter).groupBy(_._1).toList.map { case (k,v) =>
+      fmt format (v.map(_._2).mkString("/"), k)
+    }.mkString(delim)
+  }
+
+  def join(xs: List[String], end: String, includeEnd: Boolean = false): String =
+    xs match {
+      case List(x) => if (includeEnd) end + x else x
+      case x :: tail => x + ", " + join(tail, end, true)
+    }
+  def or(xs: List[String]) = join(xs, " or ")
+  def and(xs: List[String]) = join(xs, " and ")
+}
 // TODO handle weapons/variance?
 case class UnitStats(atk: Int, defs: Int, mag: Int, spr: Int, l: Int, r: Int, dw: Boolean, level: Int, elements: Set[Int], killers: Map[Int,(Int,Int)])
 case class TargetStats(defs: Int, spr: Int, tribes: Set[Int], resists: ElementResist)
@@ -7,6 +31,9 @@ case class BattleStats(unit: UnitStats, target: TargetStats)
 case class Damage(physical: Int, magical: Int)
 
 case class ActiveData(element: List[String], tpe: String, frames: List[List[Int]], dmgsplit: List[List[Int]], atks: List[Int], atktpe: String, movetpe: Int, motiontpe: Int)
+sealed trait RelatedSkill {
+  def related: List[Int]
+}
 sealed trait Target
 sealed trait TargetClass
 sealed trait HasActiveData {
@@ -27,7 +54,49 @@ object Target {
   case object Allies extends TargetClass // not-self
   case object KOd extends TargetClass
 }
-case class SkillTarget(tgt: Target, cls: TargetClass)
+case class SkillTarget(tgt: Target, cls: TargetClass) {
+  override lazy val toString = {
+    import Target._
+    cls match {
+      case Enemy  => tgt match {
+        case Self   => "the enemy is yourself"
+        case Single => "an enemy"
+        case AoE    => "all enemies"
+        case Random => "a random enemy"
+      }
+      case Party  => tgt match {
+        case Self   => "self"
+        case Single => "an ally"
+        case AoE    => "all allies"
+        case Random => "a random ally"
+      }
+      case All    => tgt match {
+        case Self   => "all selves"
+        case Single => "a target"
+        case AoE    => "all"
+        case Random => "a random target"
+      }
+      case Allies => tgt match {
+        case Self   => "Self excluding Self wut"
+        case Single => "an ally, excluding self"
+        case AoE    => "all allies, excluding self"
+        case Random => "a random ally, excluding self"
+      }
+      case KOd    => tgt match {
+        case Self => "WTF self KO"
+        case Single => "a KOd target"
+        case AoE    => "all KOd targets"
+        case Random => "random KOd target"
+      }
+      case Self   => tgt match {
+        case Self   => "self"
+        case Single => "self"
+        case AoE    => "all selves"
+        case Random => "random selves"
+      }
+    }
+  }
+}
 sealed trait Condition
 sealed trait ActiveEffect {
   def target: SkillTarget
@@ -212,23 +281,44 @@ case class MPDrainEffect(ratio: Int, drain: Int, target: SkillTarget, data: Acti
 case class HPDrainEffect(ratio: Int, drain: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class SacrificeSelfRestoreEffect(hppct: Int, mppct: Int, target: SkillTarget) extends ActiveEffect
 case class SacrificeHPPercentDamageEffect(sacrifice: Int, damage: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
-case class SacrificeHPDamageEffect(ratio: Int, sacrifice: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
+case class SacrificeHPDamageEffect(ratio: Int, sacrifice: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData {
+  def s = if (data.atktpe == "None") "*" else ""
+  override lazy val toString = {
+    f"Sacrifice $sacrifice%s%% HP to deal physical$s damage (${ratio.toDouble / 100}%.2fx ATK) to $target"
+  }
+}
 // skill -> chance
-case class RandomActiveEffect(skills: List[(Int,Int)], target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
-case class RandomMagicEffect(skills: List[(Int,Int)]) extends ActiveEffect with NoTarget
+case class RandomActiveEffect(skills: List[(Int,Int)], target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with RelatedSkill {
+  def related = skills.map(_._1)
+}
+case class RandomMagicEffect(skills: List[(Int,Int)]) extends ActiveEffect with NoTarget with RelatedSkill {
+  def related = skills.map(_._1)
+}
 case class RestoreEffect(hp: Int, mp: Int, target: SkillTarget) extends ActiveEffect
 case class SetHPEffect(hp: Int, target: SkillTarget) extends ActiveEffect
-case class ReraiseEffect(pct: Int, turns: Int, target: SkillTarget) extends ActiveEffect
+case class ReraiseEffect(pct: Int, turns: Int, target: SkillTarget) extends ActiveEffect {
+  override lazy val toString = s"Auto-revive ($pct% HP) for ${ActiveUtils.turns(turns)} to $target"
+}
 case class SalveEffect(items: List[Int], target: SkillTarget) extends ActiveEffect
 case class RestorePercentEffect(hp: Int, mp: Int, target: SkillTarget) extends ActiveEffect
 case class ReducePhysicalDamageEffect(pct: Int, turns: Int, target: SkillTarget) extends ActiveEffect
-case class DodgePhysicalEffect(count: Int, turns: Int, target: SkillTarget) extends ActiveEffect
+case class DodgePhysicalEffect(count: Int, turns: Int, target: SkillTarget) extends ActiveEffect {
+  override lazy val toString = s"Dodge $count physical attacks for ${ActiveUtils.turns(turns)} to $target"
+}
 case class SkipTurnsEffect(turns: Int, target: SkillTarget) extends ActiveEffect
 case object DualBlackMagicEffect extends ActiveEffect with NoTarget
 case class LibraEffect(target: SkillTarget) extends ActiveEffect
 case object DualCastEffect extends ActiveEffect with NoTarget
 case class DualMagicEffect(white: Boolean, green: Boolean, whiteCount: Int, greenCount: Int) extends ActiveEffect with NoTarget
-case class HideEffect(min: Int, max: Int, target: SkillTarget) extends ActiveEffect
+case class HideEffect(min: Int, max: Int, target: SkillTarget) extends ActiveEffect {
+  def turns = {
+    if (min == max)
+      ActiveUtils.turns(min)
+    else s"$min to $max turns"
+  }
+
+  override lazy val toString = s"Remove caster from battle for $turns"
+}
 case object EscapeEffect extends ActiveEffect with NoTarget
 case object ThrowEffect extends ActiveEffect with NoTarget
 case object DrinkEffect extends ActiveEffect with NoTarget
@@ -241,25 +331,58 @@ case class StoreAttackEffect(stack: Int, max: Int, selfdamage: Int, target: Skil
 case class PercentHPDamageEffect(min: Int, max: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class MPDamageEffect(ratio: Int, max: Int, scaling: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class SprDamageEffect(ratio: Int, max: Int, scaling: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
-case class PhysicalEffect(ratio: Int, itd: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
+case class PhysicalEffect(ratio: Int, itd: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData {
+  def s = if (data.atktpe == "None") "*" else ""
+  def realRatio = (ratio / 100.0) / (1.0 - itd / 100.0)
+  override lazy val toString = f"""Physical$s ${data.element.mkString("/")} damage ($realRatio%.2fx ATK) to $target"""
+}
 case class PhysicalKillerEffect(ratio: Int, tribe: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class MagicalKillerEffect(ratio: Int, tribe: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class StopEffect(chance: Int, turns: Int, target: SkillTarget) extends ActiveEffect
 case class StealEffect(bonus: Int, target: SkillTarget) extends ActiveEffect
-case class InstantKOEffect(chance: Int, target: SkillTarget) extends ActiveEffect
+case class InstantKOEffect(chance: Int, target: SkillTarget) extends ActiveEffect {
+  override lazy val toString = s"Instant KO ($chance%) to $target"
+}
 case class ElementResistEffect(fire: Int, ice: Int, lightning: Int, water: Int,
   wind: Int, earth: Int, light: Int, dark: Int, turns: Int, target: SkillTarget) extends ActiveEffect
 case class EsunaEffect(poison: Boolean, blind: Boolean, sleep: Boolean, silence: Boolean, paralyze: Boolean, confusion: Boolean, disease: Boolean, petrify: Boolean, target: SkillTarget) extends ActiveEffect
-case class StatusAilmentEffect(poison: Int, blind: Int, sleep: Int, silence: Int, paralyze: Int, confusion: Int, disease: Int, petrify: Int, target: SkillTarget) extends ActiveEffect
+case class StatusAilmentEffect(poison: Int, blind: Int, sleep: Int, silence: Int, paralyze: Int, confusion: Int, disease: Int, petrify: Int, target: SkillTarget) extends ActiveEffect {
+  def inflictString = ActiveUtils.collate(
+    List(poison -> "Poison", blind -> "Blind", sleep -> "Sleep",
+      silence -> "Silence", paralyze -> "Paralyze",
+      confusion -> "Confusion", disease -> "Disease", petrify -> "Petrify"
+    ), "%s (%s%%)")
+  override lazy val toString = s"Inflict $inflictString on $target"
+}
 case class RandomAilmentEffect(poison: Int, blind: Int, sleep: Int, silence: Int, paralyze: Int, confusion: Int, disease: Int, petrify: Int, count: Int, target: SkillTarget) extends ActiveEffect
 case class AilmentResistEffect(poison: Int, blind: Int, sleep: Int, silence: Int, paralyze: Int, confusion: Int, disease: Int, petrify: Int, turns: Int, target: SkillTarget) extends ActiveEffect
 case class StackingPhysicalEffect(first: Int, stack: Int, max: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class StackingMagicalEffect(first: Int, stack: Int, max: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class MagicalEffect(ratio: Int, its: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class SingingBuffEffect(atk: Int, defs: Int, mag: Int, spr: Int, turns: Int, target: SkillTarget) extends ActiveEffect
-case class BuffEffect(atk: Int, defs: Int, mag: Int, spr: Int, turns: Int, target: SkillTarget) extends ActiveEffect
+case class BuffEffect(atk: Int, defs: Int, mag: Int, spr: Int, turns: Int, target: SkillTarget) extends ActiveEffect {
+  lazy val buffString = ActiveUtils.collate(List(
+    atk  -> "ATK",
+    defs -> "DEF",
+    mag  -> "MAG",
+    spr  -> "SPR",
+  ), "%s by %s%%")
+  override lazy val toString = {
+    s"Increase $buffString for ${ActiveUtils.turns(turns)} to $target"
+  }
+}
 case class RaiseEffect(pct: Int, target: SkillTarget) extends ActiveEffect
-case class DebuffEffect(atk: Int, defs: Int, mag: Int, spr: Int, turns: Int, target: SkillTarget) extends ActiveEffect
+case class DebuffEffect(atk: Int, defs: Int, mag: Int, spr: Int, turns: Int, target: SkillTarget) extends ActiveEffect {
+  lazy val buffString = ActiveUtils.collate(List(
+    atk  -> "ATK",
+    defs -> "DEF",
+    mag  -> "MAG",
+    spr  -> "SPR",
+  ), "%s by %s%%")
+  override lazy val toString = {
+    s"Decrease $buffString for ${ActiveUtils.turns(turns)} to $target"
+  }
+}
 case class DebuffResistEffect(atk: Int, defs: Int, mag: Int, spr: Int, stop: Int, charm: Int, turns: Int, target: SkillTarget) extends ActiveEffect
 case class DebuffRemoveEffect(atk: Int, defs: Int, mag: Int, spr: Int, stop: Int, charm: Int, target: SkillTarget) extends ActiveEffect
 case class DispelEffect(target: SkillTarget) extends ActiveEffect
@@ -278,13 +401,25 @@ case class ImbueMKillerEffect(tribe: Int, killer: Int, target: SkillTarget) exte
 case class ImbueElementEffect(fire: Int, ice: Int, lightning: Int, water: Int,
   wind: Int, earth: Int, light: Int, dark: Int, turns: Int, target: SkillTarget) extends ActiveEffect
 case class PhysicalTargetCoverEffect(chance: Int, preduction: Int, mreduction: Int, turns: Int, target: SkillTarget) extends ActiveEffect
-case class ActiveCounterEffect(chance: Int, stat: Int, turns: Int, max: Int, target: SkillTarget) extends ActiveEffect
+case class ActiveCounterEffect(chance: Int, stat: Int, ratio: Int, turns: Int, max: Int, target: SkillTarget) extends ActiveEffect {
+  override lazy val toString = f"Grant $chance%% chance to counter physical attacks (${ratio.toDouble / 100}%.2fx ATK) to $target for ${ActiveUtils.turns(turns)}"
+}
 case class PhysicalAllCoverEffect(chance: Int, preduction: Int, mreduction: Int, turns: Int, target: SkillTarget) extends ActiveEffect
-case class UnlockSkillEffect(skill: Int, turns: Int) extends ActiveEffect with NoTarget
-case class MultiAbilityEffect(skills: List[Int], count: Int) extends ActiveEffect with NoTarget
-case class UnlockMultiSkillEffect(skills: List[Int], count: Int, turns: Int) extends ActiveEffect with NoTarget
-case class ConditionalSkillEffect(trigger: List[Int], ifTrue: Int, ifFalse: Int) extends ActiveEffect with NoTarget
-case class UnlockSkillCountedEffect(skills: List[Int], turns: Int, uses: Int) extends ActiveEffect with NoTarget
+case class UnlockSkillEffect(skill: Int, turns: Int) extends ActiveEffect with NoTarget with RelatedSkill {
+  def related = List(skill)
+}
+case class MultiAbilityEffect(skills: List[Int], count: Int) extends ActiveEffect with NoTarget with RelatedSkill {
+  def related = skills
+}
+case class UnlockMultiSkillEffect(skills: List[Int], count: Int, turns: Int) extends ActiveEffect with NoTarget with RelatedSkill {
+  def related = skills
+}
+case class ConditionalSkillEffect(trigger: List[Int], ifTrue: Int, ifFalse: Int) extends ActiveEffect with NoTarget with RelatedSkill {
+  def related = trigger ++ List(ifTrue, ifFalse)
+}
+case class UnlockSkillCountedEffect(skills: List[Int], turns: Int, uses: Int, target: SkillTarget) extends ActiveEffect with RelatedSkill {
+  def related = skills
+}
 case class DamageOrDeathEffect(ratio: Int, chance: Int, death: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class DeathImmunityEffect(turns: Int, target: SkillTarget) extends ActiveEffect
 case class EvokeDamageEffect(magRatio: Int, sprRatio: Int, splits: List[Int], target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData

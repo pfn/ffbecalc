@@ -128,7 +128,7 @@ object YaFFBEDB {
       Observable.combineLatest(es.toList.map { case (k,v) =>
         Data.get[SkillInfo](s"pickle/skill/${v.newSkill}.pickle").map(d => (v.oldSkill,d))
       }).map(_.toMap)
-    }
+    }.publishReplay(1).refCount
 
     val unitEntry: Observable[Option[UnitEntry]] = unitInfo.map {
       _.fold(Option.empty[UnitEntry])(
@@ -294,11 +294,66 @@ object YaFFBEDB {
       }
     }
     def deco[A,B,C](f: (A,B,C) => VNode): ((A,B,C)) => VNode = f.tupled(_)
+    val unitActives = unitSkills.combineLatest(enhancedSkills).map(a =>
+      a._1.filter(_._2.active).map(b => (b._1, b._2, a._2)))
+    // TODO handles cycles but does not handle encountering multiply
+    def relationsOf(s: SkillInfo,
+      seen: Set[Int] = Set.empty): Observable[Seq[SkillInfo]] = {
+      val relations = s.actives.flatMap {
+        case r: RelatedSkill => r.related
+        case _ => Nil
+      }
+
+      Observable.combineLatest(relations.map(rid =>
+        Data.get[SkillInfo](s"pickle/skill/${rid}.pickle").flatMap { os =>
+          if (seen(os.id)) Observable.just(Nil) else
+            relationsOf(os, seen + os.id).flatMap { rs =>
+              Observable.just(List(os) ++ rs)
+            }
+        })).scan(Seq.empty[SkillInfo])((xs, x) => x.flatten ++ xs)
+    }
+    val unitActivesRelated: Observable[Seq[Int]] =
+      unitActives.combineLatest(enhMap).map { case (as, enhm) =>
+        val notseen = as.flatMap { case (_, skill, enhs) =>
+          val s = enhancedInfo(skill, enhm.get(skill.id), enhs, identity)
+
+          s.actives.flatMap {
+            case r: UnlockSkillCountedEffect => r.related
+            case _ => Nil
+          }
+        }.distinct.toSet
+        as.flatMap { case (_, skill, enhs) =>
+          val s = enhancedInfo(skill, enhm.get(skill.id), enhs, identity)
+
+          s.actives.flatMap {
+            case _: UnlockSkillCountedEffect => Nil
+            case r: RelatedSkill => r.related
+            case _ => Nil
+          }
+        }.distinct.filterNot(notseen)
+      }
+    val relatedActives: Observable[Map[Int,SkillInfo]] =
+      unitInfo.combineLatest(unitActives, enhMap).flatMap { case (u, as, enhm) =>
+        Observable.combineLatest(
+          as.map { case (_, skill, enhs) =>
+            val s = enhancedInfo(skill, enhm.get(skill.id), enhs, identity)
+
+            relationsOf(s)
+          }).scan((u,Map.empty[Int,SkillInfo])) { case ((i,xs), x) =>
+            if (u == i) (i,x.flatten.map(s => s.id -> s).toMap ++ xs)
+            else (i,Map.empty)
+          }.map(_._2)
+      }.share
+    val filteredRelated =
+      relatedActives.combineLatest(unitActivesRelated).map { case (ss,rs) =>
+        rs.foldLeft(ss) { (ac, s) => ac - s }
+      }.share
+
     val activesTable = {
 
-      unitSkills.combineLatest(enhancedSkills).map( a =>
-        a._1.filter(_._2.active).map(b => (b._1, b._2, a._2))).map { ss =>
-        components.dataTable(ss,
+      unitSkills.combineLatest(enhancedSkills, relatedActives).map { a =>
+        a._1.filter(_._2.active).map(b => (b._1, b._2, a._2, a._3))}.map { ss =>
+        components.dataTable(ss.map(x => (x._1, x._2, x._3)),
           "skills-active",
           List("Rarity", "Level", "Name", "Description", "MP"),
           List("unit-skill-rarity", "unit-skill-level",
@@ -318,11 +373,73 @@ object YaFFBEDB {
               }
             },
             deco { (us, info, enhs) =>
-              div(children <-- enhMap.map(e => enhancedInfo(info, e.get(info.id), enhs, _.effects.map(e => div(e)))))
+              div(children <-- enhMap.map { e =>
+                val s = enhancedInfo(info, e.get(info.id), enhs, identity)
+                if (s.actives.exists(_.isInstanceOf[RelatedSkill])) {
+                  s.actives.flatMap {
+                    case r: RelatedSkill =>
+                    val rs = ss.headOption.map(_._4).getOrElse(Nil)
+                    if (rs.isEmpty) List(div("Loading"))
+                    else
+                    r match {
+                      case UnlockSkillEffect(skill, turns) =>
+                        List(p(s"Enable the following skills for ${ActiveUtils.turns(turns)}:", div(rs(skill).name)))
+                      case RandomActiveEffect(skills, tgt, data) =>
+                        List(div(span("Randomly use:") ::
+                          skills.map(s => p(
+                            s"""${s._2}% ${rs(s._1).name} \u27a1 ${rs(s._1).effects.mkString(", ")}"""
+                          )):_*))
+                      case RandomMagicEffect(skills) =>
+                        List(div(span("Randomly cast:") ::
+                          skills.map(s => p(
+                            s"""${s._2}% ${rs(s._1).name} \u27a1 ${rs(s._1).effects.mkString(", ")}"""
+                          )):_*))
+                      case ConditionalSkillEffect(triggers, ifTrue, ifFalse) =>
+                        val ts = ActiveUtils.or(triggers.map(rs).map(_.name).distinct)
+                        List(
+                         p(rs(ifFalse).effects.map(div(_)):_*),
+                         p(span(s"If used after $ts:"), p(rs(ifTrue).effects.map(div(_)):_*)))
+
+                      case MultiAbilityEffect(skills, count) =>
+                        List((p(s"Use any of the following abilities $count times in one turn:") :: skills.map(s => div(rs(s).name)) :_*))
+                      case UnlockSkillCountedEffect(skills, turns, uses, target) =>
+                        // TODO handle uses
+                        p(s"Enable the following skills on $target for ${ActiveUtils.turns(turns)}:") :: skills.map(s => p(rs(s).name))
+                      case UnlockMultiSkillEffect(skills, count, turns) =>
+                        p(s"Enable using the following skills $count times each turn for ${ActiveUtils.turns(turns)}:") :: skills.map(rs(_).name).distinct.map(s => div(s))
+                    }
+                    case a => List(div(a.toString))
+                  }
+                } else s.effects.map(div(_))
+              })
             },
             deco { (us, info, enhs) =>
               span(child <-- enhMap.map(e => enhancedInfo(info, e.get(info.id), enhs, _.mpCost.toString)))
             }
+          )
+        )
+      }
+    }
+
+    val relatedTable = {
+
+      filteredRelated.map { case ss =>
+        components.dataTable(ss.values.toList.sortBy(_.id),
+          "skills-active",
+          List("", "Name", "Effects", "MP"),
+          List("unit-skill-rarity", "unit-skill-name",
+            "unit-skill-desc", "unit-skill-cost"))(
+          List(
+            a => div(img(src := s"http://exviusdb.com/static/img/assets/ability/${a.icon}")),
+            a => div(a.name),
+            a =>
+              div(children <-- enhMap.map { e =>
+                a.actives.flatMap {
+                  case r: RelatedSkill => List(div("Related!"))
+                  case s => List(div(s.toString))
+                }
+              }),
+            a => div(a.mpCost.toString)
           )
         )
       }
@@ -612,6 +729,10 @@ object YaFFBEDB {
         div(child <-- activesTable),
         h3("Traits"),
         div(child <-- traitsTable),
+        div(hidden <-- filteredRelated.map(_.isEmpty),
+          h3("Related Skills"),
+          div(child <-- relatedTable)
+        ),
         div(hidden <-- equipSkills.map(_.isEmpty),
           h3("Equipped"),
           div(child <-- equippedTable),

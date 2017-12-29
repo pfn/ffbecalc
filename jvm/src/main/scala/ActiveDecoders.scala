@@ -202,7 +202,7 @@ object ActiveDecoders {
     29 -> {
       (t, a, c) => {
         val sks = c.toList.flatMap(j => root.each.arr.getAll(j).map(v => v(0).as[Int].getOrElse(0) -> v(1).as[Int].getOrElse(0)))
-        RandomActiveEffect(sks, t, a)
+        RandomActiveEffect(sks.filter(a => a._1 != 0 && a._2 != 0), t, a)
       }
     },
     30 -> {
@@ -425,7 +425,7 @@ object ActiveDecoders {
     82 -> {
       (t, a, c) => {
         val sks = c.toList.flatMap(j => root.each.arr.getAll(j).map(v => v(0).as[Int].getOrElse(0) -> v(1).as[Int].getOrElse(0)))
-        RandomMagicEffect(sks)
+        RandomMagicEffect(sks.filter(a => a._1 != 0 && a._2 != 0))
       }
     },
     83 -> {
@@ -490,7 +490,7 @@ object ActiveDecoders {
     97 -> {
       (t, a, c) => {
         val xs = listInt(c)
-        UnlockSkillEffect(xs(2), xs(3))
+        UnlockSkillEffect(xs(2), xs(3) - 1)
       }
     },
     98 -> {
@@ -499,9 +499,13 @@ object ActiveDecoders {
         if (xs.size < 4) {
           val ys = c.toList.flatMap(root(3).each.int.getAll)
           val turns = c.flatMap(root(4).int.getOption).getOrElse(0)
-          UnlockMultiSkillEffect(ys, xs(0), turns)
+          UnlockMultiSkillEffect(ys, xs(0), turns - 1)
         } else {
-          UnlockMultiSkillEffect(xs(3) :: Nil, xs(1), xs(4))
+          val ys = c.toList.flatMap(root(3).each.int.getAll)
+          val sks = if (ys.isEmpty) List(xs(3))
+          else ys
+          val turns = c.flatMap(root(4).int.getOption).getOrElse(0)
+          UnlockMultiSkillEffect(sks, xs(0), turns - 1)
         }
       }
     },
@@ -525,9 +529,9 @@ object ActiveDecoders {
           val ys = c.toList.flatMap(root(1).each.int.getAll)
           val uses = c.flatMap(root(2).int.getOption).getOrElse(0)
           val turns = c.flatMap(root(3).int.getOption).getOrElse(0)
-          UnlockSkillCountedEffect(ys, turns, uses)
+          UnlockSkillCountedEffect(ys, turns - 1, uses, t)
         } else {
-          UnlockSkillCountedEffect(xs(1) :: Nil, xs(2), xs(3))
+          UnlockSkillCountedEffect(xs(1) :: Nil, xs(3) - 1, xs(2), t)
         }
       }
     },
@@ -570,14 +574,14 @@ object ActiveDecoders {
     119 -> {
       (t, a, c) => {
         val xs = listInt(c)
-        ActiveCounterEffect(xs(0), xs(1), xs(2), xs(3), t)
+        ActiveCounterEffect(xs(0), xs(1), xs(2), xs(3), xs(4), t)
       }
     },
     122 -> { (t, a, c) => DeathImmunityEffect(listInt(c)(0), t) },
     123 -> {
       (t, a, c) => {
         val xs = listInt(c)
-        ActiveCounterEffect(xs(0), xs(1), xs(2), xs(3), t)
+        ActiveCounterEffect(xs(0), xs(1), xs(2), xs(3), xs(4), t)
       }
     },
     124 -> {
