@@ -349,6 +349,48 @@ object YaFFBEDB {
         rs.foldLeft(ss) { (ac, s) => ac - s }
       }.share
 
+    def renderRelations(info: SkillInfo, e: Map[Int,Int], enhs: Map[Int,SkillInfo], rs: Map[Int,SkillInfo]) = {
+      val s = enhancedInfo(info, e.get(info.id), enhs, identity)
+      if (s.actives.exists(_.isInstanceOf[RelatedSkill])) {
+        s.actives.flatMap {
+          case r: RelatedSkill =>
+          if (rs.isEmpty) List(div("Loading"))
+          else
+          r match {
+            case UnlockSkillEffect(skill, turns) =>
+              List(p(s"Enable the following skills for ${ActiveUtils.turns(turns)}:", div(rs(skill).name)))
+            case RandomActiveEffect(skills, tgt, data) =>
+              List(div(span("Randomly use:") ::
+                skills.map(s => p(
+                  s"""${s._2}% ${rs(s._1).name} \u27a1 ${rs(s._1).effects.mkString(", ")}"""
+                )):_*))
+            case RandomMagicEffect(skills) =>
+              List(div(span("Randomly cast:") ::
+                skills.map(s => p(
+                  s"""${s._2}% ${rs(s._1).name} \u27a1 ${rs(s._1).effects.mkString(", ")}"""
+                )):_*))
+            case ConditionalSkillEffect(triggers, ifTrue, ifFalse) =>
+              val ts = ActiveUtils.or(triggers.map(rs).map(_.name).distinct)
+              List(
+               p(rs(ifFalse).effects.map(div(_)):_*),
+               p(span(s"If used after $ts:"), p(rs(ifTrue).effects.map(div(_)):_*)))
+
+            case MultiAbilityEffect(skills, count) =>
+              List((p(s"Use any of the following abilities $count times in one turn:") :: skills.map(s => div(rs(s).name)) :_*))
+            case UnlockSkillCountedEffect(skills, turns, uses, target) =>
+              val ts = if (turns > 90000) ""
+              else s" for ${ActiveUtils.turns(turns)}"
+              val uc = if (uses == 1) " (1 time)"
+              else if (uses < 100) s" ($uses times)"
+              else ""
+              p(s"Enable the following skills on $target$ts$uc:") :: skills.map(s => p(rs(s).name))
+            case UnlockMultiSkillEffect(skills, count, turns) =>
+              p(s"Enable using the following skills $count times each turn for ${ActiveUtils.turns(turns)}:") :: skills.map(rs(_).name).distinct.map(s => div(s))
+          }
+          case a => List(div(a.toString))
+        }
+      } else s.effects.map(div(_))
+    }
     val activesTable = {
 
       unitSkills.combineLatest(enhancedSkills, relatedActives).map { a =>
@@ -375,42 +417,8 @@ object YaFFBEDB {
             deco { (us, info, enhs) =>
               div(children <-- enhMap.map { e =>
                 val s = enhancedInfo(info, e.get(info.id), enhs, identity)
-                if (s.actives.exists(_.isInstanceOf[RelatedSkill])) {
-                  s.actives.flatMap {
-                    case r: RelatedSkill =>
-                    val rs = ss.headOption.map(_._4).getOrElse(Nil)
-                    if (rs.isEmpty) List(div("Loading"))
-                    else
-                    r match {
-                      case UnlockSkillEffect(skill, turns) =>
-                        List(p(s"Enable the following skills for ${ActiveUtils.turns(turns)}:", div(rs(skill).name)))
-                      case RandomActiveEffect(skills, tgt, data) =>
-                        List(div(span("Randomly use:") ::
-                          skills.map(s => p(
-                            s"""${s._2}% ${rs(s._1).name} \u27a1 ${rs(s._1).effects.mkString(", ")}"""
-                          )):_*))
-                      case RandomMagicEffect(skills) =>
-                        List(div(span("Randomly cast:") ::
-                          skills.map(s => p(
-                            s"""${s._2}% ${rs(s._1).name} \u27a1 ${rs(s._1).effects.mkString(", ")}"""
-                          )):_*))
-                      case ConditionalSkillEffect(triggers, ifTrue, ifFalse) =>
-                        val ts = ActiveUtils.or(triggers.map(rs).map(_.name).distinct)
-                        List(
-                         p(rs(ifFalse).effects.map(div(_)):_*),
-                         p(span(s"If used after $ts:"), p(rs(ifTrue).effects.map(div(_)):_*)))
-
-                      case MultiAbilityEffect(skills, count) =>
-                        List((p(s"Use any of the following abilities $count times in one turn:") :: skills.map(s => div(rs(s).name)) :_*))
-                      case UnlockSkillCountedEffect(skills, turns, uses, target) =>
-                        // TODO handle uses
-                        p(s"Enable the following skills on $target for ${ActiveUtils.turns(turns)}:") :: skills.map(s => p(rs(s).name))
-                      case UnlockMultiSkillEffect(skills, count, turns) =>
-                        p(s"Enable using the following skills $count times each turn for ${ActiveUtils.turns(turns)}:") :: skills.map(rs(_).name).distinct.map(s => div(s))
-                    }
-                    case a => List(div(a.toString))
-                  }
-                } else s.effects.map(div(_))
+                val rs = ss.headOption.map(_._4).getOrElse(Nil).toMap
+                renderRelations(s, e, enhs, rs)
               })
             },
             deco { (us, info, enhs) =>
@@ -434,10 +442,7 @@ object YaFFBEDB {
             a => div(a.name),
             a =>
               div(children <-- enhMap.map { e =>
-                a.actives.flatMap {
-                  case r: RelatedSkill => List(div("Related!"))
-                  case s => List(div(s.toString))
-                }
+                renderRelations(a, e, Map.empty, ss)
               }),
             a => div(a.mpCost.toString)
           )

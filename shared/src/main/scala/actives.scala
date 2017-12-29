@@ -358,7 +358,11 @@ case class RandomAilmentEffect(poison: Int, blind: Int, sleep: Int, silence: Int
 case class AilmentResistEffect(poison: Int, blind: Int, sleep: Int, silence: Int, paralyze: Int, confusion: Int, disease: Int, petrify: Int, turns: Int, target: SkillTarget) extends ActiveEffect
 case class StackingPhysicalEffect(first: Int, stack: Int, max: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class StackingMagicalEffect(first: Int, stack: Int, max: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
-case class MagicalEffect(ratio: Int, its: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
+case class MagicalEffect(ratio: Int, its: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData {
+  def s = if (data.atktpe == "None") "*" else ""
+  def realRatio = (ratio / 100.0) / (1.0 - its / 100.0)
+  override lazy val toString = f"""Magical$s ${data.element.mkString("/")} damage ($realRatio%.2fx MAG) to $target"""
+}
 case class SingingBuffEffect(atk: Int, defs: Int, mag: Int, spr: Int, turns: Int, target: SkillTarget) extends ActiveEffect
 case class BuffEffect(atk: Int, defs: Int, mag: Int, spr: Int, turns: Int, target: SkillTarget) extends ActiveEffect {
   lazy val buffString = ActiveUtils.collate(List(
