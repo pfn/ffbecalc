@@ -20,6 +20,7 @@ object ActiveUtils {
     xs match {
       case List(x) => if (includeEnd) end + x else x
       case x :: tail => x + ", " + join(tail, end, true)
+      case Nil => ""
     }
   def or(xs: List[String]) = join(xs, " or ")
   def and(xs: List[String]) = join(xs, " and ")
