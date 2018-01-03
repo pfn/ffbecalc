@@ -420,7 +420,7 @@ case class UnlockMultiSkillEffect(skills: List[Int], count: Int, turns: Int) ext
   def related = skills
 }
 case class ConditionalSkillEffect(trigger: List[Int], ifTrue: Int, ifFalse: Int) extends ActiveEffect with NoTarget with RelatedSkill {
-  def related = trigger ++ List(ifTrue, ifFalse)
+  def related = List(ifTrue, ifFalse)
 }
 case class UnlockSkillCountedEffect(skills: List[Int], turns: Int, uses: Int, target: SkillTarget) extends ActiveEffect with RelatedSkill {
   def related = skills
