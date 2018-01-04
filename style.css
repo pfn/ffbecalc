@@ -103,20 +103,44 @@ td.unit-stat-data {
   text-align: right;
 }
 
+.target-tribes > span {
+  width: calc((100% - 16px) / 4);
+  display: inline-block;
+  margin-bottom: 6px;
+}
+.battle-stats,
+.battle-stats-inner > div,
 .unit-stats {
-  width: calc(100% - 16px);
+  width: calc(100% - 16px) !important;
   margin-left: 16px;
   font-size: smaller;
 }
+.battle-stats > div > div,
 .unit-stats > div > div {
   display: inline-block;
   margin-right: 16px;
   width: calc((100% - 16px) / 7 - 16px);
 }
+.battle-stats > div > button,
 .unit-stats > div > button {
   width: calc((100% - 16px) / 7 - 16px);
   font-size: inherit;
   height: 1.75rem;
+}
+
+div.number-picker > button {
+  height: 1.5rem;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.number-picker > span {
+  display: inline-block;
+  text-align: center;
+  min-width: 3em;
+  margin-left: 4px;
+  margin-right: 4px;
+  vertical-align: middle;
 }
 
 .unit-stats > div {
@@ -167,33 +191,46 @@ table.unit-resists td {
 .unit-resists > tr:first-child > td {
   padding: 0;
 }
+.number-picker .elements {
+  margin-left: -4px;
+  vertical-align: middle;
+}
+.elements,
 .unit-resists > tr:first-child > td > div {
   background-image: url("images/unit-stat-icons.png");
   transform: scale(0.70);
   width: 39px;
   height: 39px;
 }
+.fire,
 .elements-table > tr:first-child > td:nth-child(1) > div {
   background-position: 0 0;
 }
+.ice,
 .elements-table > tr:first-child > td:nth-child(2) > div {
   background-position: calc(-39px * 1) 0;
 }
+.thunder,
 .elements-table > tr:first-child > td:nth-child(3) > div {
   background-position: calc(-39px * 2) 0;
 }
+.water,
 .elements-table > tr:first-child > td:nth-child(4) > div {
   background-position: calc(-39px * 3 - 1px) 0;
 }
+.wind,
 .elements-table > tr:first-child > td:nth-child(5) > div {
   background-position: calc(-39px * 4 - 2px) 0;
 }
+.earth,
 .elements-table > tr:first-child > td:nth-child(6) > div {
   background-position: calc(-39px * 5 - 3px) 0;
 }
+.holy,
 .elements-table > tr:first-child > td:nth-child(7) > div {
   background-position: calc(-39px * 6 - 4px) 0;
 }
+.dark,
 .elements-table > tr:first-child > td:nth-child(8) > div {
   background-position: calc(-39px * 7 - 5px) 0;
 }
@@ -315,12 +352,15 @@ td div:nth-child(2) .icon-equips:nth-child(4)::after {
 
 #equip-slots label, #materia-slots label { white-space: normal; }
 #equip-slots tr > td, #materia-slots tr > td { width: 50% }
+.number-picker,
 .pot-slider {
   width: calc(100% - 32px) !important;
 }
+.number-picker,
 .pot-slider {
   margin-bottom: 8px;
 }
+.number-picker div,
 .pot-slider div {
   display: inline-block;
   width: 83%;

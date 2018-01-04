@@ -165,6 +165,8 @@ object YaFFBEDB {
     val esper = createHandler[Option[EsperData]](None)
     val esperEntry = createHandler[Option[EsperEntry]](None)
 
+    val unitEffectiveStats = createHandler[Option[UnitStats]](None)
+
     def equipFor(idOb: Observable[Option[String]]): Observable[Option[EquipIndex]] = for {
       ms <- equips
       id <- idOb
@@ -721,7 +723,7 @@ object YaFFBEDB {
         div(id := "unit-info",
           select(children <-- unitIndex, inputId --> unitIdSink),
           div(hidden <-- unitId.map(_.isEmpty),
-            components.unitStats(unitInfo, unitEntry, unitStats, equipped, allPassives.map(_._2), esper, esperStats, esperEntry, enhancedSkills, enhMap), button("Reset", click(()) --> resetClick)
+            components.unitStats(unitInfo, unitEntry, unitStats, equipped, allPassives.map(_._2), esper, esperStats, esperEntry, enhancedSkills, enhMap, unitEffectiveStats), button("Reset", click(()) --> resetClick)
           )
         ),
         div(hidden <-- unitId.map(_.isEmpty),
@@ -732,6 +734,8 @@ object YaFFBEDB {
         }),
         h3("Base Stats"),
         div(child <-- components.unitBaseStats(unitEntry, unitStats, pots)),
+        h3("Battle Stats"),
+        div(child <-- components.battleStats(unitStats, unitEffectiveStats)),
         h3("Equipment"),
         components.sortBy(_sorting),
         table(id := "equip-slots",

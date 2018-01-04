@@ -1,11 +1,12 @@
 package yaffbedb
 
-import outwatch.dom._
+import outwatch.dom.{math => _,_}
+import outwatch.Sink
 import rxscalajs.Observable
 
 object components {
 
-  def sortBy(out: outwatch.Sink[Sort]): VNode = {
+  def sortBy(out: Sink[Sort]): VNode = {
     val sortAZ = createHandler[Sort](Sort.AZ)
     val sortHP = createHandler[Sort]()
     val sortMP = createHandler[Sort]()
@@ -28,7 +29,7 @@ object components {
       sortItem(Sort.MAG, sortMAG, "MAG"),
       sortItem(Sort.SPR, sortSPR, "SPR"))
   }
-  def unitBaseStats(unit: Observable[Option[UnitEntry]], stats: outwatch.Sink[Option[BaseStats]], sub: PotSubjects) = {
+  def unitBaseStats(unit: Observable[Option[UnitEntry]], stats: Sink[Option[BaseStats]], sub: PotSubjects) = {
     def potsFor(unit: Option[UnitEntry], f: StatInfo => StatRange): Int =
       unit.fold(0)(e => f(e.stats).pots)
     def statOf(unit: Option[UnitEntry],
@@ -90,6 +91,178 @@ object components {
     }
   }
 
+  def breakStat(stat: Observable[Int], break: Observable[Int]): Observable[Int] =
+    stat.combineLatest(break).map { case (d,b) =>
+      math.max(1, (d * (1.0 - b/100.0)).toInt)
+    }
+  def getDefStat(stats: Observable[Option[UnitStats]], base: Observable[Option[BaseStats]], buff: Observable[Int], sel1: UnitStats => Int, sel2: BaseStats => Int): Observable[Option[Int]] = {
+    stats.combineLatest(base, buff).map { case (s, b, bf) =>
+      for {
+        st <- s
+        bs <- b
+      } yield {
+        sel1(st) + (sel2(bs) * (bf/100.0)).toInt
+      }
+    }
+  }
+  def calculateDamageReceived(stat: Observable[Int], ratio: Observable[Int], defs: Observable[Option[Int]], level: Observable[Int], reduc1: Observable[Int], reduc2: Observable[Int]): Observable[String] = {
+    stat.combineLatest(ratio, defs, level).combineLatest(reduc1, reduc2).map { case ((st, r, d, l), r1, r2) =>
+      d.map { df =>
+        ((1 - r1/100.0) * (1 - r2/100.0) * (1 + l/100.0) * (r/100.0) * ((st * st) / df)).toInt.toString + " +/- 0/15%"
+      }.getOrElse("N/A")
+    }
+  }
+  def battleStats(baseStats: Observable[Option[BaseStats]], unitStats: Observable[Option[UnitStats]]): Observable[VNode] = Observable.just {
+    val statsClicks = createHandler[Unit](())
+    val showStats = statsClicks.scan(false) { (show,_) => !show }
+    val atkBuff = createHandler[Int](0)
+    val defBuff = createHandler[Int](0)
+    val magBuff = createHandler[Int](0)
+    val sprBuff = createHandler[Int](0)
+    val sprBreak = createHandler[Int](0)
+    val defBreak = createHandler[Int](0)
+    val atkBreak = createHandler[Int](0)
+    val magBreak = createHandler[Int](0)
+
+    val targetSpr = createHandler[Int](25)
+    val targetDef = createHandler[Int](25)
+    val targetAtk = createHandler[Int](500)
+    val targetMag = createHandler[Int](500)
+    val targetLevel = createHandler[Int](99)
+
+    val fireRes    = createHandler[Int](0)
+    val iceRes     = createHandler[Int](0)
+    val thunderRes = createHandler[Int](0)
+    val waterRes   = createHandler[Int](0)
+    val windRes    = createHandler[Int](0)
+    val earthRes   = createHandler[Int](0)
+    val holyRes    = createHandler[Int](0)
+    val darkRes    = createHandler[Int](0)
+
+    val damageRatio = createHandler[Int](1000)
+    val damageReduction = createHandler[Int](0)
+    val physReduction = createHandler[Int](0)
+    val magReduction = createHandler[Int](0)
+
+    val tribeSink = createHandler[(Int,Boolean)]()
+    val tribes = tribeSink.scan(Set(5)) { case (ac,(x,b)) =>
+      if (b) ac + x else ac - x
+    }.startWith(Set(5))
+
+    val eleres = fireRes.combineLatest(iceRes, thunderRes, waterRes)
+      .combineLatest(
+        windRes.combineLatest(earthRes, holyRes, darkRes)).map {
+          case ((fire, ice, thunder, water), (wind, earth, holy, dark)) =>
+      ElementResist(fire, ice, thunder, water, wind, earth, holy, dark)
+    }
+
+    targetDef.combineLatest(targetSpr, defBreak, sprBreak)
+      .combineLatest(eleres, tribes).map {
+        case ((defs, spr, defB, sprB),eler, tribe) =>
+      TargetStats(defs, spr, defB, sprB, tribe, eler)
+    }
+
+    val buffs = atkBuff.combineLatest(defBuff, magBuff, sprBuff).map {
+      case (atk, defs, mag, spr) => Buffs(atk, defs, mag, spr)
+    }
+
+    div(cls := "battle-stats",
+      div(
+        div("Buffs"),
+        //div("ATK ", child <-- atkBuff.map(_ + "%")),
+        div("DEF ", child <-- defBuff.map(_ + "%")),
+        //div("MAG ", child <-- magBuff.map(_ + "%")),
+        div("SPR ", child <-- sprBuff.map(_ + "%")),
+        div(),
+        div(),
+        div(),
+        button("Adjust", tpe := "button", click(()) --> statsClicks),
+      ),
+      div(
+        div("Opponent"),
+        div("ATK ", child <-- breakStat(targetAtk, atkBreak)),
+        //div("DEF ", child <-- breakStat(targetDef, defBreak)),
+        div("MAG ", child <-- breakStat(targetMag, magBreak)),
+        //div("SPR ", child <-- breakStat(targetSpr, sprBreak)),
+      ),
+      div(hidden <-- showStats, cls := "battle-stats-inner",
+      h4("Unit Buffs"),
+      div(
+        //numberPicker("ATK", atkBuff, init = 0, min = 0, n = _ + "%"),
+        numberPicker("DEF", defBuff, init = 0, min = 0, n = _ + "%"),
+        //numberPicker("MAG", magBuff, init = 0, min = 0, n = _ + "%"),
+        numberPicker("SPR", sprBuff, init = 0, min = 0, n = _ + "%"),
+      ),
+      h4("Opponent"),
+      h5("Stats"),
+      div(
+        numberPicker("ATK", targetAtk, init = 500, min = 1),
+        //numberPicker("DEF", targetDef, init = 25, min = 1),
+        numberPicker("MAG", targetMag, init = 500, min = 1),
+        //numberPicker("SPR", targetSpr, init = 25, min = 1),
+        numberPicker("Level", targetLevel, init = 99, min = 1, max = 100),
+      ),
+      h5("Breaks"),
+      div(
+        numberPicker("ATK", atkBreak, init = 0, min = 0, max = 99, n = _ + "%"),
+        //numberPicker("DEF", defBreak, init = 0, min = 0, max = 99, n = _ + "%"),
+        numberPicker("MAG", magBreak, init = 0, min = 0, max = 99, n = _ + "%"),
+        //numberPicker("SPR", sprBreak, init = 0, min = 0, max = 99, n = _ + "%"),
+      ),
+      h5("Damage Received"),
+      div(
+        numberPicker("Ratio", damageRatio, init = 1000, min = 1, max = 50000, n = r => f"${r / 100.0}%.2fx"),
+        numberPicker("Damage Reduction", damageReduction, init = 0, min = 0, max = 99, n = _ + "%"),
+        numberPicker("Physical Reduction", physReduction, init = 0, min = 0, max = 99, n = _ + "%"),
+        numberPicker("Magical Reduction", magReduction, init = 0, min = 0, max = 99, n = _ + "%"),
+        div("Physical: ", child <-- calculateDamageReceived(breakStat(targetAtk, atkBreak), damageRatio, getDefStat(unitStats, baseStats, defBuff, _.defs, _.defs), targetLevel, damageReduction, physReduction)),
+        div("Magical: ", child <-- calculateDamageReceived(breakStat(targetMag, magBreak), damageRatio, getDefStat(unitStats, baseStats, sprBuff, _.spr, _.spr), targetLevel, damageReduction, magReduction)),
+      ),
+      /*
+      h5("Elemental Resists"),
+      div(
+        numberPicker(span(cls := "elements fire"), fireRes, init = 0, min = -200, max = 200, n = _ + "%"),
+        numberPicker(span(cls := "elements ice"), iceRes, init = 0, min = -200, max = 200, n = _ + "%"),
+        numberPicker(span(cls := "elements thunder"), iceRes, init = 0, min = -200, max = 200, n = _ + "%"),
+        numberPicker(span(cls := "elements water"), thunderRes, init = 0, min = -200, max = 200, n = _ + "%"),
+        numberPicker(span(cls := "elements wind"), windRes, init = 0, min = -200, max = 200, n = _ + "%"),
+        numberPicker(span(cls := "elements earth"), earthRes, init = 0, min = -200, max = 200, n = _ + "%"),
+        numberPicker(span(cls := "elements holy"), holyRes, init = 0, min = -200, max = 200, n = _ + "%"),
+        numberPicker(span(cls := "elements dark"), darkRes, init = 0, min = -200, max = 200, n = _ + "%"),
+      ),
+      h5("Tribes"),
+      div((cls := "target-tribes") ::
+        SkillEffect.TRIBE.toList.sortBy(_._1).map { case (k,v) =>
+          span(label(input(tpe := "checkbox",
+            value := k, checked := k == 5, inputChecked(b => (k,b)) --> tribeSink), " ", v), " ")
+        }: _*
+      ),
+      */
+    )
+    )
+  }
+
+  def numberPicker(lbl: VNode, sink: Sink[Int], init: Int = 25, min: Int = -300, max: Int = 3000, n: Int => String = _.toString): VNode = {
+    val h = createHandler[Int]()
+    val result = h.scan(init) { (ac,x) =>
+      math.min(max, math.max(min, ac + x))
+    }
+
+    sink <-- result
+
+    div(cls := "number-picker",
+      button("\u2193", click(-1) --> h),
+      button("\u21e9", click(-5) --> h),
+      button("\u2b07", click(-50) --> h),
+      span(child <-- result.startWith(init).map(n)),
+      button("\u2b06", click(50) --> h),
+      button("\u21e7", click(5) --> h),
+      button("\u2191", click(1) --> h),
+      " ",
+      lbl,
+    )
+  }
+
   val inputInt = inputNumber(_.toInt)
   def potSlider(name: String, maxv: Int, steps: Int, h: Handler[Int]) = {
     div(cls := "pot-slider", 
@@ -129,7 +302,7 @@ object components {
     dh: PassiveDoublehandEffect, dhGE: PassiveSinglehandEffect,
     tdh: Passive2HEffect, tdhGE: PassiveTDHEffect, accuracy: Int,
     is1h: Boolean, is2h: Boolean,
-    ed: Option[EsperData], e: Option[EsperStatInfo], ee: Option[EsperEntry])
+    ed: Option[EsperData], e: Option[EsperStatInfo], ee: Option[EsperEntry], killers: Map[Int,(Int,Int)])
 
   def unitStats(unitInfo: Observable[Option[UnitData]],
                 unit: Observable[Option[UnitEntry]],
@@ -140,7 +313,8 @@ object components {
                 esper: Observable[Option[EsperStatInfo]],
                 esperEntry: Observable[Option[EsperEntry]],
                 enhs: Observable[Map[Int,SkillInfo]],
-                enhm: Observable[Map[Int,Int]]) = {
+                enhm: Observable[Map[Int,Int]],
+                unitOut: Sink[Option[UnitStats]]) = {
     val effective = stats.combineLatest(esper.combineLatest(esperD, esperEntry), equipped, allPassives).map {
       case (s,(e,ed,ee),(eqs,_),pasv) =>
         s.map { st =>
@@ -170,9 +344,13 @@ object components {
 
           val accuracy = (if (is2h || isSW) pasv.tdh.accuracy else 0) + (if (!is2h && isSW) pasv.accuracy1h else 0)
 
-          Effective(st, st.asStats * passives + e + eqstats + (eqstats * alldh) + (eqstats * alldhGE) ++ ee, passives, pasv.dh, pasv.dhGE, pasv.tdh, pasv.tdhGE, accuracy, !is2h && isSW, isSW || is2h, ed, e, ee)
+          Effective(st, st.asStats * passives + e + eqstats + (eqstats * alldh) + (eqstats * alldhGE) ++ ee, passives, pasv.dh, pasv.dhGE, pasv.tdh, pasv.tdhGE, accuracy, !is2h && isSW, isSW || is2h, ed, e, ee, pasv.killers)
         }
     }
+
+    unitOut <-- effective.map { _.map(eff =>
+      UnitStats(eff.stats.atk, eff.stats.defs, eff.stats.mag, eff.stats.spr, 0, 0, 100, Set.empty, eff.killers)
+    )}
     table(cls := "unit-stats",
       caption("Effective Stats"),
       children <-- unit.combineLatest(unitInfo, allPassives, effective).combineLatest(equipped).combineLatest(enhs, enhm).map { case (((u,ui,pasv,eff),(eqs,abis)),es,em) =>
@@ -453,7 +631,7 @@ object components {
     }
   }
 
-  def mslot(name: String, cs: Observable[List[VNode]], sink: outwatch.Sink[Option[String]], subject: rxscalajs.Subject[Option[String]]): VNode =
+  def mslot(name: String, cs: Observable[List[VNode]], sink: Sink[Option[String]], subject: rxscalajs.Subject[Option[String]]): VNode =
     td(label(name, select(cls := "equip-slot", children <-- cs, inputId --> sink, value <-- subject.map(_.getOrElse(EMPTY)).startWith(EMPTY))))
 
 }

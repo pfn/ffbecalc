@@ -104,6 +104,7 @@ object Pots {
 case class BaseStats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int, pots: Pots) {
   def asStats = Stats(hp, mp, atk, defs, mag, spr, AilmentResist.zero, ElementResist.zero)
 }
+case class Buffs(atk: Int, defs: Int, mag: Int, spr: Int)
 case class Stats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int, status: AilmentResist, element: ElementResist) {
   def +(o: Option[EsperStatInfo]) = Stats(
     hp   + o.fold(0)(_.hp.effectiveMax),
