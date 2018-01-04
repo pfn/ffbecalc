@@ -211,7 +211,7 @@ object components {
       ),
       h5("Damage Received"),
       div(
-        numberPicker("Ratio", damageRatio, init = 1000, min = 1, max = 50000, n = r => f"${r / 100.0}%.2fx"),
+        numberPicker("Ratio", damageRatio, init = 1000, min = 1, max = 50000, steps = (10, 100, 500), n = r => f"${r / 100.0}%.1fx"),
         numberPicker("Damage Reduction", damageReduction, init = 0, min = 0, max = 99, n = _ + "%"),
         numberPicker("Physical Reduction", physReduction, init = 0, min = 0, max = 99, n = _ + "%"),
         numberPicker("Magical Reduction", magReduction, init = 0, min = 0, max = 99, n = _ + "%"),
@@ -242,7 +242,7 @@ object components {
     )
   }
 
-  def numberPicker(lbl: VNode, sink: Sink[Int], init: Int = 25, min: Int = -300, max: Int = 3000, n: Int => String = _.toString): VNode = {
+  def numberPicker(lbl: VNode, sink: Sink[Int], init: Int = 25, min: Int = -300, max: Int = 3000, steps: (Int, Int, Int) = (1, 5, 50), n: Int => String = _.toString): VNode = {
     val h = createHandler[Int]()
     val result = h.scan(init) { (ac,x) =>
       math.min(max, math.max(min, ac + x))
@@ -251,13 +251,13 @@ object components {
     sink <-- result
 
     div(cls := "number-picker",
-      button("\u2193", click(-1) --> h),
-      button("\u21e9", click(-5) --> h),
-      button("\u2b07", click(-50) --> h),
+      button("\u2193", click(-1 * steps._1) --> h),
+      button("\u21e9", click(-1 * steps._2) --> h),
+      button("\u2b07", click(-1 * steps._3) --> h),
       span(child <-- result.startWith(init).map(n)),
-      button("\u2b06", click(50) --> h),
-      button("\u21e7", click(5) --> h),
-      button("\u2191", click(1) --> h),
+      button("\u2b06", click(steps._3) --> h),
+      button("\u21e7", click(steps._2) --> h),
+      button("\u2191", click(steps._1) --> h),
       " ",
       lbl,
     )
