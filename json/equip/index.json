@@ -4282,6 +4282,85 @@
     ], 
     "slot_id": 3
   }, 
+  "Grasping Sphere": {
+    "type_id": 30, 
+    "compid": 90130, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": [
+          401003004
+        ], 
+        "name": "Carpet Bomb", 
+        "icon": "ability_28.png", 
+        "active": true, 
+        "unique": false, 
+        "id": 910708, 
+        "effects": [
+          [
+            2, 
+            1, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              200, 
+              0
+            ]
+          ], 
+          [
+            1, 
+            3, 
+            3, 
+            [
+              0, 
+              50, 
+              0, 
+              0, 
+              2, 
+              1
+            ]
+          ]
+        ], 
+        "desc": [
+          "Physical earth damage (2x, ATK) to all enemies", 
+          "Increase DEF by 50% for 2 turns to caster"
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Carpet Bomb": [
+        "Physical earth damage (2x, ATK) to all enemies", 
+        "Increase DEF by 50% for 2 turns to caster"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "1100000127", 
+    "icon": "global_equip_10063.png", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": {
+        "Earth": 30
+      }, 
+      "HP": 133, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 28, 
+      "DEF": 28
+    }, 
+    "skills": [
+      910708
+    ], 
+    "slot_id": 2
+  }, 
   "Red Wing": {
     "type_id": 3, 
     "compid": 585, 
@@ -16026,7 +16105,7 @@
           ]
         ], 
         "desc": [
-          "30% chance to counter magic attacks with Sweet Sorrow (910551) to caster"
+          "30% chance to counter magic attacks with Sweet Sorrow (910551) to caster (max 1 / turn)"
         ]
       }
     ], 
@@ -16035,7 +16114,7 @@
         "Increase SPR by 30%"
       ], 
       "Sweet Sorrow": [
-        "30% chance to counter magic attacks with Sweet Sorrow (910551) to caster"
+        "30% chance to counter magic attacks with Sweet Sorrow (910551) to caster (max 1 / turn)"
       ]
     }, 
     "skill_restriction": [], 
@@ -17417,6 +17496,84 @@
       100040
     ], 
     "slot_id": 4
+  }, 
+  "Staff of Blizzards": {
+    "type_id": 6, 
+    "compid": 90131, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": [
+          401003104
+        ], 
+        "name": "Aquatic Implosion", 
+        "icon": "ability_23.png", 
+        "active": true, 
+        "unique": false, 
+        "id": 910709, 
+        "effects": [
+          [
+            1, 
+            1, 
+            15, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              200, 
+              0
+            ]
+          ], 
+          [
+            2, 
+            2, 
+            3, 
+            [
+              0, 
+              40, 
+              0, 
+              0, 
+              3, 
+              1
+            ]
+          ]
+        ], 
+        "desc": [
+          "Magic water damage (2x, MAG) to one enemy", 
+          "Increase DEF by 40% for 3 turns to all allies"
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Aquatic Implosion": [
+        "Magic water damage (2x, MAG) to one enemy", 
+        "Increase DEF by 40% for 3 turns to all allies"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "1100000128", 
+    "icon": "global_equip_10064.png", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 16, 
+      "element_inflict": [
+        "Water"
+      ], 
+      "MP": 0, 
+      "MAG": 78, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      910709
+    ], 
+    "slot_id": 1
   }, 
   "Kingsglaive Uniform": {
     "type_id": 50, 
@@ -19640,6 +19797,82 @@
     }, 
     "skills": [
       100050
+    ], 
+    "slot_id": 1
+  }, 
+  "Lightbringer": {
+    "type_id": 2, 
+    "compid": 90129, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": [
+          401002905
+        ], 
+        "name": "Morning Star", 
+        "icon": "ability_5.png", 
+        "active": true, 
+        "unique": false, 
+        "id": 910707, 
+        "effects": [
+          [
+            1, 
+            1, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              220, 
+              0
+            ]
+          ], 
+          [
+            1, 
+            3, 
+            26, 
+            [
+              15, 
+              15, 
+              100
+            ]
+          ]
+        ], 
+        "desc": [
+          "Physical light damage (2.2x, ATK) to one enemy", 
+          "Restore 15% HP to caster"
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Morning Star": [
+        "Physical light damage (2.2x, ATK) to one enemy", 
+        "Restore 15% HP to caster"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "1100000126", 
+    "icon": "global_equip_10062.png", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 96, 
+      "element_inflict": [
+        "Light"
+      ], 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      910707
     ], 
     "slot_id": 1
   }, 
@@ -27349,13 +27582,13 @@
           ]
         ], 
         "desc": [
-          "30% chance to counter magic attacks with Snowbear Guard (910656) to caster"
+          "30% chance to counter magic attacks with Snowbear Guard (910656) to caster (max 1 / turn)"
         ]
       }
     ], 
     "skill_effects": {
       "Snowbear Guard": [
-        "30% chance to counter magic attacks with Snowbear Guard (910656) to caster"
+        "30% chance to counter magic attacks with Snowbear Guard (910656) to caster (max 1 / turn)"
       ]
     }, 
     "skill_restriction": [], 
@@ -30651,6 +30884,95 @@
     "skills": null, 
     "slot_id": 4
   }, 
+  "Wing Edges": {
+    "type_id": 1, 
+    "compid": 90132, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": [
+          401003203
+        ], 
+        "name": "Tornado Alley", 
+        "icon": "ability_25.png", 
+        "active": true, 
+        "unique": false, 
+        "id": 910710, 
+        "effects": [
+          [
+            2, 
+            1, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              200, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Physical wind damage (2x, ATK) to all enemies"
+        ]
+      }, 
+      {
+        "unit_restriction": null, 
+        "name": "Speed Plus", 
+        "icon": "ability_97.png", 
+        "active": false, 
+        "unique": false, 
+        "id": 203190, 
+        "effects": [
+          [
+            0, 
+            3, 
+            22, 
+            [
+              5
+            ]
+          ]
+        ], 
+        "desc": [
+          "5% chance of evading physical attacks"
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "Tornado Alley": [
+        "Physical wind damage (2x, ATK) to all enemies"
+      ], 
+      "Speed Plus": [
+        "5% chance of evading physical attacks"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "1100000129", 
+    "icon": "global_equip_10065.png", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 45, 
+      "element_inflict": [
+        "Wind"
+      ], 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      910710, 
+      203190
+    ], 
+    "slot_id": 1
+  }, 
   "\u30a8\u30af\u30b9\u30d7\u30ed\u30a2\u30ca\u30c3\u30af\u30eb": {
     "type_id": 60, 
     "compid": 588, 
@@ -32558,6 +32880,33 @@
     "skills": [
       220690
     ], 
+    "slot_id": 1
+  }, 
+  "Salamander's Gauntlets": {
+    "type_id": 16, 
+    "compid": 90133, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [], 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "1100000130", 
+    "icon": "global_equip_10066.png", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 66, 
+      "element_inflict": [
+        "Fire"
+      ], 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": null, 
     "slot_id": 1
   }, 
   "Glauca's Greatsword": {
@@ -34709,6 +35058,67 @@
       "DEF": 0
     }, 
     "skills": null, 
+    "slot_id": 1
+  }, 
+  "Crag Splitter": {
+    "type_id": 3, 
+    "compid": 90134, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "HP + 5%", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": 203250, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              5, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase HP by 5%"
+        ]
+      }
+    ], 
+    "skill_effects": {
+      "HP + 5%": [
+        "Increase HP by 5%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "1100000131", 
+    "icon": "global_equip_10067.png", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 56, 
+      "element_inflict": [
+        "Earth"
+      ], 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 15
+    }, 
+    "skills": [
+      203250
+    ], 
     "slot_id": 1
   }, 
   "Bone Rod": {
