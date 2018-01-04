@@ -52,21 +52,12 @@ object DataDecoders {
     }
   }
   def decodePassiveEffectList(c: ACursor): List[SkillEffect] = {
-    if (c.downField("unit_restriction").succeeded) {
-      val active = c.downField("active").as[Boolean].getOrElse(false)
-      if (!active) {
-        val restrict = c.downField("unit_restriction").as[Option[List[Int]]].fold(
+    val active = c.up.up.downField("active").as[Boolean].getOrElse(false)
+    if (active) Nil else {
+      val restrict =
+        c.up.up.downField("unit_restriction").as[Option[List[Int]]].fold(
           _ => Nil, _.toList.flatten)
-        array(c.downField("effects").downArray).map(a =>
-          decodePassiveEffect(restrict, a.downArray)).collect {
-            case Right(x) => x
-          }.filterNot(
-            _ == UnknownSkillEffect).toList
-      } else Nil
-    } else {
-      val active = c.up.up.downField("active").as[Boolean].getOrElse(false)
-      if (active) Nil else
-        decodePassiveEffect(Nil, c.downArray).fold(_ => Nil, x => List(x))
+      decodePassiveEffect(restrict, c.downArray).fold(_ => Nil, x => List(x))
     }
   }
   implicit val decodeSkillEffects: Decoder[List[SkillEffect]] = c => {

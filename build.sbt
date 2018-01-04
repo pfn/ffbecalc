@@ -1,4 +1,6 @@
-lazy val shared = crossProject.crossType(CrossType.Pure).in(file("shared"))
+lazy val shared = crossProject.crossType(CrossType.Pure).in(file("shared")).settings(
+  libraryDependencies += "io.suzaku" %% "boopickle" % "1.2.6"
+)
 lazy val sharedJS = shared.js
 lazy val jvm = project.in(file("jvm")).settings(
   libraryDependencies ++=

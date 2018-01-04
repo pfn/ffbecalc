@@ -2,9 +2,7 @@ import rxscalajs.{Observable,Subject}
 import rxscalajs.subjects.ReplaySubject
 import java.util.UUID
 
-package object yaffbedb {
-  import boopickle.Default._
-  implicit val picklerworkaround = implicitly[Pickler[List[ActiveEffect]]]
+package object yaffbedb extends PicklerImplicits {
   // why isn't the definition in outwatch.dom visible to us?
   type Handler[T] = Observable[T] with outwatch.Sink[T]
 
