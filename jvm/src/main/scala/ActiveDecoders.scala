@@ -541,6 +541,10 @@ object ActiveDecoders {
         ReduceDamageEffect(xs(0), xs(1), t)
       }
     },
+    102 -> { (t, a, c) => {
+      val xs = listInt(c)
+      DefDamageEffect(xs(2), t, a)
+    }},
     103 -> {
       (t, a, c) => {
         val xs = listInt(c)
