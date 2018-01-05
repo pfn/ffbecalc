@@ -134,13 +134,15 @@ div.number-picker > button {
   margin-right: 4px;
 }
 
-.number-picker > span {
+.number-picker > input {
   display: inline-block;
   text-align: center;
-  min-width: 3em;
+  min-width: 4em;
+  width: 4em;
+  height: 1.25rem;
   margin-left: 4px;
   margin-right: 4px;
-  vertical-align: middle;
+  vertical-align: top;
 }
 
 .unit-stats > div {

@@ -562,7 +562,7 @@ object YaFFBEDB {
             }
           ))
       })
-    }}.map(_.getOrElse(div("nope")))
+    }}.map(_.getOrElse(div("No TMR info available")))
 
     val unitDescription = unitInfo.map { i =>
       i.fold("")(_.entries.values.toList.sortBy(

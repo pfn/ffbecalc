@@ -189,9 +189,9 @@ object components {
       h4("Unit Buffs"),
       div(
         //numberPicker("ATK", atkBuff, init = 0, min = 0, n = _ + "%"),
-        numberPicker("DEF", defBuff, init = 0, min = 0, n = _ + "%"),
+        numberPicker("% DEF", defBuff, init = 0, min = 0),
         //numberPicker("MAG", magBuff, init = 0, min = 0, n = _ + "%"),
-        numberPicker("SPR", sprBuff, init = 0, min = 0, n = _ + "%"),
+        numberPicker("% SPR", sprBuff, init = 0, min = 0),
       ),
       h4("Opponent"),
       h5("Stats"),
@@ -204,17 +204,17 @@ object components {
       ),
       h5("Breaks"),
       div(
-        numberPicker("ATK", atkBreak, init = 0, min = 0, max = 99, n = _ + "%"),
+        numberPicker("% ATK", atkBreak, init = 0, min = 0, max = 99),
         //numberPicker("DEF", defBreak, init = 0, min = 0, max = 99, n = _ + "%"),
-        numberPicker("MAG", magBreak, init = 0, min = 0, max = 99, n = _ + "%"),
+        numberPicker("% MAG", magBreak, init = 0, min = 0, max = 99),
         //numberPicker("SPR", sprBreak, init = 0, min = 0, max = 99, n = _ + "%"),
       ),
       h5("Damage Received"),
       div(
-        numberPicker("Ratio", damageRatio, init = 1000, min = 1, max = 50000, steps = (10, 100, 500), n = r => f"${r / 100.0}%.1fx"),
-        numberPicker("Damage Reduction", damageReduction, init = 0, min = 0, max = 99, n = _ + "%"),
-        numberPicker("Physical Reduction", physReduction, init = 0, min = 0, max = 99, n = _ + "%"),
-        numberPicker("Magical Reduction", magReduction, init = 0, min = 0, max = 99, n = _ + "%"),
+        numberPicker("Ratio", damageRatio, init = 1000, min = 1, max = 50000, steps = (10, 100, 500), n = r => f"${r / 100.0}%.1f", from = x => (x * 100).toInt),
+        numberPicker("% Damage Reduction", damageReduction, init = 0, min = 0, max = 99),
+        numberPicker("% Physical Reduction", physReduction, init = 0, min = 0, max = 99),
+        numberPicker("% Magical Reduction", magReduction, init = 0, min = 0, max = 99),
         div("Physical: ", child <-- calculateDamageReceived(breakStat(targetAtk, atkBreak), damageRatio, getDefStat(unitStats, baseStats, defBuff, _.defs, _.defs), targetLevel, damageReduction, physReduction)),
         div("Magical: ", child <-- calculateDamageReceived(breakStat(targetMag, magBreak), damageRatio, getDefStat(unitStats, baseStats, sprBuff, _.spr, _.spr), targetLevel, damageReduction, magReduction)),
       ),
@@ -242,19 +242,31 @@ object components {
     )
   }
 
-  def numberPicker(lbl: VNode, sink: Sink[Int], init: Int = 25, min: Int = -300, max: Int = 3000, steps: (Int, Int, Int) = (1, 5, 50), n: Int => String = _.toString): VNode = {
+  def numberPicker(lbl: VNode, sink: Sink[Int],
+    init: Int = 25, min: Int = -300, max: Int = 3000,
+    steps: (Int, Int, Int) = (1, 5, 50),
+    n: Int => String = _.toString,
+    from: Double => Int = _.toInt): VNode = {
     val h = createHandler[Int]()
-    val result = h.scan(init) { (ac,x) =>
-      math.min(max, math.max(min, ac + x))
+    val nh = createHandler[Int](init)
+    val validator = rxscalajs.Subject[Int]()
+    val result = withStamp(h.startWith(0)).combineLatest(withStamp(nh)).scan(init) {
+      case (ac,((x,ts1),(y,ts2))) =>
+      val z = if (ts1 > ts2) ac + x else y
+      val r = math.min(max, math.max(min, z))
+      if (z != r)
+        validator.next(r)
+      r
     }
 
-    sink <-- result
+
+    sink <-- result.merge(nh)
 
     div(cls := "number-picker",
       button("\u2193", click(-1 * steps._1) --> h),
       button("\u21e9", click(-1 * steps._2) --> h),
       button("\u2b07", click(-1 * steps._3) --> h),
-      span(child <-- result.startWith(init).map(n)),
+      input(tpe := "number", inputNumber(from) --> nh, value <-- result.merge(validator).startWith(init).map(n)),
       button("\u2b06", click(steps._3) --> h),
       button("\u21e7", click(steps._2) --> h),
       button("\u2191", click(steps._1) --> h),
