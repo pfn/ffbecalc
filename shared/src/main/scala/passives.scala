@@ -71,6 +71,25 @@ object SkillEffect {
     60 -> "Accessory"
   )
 
+  val VARIANCE = Map(
+    1  -> WeaponVariance(0.95, 1.05),
+    2  -> WeaponVariance(0.9, 1.1),
+    3  -> WeaponVariance(0.85, 1.15),
+    4  -> WeaponVariance(0.9, 1.1),
+    5  -> WeaponVariance(0.95, 1.05),
+    6  -> WeaponVariance(0.95, 1.05),
+    //7 -> always set in data
+    8  -> WeaponVariance(0.7, 1.3),
+    9  -> WeaponVariance(0.8, 1.2),
+    10 -> WeaponVariance(0.85, 1.15),
+    11 -> WeaponVariance(1, 1), // assumed for 1h harp (Holiday Bell)
+    12 -> WeaponVariance(0.9, 1.1),
+    13 -> WeaponVariance(0.9, 1.1),
+    14 -> WeaponVariance(0.95, 1.05),
+    15 -> WeaponVariance(0.95, 1.05),
+    16 -> WeaponVariance(1, 1)
+  ).withDefaultValue(WeaponVariance.none)
+
 
   def apply(restrict: List[Int], x: Int, y: Int, z: Int, xs: List[Int]): SkillEffect = {
     (x, y, z) match {

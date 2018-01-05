@@ -339,6 +339,7 @@ object components {
           val eqstats = alleq.foldLeft(Stats.zero) { (ac, equip) =>
             ac + equip.stats
           }
+          val eqaccy = alleq.map(_.accuracy).sum
           val dh = if (!is2h && isSW) pasv.dh.asSingleHand
           else PassiveSinglehandEffect.zero
 
@@ -354,7 +355,7 @@ object components {
           val alldhGE = dhGE + tdhGE
           val alldh = dh + tdh
 
-          val accuracy = (if (is2h || isSW) pasv.tdh.accuracy else 0) + (if (!is2h && isSW) pasv.accuracy1h else 0)
+          val accuracy = (if (isSW) eqaccy else 0) + (if (is2h || isSW) pasv.tdh.accuracy else 0) + (if (!is2h && isSW) pasv.accuracy1h else 0)
 
           Effective(st, st.asStats * passives + e + eqstats + (eqstats * alldh) + (eqstats * alldhGE) ++ ee, passives, pasv.dh, pasv.dhGE, pasv.tdh, pasv.tdhGE, accuracy, !is2h && isSW, isSW || is2h, ed, e, ee, pasv.killers)
         }

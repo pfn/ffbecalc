@@ -170,10 +170,17 @@ case class Memo[A,B](f: A => B) extends Function1[A,B] {
     m
   })
 }
+case class WeaponVariance(min: Double, max: Double) {
+  def effective(tpe: Int) =
+    if (min == 0 && max == 0) SkillEffect.VARIANCE(tpe) else this
+}
+object WeaponVariance {
+  def none = WeaponVariance(0, 0)
+}
 case class EquipIndexData(
-  id: Int, icon: String, slotId: Int, twohands: Boolean, skills: List[Int], tpe: Int, stats: EquipStats, req: Option[EquipReq], skillInfo: List[IndexSkillInfo])
+  id: Int, icon: String, slotId: Int, twohands: Boolean, variance: WeaponVariance, accuracy: Int, skills: List[Int], tpe: Int, stats: EquipStats, req: Option[EquipReq], skillInfo: List[IndexSkillInfo])
 case class EquipIndex(
-  name: String, id: Int, icon: String, twohands: Boolean, slotId: Int, skills: List[Int], tpe: Int, stats: EquipStats, req: Option[EquipReq], skillInfo: List[IndexSkillInfo]) extends Equipment with SkillIndex {
+  name: String, id: Int, icon: String, twohands: Boolean, slotId: Int, variance: WeaponVariance, accuracy: Int, skills: List[Int], tpe: Int, stats: EquipStats, req: Option[EquipReq], skillInfo: List[IndexSkillInfo]) extends Equipment with SkillIndex {
 
   val memo = Memo { a: Option[UnitData] =>
     SkillEffect.collateEffects(a, skillInfo.flatMap(_.passives)).toString

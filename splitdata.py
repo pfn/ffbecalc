@@ -87,6 +87,8 @@ for x in equip.keys():
   equipdex[name2] = {
     "id": x,
     "compid": compid,
+    "dmg_variance": equip[x]["dmg_variance"],
+    "accuracy": equip[x]["accuracy"],
     "icon": equip[x]["icon"],
     "type_id": equip[x]["type_id"],
     "slot_id": equip[x]["slot_id"],

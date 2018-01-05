@@ -83,6 +83,14 @@ object DataDecoders {
       pot <- c.downArray.first.right.right.as[Int]
     } yield StatRange(min, max, pot)
   }
+  implicit val decodeWeaponVariance: Decoder[WeaponVariance] = c => {
+    (for {
+      min <- c.downArray.first.as[Int]
+      max <- c.downArray.first.right.as[Int]
+    } yield WeaponVariance(min, max)).left.flatMap { _ =>
+      c.up.downField("type_id").as[Int].map(SkillEffect.VARIANCE)
+    }
+  }
   implicit val decodeAilmentResists: Decoder[AilmentResist] = c => {
     for {
       poison    <- c.downArray.first.as[Int]
@@ -183,18 +191,23 @@ object DataDecoders {
       }
     }
   }
-  implicit val decodeEquipIndexData: Decoder[EquipIndexData] =
-    Decoder.forProduct9(
-      "id",
-      "icon",
-      "slot_id",
-      "is_twohanded",
-      "skills",
-      "type_id",
-      "stats",
-      "reqs",
-      "effects_raw"
-    )(EquipIndexData.apply)
+  implicit val decodeEquipIndexData: Decoder[EquipIndexData] = c => {
+    for {
+      id       <- c.downField("id").as[Int]
+      tpe      <- c.downField("type_id").as[Int]
+      icon     <- c.downField("icon").as[String]
+      slot     <- c.downField("slot_id").as[Int]
+      is2h     <- c.downField("is_twohanded").as[Boolean]
+      variance <- c.downField("dmg_variance").as[WeaponVariance]
+        .left.flatMap(_ => Right(SkillEffect.VARIANCE(tpe)))
+      accuracy <- c.downField("accuracy").as[Int].left.flatMap(_ => Right(0))
+      skills   <- c.downField("skills").as[List[Int]]
+      stats    <- c.downField("stats").as[EquipStats]
+      reqs     <- c.downField("reqs").as[Option[EquipReq]]
+      sinfo    <- c.downField("effects_raw").as[List[IndexSkillInfo]]
+    } yield EquipIndexData(
+      id, icon, slot, is2h, variance, accuracy, skills, tpe, stats, reqs, sinfo)
+  }
   // have to use custom decoder because of optional unique field
   implicit val decodeSkillInfo: Decoder[SkillInfo] = c => {
     for {
