@@ -95,6 +95,10 @@ object components {
     stat.combineLatest(break).map { case (d,b) =>
       math.max(1, (d * (1.0 - b/100.0)).toInt)
     }
+  def buffStat(stat: Observable[Int], buff: Observable[Int]): Observable[Int] =
+    stat.combineLatest(buff).map { case (s, b) =>
+      (s * (1 + b/100.0)).toInt
+    }
   def getDefStat(stats: Observable[Option[UnitStats]], base: Observable[Option[BaseStats]], buff: Observable[Int], sel1: UnitStats => Int, sel2: BaseStats => Int): Observable[Option[Int]] = {
     stats.combineLatest(base, buff).map { case (s, b, bf) =>
       for {
@@ -105,12 +109,50 @@ object components {
       }
     }
   }
-  def calculateDamageReceived(stat: Observable[Int], ratio: Observable[Int], defs: Observable[Option[Int]], level: Observable[Int], reduc1: Observable[Int], reduc2: Observable[Int]): Observable[String] = {
-    stat.combineLatest(ratio, defs, level).combineLatest(reduc1, reduc2).map { case ((st, r, d, l), r1, r2) =>
-      d.map { df =>
-        ((1 - r1/100.0) * (1 - r2/100.0) * (1 + l/100.0) * (r/100.0) * ((st * st) / df)).toInt.toString + " +/- 0/15%"
-      }.getOrElse("N/A")
+
+  def calcKillers(target: TargetStats, killers: Map[Int,(Int,Int)], sel: ((Int,Int)) => Int): Int = {
+    val ts = target.tribes.size
+    val ks = target.tribes.map(t => sel(killers.getOrElse(t, (0,0)))).sum
+    ks / ts
+  }
+
+  def calcElements(unit: Option[UnitStats], target: TargetStats): Int = {
+    unit.fold(0) { u =>
+      val es = u.elements
+      val est = es.map(e =>
+        target.resists.asMap.getOrElse(e, 0)).sum
+      if (es.isEmpty) 0 else est / es.size
     }
+  }
+  case class Damage(min: Int, max: Int, avg: Int) {
+    override def toString = s"$min - $max (avg $avg)"
+    def +(o: Damage) = Damage(min + o.min, max + o.max, avg + o.avg)
+  }
+  object Damage {
+    def empty = Damage(0, 0, 0)
+  }
+
+  case class DamageScoreSim(
+    phy: Damage, dwL: Damage, dwR: Damage, dwT: Damage, mag: Damage)
+
+  object DamageScoreSim {
+    def empty = DamageScoreSim(
+      Damage.empty, Damage.empty, Damage.empty, Damage.empty, Damage.empty)
+  }
+
+  def calculateDamageReceived(stat: Observable[Int], ratio: Observable[Int], defs: Observable[Option[Int]], level: Observable[Int], reduc1: Observable[Int], reduc2: Observable[Int], variance: WeaponVariance = WeaponVariance(1, 1)): Observable[Damage] = {
+    stat.combineLatest(ratio, defs, level).combineLatest(reduc1, reduc2).map { case ((st, r, d, l), r1, r2) =>
+    calculateDamageReceivedS(st, r, d, l, r1, r2, 0, 0)
+    }
+  }
+  def calculateDamageReceivedS(st: Int, r: Int, d: Option[Int], l: Int, r1: Int, r2: Int, elements: Int, killers: Int, variance: WeaponVariance = WeaponVariance(1, 1)): Damage = {
+      d.fold(Damage(0, 0, 0)) { df =>
+        val dmg = ((1 + elements/100.0) * (1+ killers/100.0) * (1 - r1/100.0) * (1 - r2/100.0) * (1 + l/100.0) * (r/100.0) * ((st * st) / df)).toInt
+        val min = (dmg * 0.85 * variance.min).toInt
+        val max = (dmg * variance.max).toInt
+        val avg = (min + max) / 2
+        Damage(min, max, avg)
+      }
   }
   def battleStats(baseStats: Observable[Option[BaseStats]], unitStats: Observable[Option[UnitStats]]): Observable[VNode] = Observable.just {
     val statsClicks = createHandler[Unit](())
@@ -140,6 +182,7 @@ object components {
     val darkRes    = createHandler[Int](0)
 
     val damageRatio = createHandler[Int](1000)
+    val outputRatio = createHandler[Int](100)
     val damageReduction = createHandler[Int](0)
     val physReduction = createHandler[Int](0)
     val magReduction = createHandler[Int](0)
@@ -156,7 +199,7 @@ object components {
       ElementResist(fire, ice, thunder, water, wind, earth, holy, dark)
     }
 
-    targetDef.combineLatest(targetSpr, defBreak, sprBreak)
+    val targetStats = targetDef.combineLatest(targetSpr, defBreak, sprBreak)
       .combineLatest(eleres, tribes).map {
         case ((defs, spr, defB, sprB),eler, tribe) =>
       TargetStats(defs, spr, defB, sprB, tribe, eler)
@@ -166,48 +209,120 @@ object components {
       case (atk, defs, mag, spr) => Buffs(atk, defs, mag, spr)
     }
 
+    val phyReceived  = calculateDamageReceived(breakStat(targetAtk, atkBreak),
+      damageRatio,
+      getDefStat(unitStats, baseStats, defBuff, _.defs, _.defs),
+      targetLevel, damageReduction, physReduction)
+    val magReceived = calculateDamageReceived(breakStat(targetMag, magBreak),
+      damageRatio,
+      getDefStat(unitStats, baseStats, sprBuff, _.spr, _.spr),
+      targetLevel, damageReduction, magReduction)
+
+    val dmgScore: Observable[DamageScoreSim] = {
+      unitStats.combineLatest(
+        baseStats, targetStats).combineLatest(
+        defBreak.combineLatest(sprBreak), atkBuff.combineLatest(magBuff), outputRatio).map { case ((u,b,t),(db,sb),(ab,mb),r) =>
+        (for {
+          s <- u
+          a <- b
+        } yield {
+          val dwadj = if (s.l != 0 && s.l != 0) s.l
+          else 0
+          println("variance: " + s.variance)
+          val phy = calculateDamageReceivedS(
+            (s.atk + a.atk * (1 + ab/100.0)).toInt - dwadj,
+            r,
+            Option((t.defs * (1 / (1 - db/100.0))).toInt),
+            s.level, 0, 0,
+            calcKillers(t, u.fold(Map.empty[Int,(Int,Int)])(_.killers), _._1),
+            calcElements(u, t),
+            s.variance)
+          val (dw1, dw2) = if (s.dw) {
+            val dwR = calculateDamageReceivedS(
+              (s.atk + a.atk * (1 + ab/100.0)).toInt - s.l,
+              r,
+              Option((t.defs * (1 / (1 - db/100.0))).toInt),
+              s.level, 0, 0,
+              calcKillers(t, u.fold(Map.empty[Int,(Int,Int)])(_.killers), _._1),
+              calcElements(u, t),
+              s.variance)
+            val dwL = calculateDamageReceivedS(
+              (s.atk + a.atk * (1 + ab/100.0)).toInt - s.r,
+              r,
+              Option((t.defs * (1 / (1 - db/100.0))).toInt),
+              s.level, 0, 0,
+              calcKillers(t, u.fold(Map.empty[Int,(Int,Int)])(_.killers), _._1),
+              calcElements(u, t),
+              s.variance)
+              List(
+                div("Physical DW R: " + dwR),
+                div("Physical DW L: " + dwL)
+              )
+            dwR -> dwL
+          } else {
+            Damage.empty -> Damage.empty
+          }
+          val mag = calculateDamageReceivedS(
+            (s.mag + a.mag * (1 + mb/100.0)).toInt,
+            r,
+            Option((t.spr * (1 / (1 - sb/100.0))).toInt),
+            s.level, 0, 0,
+            calcKillers(t, u.fold(Map.empty[Int,(Int,Int)])(_.killers), _._2),
+            0, s.variance)
+          DamageScoreSim(phy, dw1, dw2, dw1 + dw2, mag)
+        }).getOrElse(DamageScoreSim.empty)
+      }
+    }
+
     div(cls := "battle-stats",
       div(
         div("Buffs"),
-        //div("ATK ", child <-- atkBuff.map(_ + "%")),
+        div("ATK ", child <-- atkBuff.map(_ + "%")),
         div("DEF ", child <-- defBuff.map(_ + "%")),
-        //div("MAG ", child <-- magBuff.map(_ + "%")),
+        div("MAG ", child <-- magBuff.map(_ + "%")),
         div("SPR ", child <-- sprBuff.map(_ + "%")),
-        div(),
-        div(),
         div(),
         button("Adjust", tpe := "button", click(()) --> statsClicks),
       ),
       div(
         div("Opponent"),
         div("ATK ", child <-- breakStat(targetAtk, atkBreak)),
-        //div("DEF ", child <-- breakStat(targetDef, defBreak)),
+        div("DEF ", child <-- breakStat(targetDef, defBreak)),
         div("MAG ", child <-- breakStat(targetMag, magBreak)),
-        //div("SPR ", child <-- breakStat(targetSpr, sprBreak)),
+        div("SPR ", child <-- breakStat(targetSpr, sprBreak)),
+      ),
+      div(cls := "dmg-score",
+        div("Damage:"),
+        div(child <-- dmgScore.map { d =>
+          math.max(d.mag.avg, math.max(d.phy.avg, d.dwT.avg))
+        }),
+        div("Tanking:"),
+        div(child <-- phyReceived.map(_.avg)),
+        div(child <-- magReceived.map(_.avg))
       ),
       div(hidden <-- showStats, cls := "battle-stats-inner",
       h4("Unit Buffs"),
       div(
-        //numberPicker("ATK", atkBuff, init = 0, min = 0, n = _ + "%"),
+        numberPicker("% ATK", atkBuff, init = 0, min = 0),
         numberPicker("% DEF", defBuff, init = 0, min = 0),
-        //numberPicker("MAG", magBuff, init = 0, min = 0, n = _ + "%"),
+        numberPicker("% MAG", magBuff, init = 0, min = 0),
         numberPicker("% SPR", sprBuff, init = 0, min = 0),
       ),
       h4("Opponent"),
       h5("Stats"),
       div(
         numberPicker("ATK", targetAtk, init = 500, min = 1),
-        //numberPicker("DEF", targetDef, init = 25, min = 1),
+        numberPicker("DEF", targetDef, init = 25, min = 1),
         numberPicker("MAG", targetMag, init = 500, min = 1),
-        //numberPicker("SPR", targetSpr, init = 25, min = 1),
+        numberPicker("SPR", targetSpr, init = 25, min = 1),
         numberPicker("Level", targetLevel, init = 99, min = 1, max = 100),
       ),
       h5("Breaks"),
       div(
         numberPicker("% ATK", atkBreak, init = 0, min = 0, max = 99),
-        //numberPicker("DEF", defBreak, init = 0, min = 0, max = 99, n = _ + "%"),
+        numberPicker("% DEF", defBreak, init = 0, min = 0, max = 99),
         numberPicker("% MAG", magBreak, init = 0, min = 0, max = 99),
-        //numberPicker("SPR", sprBreak, init = 0, min = 0, max = 99, n = _ + "%"),
+        numberPicker("% SPR", sprBreak, init = 0, min = 0, max = 99),
       ),
       h5("Damage Received"),
       div(
@@ -215,20 +330,19 @@ object components {
         numberPicker("% Damage Reduction", damageReduction, init = 0, min = 0, max = 99),
         numberPicker("% Physical Reduction", physReduction, init = 0, min = 0, max = 99),
         numberPicker("% Magical Reduction", magReduction, init = 0, min = 0, max = 99),
-        div("Physical: ", child <-- calculateDamageReceived(breakStat(targetAtk, atkBreak), damageRatio, getDefStat(unitStats, baseStats, defBuff, _.defs, _.defs), targetLevel, damageReduction, physReduction)),
-        div("Magical: ", child <-- calculateDamageReceived(breakStat(targetMag, magBreak), damageRatio, getDefStat(unitStats, baseStats, sprBuff, _.spr, _.spr), targetLevel, damageReduction, magReduction)),
+        div("Physical: ", child <-- phyReceived),
+        div("Magical: ", child <-- magReceived),
       ),
-      /*
       h5("Elemental Resists"),
       div(
-        numberPicker(span(cls := "elements fire"), fireRes, init = 0, min = -200, max = 200, n = _ + "%"),
-        numberPicker(span(cls := "elements ice"), iceRes, init = 0, min = -200, max = 200, n = _ + "%"),
-        numberPicker(span(cls := "elements thunder"), iceRes, init = 0, min = -200, max = 200, n = _ + "%"),
-        numberPicker(span(cls := "elements water"), thunderRes, init = 0, min = -200, max = 200, n = _ + "%"),
-        numberPicker(span(cls := "elements wind"), windRes, init = 0, min = -200, max = 200, n = _ + "%"),
-        numberPicker(span(cls := "elements earth"), earthRes, init = 0, min = -200, max = 200, n = _ + "%"),
-        numberPicker(span(cls := "elements holy"), holyRes, init = 0, min = -200, max = 200, n = _ + "%"),
-        numberPicker(span(cls := "elements dark"), darkRes, init = 0, min = -200, max = 200, n = _ + "%"),
+        numberPicker(span(cls := "elements fire"), fireRes, init = 0, min = -200, max = 200),
+        numberPicker(span(cls := "elements ice"), iceRes, init = 0, min = -200, max = 200),
+        numberPicker(span(cls := "elements thunder"), iceRes, init = 0, min = -200, max = 200),
+        numberPicker(span(cls := "elements water"), thunderRes, init = 0, min = -200, max = 200),
+        numberPicker(span(cls := "elements wind"), windRes, init = 0, min = -200, max = 200),
+        numberPicker(span(cls := "elements earth"), earthRes, init = 0, min = -200, max = 200),
+        numberPicker(span(cls := "elements holy"), holyRes, init = 0, min = -200, max = 200),
+        numberPicker(span(cls := "elements dark"), darkRes, init = 0, min = -200, max = 200),
       ),
       h5("Tribes"),
       div((cls := "target-tribes") ::
@@ -237,7 +351,22 @@ object components {
             value := k, checked := k == 5, inputChecked(b => (k,b)) --> tribeSink), " ", v), " ")
         }: _*
       ),
-      */
+      h5("Damage Score"),
+      div(
+        numberPicker("Ratio", outputRatio, init = 100, min = 1, max = 3000, steps = (10, 100, 500), n = r => f"${r / 100.0}%.1f", from = x => (x * 100).toInt),
+        div(children <-- dmgScore.map { ds =>
+          val dw = if (ds.dwT != Damage.empty) {
+            List(
+              div("Physical DW: " + ds.dwT),
+              div("Physical DW R: " + ds.dwR),
+              div("Physical DW L: " + ds.dwL),
+            )
+          } else Nil
+          List(div("Physical SW: " + ds.phy)) ++
+          dw ++ List(div("Magical: " + ds.mag))
+        }),
+      ),
+
     )
     )
   }
@@ -314,7 +443,8 @@ object components {
     dh: PassiveDoublehandEffect, dhGE: PassiveSinglehandEffect,
     tdh: Passive2HEffect, tdhGE: PassiveTDHEffect, accuracy: Int,
     is1h: Boolean, is2h: Boolean,
-    ed: Option[EsperData], e: Option[EsperStatInfo], ee: Option[EsperEntry], killers: Map[Int,(Int,Int)])
+    ed: Option[EsperData], e: Option[EsperStatInfo], ee: Option[EsperEntry],
+    variance: WeaponVariance, atkL: Int, atkR: Int, killers: Map[Int,(Int,Int)])
 
   def unitStats(unitInfo: Observable[Option[UnitData]],
                 unit: Observable[Option[UnitEntry]],
@@ -331,6 +461,17 @@ object components {
       case (s,(e,ed,ee),(eqs,_),pasv) =>
         s.map { st =>
           val alleq = eqs.allEquipped
+          val atks = alleq.collect {
+            case equip if equip.slotId == 1 => equip.stats.atk
+          }
+          val (l,r) = atks match {
+            case Nil           => (0, 0)
+            case x :: y :: Nil => (y, x)
+            case x :: Nil      => (0, x)
+            case xs            => (0, 0) // more than 2 weapons???
+          }
+          val variance = alleq.map(_.variance).find(
+            _ != WeaponVariance.none).getOrElse(WeaponVariance(1,1))
           val passives = pasv.stats + pasv.statFromEquips(alleq)
 
           val is2h = alleq.exists(_.twohands)
@@ -357,12 +498,12 @@ object components {
 
           val accuracy = (if (isSW) eqaccy else 0) + (if (is2h || isSW) pasv.tdh.accuracy else 0) + (if (!is2h && isSW) pasv.accuracy1h else 0)
 
-          Effective(st, st.asStats * passives + e + eqstats + (eqstats * alldh) + (eqstats * alldhGE) ++ ee, passives, pasv.dh, pasv.dhGE, pasv.tdh, pasv.tdhGE, accuracy, !is2h && isSW, isSW || is2h, ed, e, ee, pasv.killers)
+          Effective(st, st.asStats * passives + e + eqstats + (eqstats * alldh) + (eqstats * alldhGE) ++ ee, passives, pasv.dh, pasv.dhGE, pasv.tdh, pasv.tdhGE, accuracy, !is2h && isSW, isSW || is2h, ed, e, ee, variance, l, r, pasv.killers)
         }
     }
 
     unitOut <-- effective.map { _.map(eff =>
-      UnitStats(eff.stats.atk, eff.stats.defs, eff.stats.mag, eff.stats.spr, 0, 0, 100, Set.empty, eff.killers)
+      UnitStats(eff.stats.atk, eff.stats.defs, eff.stats.mag, eff.stats.spr, eff.atkL, eff.atkR, eff.variance, 100, Set.empty, eff.killers)
     )}
     table(cls := "unit-stats",
       caption("Effective Stats"),

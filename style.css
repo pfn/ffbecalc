@@ -157,6 +157,8 @@ div.number-picker > button {
   text-indent: -0.5em;
 }
 
+.dmg-score { margin-top: 8px }
+
 table.unit-resists {
   width: 100%;
 }
@@ -196,6 +198,10 @@ table.unit-resists td {
 .number-picker .elements {
   margin-left: -4px;
   vertical-align: middle;
+}
+span.elements {
+  display: inline-block;
+  vertical-align: top;
 }
 .elements,
 .unit-resists > tr:first-child > td > div {

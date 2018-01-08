@@ -99,6 +99,7 @@ object Pickler {
     //println(unpickle[List[EquipIndex]](picklepath / "equip" / "index.pickle"))
     //println(unpickle[List[EsperSlot]](picklepath / "esperboard" / "4.pickle"))
     val equips = unpickle[List[EquipIndex]](picklepath / "equip" / "index.pickle")
+    asserteq(equips.find(_.id == 315020900), "Some(EquipIndex(Fixed Dice,315020900,item_11314.png,true,1,WeaponVariance(1.2,6.5),10,List(),13,ATK+1,None,List()))")
     asserteq(equips.find(_.id == 303002300).map(_.skillInfo.flatMap(_.passives).map(_.restrictions)), "Some(List(Set(100000102)))")
     asserteq(equips.find(_.id == 301001500), "Some(EquipIndex(Swordbreaker,301001500,item_10110.png,false,1,WeaponVariance(0.95,1.05),0,List(206170),1,ATK+43,None,List(IndexSkillInfo(206170,Swordbreaker,true,ability_97.png,List(5% chance of evading physical attacks),List(),List(PassiveDodgeEffect(5,0))))))")
     asserteq(equips.find(_.id == 302003300), "Some(EquipIndex(Onion Sword,302003300,item_10230.png,false,1,WeaponVariance(0.9,1.1),0,List(200440, 211500),2,ATK+135,None,List(IndexSkillInfo(200440,Bladeblitz,false,ability_53.png,List(Physical damage (1.4x, ATK) to all enemies),List(Physical*  damage (1.40x ATK) to all enemies),List()), IndexSkillInfo(211500,Onion Cutter,false,ability_54.png,List(Physical damage (5.2x, ATK) to one enemy),List(Physical*  damage (5.20x ATK) to an enemy),List()))))")

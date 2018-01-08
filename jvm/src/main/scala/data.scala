@@ -85,9 +85,9 @@ object DataDecoders {
   }
   implicit val decodeWeaponVariance: Decoder[WeaponVariance] = c => {
     (for {
-      min <- c.downArray.first.as[Int]
-      max <- c.downArray.first.right.as[Int]
-    } yield WeaponVariance(min, max)).left.flatMap { _ =>
+      min <- c.downArray.as[Double]
+      max <- c.downArray.right.as[Double]
+    } yield WeaponVariance(min, max)).left.flatMap { e =>
       c.up.downField("type_id").as[Int].map(SkillEffect.VARIANCE)
     }
   }

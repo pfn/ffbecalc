@@ -25,8 +25,7 @@ object ActiveUtils {
   def or(xs: List[String]) = join(xs, " or ")
   def and(xs: List[String]) = join(xs, " and ")
 }
-// TODO handle weapons/variance?
-case class UnitStats(atk: Int, defs: Int, mag: Int, spr: Int, l: Int, r: Int, level: Int, elements: Set[Int], killers: Map[Int,(Int,Int)]) {
+case class UnitStats(atk: Int, defs: Int, mag: Int, spr: Int, l: Int, r: Int, variance: WeaponVariance, level: Int, elements: Set[Int], killers: Map[Int,(Int,Int)]) {
   def dw = r != 0 && l != 0
 }
 case class TargetStats(defs: Int, spr: Int, defBreak: Int, sprBreak: Int, tribes: Set[Int], resists: ElementResist)
