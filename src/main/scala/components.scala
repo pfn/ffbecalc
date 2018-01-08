@@ -25,8 +25,8 @@ object components {
       sortItem(Sort.HP,  sortHP,  "HP"),
       sortItem(Sort.MP,  sortMP,  "MP"),
       sortItem(Sort.ATK, sortATK, "ATK"),
-      sortItem(Sort.DEF, sortDEF, "DEF"),
       sortItem(Sort.MAG, sortMAG, "MAG"),
+      sortItem(Sort.DEF, sortDEF, "DEF"),
       sortItem(Sort.SPR, sortSPR, "SPR"))
   }
   def unitBaseStats(unit: Observable[Option[UnitEntry]], stats: Sink[Option[BaseStats]], sub: PotSubjects) = {
@@ -74,8 +74,8 @@ object components {
           div("HP " , child <-- maxstat(u, hpPots, _.hp)),
           div("MP " , child <-- maxstat(u, mpPots, _.mp)),
           div("ATK ", child <-- maxstat(u, atkPots, _.atk)),
-          div("DEF ", child <-- maxstat(u, defPots, _.defs)),
           div("MAG ", child <-- maxstat(u, magPots, _.mag)),
+          div("DEF ", child <-- maxstat(u, defPots, _.defs)),
           div("SPR ", child <-- maxstat(u, sprPots, _.spr)),
           button("Pots", tpe := "button", click(()) --> potClicks),
         ),
@@ -83,8 +83,8 @@ object components {
           potSlider("HP",  potsFor(u, _.hp),  10,  hpPots),
           potSlider("MP",  potsFor(u, _.mp),   5,  mpPots),
           potSlider("ATK", potsFor(u, _.atk),  1,  atkPots),
-          potSlider("DEF", potsFor(u, _.defs), 1,  defPots),
           potSlider("MAG", potsFor(u, _.mag),  1,  magPots),
+          potSlider("DEF", potsFor(u, _.defs), 1,  defPots),
           potSlider("SPR", potsFor(u, _.spr),  1,  sprPots),
         ),
       )
@@ -278,8 +278,8 @@ object components {
       div(
         div("Buffs"),
         div("ATK ", child <-- atkBuff.map(_ + "%")),
-        div("DEF ", child <-- defBuff.map(_ + "%")),
         div("MAG ", child <-- magBuff.map(_ + "%")),
+        div("DEF ", child <-- defBuff.map(_ + "%")),
         div("SPR ", child <-- sprBuff.map(_ + "%")),
         div(),
         button("Adjust", tpe := "button", click(()) --> statsClicks),
@@ -287,8 +287,8 @@ object components {
       div(
         div("Opponent"),
         div("ATK ", child <-- breakStat(targetAtk, atkBreak)),
-        div("DEF ", child <-- breakStat(targetDef, defBreak)),
         div("MAG ", child <-- breakStat(targetMag, magBreak)),
+        div("DEF ", child <-- breakStat(targetDef, defBreak)),
         div("SPR ", child <-- breakStat(targetSpr, sprBreak)),
       ),
       div(cls := "dmg-score",
@@ -304,24 +304,24 @@ object components {
       h4("Unit Buffs"),
       div(
         numberPicker("% ATK", atkBuff, init = 0, min = 0),
-        numberPicker("% DEF", defBuff, init = 0, min = 0),
         numberPicker("% MAG", magBuff, init = 0, min = 0),
+        numberPicker("% DEF", defBuff, init = 0, min = 0),
         numberPicker("% SPR", sprBuff, init = 0, min = 0),
       ),
       h4("Opponent"),
       h5("Stats"),
       div(
         numberPicker("ATK", targetAtk, init = 500, min = 1),
-        numberPicker("DEF", targetDef, init = 25, min = 1),
         numberPicker("MAG", targetMag, init = 500, min = 1),
+        numberPicker("DEF", targetDef, init = 25, min = 1),
         numberPicker("SPR", targetSpr, init = 25, min = 1),
         numberPicker("Level", targetLevel, init = 99, min = 1, max = 100),
       ),
       h5("Breaks"),
       div(
         numberPicker("% ATK", atkBreak, init = 0, min = 0, max = 99),
-        numberPicker("% DEF", defBreak, init = 0, min = 0, max = 99),
         numberPicker("% MAG", magBreak, init = 0, min = 0, max = 99),
+        numberPicker("% DEF", defBreak, init = 0, min = 0, max = 99),
         numberPicker("% SPR", sprBreak, init = 0, min = 0, max = 99),
       ),
       h5("Damage Received"),
