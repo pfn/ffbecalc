@@ -232,7 +232,7 @@ object components {
           val phy = calculateDamageReceivedS(
             (s.atk + a.atk * (1 + ab/100.0)).toInt - dwadj,
             r,
-            Option((t.defs * (1 / (1 - db/100.0))).toInt),
+            Option((t.defs * (1 - db/100.0)).toInt),
             s.level, 0, 0,
             calcKillers(t, u.fold(Map.empty[Int,(Int,Int)])(_.killers), _._1),
             calcElements(u, t),
@@ -241,7 +241,7 @@ object components {
             val dwR = calculateDamageReceivedS(
               (s.atk + a.atk * (1 + ab/100.0)).toInt - s.l,
               r,
-              Option((t.defs * (1 / (1 - db/100.0))).toInt),
+              Option((t.defs * (1 - db/100.0)).toInt),
               s.level, 0, 0,
               calcKillers(t, u.fold(Map.empty[Int,(Int,Int)])(_.killers), _._1),
               calcElements(u, t),
@@ -249,7 +249,7 @@ object components {
             val dwL = calculateDamageReceivedS(
               (s.atk + a.atk * (1 + ab/100.0)).toInt - s.r,
               r,
-              Option((t.defs * (1 / (1 - db/100.0))).toInt),
+              Option((t.defs * (1 - db/100.0)).toInt),
               s.level, 0, 0,
               calcKillers(t, u.fold(Map.empty[Int,(Int,Int)])(_.killers), _._1),
               calcElements(u, t),
@@ -265,7 +265,7 @@ object components {
           val mag = calculateDamageReceivedS(
             (s.mag + a.mag * (1 + mb/100.0)).toInt,
             r,
-            Option((t.spr * (1 / (1 - sb/100.0))).toInt),
+            Option((t.spr * (1 - sb/100.0)).toInt),
             s.level, 0, 0,
             calcKillers(t, u.fold(Map.empty[Int,(Int,Int)])(_.killers), _._2),
             0, s.variance)
