@@ -228,9 +228,8 @@ object components {
         } yield {
           val dwadj = if (s.l != 0 && s.l != 0) s.l
           else 0
-          println("variance: " + s.variance)
           val phy = calculateDamageReceivedS(
-            (s.atk + a.atk * (1 + ab/100.0)).toInt - dwadj,
+            (s.atk + a.atk * (ab/100.0)).toInt - dwadj,
             r,
             Option((t.defs * (1 - db/100.0)).toInt),
             s.level, 0, 0,
@@ -239,7 +238,7 @@ object components {
             s.variance)
           val (dw1, dw2) = if (s.dw) {
             val dwR = calculateDamageReceivedS(
-              (s.atk + a.atk * (1 + ab/100.0)).toInt - s.l,
+              (s.atk + a.atk * (ab/100.0)).toInt - s.l,
               r,
               Option((t.defs * (1 - db/100.0)).toInt),
               s.level, 0, 0,
@@ -247,7 +246,7 @@ object components {
               calcElements(u, t),
               s.variance)
             val dwL = calculateDamageReceivedS(
-              (s.atk + a.atk * (1 + ab/100.0)).toInt - s.r,
+              (s.atk + a.atk * (ab/100.0)).toInt - s.r,
               r,
               Option((t.defs * (1 - db/100.0)).toInt),
               s.level, 0, 0,
@@ -263,7 +262,7 @@ object components {
             Damage.empty -> Damage.empty
           }
           val mag = calculateDamageReceivedS(
-            (s.mag + a.mag * (1 + mb/100.0)).toInt,
+            (s.mag + a.mag * (mb/100.0)).toInt,
             r,
             Option((t.spr * (1 - sb/100.0)).toInt),
             s.level, 0, 0,
