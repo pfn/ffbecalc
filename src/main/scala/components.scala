@@ -333,6 +333,7 @@ object components {
         div("Physical: ", child <-- phyReceived),
         div("Magical: ", child <-- magReceived),
       ),
+      /*
       h5("Elemental Resists"),
       div(
         numberPicker(span(cls := "elements fire"), fireRes, init = 0, min = -200, max = 200),
@@ -344,6 +345,7 @@ object components {
         numberPicker(span(cls := "elements holy"), holyRes, init = 0, min = -200, max = 200),
         numberPicker(span(cls := "elements dark"), darkRes, init = 0, min = -200, max = 200),
       ),
+      */
       h5("Tribes"),
       div((cls := "target-tribes") ::
         SkillEffect.TRIBE.toList.sortBy(_._1).map { case (k,v) =>
