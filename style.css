@@ -64,10 +64,12 @@ label { white-space: nowrap; }
 table#esper-training { width: calc(100% - 32px); margin: 16px }
 #esper-training th { text-align: left; width: 20%; }
 #esper-training span { margin-left: 16px; }
+table.lb,
 table.tmr,
 table.skills-equip,
 table.skills-active,
 table.skills-trait { width: calc(100% - 32px); margin: 16px; }
+table.lb tr,
 table.tmr tr,
 table.skills-equip tr,
 table.skills-trait tr,
@@ -178,6 +180,8 @@ td.unit-skill-rarity { width: 5%; }
 td.unit-skill-level { width: 5%; }
 td.unit-skill-name { width: 20%; }
 td.unit-skill-desc { width: 65%; }
+td.lb-lvl,
+td.lb-cost,
 td.unit-skill-cost { width: 5%; }
 td { padding: 8px; }
 th { padding: 8px; }

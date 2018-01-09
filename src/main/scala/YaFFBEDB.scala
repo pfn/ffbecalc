@@ -150,6 +150,16 @@ object YaFFBEDB {
         _.entries.values.toList.sortBy(_.rarity).lastOption)
     }.publishReplay(1).refCount
 
+    val limitBurst: Observable[Option[LimitBurst]] = unitInfo.combineLatest(unitEntry).flatMap { case (u,e) =>
+      (for {
+        unit  <- u
+        entry <- e
+        k     <- unit.entries.toList.find { case (k,v) => v == entry }.map(_._1)
+      } yield {
+        Data.get[LimitBurst](s"pickle/lb/$k.pickle").map(Some.apply)
+      }).getOrElse(Observable.just(None))
+    }
+
     case class UnitSkills(unit: UnitData, skills: Seq[(UnitSkill, SkillInfo)])
     val unitSkills: Observable[Option[UnitSkills]] = unitInfo.flatMap { u =>
       Observable.combineLatest(u.fold(
@@ -564,6 +574,18 @@ object YaFFBEDB {
       })
     }}.map(_.getOrElse(div("No TMR info available")))
 
+    val limitBurstTable = limitBurst.map { lb =>
+      lb.fold(div("Nil")) { limit =>
+        components.dataTable(List(limit.min, limit.max),
+          "lb",
+          List("Level", "Effects", "Cost"),
+          List("lb-lvl", "lb-effects", "lb-cost"))(List(
+            a => div((if (limit.min == a) 1 else limit.levels).toString),
+            a => div(a.effects.map(div(_)):_*),
+            a => div(a.cost.toString),
+          ))
+      }
+    }
     val unitDescription = unitInfo.map { i =>
       i.fold("")(_.entries.values.toList.sortBy(
         _.rarity).lastOption.fold("Unknown")(_.strings.description.headOption.flatten.getOrElse("Unknown")))
@@ -773,6 +795,10 @@ object YaFFBEDB {
         div(hidden <-- unitInfo.map(_.forall(_.tmr.isEmpty)),
           h3("Trust Mastery Reward"),
           div(child <-- trustTable),
+        ),
+        div(
+          h3("Limit Burst: ", child <-- limitBurst.map(_.fold("N/A")(_.name))),
+          div(child <-- limitBurstTable),
         ),
         ),
       )
