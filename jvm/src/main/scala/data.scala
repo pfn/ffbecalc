@@ -9,7 +9,7 @@ object DataDecoders {
   }
 
   def decodeActiveEffectList(c: ACursor): List[ActiveEffect] = {
-      val active = c.up.up.downField("active").as[Boolean].getOrElse(false)
+      val active = c.up.up.downField("active").as[Boolean].getOrElse(false) || c.up.up.up.downField("levels").as[Int].fold(_ => false, _ => true)
       if (active) decodeActiveEffect(Nil, c.downArray).fold(_ => Nil, x => List(x))
       else Nil
   }
@@ -289,6 +289,10 @@ object DataDecoders {
   implicit val decodeEnhancementStrings: Decoder[EnhancementStrings] =
     Decoder.forProduct2("names", "description")(EnhancementStrings.apply)
 
+  implicit val decodeLimitBurstEffect: Decoder[LimitBurstEffect] =
+    Decoder.forProduct3("cost", "effects", "effects_raw")(LimitBurstEffect.apply)
+  implicit val decodeLimitBurst: Decoder[LimitBurst] =
+    Decoder.forProduct4("name", "levels", "min_level", "max_level")(LimitBurst.apply)
   implicit val decodeEnhancement: Decoder[Enhancement] =
     Decoder.forProduct3("skill_id_old", "skill_id_new", "strings")(Enhancement.apply)
 }

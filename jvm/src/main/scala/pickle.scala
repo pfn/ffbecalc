@@ -24,8 +24,8 @@ object Pickler {
   def main(args: Array[String]): Unit = {
     val jsonpath   = new File("json")
     val picklepath = new File("pickle")
-    //enhance lb
     val enhancepath = jsonpath / "enhance"
+    val lbpath      = jsonpath / "lb"
     val equippath   = jsonpath / "equip"
     val esperpath   = jsonpath / "esper"
     val esperbpath  = jsonpath / "esperboard"
@@ -76,6 +76,12 @@ object Pickler {
       pickle[UnitData,UnitData](f, picklepath / "unit" / out,
         _.fold(e => sys.error(s"unit data $n: " + e), identity))
     }
+    (lbpath * jsonFilter).foreach { f =>
+      val n = f.getName
+      val out = n.dropRight(5) + ".pickle"
+      pickle[LimitBurst,LimitBurst](f, picklepath / "lb" / out,
+        _.fold(e => sys.error(s"lb data $n: " + e), identity))
+    }
     (skillpath * jsonFilter).foreach { f =>
       val n = f.getName
       val out = n.dropRight(5) + ".pickle"
@@ -99,6 +105,8 @@ object Pickler {
     //println(unpickle[List[EquipIndex]](picklepath / "equip" / "index.pickle"))
     //println(unpickle[List[EsperSlot]](picklepath / "esperboard" / "4.pickle"))
     val equips = unpickle[List[EquipIndex]](picklepath / "equip" / "index.pickle")
+    println(unpickle[LimitBurst](picklepath / "lb" / "401002905.pickle").max.actives.collect { case h: HasActiveData => h.data })
+    println(unpickle[LimitBurst](picklepath / "lb" / "209000305.pickle"))
     asserteq(equips.find(_.id == 315020900), "Some(EquipIndex(Fixed Dice,315020900,item_11314.png,true,1,WeaponVariance(1.2,6.5),10,List(),13,ATK+1,None,List()))")
     asserteq(equips.find(_.id == 303002300).map(_.skillInfo.flatMap(_.passives).map(_.restrictions)), "Some(List(Set(100000102)))")
     asserteq(equips.find(_.id == 301001500), "Some(EquipIndex(Swordbreaker,301001500,item_10110.png,false,1,WeaponVariance(0.95,1.05),0,List(206170),1,ATK+43,None,List(IndexSkillInfo(206170,Swordbreaker,true,ability_97.png,List(5% chance of evading physical attacks),List(),List(PassiveDodgeEffect(5,0))))))")

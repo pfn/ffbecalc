@@ -15,6 +15,8 @@ sealed trait Equipment {
   def name: String
   def icon: String
 }
+case class LimitBurstEffect(cost: Int, effects: List[String], actives: List[ActiveEffect])
+case class LimitBurst(name: String, levels: Int, min: LimitBurstEffect, max: LimitBurstEffect)
 case class MateriaTrust(id: Int) extends TMR
 case class EquipTrust(id: Int) extends TMR
 case class UnitEntry(

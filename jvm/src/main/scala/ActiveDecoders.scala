@@ -9,6 +9,7 @@ object ActiveDataExtract {
   val atkdmg = root.attack_damage.each.arr
   val atkcount = root.attack_count.each.int
   val atktpe = root.attack_type.string
+  val atktpe2 = root.damage_type.string
   val movetpe = root.move_type.int
   val motiontpe = root.motion_type.int
 
@@ -17,13 +18,14 @@ object ActiveDataExtract {
     Vector[Json]], j: Json, default: T): List[List[T]] =
       p.getAll(j).map(_.toList.map(_.as[T].getOrElse(default)))
   def apply(c: ACursor): ActiveData = {
-    val top = c.up.up.up.focus
+    // also handle data from limitbursts
+    val top = if (c.up.up.up.downField("cost").succeeded) c.up.up.up.up.focus else c.up.up.up.focus
     val t = top.flatMap(tpe.getOption)
     val fs = top.toList.map(atkframes.getAll)
     (for {
       t    <- top
-      tp   <- tpe.getOption(t)
-      atpe <- atktpe.getOption(t)
+      tp   <- tpe.getOption(t).orElse(Some("LIMITBURST"))
+      atpe <- atktpe.getOption(t).orElse(atktpe2.getOption(t))
       mtpe <- movetpe.getOption(t)
     } yield ActiveData(elements.getAll(t), tp,
       listList(atkframes, t, 0),
@@ -623,6 +625,8 @@ object ActiveDecoders {
         StackingPhysicalEffect(xs(2), xs(3), xs(5), t, a)
       }
     },
+    1009 -> { (t, a, c) => AddGlowEffect },
+    1010 -> { (t, a, c) => LoseHPEffect },
     1011 -> { (t, a, c) => SkipTurnsEffect(listInt(c)(0), t) },
     1012 -> { (t, a, c) => HexDebuffAttackEffect(t, a) },
   )
