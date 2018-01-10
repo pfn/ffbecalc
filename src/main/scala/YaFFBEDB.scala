@@ -500,9 +500,9 @@ object YaFFBEDB {
                 }
               }
               if (isAttack)
-                div(cls <-- scanned.startWith(false).map(b => if (b) "active-view-open" else "active-view-close"), id := "active" + a._1.id, click(()) --> clickSink, img(src := s"http://exviusdb.com/static/img/assets/ability/${a._2.icon}"), span(s"${a._1.rarity}\u2605"))
+                div(cls <-- scanned.startWith(false).map(b => if (b) "active-view-open" else "active-view-close"), id := "active" + a._1.id, click(()) --> clickSink, img(src := s"https://exviusdb.com/static/img/assets/ability/${a._2.icon}"), span(s"${a._1.rarity}\u2605"))
               else
-                div(img(src := s"http://exviusdb.com/static/img/assets/ability/${a._2.icon}"), span(s"${a._1.rarity}\u2605"))
+                div(img(src := s"https://exviusdb.com/static/img/assets/ability/${a._2.icon}"), span(s"${a._1.rarity}\u2605"))
             },
             a => span(a._1.level.toString),
             deco { (us, info, enhs) =>
@@ -539,7 +539,7 @@ object YaFFBEDB {
           List("unit-skill-rarity", "unit-skill-name",
             "unit-skill-desc", "unit-skill-cost"))(
           List(
-            a => div(img(src := s"http://exviusdb.com/static/img/assets/ability/${a.icon}")),
+            a => div(img(src := s"https://exviusdb.com/static/img/assets/ability/${a.icon}")),
             a => div(s"${a.name} (${a.id})"),
             a =>
               div(children <-- enhMap.map { e =>
@@ -576,7 +576,7 @@ object YaFFBEDB {
           List("Rarity", "Level", "Name", "Description"),
           List("unit-trait-rarity", "unit-trait-level",
             "unit-trait-name", "unit-trait-desc"))(List(
-            a => div(img(src := s"http://exviusdb.com/static/img/assets/ability/${a._2.icon}"), span(s"${a._1.rarity}\u2605")),
+            a => div(img(src := s"https://exviusdb.com/static/img/assets/ability/${a._2.icon}"), span(s"${a._1.rarity}\u2605")),
             a => span(a._1.level.toString),
             deco { (us, info, enhs) =>
               enhancementsOf(info.id, enhs).fold {
@@ -601,7 +601,7 @@ object YaFFBEDB {
       "skills-equip",
       List("", "Name", "Description"),
       List("unit-equip-icon", "unit-equip-name", "unit-equip-desc"))(List(
-        a => img(src := s"http://exviusdb.com/static/img/assets/ability/${a.icon}"),
+        a => img(src := s"https://exviusdb.com/static/img/assets/ability/${a.icon}"),
         a => div(a.name.split("\n").map(e => div(e)):_*),
         a => div(a.effects.map(e => div(e)):_*)
       ))
@@ -615,7 +615,7 @@ object YaFFBEDB {
           "tmr",
           List("", "Name", "Effects"),
           List("tmr-icon", "tmr-name", "tmr-desc"))(List(
-            a => img(src := s"http://exviusdb.com/static/img/assets/item/${a.icon}"),
+            a => img(src := s"https://exviusdb.com/static/img/assets/item/${a.icon}"),
             a => div(a.name),
             a => {
               val is2h = if (e.twohands) "2h" else ""
@@ -629,7 +629,7 @@ object YaFFBEDB {
           "tmr",
           List("", "Name", "Effects"),
           List("tmr-icon", "tmr-name", "tmr-desc"))(List(
-            a => img(src := s"http://exviusdb.com/static/img/assets/ability/${a.icon}"),
+            a => img(src := s"https://exviusdb.com/static/img/assets/ability/${a.icon}"),
             a => div(a.name),
             a => {
               div(a.skillInfo.map(s =>
@@ -817,7 +817,7 @@ object YaFFBEDB {
         p(children <-- unitDescription.combineLatest(unitInfo).map { case (d,i) =>
           val eid = i.flatMap(_.entries.toList.sortBy(_._2.rarity).lastOption.map(_._1))
           eid.toList.map(id =>
-            img(src := s"http://exviusdb.com/static/img/assets/unit/unit_ills_$id.png", align := "right")) ++ List(p(d))
+            img(src := s"https://exviusdb.com/static/img/assets/unit/unit_ills_$id.png", align := "right")) ++ List(p(d))
         }),
         h3("Base Stats"),
         div(child <-- components.unitBaseStats(unitEntry, unitStats, pots)),
