@@ -190,6 +190,13 @@ th { padding: 8px; }
 .sort-options label { margin-left: 16px }
 .sort-options input { margin-right: 8px }
 
+div.active-view-open, div.active-view-close { cursor: pointer }
+div.active-view-open::before {
+  content: "\25bc"
+}
+div.active-view-close::before {
+  content: "\25b6"
+}
 table.unit-resists td {
   font-size: xx-small;
 }

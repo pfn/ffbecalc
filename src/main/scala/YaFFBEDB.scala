@@ -429,16 +429,81 @@ object YaFFBEDB {
         }
       } else s.effects.map(div(_))
     }
-    val activesTable = {
 
+    def extractIs[A](idx: List[Int], xs: Seq[A]): List[A] = idx.map(xs.applyOrElse(_, (x: Int) => xs.head))
+    def extractFrames(xs: List[Int]): List[Int] = xs.sorted match {
+      case Nil => Nil
+      case x :: Nil => xs
+      case ys => ys.head :: ys.zip(ys.tail).map(x => x._2 - x._1)
+    }
+
+    val activesTable = {
       unitActives.combineLatest(relatedActives).map { case (ss, rs) =>
+        val eles = document.querySelectorAll(".active-view")
+        (0 until eles.length).foreach(i => eles(i).parentNode.removeChild(eles(i)))
         components.dataTable(ss.toList.flatMap(_.actives).map(UnitActive.unapply(_).get),
           "skills-active",
           List("Rarity", "Level", "Name", "Description", "MP"),
           List("unit-skill-rarity", "unit-skill-level",
             "unit-skill-name", "unit-skill-desc", "unit-skill-cost"))(
           List(
-            a => div(img(src := s"http://exviusdb.com/static/img/assets/ability/${a._2.icon}"), span(s"${a._1.rarity}\u2605")),
+            a => {
+              val rowid = a._1.id
+              val actives = a._2.actives.zipWithIndex.collect {
+                case (x,y) if x.isInstanceOf[HasActiveData] => y
+              }
+              val isAttack = actives.nonEmpty
+              val clickSink = createHandler[Unit]()
+              val scanned = clickSink.scan(false) { (b, _) => !b && isAttack }
+              scanned.combineLatest(enhMap) { case (b,enhm) =>
+                val s = enhancedInfo(a._2, enhm.get(a._2.id), a._3, identity)
+                if (b) {
+                  val newid = "active" + rowid + "-view"
+                  val exists = document.getElementById(newid)
+                  if (exists == null) {
+                    val node = document.getElementById("active" + rowid)
+                    val newdiv = document.createElement("tr")
+                    newdiv.id = newid
+                    newdiv.setAttribute("class", "active-view")
+                    val next = node.parentNode.parentNode.nextSibling
+                    if (next == null) {
+                      node.parentNode.parentNode.parentNode.appendChild(newdiv)
+                    } else {
+                      node.parentNode.parentNode.parentNode.insertBefore(newdiv, next)
+                    }
+                    val data = s.actives.head.asInstanceOf[HasActiveData].data
+                    OutWatch.render("#active" + rowid + "-view",
+                      td(colspan := 5,
+                        div("Hits: " + (extractIs(actives, data.atks) match {
+                          case 0 :: Nil => "Normal Attack"
+                          case x :: Nil => x.toString
+                          case Nil => "Normal Attack"
+                          case xs => xs.sum + " (" + xs.mkString("+") + ")"
+                        })),
+                        div("Frames: " + extractIs(actives, data.frames).map(extractFrames).map(_.mkString("-")).mkString(", ")),
+                        div("Cast Delay: " + extractIs(actives, data.eframes).map(x => scala.math.max(8, x.headOption.getOrElse(0))).mkString(", ")),
+                        div("Movement: " + (data.movetpe match {
+                          case 6 => "Dash"
+                          case 5 => "Steal"
+                          case 4 => "Cast"
+                          case 3 => "Normal Attack"
+                          case 2 => "Walk"
+                          case 1 => "Normal Attack"
+                          case 0 => "Cast"
+                        }))
+                      )
+                    )
+                  }
+                } else {
+                  val node = document.getElementById("active" + rowid + "-view")
+                  if (node != null) node.parentNode.removeChild(node)
+                }
+              }
+              if (isAttack)
+                div(cls <-- scanned.startWith(false).map(b => if (b) "active-view-open" else "active-view-close"), id := "active" + a._1.id, click(()) --> clickSink, img(src := s"http://exviusdb.com/static/img/assets/ability/${a._2.icon}"), span(s"${a._1.rarity}\u2605"))
+              else
+                div(img(src := s"http://exviusdb.com/static/img/assets/ability/${a._2.icon}"), span(s"${a._1.rarity}\u2605"))
+            },
             a => span(a._1.level.toString),
             deco { (us, info, enhs) =>
               enhancementsOf(info.id, enhs).fold {

@@ -6,6 +6,7 @@ object ActiveDataExtract {
   val elements = root.element_inflict.each.string
   val tpe = root.`type`.string
   val atkframes = root.attack_frames.each.arr
+  val efframes = root.effect_frames.each.arr
   val atkdmg = root.attack_damage.each.arr
   val atkcount = root.attack_count.each.int
   val atktpe = root.attack_type.string
@@ -13,7 +14,7 @@ object ActiveDataExtract {
   val movetpe = root.move_type.int
   val motiontpe = root.motion_type.int
 
-  def empty = ActiveData(Nil, "------", Nil, Nil, Nil, "None", 0, 0)
+  def empty = ActiveData(Nil, "------", Nil, Nil, Nil, Nil, "None", 0, 0)
   def listList[T: Decoder](p: monocle.Traversal[Json,
     Vector[Json]], j: Json, default: T): List[List[T]] =
       p.getAll(j).map(_.toList.map(_.as[T].getOrElse(default)))
@@ -29,6 +30,7 @@ object ActiveDataExtract {
       mtpe <- movetpe.getOption(t)
     } yield ActiveData(elements.getAll(t), tp,
       listList(atkframes, t, 0),
+      listList(efframes, t, 0),
       listList(atkdmg, t, 0),
       atkcount.getAll(t), atpe, mtpe,
       motiontpe.getOption(t).getOrElse(0))) getOrElse empty
