@@ -9471,50 +9471,6 @@
     "id": "504100130", 
     "icon": "ability_77.png"
   }, 
-  "Freezing Spirit": {
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "name": "Freezing Spirit", 
-        "icon": "ability_77.png", 
-        "active": false, 
-        "unique": false, 
-        "id": "218380", 
-        "effects": [
-          [
-            0, 
-            3, 
-            1, 
-            [
-              30, 
-              0, 
-              0, 
-              0, 
-              30, 
-              0, 
-              0
-            ]
-          ], 
-          [
-            0, 
-            3, 
-            31, 
-            [
-              25
-            ]
-          ]
-        ], 
-        "desc": [
-          "Increase ATK and HP by 30%", 
-          "Increase the limit burst gauge fill rate by 25%"
-        ]
-      }
-    ], 
-    "rarity": 8, 
-    "unique": false, 
-    "id": "504218380", 
-    "icon": "ability_77.png"
-  }, 
   "Uncollapsing Will": {
     "effects_raw": [
       {
@@ -11617,6 +11573,50 @@
     "rarity": 5, 
     "unique": false, 
     "id": "504208480", 
+    "icon": "ability_77.png"
+  }, 
+  "Azure Crimson Soul": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Azure Crimson Soul", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "218380", 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              30, 
+              0, 
+              0, 
+              0, 
+              30, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            31, 
+            [
+              25
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase ATK and HP by 30%", 
+          "Increase the limit burst gauge fill rate by 25%"
+        ]
+      }
+    ], 
+    "rarity": 8, 
+    "unique": false, 
+    "id": "504218380", 
     "icon": "ability_77.png"
   }, 
   "Faith": {

@@ -5612,6 +5612,33 @@
     "slot_id": 5, 
     "accuracy": 0
   }, 
+  "Dragon's Whisker - Replica": {
+    "type_id": 10, 
+    "compid": 753, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "dmg_variance": null, 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "308003300", 
+    "icon": "item_11030.png", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 69, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": null, 
+    "effects_raw": [], 
+    "slot_id": 1, 
+    "accuracy": 0
+  }, 
   "Shadow Mail": {
     "type_id": 52, 
     "compid": 750, 
@@ -7222,33 +7249,6 @@
     "skills": null, 
     "effects_raw": [], 
     "slot_id": 3, 
-    "accuracy": 0
-  }, 
-  "Imperial Shield": {
-    "type_id": 31, 
-    "compid": 425, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "dmg_variance": null, 
-    "skill_effects": {}, 
-    "skill_restriction": [], 
-    "id": "402001600", 
-    "icon": "item_40218.png", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 65, 
-      "DEF": 65
-    }, 
-    "skills": null, 
-    "effects_raw": [], 
-    "slot_id": 2, 
     "accuracy": 0
   }, 
   "Scion Thaumaturge's Monocle": {
@@ -19666,61 +19666,6 @@
     "slot_id": 4, 
     "accuracy": 0
   }, 
-  "Second Knife": {
-    "type_id": 1, 
-    "compid": 90072, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "dmg_variance": null, 
-    "skill_effects": {
-      "Dual Wield": [
-        "Enable unit to equip two one-handed weapons"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "1100000068", 
-    "icon": "global_equip_10008.png", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 5, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
-    }, 
-    "skills": [
-      101370
-    ], 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "name": "Dual Wield", 
-        "icon": "ability_72.png", 
-        "active": false, 
-        "unique": false, 
-        "id": 101370, 
-        "effects": [
-          [
-            1, 
-            3, 
-            14, 
-            [
-              "none"
-            ]
-          ]
-        ], 
-        "desc": [
-          "Enable unit to equip two one-handed weapons"
-        ]
-      }
-    ], 
-    "slot_id": 1, 
-    "accuracy": 0
-  }, 
   "Goddess Bow": {
     "type_id": 7, 
     "compid": 325, 
@@ -24625,30 +24570,60 @@
     "slot_id": 3, 
     "accuracy": 0
   }, 
-  "Dragon's Hair - Replica": {
-    "type_id": 10, 
-    "compid": 753, 
+  "Save the Queen (684)": {
+    "type_id": 3, 
+    "compid": 684, 
     "is_twohanded": false, 
     "reqs": null, 
     "dmg_variance": null, 
-    "skill_effects": {}, 
+    "skill_effects": {
+      "100 Man Killer": [
+        "Increase the limit burst gauge fill rate by 25%"
+      ]
+    }, 
     "skill_restriction": [], 
-    "id": "308003300", 
-    "icon": "item_11030.png", 
+    "id": "303003500", 
+    "icon": "item_10329.png", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
-      "element_resist": null, 
+      "element_resist": {
+        "Fire": 30
+      }, 
       "HP": 0, 
-      "ATK": 69, 
+      "ATK": 135, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
       "SPR": 0, 
       "DEF": 0
     }, 
-    "skills": null, 
-    "effects_raw": [], 
+    "skills": [
+      217120
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "100 Man Killer", 
+        "icon": "ability_78.png", 
+        "active": false, 
+        "unique": false, 
+        "id": 217120, 
+        "effects": [
+          [
+            0, 
+            3, 
+            31, 
+            [
+              25
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase the limit burst gauge fill rate by 25%"
+        ]
+      }
+    ], 
     "slot_id": 1, 
     "accuracy": 0
   }, 
@@ -25486,6 +25461,33 @@
       }
     ], 
     "slot_id": 1, 
+    "accuracy": 0
+  }, 
+  "Shield of the Empire": {
+    "type_id": 31, 
+    "compid": 425, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "dmg_variance": null, 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "402001600", 
+    "icon": "item_40218.png", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 65, 
+      "DEF": 65
+    }, 
+    "skills": null, 
+    "effects_raw": [], 
+    "slot_id": 2, 
     "accuracy": 0
   }, 
   "Retaliator": {
@@ -27520,28 +27522,26 @@
     "slot_id": 1, 
     "accuracy": 0
   }, 
-  "Save the Queen (684)": {
-    "type_id": 3, 
-    "compid": 684, 
+  "Second Knife": {
+    "type_id": 1, 
+    "compid": 90072, 
     "is_twohanded": false, 
     "reqs": null, 
     "dmg_variance": null, 
     "skill_effects": {
-      "100 Man Killer": [
-        "Increase the limit burst gauge fill rate by 25%"
+      "Dual Wield": [
+        "Enable unit to equip two one-handed weapons"
       ]
     }, 
     "skill_restriction": [], 
-    "id": "303003500", 
-    "icon": "item_10329.png", 
+    "id": "1100000068", 
+    "icon": "global_equip_10008.png", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
-      "element_resist": {
-        "Fire": 30
-      }, 
+      "element_resist": null, 
       "HP": 0, 
-      "ATK": 135, 
+      "ATK": 5, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
@@ -27549,28 +27549,28 @@
       "DEF": 0
     }, 
     "skills": [
-      217120
+      101370
     ], 
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "100 Man Killer", 
-        "icon": "ability_78.png", 
+        "name": "Dual Wield", 
+        "icon": "ability_72.png", 
         "active": false, 
         "unique": false, 
-        "id": 217120, 
+        "id": 101370, 
         "effects": [
           [
-            0, 
+            1, 
             3, 
-            31, 
+            14, 
             [
-              25
+              "none"
             ]
           ]
         ], 
         "desc": [
-          "Increase the limit burst gauge fill rate by 25%"
+          "Enable unit to equip two one-handed weapons"
         ]
       }
     ], 

@@ -44,6 +44,11 @@
     "id": "303000103", 
     "min": 3
   }, 
+  "Pyro Glacial Lasswell": {
+    "max": 6, 
+    "id": "100011705", 
+    "min": 5
+  }, 
   "Ruggles": {
     "max": 5, 
     "id": "100007603", 
@@ -152,11 +157,6 @@
   "Seabreeze Dark Fina": {
     "max": 6, 
     "id": "100007205", 
-    "min": 5
-  }, 
-  "Ice Knight Lasswell": {
-    "max": 6, 
-    "id": "100011705", 
     "min": 5
   }, 
   "Seria": {
@@ -595,7 +595,7 @@
     "min": 5
   }, 
   "Miyuki": {
-    "max": 5, 
+    "max": 6, 
     "id": "100003803", 
     "min": 3
   }, 
