@@ -805,7 +805,7 @@ object YaFFBEDB {
       window.history.pushState(0, "reload", "#")
       document.location.reload()
     }
-    OutWatch.render("#content",
+    OutWatch.render("#unit-calculator",
       div(insert --> onLoad,
         div(id := "unit-info",
           select(children <-- unitIndex, inputId --> unitIdSink),
@@ -816,7 +816,16 @@ object YaFFBEDB {
         div(hidden <-- unitId.map(_.isEmpty),
         p(children <-- unitDescription.combineLatest(unitInfo).map { case (d,i) =>
           val eid = i.flatMap(_.entries.toList.sortBy(_._2.rarity).lastOption.map(_._1))
-          eid.toList.map(id =>
+          List(
+            p(
+              a(href := "https://exvius.gamepedia.com/" +
+                i.fold(""){_.name.replace(" ", "_")}, "ExviusWiki"),
+              " | ",
+              a(href := "https://exviusdb.com/gl/units/" +
+                i.fold(""){_.name.toLowerCase.replace(" ", "-")} + "/",
+                  "ExviusDB")
+            )
+          ) ++ eid.toList.map(id =>
             img(src := s"https://exviusdb.com/static/img/assets/unit/unit_ills_$id.png", align := "right")) ++ List(p(d))
         }),
         h3("Base Stats"),
