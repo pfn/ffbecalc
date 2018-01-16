@@ -119,7 +119,7 @@ object components {
   def calcElements(unit: Option[UnitStats], target: TargetStats): Int = {
     unit.fold(0) { u =>
       val es = u.elements
-      val est = es.map(e =>
+      val est = -1 * es.map(e =>
         target.resists.asMap.getOrElse(e, 0)).sum
       if (es.isEmpty) 0 else est / es.size
     }
@@ -332,7 +332,6 @@ object components {
         div("Physical: ", child <-- phyReceived),
         div("Magical: ", child <-- magReceived),
       ),
-      /*
       h5("Elemental Resists"),
       div(
         numberPicker(span(cls := "elements fire"), fireRes, init = 0, min = -200, max = 200),
@@ -344,7 +343,6 @@ object components {
         numberPicker(span(cls := "elements holy"), holyRes, init = 0, min = -200, max = 200),
         numberPicker(span(cls := "elements dark"), darkRes, init = 0, min = -200, max = 200),
       ),
-      */
       h5("Tribes"),
       div((cls := "target-tribes") ::
         SkillEffect.TRIBE.toList.sortBy(_._1).map { case (k,v) =>
@@ -445,7 +443,8 @@ object components {
     tdh: Passive2HEffect, tdhGE: PassiveTDHEffect, accuracy: Int,
     is1h: Boolean, is2h: Boolean,
     ed: Option[EsperData], e: Option[EsperStatInfo], ee: Option[EsperEntry],
-    variance: WeaponVariance, atkL: Int, atkR: Int, killers: Map[Int,(Int,Int)])
+    variance: WeaponVariance, atkL: Int, atkR: Int, killers: Map[Int,(Int,Int)],
+    elements: Set[Int])
 
   def unitStats(unitInfo: Observable[Option[UnitData]],
                 unit: Observable[Option[UnitEntry]],
@@ -464,6 +463,9 @@ object components {
           val alleq = eqs.allEquipped
           val atks = alleq.collect {
             case equip if equip.slotId == 1 => equip.stats.atk
+          }
+          val eles = alleq.foldLeft(Set.empty[Int]) { (ac,x) =>
+            ac ++ x.stats.element.map(SkillEffect.ELEMENTS)
           }
           val (l,r) = atks match {
             case Nil           => (0, 0)
@@ -499,12 +501,12 @@ object components {
 
           val accuracy = (if (isSW) eqaccy else 0) + (if (is2h || isSW) pasv.tdh.accuracy else 0) + (if (!is2h && isSW) pasv.accuracy1h else 0)
 
-          Effective(st, st.asStats * passives + e + eqstats + (eqstats * alldh) + (eqstats * alldhGE) ++ ee, passives, pasv.dh, pasv.dhGE, pasv.tdh, pasv.tdhGE, accuracy, !is2h && isSW, isSW || is2h, ed, e, ee, variance, l, r, pasv.killers)
+          Effective(st, st.asStats * passives + e + eqstats + (eqstats * alldh) + (eqstats * alldhGE) ++ ee, passives, pasv.dh, pasv.dhGE, pasv.tdh, pasv.tdhGE, accuracy, !is2h && isSW, isSW || is2h, ed, e, ee, variance, l, r, pasv.killers, eles)
         }
     }
 
     unitOut <-- effective.map { _.map(eff =>
-      UnitStats(eff.stats.atk, eff.stats.defs, eff.stats.mag, eff.stats.spr, eff.atkL, eff.atkR, eff.variance, 100, Set.empty, eff.killers)
+      UnitStats(eff.stats.atk, eff.stats.defs, eff.stats.mag, eff.stats.spr, eff.atkL, eff.atkR, eff.variance, 100, eff.elements, eff.killers)
     )}
     table(cls := "unit-stats",
       caption("Effective Stats"),

@@ -259,24 +259,35 @@ object YaFFBEDB {
 
     def publishTo[A](sink: Subject[A], value: A): Unit = sink.next(value)
 
+    def passiveOf(e: Option[EquipIndex]): List[SkillEffect] = for {
+      equip  <- e.toList
+      skills <- equip.skillInfo
+      pasv   <- skills.passives
+    } yield pasv
+
     def handValidator(
       r: Option[EquipIndex], l: Option[EquipIndex],
       info: Option[UnitData], effs: SkillEffect.CollatedEffect,
       sink: Subject[Option[String]], older: Boolean): String = {
-      if (isSlot(2, r) && isSlot(2, l) && older) {
+      if (isSlot(2, r) && isSlot(2, l) && older) { // no DW shields
         publishTo(sink, None)
         EMPTY
-      } else if ((is2h(r) || is2h(l)) && older) {
-        publishTo(sink, None)
-        EMPTY
-      } else if ((isSlot(1, r) && isSlot(1, l)) && info.nonEmpty && !effs.isEmpty &&
-        ((!effs.canDualWield(typeOf(r)) || !effs.canDualWield(typeOf(l))) && older)) {
+      } else if ((is2h(r) || is2h(l)) && older) { // only 1 2h weapon
         publishTo(sink, None)
         EMPTY
       } else if (r.nonEmpty && info.nonEmpty && !effs.canEquip(typeOf(r), info)) {
         publishTo(sink, None)
         EMPTY
-      } else r.fold(EMPTY)(_.id.toString)
+      } else if ((isSlot(1, r) && isSlot(1, l)) && (info.nonEmpty && !effs.isEmpty &&
+        (!effs.canDualWield(typeOf(r)) || !effs.canDualWield(typeOf(l))) && older)) {
+
+        val eff2 = SkillEffect.collateEffects(info, passiveOf(r) ++ passiveOf(l))
+        if (!eff2.canDualWield(typeOf(r)) || !eff2.canDualWield(typeOf(l))) {
+          publishTo(sink, None)
+          EMPTY
+        } else r.fold(EMPTY)(_.id.toString)
+      }
+      else r.fold(EMPTY)(_.id.toString)
     }
 
     def equipValidator(
