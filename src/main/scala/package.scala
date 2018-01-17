@@ -2,7 +2,9 @@ import rxscalajs.{Observable,Subject}
 import rxscalajs.subjects.ReplaySubject
 import java.util.UUID
 
-package object yaffbedb extends PicklerImplicits {
+package com {
+
+package object ffbecalc extends PicklerImplicits {
   // why isn't the definition in outwatch.dom visible to us?
   type Handler[T] = Observable[T] with outwatch.Sink[T]
 
@@ -36,7 +38,9 @@ package object yaffbedb extends PicklerImplicits {
     } yield (p1, p2)
 }
 
-package yaffbedb {
+}
+
+package com.ffbecalc {
 case class Equipped(
   rhand: EqStamp, lhand: EqStamp,
   head:  EqStamp, body:  EqStamp,

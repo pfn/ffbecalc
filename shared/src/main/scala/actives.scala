@@ -1,4 +1,4 @@
-package yaffbedb
+package com.ffbecalc
 
 object ActiveUtils {
   def turns(ts: Int) = ts match {

@@ -1,4 +1,4 @@
-package yaffbedb
+package com.ffbecalc
 
 import rxscalajs.Observable
 import rxscalajs.Subject

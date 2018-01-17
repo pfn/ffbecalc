@@ -1,4 +1,4 @@
-package yaffbedb
+package com.ffbecalc
 
 import boopickle.Default._
 import io.circe._

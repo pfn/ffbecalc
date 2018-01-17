@@ -1,4 +1,4 @@
-package yaffbedb
+package com.ffbecalc
 
 case class UnitIndex(name: String, min: Int, max: Int, id: String)
 case class UnitIndexData(min: Int, max: Int, id: String)

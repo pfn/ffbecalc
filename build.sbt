@@ -1,7 +1,11 @@
 lazy val shared = crossProject.crossType(CrossType.Pure).in(file("shared")).settings(
-  libraryDependencies += "io.suzaku" %% "boopickle" % "1.2.6"
+  libraryDependencies += "io.suzaku" %% "boopickle" % "1.2.6",
+  name := "model",
+  organization := "com.ffbecalc",
+  version := "0.1-SNAPSHOT"
 )
 lazy val sharedJS = shared.js
+lazy val sharedJVM = shared.jvm
 lazy val jvm = project.in(file("jvm")).settings(
   libraryDependencies ++=
     "io.circe" %% "circe-core" % "0.8.0" ::
@@ -27,10 +31,10 @@ enablePlugins(WorkbenchPlugin)
 enablePlugins(ScalaJSBundlerPlugin)
 enablePlugins(BuildInfoPlugin)
 
-name := "yaffbedb"
+name := "ffbecalc"
 
 buildInfoKeys := Seq[BuildInfoKey](versionCode)
-buildInfoPackage := "yaffbedb"
+buildInfoPackage := "com.ffbecalc"
 
 scalaVersion in Global := "2.12.3"
 

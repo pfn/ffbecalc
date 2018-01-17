@@ -1,4 +1,4 @@
-package yaffbedb
+package com.ffbecalc
 
 import scalajs.js.annotation.JSExportTopLevel
 import org.scalajs.dom.document
@@ -95,7 +95,7 @@ object YaFFBEDB {
       stats.fold(Pots.none)(_.pots), enhs,
       esper, esperR)
   }
-  @JSExportTopLevel("yaffbedb.YaFFBEDB.main")
+  @JSExportTopLevel("ffbecalc.main")
   def main(args: Array[String]): Unit = {
     val unitIdSubject = BehaviorSubject[Option[String]](None)
     val unitIdSink = createIdHandler(None)

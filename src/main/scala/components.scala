@@ -1,4 +1,4 @@
-package yaffbedb
+package com.ffbecalc
 
 import outwatch.dom.{math => _,_}
 import outwatch.Sink

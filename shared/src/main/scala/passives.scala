@@ -1,4 +1,4 @@
-package yaffbedb
+package com.ffbecalc
 
 sealed trait SkillEffect {
   def restrictions: Set[Int]

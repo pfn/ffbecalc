@@ -1,4 +1,4 @@
-package yaffbedb
+package com.ffbecalc
 import io.circe._
 
 object DataDecoders {
