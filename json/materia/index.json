@@ -3224,6 +3224,52 @@
     "id": "504206750", 
     "icon": "ability_77.png"
   }, 
+  "Spirit Magician": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Spirit Magician", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "221590", 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              10, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            11, 
+            [
+              8, 
+              0, 
+              20
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase MAG by 10%", 
+          "Increase magic damage against Fairies by 20%"
+        ]
+      }
+    ], 
+    "rarity": 5, 
+    "unique": false, 
+    "id": "504221610", 
+    "icon": "ability_77.png"
+  }, 
   "Mog Search": {
     "effects_raw": [
       {
@@ -8204,6 +8250,41 @@
     "id": "504200520", 
     "icon": "ability_22.png"
   }, 
+  "Callous Strategist": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Callous Strategist", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "221600", 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              15, 
+              0, 
+              15, 
+              0, 
+              20, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase HP by 20% and ATK and MAG by 15%"
+        ]
+      }
+    ], 
+    "rarity": 7, 
+    "unique": false, 
+    "id": "504221580", 
+    "icon": "ability_77.png"
+  }, 
   "Magician": {
     "effects_raw": [
       {
@@ -12504,6 +12585,50 @@
     "magic_type": "Black", 
     "icon": "ability_22.png"
   }, 
+  "Imperial Talent": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Imperial Talent", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "221610", 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              20, 
+              5, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            35, 
+            [
+              10121
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase SPR by 20% and HP by 5%", 
+          "Gain Regen (Auto) (10121) at the start of a battle"
+        ]
+      }
+    ], 
+    "rarity": 6, 
+    "unique": false, 
+    "id": "504221590", 
+    "icon": "ability_77.png"
+  }, 
   "Yohtoh Lore": {
     "effects_raw": [
       {
@@ -12846,6 +12971,52 @@
     "unique": false, 
     "id": "504219250", 
     "icon": "ability_63.png"
+  }, 
+  "Spirit Fighter": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Spirit Fighter", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "221580", 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              10, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            11, 
+            [
+              8, 
+              20, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase ATK by 10%", 
+          "Increase physical damage against Fairies by 20%"
+        ]
+      }
+    ], 
+    "rarity": 5, 
+    "unique": false, 
+    "id": "504221600", 
+    "icon": "ability_77.png"
   }, 
   "Fairy Wisdom": {
     "effects_raw": [

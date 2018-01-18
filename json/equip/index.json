@@ -4394,6 +4394,94 @@
     "slot_id": 4, 
     "accuracy": 0
   }, 
+  "Angel Earrings": {
+    "type_id": 60, 
+    "compid": 215, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "dmg_variance": null, 
+    "skill_effects": {
+      "MP +20%": [
+        "Increase MP by 20%"
+      ], 
+      "Auto-Regen": [
+        "Gain Regen (Auto) (10121) at the start of a battle"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "409001600", 
+    "icon": "item_50115.png", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": {
+        "Dark": 50
+      }, 
+      "HP": 0, 
+      "ATK": 2, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      100730, 
+      100050
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Auto-Regen", 
+        "icon": "ability_91.png", 
+        "active": false, 
+        "unique": false, 
+        "id": 100730, 
+        "effects": [
+          [
+            1, 
+            3, 
+            35, 
+            [
+              10121
+            ]
+          ]
+        ], 
+        "desc": [
+          "Gain Regen (Auto) (10121) at the start of a battle"
+        ]
+      }, 
+      {
+        "unit_restriction": null, 
+        "name": "MP +20%", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": 100050, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              20, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase MP by 20%"
+        ]
+      }
+    ], 
+    "slot_id": 5, 
+    "accuracy": 0
+  }, 
   "Bronze Knife": {
     "type_id": 1, 
     "compid": 1, 
@@ -24570,6 +24658,35 @@
     "slot_id": 3, 
     "accuracy": 0
   }, 
+  "Basch's Uniform": {
+    "type_id": 50, 
+    "compid": 772, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "dmg_variance": null, 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "405004500", 
+    "icon": "item_20141.png", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": {
+        "Confusion": 100
+      }, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 18, 
+      "DEF": 32
+    }, 
+    "skills": null, 
+    "effects_raw": [], 
+    "slot_id": 4, 
+    "accuracy": 0
+  }, 
   "Save the Queen (684)": {
     "type_id": 3, 
     "compid": 684, 
@@ -26647,6 +26764,33 @@
     ], 
     "slot_id": 1, 
     "accuracy": 70
+  }, 
+  "Survival Vest": {
+    "type_id": 50, 
+    "compid": 152, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "dmg_variance": null, 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "405000900", 
+    "icon": "item_20105.png", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 30, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 18
+    }, 
+    "skills": null, 
+    "effects_raw": [], 
+    "slot_id": 4, 
+    "accuracy": 0
   }, 
   "Holy Rod": {
     "type_id": 6, 
@@ -33457,6 +33601,33 @@
     "slot_id": 2, 
     "accuracy": 0
   }, 
+  "VegaPlus": {
+    "type_id": 14, 
+    "compid": 744, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "dmg_variance": null, 
+    "skill_effects": {}, 
+    "skill_restriction": [], 
+    "id": "1100000132", 
+    "icon": "global_equip_10072.png", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 101, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": null, 
+    "effects_raw": [], 
+    "slot_id": 1, 
+    "accuracy": 0
+  }, 
   "Rikku's Pouch": {
     "type_id": 60, 
     "compid": 469, 
@@ -35775,31 +35946,61 @@
     "slot_id": 1, 
     "accuracy": 0
   }, 
-  "Survival Vest": {
-    "type_id": 50, 
-    "compid": 152, 
+  "Zodiac Escutcheon": {
+    "type_id": 31, 
+    "compid": 769, 
     "is_twohanded": false, 
     "reqs": null, 
     "dmg_variance": null, 
-    "skill_effects": {}, 
+    "skill_effects": {
+      "Decoy Pose": [
+        "10% chance of evading physical attacks"
+      ]
+    }, 
     "skill_restriction": [], 
-    "id": "405000900", 
-    "icon": "item_20105.png", 
+    "id": "402002300", 
+    "icon": "item_40222.png", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
-      "element_resist": null, 
-      "HP": 30, 
+      "element_resist": {
+        "Lightning": 50
+      }, 
+      "HP": 0, 
       "ATK": 0, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 18
+      "SPR": 70, 
+      "DEF": 60
     }, 
-    "skills": null, 
-    "effects_raw": [], 
-    "slot_id": 4, 
+    "skills": [
+      221640
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Decoy Pose", 
+        "icon": "ability_97.png", 
+        "active": false, 
+        "unique": false, 
+        "id": 221640, 
+        "effects": [
+          [
+            0, 
+            3, 
+            22, 
+            [
+              10
+            ]
+          ]
+        ], 
+        "desc": [
+          "10% chance of evading physical attacks"
+        ]
+      }
+    ], 
+    "slot_id": 2, 
     "accuracy": 0
   }, 
   "Hyades Magnums": {
@@ -36474,31 +36675,26 @@
     "slot_id": 5, 
     "accuracy": 0
   }, 
-  "Angel Earrings": {
-    "type_id": 60, 
-    "compid": 215, 
+  "Chaos Blade": {
+    "type_id": 2, 
+    "compid": 768, 
     "is_twohanded": false, 
     "reqs": null, 
     "dmg_variance": null, 
     "skill_effects": {
-      "MP +20%": [
-        "Increase MP by 20%"
-      ], 
-      "Auto-Regen": [
-        "Gain Regen (Auto) (10121) at the start of a battle"
+      "Dagger Cycle": [
+        "Increase DEF by 50% when equipped with a Dagger"
       ]
     }, 
     "skill_restriction": [], 
-    "id": "409001600", 
-    "icon": "item_50115.png", 
+    "id": "302004300", 
+    "icon": "item_10240.png", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
-      "element_resist": {
-        "Dark": 50
-      }, 
+      "element_resist": null, 
       "HP": 0, 
-      "ATK": 2, 
+      "ATK": 135, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
@@ -36506,60 +36702,38 @@
       "DEF": 0
     }, 
     "skills": [
-      100730, 
-      100050
+      221620
     ], 
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "Auto-Regen", 
-        "icon": "ability_91.png", 
+        "name": "Dagger Cycle", 
+        "icon": "ability_95.png", 
         "active": false, 
         "unique": false, 
-        "id": 100730, 
+        "id": 221620, 
         "effects": [
           [
-            1, 
+            0, 
             3, 
-            35, 
+            6, 
             [
-              10121
-            ]
-          ]
-        ], 
-        "desc": [
-          "Gain Regen (Auto) (10121) at the start of a battle"
-        ]
-      }, 
-      {
-        "unit_restriction": null, 
-        "name": "MP +20%", 
-        "icon": "ability_77.png", 
-        "active": false, 
-        "unique": false, 
-        "id": 100050, 
-        "effects": [
-          [
-            1, 
-            3, 
-            1, 
-            [
+              1, 
+              0, 
+              50, 
               0, 
               0, 
               0, 
-              0, 
-              0, 
-              20, 
               0
             ]
           ]
         ], 
         "desc": [
-          "Increase MP by 20%"
+          "Increase DEF by 50% when equipped with a Dagger"
         ]
       }
     ], 
-    "slot_id": 5, 
+    "slot_id": 1, 
     "accuracy": 0
   }, 
   "Defender's Daggers": {
@@ -37705,6 +37879,67 @@
     "slot_id": 1, 
     "accuracy": 0
   }, 
+  "Death Trap": {
+    "type_id": 2, 
+    "compid": 770, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "dmg_variance": null, 
+    "skill_effects": {
+      "MP +10%": [
+        "Increase MP by 10%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "302004400", 
+    "icon": "item_10241.png", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 80, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 100, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      100040
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "MP +10%", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": 100040, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              10, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase MP by 10%"
+        ]
+      }
+    ], 
+    "slot_id": 1, 
+    "accuracy": 0
+  }, 
   "Ice Headband": {
     "type_id": 60, 
     "compid": 673, 
@@ -38613,6 +38848,106 @@
     "skills": null, 
     "effects_raw": [], 
     "slot_id": 1, 
+    "accuracy": 0
+  }, 
+  "Judge Magister Cloak": {
+    "type_id": 60, 
+    "compid": 771, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "dmg_variance": null, 
+    "skill_effects": {
+      "HP +10%": [
+        "Increase HP by 10%"
+      ], 
+      "Vortex of Judgment": [
+        "Increase chance of being targeted by 20%", 
+        "Increase the limit burst gauge fill rate by 30%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "409016900", 
+    "icon": "item_50291.png", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 35
+    }, 
+    "skills": [
+      100010, 
+      222210
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "HP +10%", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": 100010, 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              10, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase HP by 10%"
+        ]
+      }, 
+      {
+        "unit_restriction": [
+          401001105, 
+          212000905, 
+          212001404
+        ], 
+        "name": "Vortex of Judgment", 
+        "icon": "ability_83.png", 
+        "active": false, 
+        "unique": false, 
+        "id": 222210, 
+        "effects": [
+          [
+            0, 
+            3, 
+            24, 
+            [
+              20
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            31, 
+            [
+              30
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase chance of being targeted by 20%", 
+          "Increase the limit burst gauge fill rate by 30%"
+        ]
+      }
+    ], 
+    "slot_id": 5, 
     "accuracy": 0
   }, 
   "Ribbon": {
