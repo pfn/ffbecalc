@@ -36,7 +36,7 @@ mkdir("json/skill")
 mkdir("json/materia")
 
 for x in units.keys():
-  if units[x]["name"] != "<na>" and units[x]["job"] is not None:
+  if units[x]["name"] != "<na>" and units[x]["job"] is not None and "skills" in units[x]:
     if all(itertools.imap(hasLB, units[x]["entries"].values())):
       unitdex[units[x]['name']] = {
         "id": x,
