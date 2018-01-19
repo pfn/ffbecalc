@@ -195,6 +195,7 @@ td.unit-skill-rarity { width: 5%; }
 td.unit-skill-level { width: 5%; }
 td.unit-skill-name { width: 20%; }
 td.unit-skill-desc { width: 65%; }
+td.lb-lvl div { display: inline-block }
 td.lb-lvl,
 td.lb-cost,
 td.unit-skill-cost { width: 5%; }

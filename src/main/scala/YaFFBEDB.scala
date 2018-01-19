@@ -343,9 +343,8 @@ object YaFFBEDB {
     def enhChain(id: Int, enhs: Map[Int,SkillInfo]): List[Int] = {
       id :: enhs.get(id).fold(List.empty[Int])(x => enhChain(x.id, enhs))
     }
-    def relationsOf(s: SkillInfo, seed: Map[Int,SkillInfo],
-      seen: Set[Int] = Set.empty): Observable[Seq[SkillInfo]] = {
-      val relations = s.actives.flatMap {
+    def relationsOfActives(as: List[ActiveEffect], seed: Map[Int,SkillInfo], seen: Set[Int]): Observable[Seq[SkillInfo]] = {
+      val relations = as.flatMap {
         case r: RelatedSkill => r.related
         case _ => Nil
       }
@@ -353,10 +352,14 @@ object YaFFBEDB {
       Observable.combineLatest(relations.map(rid =>
         skillInfo(rid).flatMap { os =>
           if (seen(os.id)) Observable.just(Nil) else
-            relationsOf(os, Map.empty, seen + os.id).flatMap { rs =>
+            relationsOfActives(os.actives, Map.empty, seen + os.id).flatMap { rs =>
               Observable.just(List(os) ++ rs ++ seed.values)
             }
         })).scan(Seq.empty[SkillInfo])((xs, x) => x.flatten ++ xs)
+    }
+    def relationsOf(s: SkillInfo, seed: Map[Int,SkillInfo],
+      seen: Set[Int] = Set.empty): Observable[Seq[SkillInfo]] = {
+      relationsOfActives(s.actives, seed, seen)
     }
     val describedRelated: Observable[Seq[Int]] =
       unitActives.combineLatest(enhMap).map { case (as, enhm) =>
@@ -372,13 +375,14 @@ object YaFFBEDB {
         }.distinct
       }
     val relatedActives: Observable[Map[Int,SkillInfo]] =
-      unitInfo.combineLatest(unitActives, enhMap).flatMap { case (u, as, enhm) =>
+      unitInfo.combineLatest(unitActives, enhMap, limitBurst).flatMap { case (u, as, enhm, lb) =>
         if (u == as.map(_.unit)) {
-          Observable.combineLatest(
+          val seed = as.toList.flatMap(_.actives).map(x => x.info.id -> x.info).toMap
+          Observable.combineLatest(lb.toList.map(l => relationsOfActives(l.min.actives, seed, Set.empty)) ++
             as.toList.flatMap(_.actives).map { case UnitActive(_, skill, enhs) =>
               val s = enhancedInfo(skill, enhm.get(skill.id), enhs, identity)
 
-              relationsOf(s, as.toList.flatMap(_.actives).map(x => x.info.id -> x.info).toMap)
+              relationsOf(s, seed)
             }).scan((u,Map.empty[Int,SkillInfo])) { case ((i,xs), x) =>
               if (u == i) (u,x.flatten.map(s => s.id -> s).toMap ++ xs)
               else (u,Map.empty)
@@ -424,7 +428,7 @@ object YaFFBEDB {
                p(span(s"If used after $ts:"), p(sk(ifTrue, List.empty[VNode], x => (if (x.name == s.name) Nil else List(div(b(x.name)))) ++ x.effects.map(div(_))):_*)))
 
             case MultiAbilityEffect(skills, count) =>
-              List((p(s"Use any of the following abilities $count times in one turn:") :: skills.map(s => div(sk(s, "???", _.name))) :_*))
+              List((p(s"Use any of the following abilities $count times in one turn:") :: skills.map(s => sk(s, "??? " + s, _.name)).distinct.map(div(_)) :_*))
             case UnlockSkillCountedEffect(skills, turns, uses, target) =>
               val ts = if (turns > 90000) ""
               else s" for ${ActiveUtils.turns(turns)}"
@@ -441,13 +445,71 @@ object YaFFBEDB {
       } else s.effects.map(div(_))
     }
 
-    def extractIs[A](idx: List[Int], xs: Seq[A]): List[A] = idx.map(xs.applyOrElse(_, (x: Int) => xs.head))
+    def extractIs[A](idx: List[Int], xs: Seq[A], default: A): List[A] = idx.map(xs.applyOrElse(_, (x: Int) => default))
     def extractFrames(xs: List[Int]): List[Int] = xs.sorted match {
       case Nil => Nil
       case x :: Nil => xs
       case ys => ys.head :: ys.zip(ys.tail).map(x => x._2 - x._1)
     }
 
+    def describeActive(rowid: Int, skill: Either[List[ActiveEffect],SkillInfo], content: List[VNode], enhs: Map[Int,SkillInfo] = Map.empty, cols: Int = 5, idn: String = "active"): VNode = {
+      val actives = skill.fold(identity, _.actives).zipWithIndex.collect {
+        case (x,y) if x.isInstanceOf[HasActiveData] => y
+      }
+      val isExpandable = actives.nonEmpty
+      val clickSink = createHandler[Unit]()
+      val scanned = clickSink.scan(false) { (b, _) => !b && isExpandable }
+      scanned.combineLatest(enhMap) { case (b,enhm) =>
+        val data = skill.fold(x => x.collectFirst { case a: HasActiveData => a.data}.getOrElse(ActiveData.empty), sk => {
+          val s = enhancedInfo(sk, enhm.get(sk.id), enhs, identity)
+          s.actives.collectFirst { case a: HasActiveData => a.data }.getOrElse(ActiveData.empty)
+        })
+        if (b) {
+          val newid = idn + rowid + "-view"
+          val exists = document.getElementById(newid)
+          if (exists == null) {
+            val node = document.getElementById(idn + rowid)
+            val newdiv = document.createElement("tr")
+            newdiv.id = newid
+            newdiv.setAttribute("class", "active-view")
+            val next = node.parentNode.parentNode.nextSibling
+            if (next == null) {
+              node.parentNode.parentNode.parentNode.appendChild(newdiv)
+            } else {
+              node.parentNode.parentNode.parentNode.insertBefore(newdiv, next)
+            }
+            OutWatch.render("#" + idn + rowid + "-view",
+              td(colspan := cols,
+                div("Hits: " + (extractIs(actives, data.atks, data.atks.headOption.getOrElse(0)) match {
+                  case 0 :: Nil => "Normal Attack"
+                  case x :: Nil => x.toString
+                  case Nil => "Normal Attack"
+                  case xs => xs.sum + " (" + xs.mkString("+") + ")"
+                })),
+                div("Frames: " + extractIs(actives, data.frames, data.frames.headOption.getOrElse(Nil)).map(extractFrames).map(_.mkString("-")).mkString(", ")),
+                div("Cast Delay: " + extractIs(actives, data.eframes, data.eframes.headOption.getOrElse(Nil)).map(x => scala.math.max(8, x.headOption.getOrElse(0))).mkString(", ")),
+                div("Movement: " + (data.movetpe match {
+                  case 6 => "Dash"
+                  case 5 => "Steal"
+                  case 4 => "Cast"
+                  case 3 => "Normal Attack"
+                  case 2 => "Walk"
+                  case 1 => "Normal Attack"
+                  case 0 => "Cast"
+                }))
+              )
+            )
+          }
+        } else {
+          val node = document.getElementById(idn + rowid + "-view")
+          if (node != null) node.parentNode.removeChild(node)
+        }
+      }
+      if (isExpandable)
+        div((cls <-- scanned.startWith(false).map(b => if (b) "active-view-open" else "active-view-close")) :: (id := idn + rowid) :: (click(()) --> clickSink) :: content:_*)
+      else
+        div(content:_*)
+    }
     val activesTable = {
       unitActives.combineLatest(relatedActives).map { case (ss, rs) =>
         val eles = document.querySelectorAll(".active-view")
@@ -460,60 +522,8 @@ object YaFFBEDB {
           List(
             a => {
               val rowid = a._1.id
-              val actives = a._2.actives.zipWithIndex.collect {
-                case (x,y) if x.isInstanceOf[HasActiveData] => y
-              }
-              val isAttack = actives.nonEmpty
-              val clickSink = createHandler[Unit]()
-              val scanned = clickSink.scan(false) { (b, _) => !b && isAttack }
-              scanned.combineLatest(enhMap) { case (b,enhm) =>
-                val s = enhancedInfo(a._2, enhm.get(a._2.id), a._3, identity)
-                if (b) {
-                  val newid = "active" + rowid + "-view"
-                  val exists = document.getElementById(newid)
-                  if (exists == null) {
-                    val node = document.getElementById("active" + rowid)
-                    val newdiv = document.createElement("tr")
-                    newdiv.id = newid
-                    newdiv.setAttribute("class", "active-view")
-                    val next = node.parentNode.parentNode.nextSibling
-                    if (next == null) {
-                      node.parentNode.parentNode.parentNode.appendChild(newdiv)
-                    } else {
-                      node.parentNode.parentNode.parentNode.insertBefore(newdiv, next)
-                    }
-                    val data = s.actives.head.asInstanceOf[HasActiveData].data
-                    OutWatch.render("#active" + rowid + "-view",
-                      td(colspan := 5,
-                        div("Hits: " + (extractIs(actives, data.atks) match {
-                          case 0 :: Nil => "Normal Attack"
-                          case x :: Nil => x.toString
-                          case Nil => "Normal Attack"
-                          case xs => xs.sum + " (" + xs.mkString("+") + ")"
-                        })),
-                        div("Frames: " + extractIs(actives, data.frames).map(extractFrames).map(_.mkString("-")).mkString(", ")),
-                        div("Cast Delay: " + extractIs(actives, data.eframes).map(x => scala.math.max(8, x.headOption.getOrElse(0))).mkString(", ")),
-                        div("Movement: " + (data.movetpe match {
-                          case 6 => "Dash"
-                          case 5 => "Steal"
-                          case 4 => "Cast"
-                          case 3 => "Normal Attack"
-                          case 2 => "Walk"
-                          case 1 => "Normal Attack"
-                          case 0 => "Cast"
-                        }))
-                      )
-                    )
-                  }
-                } else {
-                  val node = document.getElementById("active" + rowid + "-view")
-                  if (node != null) node.parentNode.removeChild(node)
-                }
-              }
-              if (isAttack)
-                div(cls <-- scanned.startWith(false).map(b => if (b) "active-view-open" else "active-view-close"), id := "active" + a._1.id, click(()) --> clickSink, img(src := s"https://exviusdb.com/static/img/assets/ability/${a._2.icon}"), span(s"${a._1.rarity}\u2605"))
-              else
-                div(img(src := s"https://exviusdb.com/static/img/assets/ability/${a._2.icon}"), span(s"${a._1.rarity}\u2605"))
+              val c = List(img(src := s"https://exviusdb.com/static/img/assets/ability/${a._2.icon}"), span(s"${a._1.rarity}\u2605"))
+              describeActive(rowid, Right(a._2), c, a._3)
             },
             a => span(a._1.level.toString),
             deco { (us, info, enhs) =>
@@ -543,7 +553,7 @@ object YaFFBEDB {
 
     val relatedTable = {
 
-      filteredRelated.map { case ss =>
+      filteredRelated.combineLatest(relatedActives).map { case (ss,rs) =>
         components.dataTable(ss.values.toList.sortBy(_.id),
           "skills-active",
           List("", "Name", "Effects", "MP"),
@@ -554,7 +564,7 @@ object YaFFBEDB {
             a => div(s"${a.name} (${a.id})"),
             a =>
               div(children <-- enhMap.map { e =>
-                renderRelations(a, e, Map.empty, ss)
+                renderRelations(a, e, Map.empty, ss ++ rs)
               }),
             a => div(a.mpCost.toString)
           )
@@ -612,6 +622,8 @@ object YaFFBEDB {
       "skills-equip",
       List("", "Name", "Description"),
       List("unit-equip-icon", "unit-equip-name", "unit-equip-desc"))(List(
+        // can't use describeActive here because IndexSkillInfo doesn't fully
+        // load ActiveData into ActiveEffect
         a => img(src := s"https://exviusdb.com/static/img/assets/ability/${a.icon}"),
         a => div(a.name.split("\n").map(e => div(e)):_*),
         a => div(a.effects.map(e => div(e)):_*)
@@ -656,7 +668,7 @@ object YaFFBEDB {
           "lb",
           List("Level", "Effects", "Cost"),
           List("lb-lvl", "lb-effects", "lb-cost"))(List(
-            a => div((if (limit.min == a) 1 else limit.levels).toString),
+            a => describeActive(limit.name.hashCode + a.hashCode, Left(a.actives), List(div("\u00a0" + (if (limit.min == a) 1 else limit.levels).toString)), cols = 3, idn = "lb-"),
             a => div(a.effects.map(div(_)):_*),
             a => div(a.cost.toString),
           ))

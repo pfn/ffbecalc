@@ -105,7 +105,9 @@ case class IndexSkillInfo(
   effects: List[String],
   actives: List[ActiveEffect],
   passives: List[SkillEffect]
-)
+) {
+  def asSkillInfo = SkillInfo(id, name, unique, actives.nonEmpty, "", icon, None, 0, actives, passives, effects)
+}
 case class SkillInfo(
   id: Int,
   name: String,
