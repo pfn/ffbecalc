@@ -154,7 +154,7 @@ object components {
         Damage(min, max, avg)
       }
   }
-  def battleStats(baseStats: Observable[Option[BaseStats]], unitStats: Observable[Option[UnitStats]]): Observable[VNode] = Observable.just {
+  def battleStats(baseStats: Observable[Option[BaseStats]], unitStats: Observable[Option[UnitStats]], btlStats: Sink[Option[BattleStats]]): Observable[VNode] = Observable.just {
     val statsClicks = createHandler[Unit](())
     val showStats = statsClicks.scan(false) { (show,_) => !show }
     val atkBuff = createHandler[Int](0)
@@ -207,6 +207,14 @@ object components {
 
     val buffs = atkBuff.combineLatest(defBuff, magBuff, sprBuff).map {
       case (atk, defs, mag, spr) => Buffs(atk, defs, mag, spr)
+    }
+
+    btlStats <-- unitStats.combineLatest(baseStats, buffs, targetStats).map {
+      case (stats, base, buffs, target) =>
+      for {
+        s <- stats
+        b <- base
+      } yield BattleStats(buffs(b, s), target)
     }
 
     val phyReceived  = calculateDamageReceived(breakStat(targetAtk, atkBreak),
@@ -791,4 +799,65 @@ object components {
   def mslot(name: String, cs: Observable[List[VNode]], sink: Sink[Option[String]], subject: rxscalajs.Subject[Option[String]]): VNode =
     td(label(name, select(cls := "equip-slot", children <-- cs, inputId --> sink, value <-- subject.map(_.getOrElse(EMPTY)).startWith(EMPTY))))
 
+
+  def extractIs[A](idx: List[Int], xs: Seq[A], default: A): List[A] = idx.map(xs.applyOrElse(_, (x: Int) => default))
+  def extractFrames(xs: List[Int]): List[Int] = xs.sorted match {
+    case Nil => Nil
+    case x :: Nil => xs
+    case ys => ys.head :: ys.zip(ys.tail).map(x => x._2 - x._1)
+  }
+
+  def renderHealing(skill: Either[List[ActiveEffect],SkillInfo], enhs: Map[Int,SkillInfo], enhm: Map[Int,Int], stats: Option[BattleStats]): List[VNode] = {
+    val healing = skill.fold(identity, sk =>
+      enhancedInfo(sk, enhm.get(sk.id), enhs, identity).actives).collect {
+        case x: Healing => x
+      }
+    stats.fold(List.empty[VNode])(s => healing.map { h =>
+      val (min,max) = h.turnHeal(s.unit)
+      val (minT, maxT) = h.totalHeal(s.unit)
+      val healdesc = if (h.turns > 1)
+        s"Heals $min-${max}${h.stat} per turn; $minT-${maxT}${h.stat} total"
+      else
+        s"Heals $minT-${maxT}${h.stat}"
+      div(healdesc)
+    }.toList)
+  }
+
+  def renderActiveAttack(skill: Either[List[ActiveEffect],SkillInfo], enhs: Map[Int,SkillInfo], enhm: Map[Int,Int], stats: Option[BattleStats]): List[VNode] = {
+    val effects = skill.fold(identity, _.actives)
+    val actives = effects.zipWithIndex.collect {
+      case (x,y) if x.isInstanceOf[HasActiveData] => y
+    }
+    val data = skill.fold(x => x.collectFirst { case a: HasActiveData => a.data}.getOrElse(ActiveData.empty), sk => {
+      val s = enhancedInfo(sk, enhm.get(sk.id), enhs, identity)
+      s.actives.collectFirst { case a: HasActiveData => a.data }.getOrElse(ActiveData.empty)
+    })
+    val attacks = skill.fold(x => x.collect { case a: com.ffbecalc.Damage => a }, sk => {
+      val s = enhancedInfo(sk, enhm.get(sk.id), enhs, identity)
+      s.actives.collect { case a: com.ffbecalc.Damage => a }
+    })
+    List(div("Hits: " + (extractIs(actives, data.atks, data.atks.headOption.getOrElse(0)) match {
+      case 0 :: Nil => "Normal Attack"
+      case x :: Nil => x.toString
+      case Nil => "Normal Attack"
+      case xs => xs.sum + " (" + xs.mkString("+") + ")"
+    })),
+    div("Frames: " + extractIs(actives, data.frames, data.frames.headOption.getOrElse(Nil)).map(extractFrames).map(_.mkString("-")).mkString(", ")),
+    div("Cast Delay: " + extractIs(actives, data.eframes, data.eframes.headOption.getOrElse(Nil)).map(x => scala.math.max(8, x.headOption.getOrElse(0))).mkString(", ")),
+    div("Movement: " + (data.movetpe match {
+      case 6 => "Dash"
+      case 5 => "Steal"
+      case 4 => "Cast"
+      case 3 => "Normal Attack"
+      case 2 => "Walk"
+      case 1 => "Normal Attack"
+      case 0 => "Cast"
+    }))) ++ stats.fold(List.empty[VNode])(s => attacks.map(a =>
+      a.calculateDamage(s) match {
+        case m@MultiDamage(xs) => div(xs.zipWithIndex.map { case (d,x) =>
+          div(s"Attack ${x + 1} damage: ${d.total}")
+        } ++ List(div("Total damage: " + m.total)):_*)
+        case SingleDamage(p, m) => div("Damage: " + (p + m))
+      }))
+  }
 }

@@ -36,6 +36,16 @@ package object ffbecalc extends PicklerImplicits {
       p1 <- enhs.get(id)
       p2 <- enhs.get(p1.id)
     } yield (p1, p2)
+
+  def enhancedInfo[A](info: SkillInfo, enhanced: Option[Int], enhs: Map[Int,SkillInfo], f: SkillInfo => A): A = {
+    enhanced.fold(f(info)) { en =>
+      val d = enhs.getOrElse(info.id, info)
+      val s = if (en == info.id) Some(info)
+        else if (d.id == en) Some(d)
+        else enhs.get(enhs.getOrElse(info.id, info).id)
+      f(s.getOrElse(info))
+    }
+  }
 }
 
 }
@@ -105,8 +115,20 @@ object Pots {
 }
 case class BaseStats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int, pots: Pots) {
   def asStats = Stats(hp, mp, atk, defs, mag, spr, AilmentResist.zero, ElementResist.zero)
+  def +(u: UnitStats) = u.copy(atk = u.atk + atk, defs = u.defs + defs, mag = u.mag + mag, spr = u.spr + spr)
 }
-case class Buffs(atk: Int, defs: Int, mag: Int, spr: Int)
+case class Buffs(atk: Int, defs: Int, mag: Int, spr: Int) {
+  def *(b: BaseStats): BaseStats = {
+    b.copy(
+      atk  = (b.atk  * (atk  / 100.0)).toInt,
+      defs = (b.defs * (defs / 100.0)).toInt,
+      mag  = (b.mag  * (mag  / 100.0)).toInt,
+      spr  = (b.spr  * (spr  / 100.0)).toInt)
+  }
+  def apply(b: BaseStats, u: UnitStats): UnitStats = {
+    this * b + u
+  }
+}
 case class Stats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int, status: AilmentResist, element: ElementResist) {
   def +(o: Option[EsperStatInfo]) = Stats(
     hp   + o.fold(0)(_.hp.effectiveMax),

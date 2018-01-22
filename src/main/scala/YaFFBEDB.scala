@@ -176,6 +176,9 @@ object YaFFBEDB {
     val esperEntry = createHandler[Option[EsperEntry]](None)
 
     val unitEffectiveStats = createHandler[Option[UnitStats]](None)
+    val battleStats = createHandler[Option[BattleStats]](None)
+    val cacheBattleStats = BehaviorSubject[Option[BattleStats]](None)
+    battleStats { s => cacheBattleStats.next(s) }
 
     def equipFor(idOb: Observable[Option[String]]): Observable[Option[EquipIndex]] = for {
       ms <- equips
@@ -323,15 +326,6 @@ object YaFFBEDB {
         es.getOrElse(base.id, base.id) == target.id
       }
 
-    def enhancedInfo[A](info: SkillInfo, enhanced: Option[Int], enhs: Map[Int,SkillInfo], f: SkillInfo => A): A = {
-      enhanced.fold(f(info)) { en =>
-        val d = enhs.getOrElse(info.id, info)
-        val s = if (en == info.id) Some(info)
-          else if (d.id == en) Some(d)
-          else enhs.get(enhs.getOrElse(info.id, info).id)
-        f(s.getOrElse(info))
-      }
-    }
     def deco[A,B,C](f: (A,B,C) => VNode): ((A,B,C)) => VNode = f.tupled(_)
     case class UnitActive(unitSkill: UnitSkill, info: SkillInfo, enhs: Map[Int,SkillInfo])
     case class UnitActives(unit: UnitData, actives: Seq[UnitActive])
@@ -445,30 +439,23 @@ object YaFFBEDB {
       } else s.effects.map(div(_))
     }
 
-    def extractIs[A](idx: List[Int], xs: Seq[A], default: A): List[A] = idx.map(xs.applyOrElse(_, (x: Int) => default))
-    def extractFrames(xs: List[Int]): List[Int] = xs.sorted match {
-      case Nil => Nil
-      case x :: Nil => xs
-      case ys => ys.head :: ys.zip(ys.tail).map(x => x._2 - x._1)
-    }
-
     def describeActive(rowid: Int, skill: Either[List[ActiveEffect],SkillInfo], content: List[VNode], enhs: Map[Int,SkillInfo] = Map.empty, cols: Int = 5, idn: String = "active"): VNode = {
-      val actives = skill.fold(identity, _.actives).zipWithIndex.collect {
-        case (x,y) if x.isInstanceOf[HasActiveData] => y
-      }
-      val isExpandable = actives.nonEmpty
+      // TODO need to query enhs, e.g. doesn't work for hero's rime+2
+      val effects = skill.fold(identity, _.actives)
+      val hasActiveData = effects.exists(_.isInstanceOf[HasActiveData])
+      val hasHealing = effects.exists(_.isInstanceOf[Healing])
+      val isExpandable = hasActiveData || hasHealing
       val clickSink = createHandler[Unit]()
       val scanned = clickSink.scan(false) { (b, _) => !b && isExpandable }
-      scanned.combineLatest(enhMap) { case (b,enhm) =>
-        val data = skill.fold(x => x.collectFirst { case a: HasActiveData => a.data}.getOrElse(ActiveData.empty), sk => {
-          val s = enhancedInfo(sk, enhm.get(sk.id), enhs, identity)
-          s.actives.collectFirst { case a: HasActiveData => a.data }.getOrElse(ActiveData.empty)
-        })
+      scanned.combineLatest(enhMap, cacheBattleStats) { case (b,enhm,stats) =>
         if (b) {
           val newid = idn + rowid + "-view"
           val exists = document.getElementById(newid)
-          if (exists == null) {
-            val node = document.getElementById(idn + rowid)
+          if (exists != null)
+            exists.parentNode.removeChild(exists)
+
+          val node = document.getElementById(idn + rowid)
+          if (node.parentNode != null && node.parentNode.parentNode != null) {
             val newdiv = document.createElement("tr")
             newdiv.id = newid
             newdiv.setAttribute("class", "active-view")
@@ -478,28 +465,16 @@ object YaFFBEDB {
             } else {
               node.parentNode.parentNode.parentNode.insertBefore(newdiv, next)
             }
-            OutWatch.render("#" + idn + rowid + "-view",
-              td(colspan := cols,
-                div("Hits: " + (extractIs(actives, data.atks, data.atks.headOption.getOrElse(0)) match {
-                  case 0 :: Nil => "Normal Attack"
-                  case x :: Nil => x.toString
-                  case Nil => "Normal Attack"
-                  case xs => xs.sum + " (" + xs.mkString("+") + ")"
-                })),
-                div("Frames: " + extractIs(actives, data.frames, data.frames.headOption.getOrElse(Nil)).map(extractFrames).map(_.mkString("-")).mkString(", ")),
-                div("Cast Delay: " + extractIs(actives, data.eframes, data.eframes.headOption.getOrElse(Nil)).map(x => scala.math.max(8, x.headOption.getOrElse(0))).mkString(", ")),
-                div("Movement: " + (data.movetpe match {
-                  case 6 => "Dash"
-                  case 5 => "Steal"
-                  case 4 => "Cast"
-                  case 3 => "Normal Attack"
-                  case 2 => "Walk"
-                  case 1 => "Normal Attack"
-                  case 0 => "Cast"
-                }))
-              )
-            )
           }
+          val nodes = if (hasActiveData)
+            components.renderActiveAttack(skill, enhs, enhm, stats)
+          else if (hasHealing)
+            components.renderHealing(skill, enhs, enhm, stats)
+          else
+            Nil
+          OutWatch.render("#" + idn + rowid + "-view",
+            td((colspan := cols) :: nodes: _*)
+          )
         } else {
           val node = document.getElementById(idn + rowid + "-view")
           if (node != null) node.parentNode.removeChild(node)
@@ -854,7 +829,7 @@ object YaFFBEDB {
         h3("Base Stats"),
         div(child <-- components.unitBaseStats(unitEntry, unitStats, pots)),
         h3("Battle Stats"),
-        div(child <-- components.battleStats(unitStats, unitEffectiveStats)),
+        div(child <-- components.battleStats(unitStats, unitEffectiveStats, battleStats)),
         h3("Equipment"),
         components.sortBy(_sorting),
         table(id := "equip-slots",
