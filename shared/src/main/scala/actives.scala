@@ -151,7 +151,7 @@ case class SingleDamage(physical: Int, magical: Int) extends DamageResult {
 sealed trait Damage { self: HasActiveData =>
   def ratio: Int
   def isMagic: Boolean = self.data.tpe == "Magic"
-  def canDW: Boolean = self.data.atktpe == "Physical"
+  def canDW: Boolean = self.data.atktpe == "Physical" || self.data.atktpe == "Hybrid"
 
   def calcKillers(stats: BattleStats, sel: ((Int,Int)) => Int): Int = {
     val ts = stats.target.tribes.size
