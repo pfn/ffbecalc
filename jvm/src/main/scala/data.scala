@@ -239,7 +239,8 @@ object DataDecoders {
     Decoder.forProduct3("min", "max", "id")(UnitIndexData.apply)
 
   implicit val decodeUnitEntry: Decoder[UnitEntry] =
-    Decoder.forProduct8(
+    Decoder.forProduct9(
+      "compendium_id",
       "rarity",
       "stats",
       "limitburst_id",

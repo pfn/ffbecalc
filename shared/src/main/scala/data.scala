@@ -20,6 +20,7 @@ case class LimitBurst(name: String, levels: Int, min: LimitBurstEffect, max: Lim
 case class MateriaTrust(id: Int) extends TMR
 case class EquipTrust(id: Int) extends TMR
 case class UnitEntry(
+  compendium: Int,
   rarity: Int,
   stats: StatInfo,
   lb: Int,

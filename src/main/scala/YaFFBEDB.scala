@@ -814,14 +814,19 @@ object YaFFBEDB {
         div(hidden <-- unitId.map(_.isEmpty),
         p(children <-- unitDescription.combineLatest(unitInfo).map { case (d,i) =>
           val eid = i.flatMap(_.entries.toList.sortBy(_._2.rarity).lastOption.map(_._1))
+          val cid = i.flatMap(_.entries.toList.sortBy(_._2.rarity).headOption.map(_._2.compendium)).filter(_ < 8000)
           List(
             p(
               a(href := "https://exvius.gamepedia.com/" +
-                i.fold(""){_.name.replace(" ", "_")}, "ExviusWiki"),
-              " | ",
+                i.fold(""){_.name.replace(" ", "_")}, "ExviusWiki") ::
+              span(" | ") ::
               a(href := "https://exviusdb.com/gl/units/" +
                 i.fold(""){_.name.toLowerCase.replace(" ", "-")} + "/",
-                  "ExviusDB")
+                  "ExviusDB") ::
+              cid.toList.flatMap(c =>
+                List(span(" | "),
+                a(href := f"https://www.reddit.com/r/FFBraveExvius/wiki/units/$c%03d", "Reddit"))
+              ):_*
             )
           ) ++ eid.toList.map(id =>
             img(src := s"https://exviusdb.com/static/img/assets/unit/unit_ills_$id.png", align := "right")) ++ List(p(d))
