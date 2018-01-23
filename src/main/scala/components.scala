@@ -128,23 +128,25 @@ object components {
     override def toString = s"$min - $max (avg $avg)"
     def +(o: Damage) = Damage(min + o.min, max + o.max, avg + o.avg)
     def /(d: Int) = Damage(min / d, max / d, avg / d)
-    def *(m: Int) = Damage(min * m, max * m, avg * m)
+    def *(m: Double) = Damage((min * m).toInt, (max * m).toInt, (avg * m).toInt)
   }
   object Damage {
     def empty = Damage(0, 0, 0)
   }
 
   case class DamageScoreSim(
-    phy: Damage, dwR: Damage, dwL: Damage, dwT: Damage, mag: Damage) {
-    def hybridDW = (dwT + mag*2) / 2
-    def hybridR = (phy + mag) / 2
-    def hybridL = (dwL + mag) / 2
+    phy: Damage, dwR: Damage, dwL: Damage, dwT: Damage, mag: Damage,
+    eleadj: Double, killeradj: Double) {
+    def killerElements = (1+eleadj) * (1+killeradj)
+    def hybridDW = (dwT + mag*killerElements*2) / 2
+    def hybridR  = (phy + mag*killerElements)   / 2
+    def hybridL  = (dwL + mag*killerElements)   / 2
     def max = List(phy.avg, dwT.avg, mag.avg, hybridDW.avg, hybridR.avg).max
   }
 
   object DamageScoreSim {
     def empty = DamageScoreSim(
-      Damage.empty, Damage.empty, Damage.empty, Damage.empty, Damage.empty)
+      Damage.empty, Damage.empty, Damage.empty, Damage.empty, Damage.empty, 0, 0)
   }
 
   def calculateDamageReceived(stat: Observable[Int], ratio: Observable[Int], defs: Observable[Option[Int]], level: Observable[Int], reduc1: Observable[Int], reduc2: Observable[Int], variance: WeaponVariance = WeaponVariance(1, 1)): Observable[Damage] = {
@@ -283,7 +285,7 @@ object components {
             s.level, 0, 0,
             calcKillers(t, u.fold(Map.empty[Int,(Int,Int)])(_.killers), _._2),
             0, s.variance)
-          DamageScoreSim(phy, dw1, dw2, dw1 + dw2, mag)
+          DamageScoreSim(phy, dw1, dw2, dw1 + dw2, mag, calcElements(u, t) / 100.0, calcKillers(t, u.fold(Map.empty[Int,(Int,Int)])(_.killers), _._1) / 100.0)
         }).getOrElse(DamageScoreSim.empty)
       }
     }

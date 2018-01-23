@@ -153,18 +153,18 @@ sealed trait Damage { self: HasActiveData =>
   def isMagic: Boolean = self.data.tpe == "Magic"
   def canDW: Boolean = self.data.atktpe == "Physical" || self.data.atktpe == "Hybrid"
 
-  def calcKillers(stats: BattleStats, sel: ((Int,Int)) => Int): Int = {
+  def calcKillers(stats: BattleStats, sel: ((Int,Int)) => Int): Double = {
     val ts = stats.target.tribes.size
     val ks = stats.target.tribes.map(t => sel(stats.unit.killers.getOrElse(t, (0,0)))).sum
-    ks / ts
+    (ks / ts) / 100.0
   }
 
-  def calcElements(stats: BattleStats, useEquip: Boolean): Int = {
+  def calcElements(stats: BattleStats, useEquip: Boolean): Double = {
     val skilles = data.element.toSet.map(SkillEffect.ELEMENTS)
     val es = if (useEquip) skilles ++ stats.unit.elements else skilles
-    val est = es.map(e =>
+    val est = -1 * es.map(e =>
       stats.target.resists.asMap.getOrElse(e, 0)).sum
-    if (es.isEmpty) 0 else est / es.size
+    (if (es.isEmpty) 0 else est / es.size) / 100.0
   }
 
   def physical(
@@ -287,6 +287,28 @@ trait HybridDamage extends Damage { this: HasActiveData =>
   }
 }
 
+trait SpiritDamage extends Damage { this: HasActiveData =>
+  def calculateDamage(stats: BattleStats) = {
+    val count = if (canDW && stats.unit.dw) 2 else 1
+    val x = magical(
+      stats.unit.spr, ratio / 100.0,
+      calcKillers(stats, _._2), calcElements(stats, false),
+      stats.target.spr, 0, stats.unit.level)
+    val single = SingleDamage(0, x)
+    if (count == 1) single
+    else MultiDamage((0 until count).map(_ => single).toList)
+  }
+}
+trait DefenseDamage extends Damage { this: HasActiveData =>
+  def calculateDamage(stats: BattleStats): DamageResult = {
+    SingleDamage(physical(
+      stats.unit.defs, ratio / 100.0,
+      calcKillers(stats, _._1), calcElements(stats, true),
+      stats.target.defs, dw = false,
+      level = stats.unit.level), 0)
+  }
+}
+
 sealed trait Healing {
   def stat: String
   def ratio: Int
@@ -383,8 +405,8 @@ case class MagStoreEffect(stack: Int, max: Int) extends ActiveEffect with NoTarg
 case class StoreAttackEffect(stack: Int, max: Int, selfdamage: Int, target: SkillTarget) extends ActiveEffect
 case class PercentHPDamageEffect(min: Int, max: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class MPDamageEffect(ratio: Int, max: Int, scaling: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
-case class SprDamageEffect(ratio: Int, max: Int, scaling: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
-case class DefDamageEffect(ratio: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
+case class SprDamageEffect(ratio: Int, max: Int, scaling: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with SpiritDamage
+case class DefDamageEffect(ratio: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with DefenseDamage
 case class PhysicalEffect(ratio: Int, itd: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with PhysicalDamage {
   def s = if (data.atktpe == "None") "*" else ""
   def realRatio = (ratio / 100.0) / (1.0 - itd / 100.0)
