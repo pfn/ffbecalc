@@ -407,10 +407,11 @@ case class PercentHPDamageEffect(min: Int, max: Int, target: SkillTarget, data: 
 case class MPDamageEffect(ratio: Int, max: Int, scaling: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class SprDamageEffect(ratio: Int, max: Int, scaling: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with SpiritDamage
 case class DefDamageEffect(ratio: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with DefenseDamage
-case class PhysicalEffect(ratio: Int, itd: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with PhysicalDamage {
+case class PhysicalEffect(_ratio: Int, itd: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with PhysicalDamage {
   def s = if (data.atktpe == "None") "*" else ""
-  def realRatio = (ratio / 100.0) / (1.0 - itd / 100.0)
-  override lazy val toString = f"""Physical$s ${data.element.mkString("/")} damage ($realRatio%.2fx ATK) to $target"""
+  def ratio = (_ratio / (1 + itd/100.0)).toInt
+
+  override lazy val toString = f"""Physical$s ${data.element.mkString("/")} damage (${ratio/100.0}%.2fx ATK) to $target"""
 }
 case class PhysicalKillerEffect(ratio: Int, tribe: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class MagicalKillerEffect(ratio: Int, tribe: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
@@ -434,10 +435,10 @@ case class RandomAilmentEffect(poison: Int, blind: Int, sleep: Int, silence: Int
 case class AilmentResistEffect(poison: Int, blind: Int, sleep: Int, silence: Int, paralyze: Int, confusion: Int, disease: Int, petrify: Int, turns: Int, target: SkillTarget) extends ActiveEffect
 case class StackingPhysicalEffect(first: Int, stack: Int, max: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class StackingMagicalEffect(first: Int, stack: Int, max: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
-case class MagicalEffect(ratio: Int, its: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with MagicalDamage {
+case class MagicalEffect(_ratio: Int, its: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with MagicalDamage {
   def s = if (data.atktpe == "None") "*" else ""
-  def realRatio = (ratio / 100.0) / (1.0 - its / 100.0)
-  override lazy val toString = f"""Magical$s ${data.element.mkString("/")} damage ($realRatio%.2fx MAG) to $target"""
+  def ratio = (_ratio / (1 + its/100.0)).toInt
+  override lazy val toString = f"""Magical$s ${data.element.mkString("/")} damage (${ratio/100.0}%.2fx MAG) to $target"""
 }
 case class SingingBuffEffect(atk: Int, defs: Int, mag: Int, spr: Int, turns: Int, target: SkillTarget) extends ActiveEffect
 case class BuffEffect(atk: Int, defs: Int, mag: Int, spr: Int, turns: Int, target: SkillTarget) extends ActiveEffect {
