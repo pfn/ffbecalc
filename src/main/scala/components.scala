@@ -274,7 +274,7 @@ object components {
               )
             dwR -> dwL
           } else {
-            phy -> Damage.empty
+            Damage.empty -> Damage.empty
           }
           val mag = calculateDamageReceivedS(
             (s.mag + a.mag * (mb/100.0)).toInt,
