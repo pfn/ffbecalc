@@ -127,13 +127,20 @@ object components {
   case class Damage(min: Int, max: Int, avg: Int) {
     override def toString = s"$min - $max (avg $avg)"
     def +(o: Damage) = Damage(min + o.min, max + o.max, avg + o.avg)
+    def /(d: Int) = Damage(min / d, max / d, avg / d)
+    def *(m: Int) = Damage(min * m, max * m, avg * m)
   }
   object Damage {
     def empty = Damage(0, 0, 0)
   }
 
   case class DamageScoreSim(
-    phy: Damage, dwL: Damage, dwR: Damage, dwT: Damage, mag: Damage)
+    phy: Damage, dwR: Damage, dwL: Damage, dwT: Damage, mag: Damage) {
+    def hybridDW = (dwT + mag*2) / 2
+    def hybridR = (phy + mag) / 2
+    def hybridL = (dwL + mag) / 2
+    def max = List(phy.avg, dwT.avg, mag.avg, hybridDW.avg, hybridR.avg).max
+  }
 
   object DamageScoreSim {
     def empty = DamageScoreSim(
@@ -267,7 +274,7 @@ object components {
               )
             dwR -> dwL
           } else {
-            Damage.empty -> Damage.empty
+            phy -> Damage.empty
           }
           val mag = calculateDamageReceivedS(
             (s.mag + a.mag * (mb/100.0)).toInt,
@@ -300,9 +307,7 @@ object components {
       ),
       div(cls := "dmg-score",
         div("Damage:"),
-        div(child <-- dmgScore.map { d =>
-          math.max(d.mag.avg, math.max(d.phy.avg, d.dwT.avg))
-        }),
+        div(child <-- dmgScore.map(_.max)),
         div("Tanking:"),
         div(child <-- phyReceived.map(_.avg)),
         div(child <-- magReceived.map(_.avg))
@@ -369,8 +374,15 @@ object components {
               div("Physical DW L: " + ds.dwL),
             )
           } else Nil
+          val dwh = if (ds.dwT != Damage.empty) {
+            List(
+              div("ATK/MAG Hybrid DW: " + ds.hybridDW),
+              div("ATK/MAG Hybrid R: "  + ds.hybridR),
+              div("ATK/MAG Hybrid L: "  + ds.hybridL),
+            )
+          } else Nil
           List(div("Physical SW: " + ds.phy)) ++
-          dw ++ List(div("Magical: " + ds.mag))
+          dw ++ List(div("ATK/MAG Hybrid SW: " + ds.hybridR)) ++ dwh ++ List(div("Magical: " + ds.mag))
         }),
       ),
 
