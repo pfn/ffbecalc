@@ -136,17 +136,57 @@ case object UnknownActiveEffect extends ActiveEffect {
 trait ConditionalEffect
 trait ConditionalBuff
 
+object DamageRangeImplicits {
+  trait ToDamageRange[A] {
+    def applyVariance(a: A, variance: WeaponVariance): DamageRange
+  }
+  implicit val intToDamageRange: ToDamageRange[Int] = new ToDamageRange[Int] {
+    def applyVariance(value: Int, variance: WeaponVariance) =
+      DamageRange(value) * variance
+  }
+  implicit class AsDamageRange[A : ToDamageRange](a: A) {
+    def *(variance: WeaponVariance): DamageRange =
+      implicitly[ToDamageRange[A]].applyVariance(a, variance)
+  }
+}
+import DamageRangeImplicits._
 sealed trait DamageResult {
-  def total: Int
+  def total: DamageRange
+  def max = total.max
+  def avg = total.avg
+  def min = total.min
 }
-object DamageResult {
-  def apply(phys: Int, mag: Int) = SingleDamage(phys, mag)
+case class DamageRange(min: Int, max: Int) {
+  def *(variance: WeaponVariance) = DamageRange((min * variance.min).toInt,
+    (max * variance.max).toInt)
+  def *(m: Double) = DamageRange((min * m).toInt, (max * m).toInt)
+  def /(d: Double) = DamageRange((min / d).toInt, (max / d).toInt)
+  def +(other: DamageRange) = DamageRange(other.min + min, other.max + max)
+
+  lazy val avg = (min + max) / 2
+
+  override def toString = s"$min - $max (avg $avg)"
 }
+
+object DamageRange {
+  def apply(damage: Int): DamageRange =
+    DamageRange((damage * 0.85).toInt, damage)
+}
+
 case class MultiDamage(damages: List[SingleDamage]) extends DamageResult {
-  def total = damages.map(x => x.physical + x.magical).sum
+  def total = damages.foldLeft(DamageRange(0)) { (ac,x) =>
+    ac + (x.physical + x.magical)
+  }
 }
-case class SingleDamage(physical: Int, magical: Int) extends DamageResult {
-  def total = physical + magical
+case class SingleDamage(physical: DamageRange, magical: DamageRange)
+extends DamageResult {
+  val total = physical + magical
+}
+object SingleDamage {
+  def apply(physical: Int, magical: Int): SingleDamage =
+    SingleDamage(DamageRange(physical), DamageRange(magical))
+  def apply(physical: DamageRange, magical: Int): SingleDamage =
+    SingleDamage(physical, DamageRange(magical))
 }
 sealed trait Damage { self: HasActiveData =>
   def ratio: Int
@@ -258,12 +298,12 @@ trait PhysicalDamage extends Damage { this: HasActiveData =>
       stats.unit.atk - stats.unit.l, ratio / 100.0,
       calcKillers(stats, _._1), calcElements(stats, true),
       stats.target.defs, dw = false,
-      level = stats.unit.level), 0)
+      level = stats.unit.level) * stats.unit.variance, 0)
     val l = SingleDamage(physical(
       stats.unit.atk - stats.unit.r, ratio / 100.0,
       calcKillers(stats, _._1), calcElements(stats, true),
       stats.target.defs, dw = false,
-      level = stats.unit.level), 0)
+      level = stats.unit.level) * stats.unit.variance, 0)
     if (count == 1) r
     else MultiDamage(r :: l :: Nil)
   }
@@ -280,10 +320,10 @@ trait HybridDamage extends Damage { this: HasActiveData =>
       calcKillers(stats, _._1), calcElements(stats, true),
       0, stats.target.defs, stats.target.spr, 0, 0,
       dw = false, stats.unit.level)
-      if (count == 1) DamageResult(hybr.physical, hybr.magical)
+      if (count == 1) SingleDamage(hybr.physical * stats.unit.variance, hybr.magical)
       else MultiDamage(
-        DamageResult(hybr.physical, hybr.magical) ::
-        DamageResult(hybl.physical, hybl.magical) :: Nil)
+        SingleDamage(hybr.physical * stats.unit.variance, hybr.magical) ::
+        SingleDamage(hybl.physical * stats.unit.variance, hybl.magical) :: Nil)
   }
 }
 

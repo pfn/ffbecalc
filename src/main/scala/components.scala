@@ -124,19 +124,10 @@ object components {
       if (es.isEmpty) 0 else est / es.size
     }
   }
-  case class Damage(min: Int, max: Int, avg: Int) {
-    override def toString = s"$min - $max (avg $avg)"
-    def +(o: Damage) = Damage(min + o.min, max + o.max, avg + o.avg)
-    def /(d: Int) = Damage(min / d, max / d, avg / d)
-    def *(m: Double) = Damage((min * m).toInt, (max * m).toInt, (avg * m).toInt)
-  }
-  object Damage {
-    def empty = Damage(0, 0, 0)
-  }
 
   case class DamageScoreSim(
-    phy: Damage, dwR: Damage, dwL: Damage, dwT: Damage, mag: Damage,
-    eleadj: Double, killeradj: Double) {
+    phy: DamageRange, dwR: DamageRange, dwL: DamageRange, dwT: DamageRange,
+    mag: DamageRange, eleadj: Double, killeradj: Double) {
     def killerElements = (1+eleadj) * (1+killeradj)
     def hybridDW = (dwT + mag*killerElements*2) / 2
     def hybridR  = (phy + mag*killerElements)   / 2
@@ -146,21 +137,18 @@ object components {
 
   object DamageScoreSim {
     def empty = DamageScoreSim(
-      Damage.empty, Damage.empty, Damage.empty, Damage.empty, Damage.empty, 0, 0)
+      DamageRange(0), DamageRange(0), DamageRange(0), DamageRange(0), DamageRange(0), 0, 0)
   }
 
-  def calculateDamageReceived(stat: Observable[Int], ratio: Observable[Int], defs: Observable[Option[Int]], level: Observable[Int], reduc1: Observable[Int], reduc2: Observable[Int], variance: WeaponVariance = WeaponVariance(1, 1)): Observable[Damage] = {
+  def calculateDamageReceived(stat: Observable[Int], ratio: Observable[Int], defs: Observable[Option[Int]], level: Observable[Int], reduc1: Observable[Int], reduc2: Observable[Int], variance: WeaponVariance = WeaponVariance(1, 1)): Observable[DamageRange] = {
     stat.combineLatest(ratio, defs, level).combineLatest(reduc1, reduc2).map { case ((st, r, d, l), r1, r2) =>
     calculateDamageReceivedS(st, r, d, l, r1, r2, 0, 0)
     }
   }
-  def calculateDamageReceivedS(st: Int, r: Int, d: Option[Int], l: Int, r1: Int, r2: Int, elements: Int, killers: Int, variance: WeaponVariance = WeaponVariance(1, 1)): Damage = {
-      d.fold(Damage(0, 0, 0)) { df =>
+  def calculateDamageReceivedS(st: Int, r: Int, d: Option[Int], l: Int, r1: Int, r2: Int, elements: Int, killers: Int, variance: WeaponVariance = WeaponVariance(1, 1)): DamageRange = {
+      d.fold(DamageRange(0)) { df =>
         val dmg = ((1 + elements/100.0) * (1+ killers/100.0) * (1 - r1/100.0) * (1 - r2/100.0) * (1 + l/100.0) * (r/100.0) * ((st * st) / df)).toInt
-        val min = (dmg * 0.85 * variance.min).toInt
-        val max = (dmg * variance.max).toInt
-        val avg = (min + max) / 2
-        Damage(min, max, avg)
+        DamageRange(dmg) * variance
       }
   }
   def battleStats(baseStats: Observable[Option[BaseStats]], unitStats: Observable[Option[UnitStats]], btlStats: Sink[Option[BattleStats]]): Observable[VNode] = Observable.just {
@@ -276,7 +264,7 @@ object components {
               )
             dwR -> dwL
           } else {
-            Damage.empty -> Damage.empty
+            DamageRange(0) -> DamageRange(0)
           }
           val mag = calculateDamageReceivedS(
             (s.mag + a.mag * (mb/100.0)).toInt,
@@ -284,7 +272,7 @@ object components {
             Option((t.spr * (1 - sb/100.0)).toInt),
             s.level, 0, 0,
             calcKillers(t, u.fold(Map.empty[Int,(Int,Int)])(_.killers), _._2),
-            0, s.variance)
+            0)
           DamageScoreSim(phy, dw1, dw2, dw1 + dw2, mag, calcElements(u, t) / 100.0, calcKillers(t, u.fold(Map.empty[Int,(Int,Int)])(_.killers), _._1) / 100.0)
         }).getOrElse(DamageScoreSim.empty)
       }
@@ -369,14 +357,14 @@ object components {
       div(
         numberPicker("Ratio", outputRatio, init = 100, min = 1, max = 3000, steps = (10, 100, 500), n = r => f"${r / 100.0}%.1f", from = x => (x * 100).toInt),
         div(children <-- dmgScore.map { ds =>
-          val dw = if (ds.dwT != Damage.empty) {
+          val dw = if (ds.dwT != DamageRange(0)) {
             List(
               div("Physical DW: " + ds.dwT),
               div("Physical DW R: " + ds.dwR),
               div("Physical DW L: " + ds.dwL),
             )
           } else Nil
-          val dwh = if (ds.dwT != Damage.empty) {
+          val dwh = if (ds.dwT != DamageRange(0)) {
             List(
               div("ATK/MAG Hybrid DW: " + ds.hybridDW),
               div("ATK/MAG Hybrid R: "  + ds.hybridR),
@@ -846,9 +834,9 @@ object components {
       val s = enhancedInfo(sk, enhm.get(sk.id), enhs, identity)
       s.actives.collectFirst { case a: HasActiveData => a.data }.getOrElse(ActiveData.empty)
     })
-    val attacks = skill.fold(x => x.collect { case a: com.ffbecalc.Damage => a }, sk => {
+    val attacks = skill.fold(x => x.collect { case a: Damage => a }, sk => {
       val s = enhancedInfo(sk, enhm.get(sk.id), enhs, identity)
-      s.actives.collect { case a: com.ffbecalc.Damage => a }
+      s.actives.collect { case a: Damage => a }
     })
     List(div("Hits: " + (extractIs(actives, data.atks, data.atks.headOption.getOrElse(0)) match {
       case 0 :: Nil => "Normal Attack"
