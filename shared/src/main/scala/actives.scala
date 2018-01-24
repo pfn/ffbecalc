@@ -25,7 +25,7 @@ object ActiveUtils {
   def or(xs: List[String]) = join(xs, " or ")
   def and(xs: List[String]) = join(xs, " and ")
 }
-case class UnitStats(atk: Int, defs: Int, mag: Int, spr: Int, l: Int, r: Int, variance: WeaponVariance, level: Int, elements: Set[Int], killers: Map[Int,(Int,Int)]) {
+case class UnitStats(hp: Int, mp: Int, atk: Int, defs: Int, mag: Int, spr: Int, l: Int, r: Int, variance: WeaponVariance, level: Int, elements: Set[Int], killers: Map[Int,(Int,Int)], evomag: Int) {
   def dw = r != 0 && l != 0
 }
 case class TargetStats(defs: Int, spr: Int, defBreak: Int, sprBreak: Int, tribes: Set[Int], resists: ElementResist)
@@ -151,6 +151,7 @@ object DamageRangeImplicits {
 }
 import DamageRangeImplicits._
 sealed trait DamageResult {
+  def *(m: Double): DamageResult
   def total: DamageRange
   def max = total.max
   def avg = total.avg
@@ -177,10 +178,12 @@ case class MultiDamage(damages: List[SingleDamage]) extends DamageResult {
   def total = damages.foldLeft(DamageRange(0)) { (ac,x) =>
     ac + (x.physical + x.magical)
   }
+  def *(m: Double) = MultiDamage(damages.map(_ * m))
 }
 case class SingleDamage(physical: DamageRange, magical: DamageRange)
 extends DamageResult {
   val total = physical + magical
+  def *(m: Double) = SingleDamage(physical * m, magical * m)
 }
 object SingleDamage {
   def apply(physical: Int, magical: Int): SingleDamage =
@@ -275,11 +278,7 @@ sealed trait Damage { self: HasActiveData =>
         (1 + (level / 100.0)) * ratio).toInt
   }
 
-  def calculateDamage(stats: BattleStats): DamageResult
-}
-
-trait MagicalDamage extends Damage { this: HasActiveData =>
-  def calculateDamage(stats: BattleStats) = {
+  def calculateMagical(stats: BattleStats) = {
     val count = if (canDW && stats.unit.dw) 2 else 1
     val x = magical(
       stats.unit.mag, ratio / 100.0,
@@ -289,10 +288,7 @@ trait MagicalDamage extends Damage { this: HasActiveData =>
     if (count == 1) single
     else MultiDamage((0 until count).map(_ => single).toList)
   }
-}
-
-trait PhysicalDamage extends Damage { this: HasActiveData =>
-  def calculateDamage(stats: BattleStats): DamageResult = {
+  def calculatePhysical(stats: BattleStats): DamageResult = {
     val count = if (canDW && stats.unit.dw) 2 else 1
     val r = SingleDamage(physical(
       stats.unit.atk - stats.unit.l, ratio / 100.0,
@@ -307,10 +303,7 @@ trait PhysicalDamage extends Damage { this: HasActiveData =>
     if (count == 1) r
     else MultiDamage(r :: l :: Nil)
   }
-}
-
-trait HybridDamage extends Damage { this: HasActiveData =>
-  def calculateDamage(stats: BattleStats): DamageResult = {
+  def calculateHybrid(stats: BattleStats): DamageResult = {
     val count = if (canDW && stats.unit.dw) 2 else 1
     val hybr = hybrid(stats.unit.atk - stats.unit.l, stats.unit.mag, ratio / 100.0,
       calcKillers(stats, _._1), calcElements(stats, true),
@@ -325,20 +318,21 @@ trait HybridDamage extends Damage { this: HasActiveData =>
         SingleDamage(hybr.physical * stats.unit.variance, hybr.magical) ::
         SingleDamage(hybl.physical * stats.unit.variance, hybl.magical) :: Nil)
   }
+  def calculateDamage(stats: BattleStats): DamageResult
 }
 
-trait SpiritDamage extends Damage { this: HasActiveData =>
-  def calculateDamage(stats: BattleStats) = {
-    val count = if (canDW && stats.unit.dw) 2 else 1
-    val x = magical(
-      stats.unit.spr, ratio / 100.0,
-      calcKillers(stats, _._2), calcElements(stats, false),
-      stats.target.spr, 0, stats.unit.level)
-    val single = SingleDamage(0, x)
-    if (count == 1) single
-    else MultiDamage((0 until count).map(_ => single).toList)
-  }
+trait MagicalDamage extends Damage { this: HasActiveData =>
+  def calculateDamage(stats: BattleStats) = calculateMagical(stats)
 }
+
+trait PhysicalDamage extends Damage { this: HasActiveData =>
+  def calculateDamage(stats: BattleStats) = calculatePhysical(stats)
+}
+
+trait HybridDamage extends Damage { this: HasActiveData =>
+  def calculateDamage(stats: BattleStats) = calculateHybrid(stats)
+}
+
 trait DefenseDamage extends Damage { this: HasActiveData =>
   def calculateDamage(stats: BattleStats): DamageResult = {
     SingleDamage(physical(
@@ -346,6 +340,18 @@ trait DefenseDamage extends Damage { this: HasActiveData =>
       calcKillers(stats, _._1), calcElements(stats, true),
       stats.target.defs, dw = false,
       level = stats.unit.level), 0)
+  }
+}
+
+trait AttackTypeDamage extends Damage { this: HasActiveData =>
+  def calculateDamage(stats: BattleStats) = {
+    val dw = canDW && stats.unit.dw
+    data.atktpe match {
+      case "Physical" => calculatePhysical(stats)
+      case "Magic"    => calculateMagical(stats)
+      case "Hybrid"   => calculateHybrid(stats)
+      case _          => SingleDamage(0, 0)
+    }
   }
 }
 
@@ -392,11 +398,11 @@ case class HybridEffect(pratio: Int, mratio: Int, target: SkillTarget, data: Act
 }
 case class DelayDamageEffect(ratio: Int, delay: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with PhysicalDamage
 case class JumpDamageEffect(ratio: Int, delay: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with PhysicalDamage
-case class MPDrainEffect(ratio: Int, drain: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
-case class HPDrainEffect(ratio: Int, drain: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
+case class MPDrainEffect(ratio: Int, drain: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with AttackTypeDamage
+case class HPDrainEffect(ratio: Int, drain: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with AttackTypeDamage
 case class SacrificeSelfRestoreEffect(hppct: Int, mppct: Int, target: SkillTarget) extends ActiveEffect
 case class SacrificeHPPercentDamageEffect(sacrifice: Int, damage: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
-case class SacrificeHPDamageEffect(ratio: Int, sacrifice: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData {
+case class SacrificeHPDamageEffect(ratio: Int, sacrifice: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with AttackTypeDamage {
   def s = if (data.atktpe == "None") "*" else ""
   override lazy val toString = {
     f"Sacrifice $sacrifice%s%% HP to deal physical$s damage (${ratio.toDouble / 100}%.2fx ATK) to $target"
@@ -439,13 +445,23 @@ case object ThrowEffect extends ActiveEffect with NoTarget
 case object DrinkEffect extends ActiveEffect with NoTarget
 case class ReduceDamageEffect(pct: Int, turns: Int, target: SkillTarget) extends ActiveEffect
 case class ReduceMagicalDamageEffect(pct: Int, turns: Int, target: SkillTarget) extends ActiveEffect
-case class CriticalAttackEffect(ratio: Int, miss: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
+case class CriticalAttackEffect(ratio: Int, miss: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with Damage {
+  def calculateDamage(stats: BattleStats) = calculatePhysical(stats) * 1.5
+}
 case class RepeatAttackEffect(ratio: Int, min: Int, max: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class MagStoreEffect(stack: Int, max: Int) extends ActiveEffect with NoTarget
 case class StoreAttackEffect(stack: Int, max: Int, selfdamage: Int, target: SkillTarget) extends ActiveEffect
 case class PercentHPDamageEffect(min: Int, max: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
-case class MPDamageEffect(ratio: Int, max: Int, scaling: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
-case class SprDamageEffect(ratio: Int, max: Int, scaling: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with SpiritDamage
+case class MPDamageEffect(ratio: Int, max: Int, scaling: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with Damage {
+  override def calculateDamage(stats: BattleStats) =
+    calculateMagical(stats.copy(unit = stats.unit.copy(
+      mag = math.min(500, (stats.unit.mp * scaling/100.0).toInt))))
+}
+case class SprDamageEffect(ratio: Int, max: Int, scaling: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with Damage {
+  override def calculateDamage(stats: BattleStats) =
+    calculateMagical(stats.copy(unit = stats.unit.copy(
+      mag = math.min(500, (stats.unit.spr * scaling/100.0).toInt))))
+}
 case class DefDamageEffect(ratio: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with DefenseDamage
 case class PhysicalEffect(_ratio: Int, itd: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with PhysicalDamage {
   def s = if (data.atktpe == "None") "*" else ""
@@ -541,7 +557,7 @@ case class ConditionalSkillEffect(trigger: List[Int], ifTrue: Int, ifFalse: Int)
 case class UnlockSkillCountedEffect(skills: List[Int], turns: Int, uses: Int, target: SkillTarget) extends ActiveEffect with RelatedSkill {
   def related = skills
 }
-case class DamageOrDeathEffect(ratio: Int, chance: Int, death: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
+case class DamageOrDeathEffect(ratio: Int, chance: Int, death: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with PhysicalDamage
 case class DeathImmunityEffect(turns: Int, target: SkillTarget) extends ActiveEffect
 case class EvokeDamageEffect(magRatio: Int, sprRatio: Int, splits: List[Int], target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case object SurvivorFlaskEffect extends ActiveEffect with NoTarget

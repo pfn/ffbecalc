@@ -454,7 +454,7 @@ object components {
     is1h: Boolean, is2h: Boolean,
     ed: Option[EsperData], e: Option[EsperStatInfo], ee: Option[EsperEntry],
     variance: WeaponVariance, atkL: Int, atkR: Int, killers: Map[Int,(Int,Int)],
-    elements: Set[Int])
+    elements: Set[Int], evomag: Int)
 
   def unitStats(unitInfo: Observable[Option[UnitData]],
                 unit: Observable[Option[UnitEntry]],
@@ -511,12 +511,12 @@ object components {
 
           val accuracy = (if (isSW) eqaccy else 0) + (if (is2h || isSW) pasv.tdh.accuracy else 0) + (if (!is2h && isSW) pasv.accuracy1h else 0)
 
-          Effective(st, st.asStats * passives + e + eqstats + (eqstats * alldh) + (eqstats * alldhGE) ++ ee, passives, pasv.dh, pasv.dhGE, pasv.tdh, pasv.tdhGE, accuracy, !is2h && isSW, isSW || is2h, ed, e, ee, variance, l, r, pasv.killers, eles)
+          Effective(st, st.asStats * passives + e + eqstats + (eqstats * alldh) + (eqstats * alldhGE) ++ ee, passives, pasv.dh, pasv.dhGE, pasv.tdh, pasv.tdhGE, accuracy, !is2h && isSW, isSW || is2h, ed, e, ee, variance, l, r, pasv.killers, eles, pasv.evomag)
         }
     }
 
     unitOut <-- effective.map { _.map(eff =>
-      UnitStats(eff.stats.atk, eff.stats.defs, eff.stats.mag, eff.stats.spr, eff.atkL, eff.atkR, eff.variance, 100, eff.elements, eff.killers)
+      UnitStats(eff.stats.hp, eff.stats.mp, eff.stats.atk, eff.stats.defs, eff.stats.mag, eff.stats.spr, eff.atkL, eff.atkR, eff.variance, 100, eff.elements, eff.killers, eff.evomag)
     )}
     table(cls := "unit-stats",
       caption("Effective Stats"),
