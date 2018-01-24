@@ -837,7 +837,7 @@ object components {
     }.toList)
   }
 
-  def renderActiveAttack(skill: Either[List[ActiveEffect],SkillInfo], enhs: Map[Int,SkillInfo], enhm: Map[Int,Int], stats: Option[BattleStats]): List[VNode] = {
+  def renderActiveAttack(skill: Either[List[ActiveEffect],SkillInfo], enhs: Map[Int,SkillInfo], enhm: Map[Int,Int], stats: Option[BattleStats], canDW: Boolean): List[VNode] = {
     val effects = skill.fold(identity, _.actives)
     val actives = effects.zipWithIndex.collect {
       case (x,y) if x.isInstanceOf[HasActiveData] => y
@@ -867,7 +867,8 @@ object components {
       case 1 => "Normal Attack"
       case 0 => "Cast"
     }))) ++ stats.fold(List.empty[VNode])(s => attacks.map(a =>
-      a.calculateDamage(s) match {
+      a.calculateDamage(
+        s.copy(unit = s.unit.copy(atk = if (canDW) s.unit.atk else s.unit.atk - s.unit.l, l = if (canDW) s.unit.l else 0))) match {
         case m@MultiDamage(xs) => div(xs.zipWithIndex.map { case (d,x) =>
           div(s"Attack ${x + 1} damage: ${d.total}")
         } ++ List(div("Total damage: " + m.total)):_*)

@@ -439,7 +439,7 @@ object YaFFBEDB {
       } else s.effects.map(div(_))
     }
 
-    def describeActive(rowid: Int, skill: Either[List[ActiveEffect],SkillInfo], content: List[VNode], enhs: Map[Int,SkillInfo] = Map.empty, cols: Int = 5, idn: String = "active"): VNode = {
+    def describeActive(rowid: Int, skill: Either[List[ActiveEffect],SkillInfo], content: List[VNode], enhs: Map[Int,SkillInfo] = Map.empty, cols: Int = 5, idn: String = "active", canDW: Boolean = true): VNode = {
       // TODO need to query enhs, e.g. doesn't work for hero's rime+2
       val effects = skill.fold(identity, _.actives)
       val hasActiveData = effects.exists(_.isInstanceOf[HasActiveData])
@@ -467,7 +467,7 @@ object YaFFBEDB {
             }
           }
           val nodes = if (hasActiveData)
-            components.renderActiveAttack(skill, enhs, enhm, stats)
+            components.renderActiveAttack(skill, enhs, enhm, stats, canDW)
           else if (hasHealing)
             components.renderHealing(skill, enhs, enhm, stats)
           else
@@ -643,7 +643,7 @@ object YaFFBEDB {
           "lb",
           List("Level", "Effects", "Cost"),
           List("lb-lvl", "lb-effects", "lb-cost"))(List(
-            a => describeActive(limit.name.hashCode + a.hashCode, Left(a.actives), List(div("\u00a0" + (if (limit.min == a) 1 else limit.levels).toString)), cols = 3, idn = "lb-"),
+            a => describeActive(limit.name.hashCode + a.hashCode, Left(a.actives), List(div("\u00a0" + (if (limit.min == a) 1 else limit.levels).toString)), cols = 3, idn = "lb-", canDW = false),
             a => div(a.effects.map(div(_)):_*),
             a => div(a.cost.toString),
           ))
