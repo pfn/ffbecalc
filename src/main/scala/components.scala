@@ -6,6 +6,7 @@ import rxscalajs.Observable
 
 object components {
 
+  def createIntHandler(x: Int) = createHandler[Int](x)
   def sortBy(out: Sink[Sort]): VNode = {
     val sortAZ = createHandler[Sort](Sort.AZ)
     val sortHP = createHandler[Sort]()
@@ -47,7 +48,6 @@ object components {
     unit.filter(_.nonEmpty).map { u =>
       val potClicks = createHandler[Unit](())
       val showPots = potClicks.scan(false) { (show,_) => !show }
-      def createIntHandler(x: Int) = createHandler[Int](x)
       val hpPots  = createIntHandler(potsFor(u, _.hp))
       val mpPots  = createIntHandler(potsFor(u, _.mp))
       val atkPots = createIntHandler(potsFor(u, _.atk))
@@ -830,14 +830,19 @@ object components {
     val actives = effects.zipWithIndex.collect {
       case (x,y) if x.isInstanceOf[HasActiveData] => y
     }
+    def extractPF[A](pf: PartialFunction[ActiveEffect,A]): List[A] = {
+      skill.fold(x => x.collect(pf), sk => {
+        val s = enhancedInfo(sk, enhm.get(sk.id), enhs, identity)
+        s.actives.collect(pf)
+      })
+    }
     val data = skill.fold(x => x.collectFirst { case a: HasActiveData => a.data}.getOrElse(ActiveData.empty), sk => {
       val s = enhancedInfo(sk, enhm.get(sk.id), enhs, identity)
       s.actives.collectFirst { case a: HasActiveData => a.data }.getOrElse(ActiveData.empty)
     })
-    val attacks = skill.fold(x => x.collect { case a: Damage => a }, sk => {
-      val s = enhancedInfo(sk, enhm.get(sk.id), enhs, identity)
-      s.actives.collect { case a: Damage => a }
-    })
+    val attacks = extractPF { case a: Damage => a }
+    val stacking = extractPF { case a: Stacking => a }
+    val stackCount = createIntHandler(1)
     List(div("Hits: " + (extractIs(actives, data.atks, data.atks.headOption.getOrElse(0)) match {
       case 0 :: Nil => "Normal Attack"
       case x :: Nil => x.toString
@@ -854,13 +859,28 @@ object components {
       case 2 => "Walk"
       case 1 => "Normal Attack"
       case 0 => "Cast"
-    }))) ++ stats.fold(List.empty[VNode])(s => attacks.map(a =>
-      a.calculateDamage(
-        s.copy(unit = s.unit.copy(atk = if (canDW) s.unit.atk else s.unit.atk - s.unit.l, l = if (canDW) s.unit.l else 0))) match {
-        case m@MultiDamage(xs) => div(xs.zipWithIndex.map { case (d,x) =>
-          div(s"Attack ${x + 1} damage: ${d.total}")
-        } ++ List(div("Total damage: " + m.total)):_*)
-        case SingleDamage(p, m) => div("Damage: " + (p + m))
-      }))
+    }))) ++ stacking.flatMap { s =>
+
+      List(div(
+        select((inputString(_.toInt) --> stackCount) :: (1 to s.max).toList.map(x => option(value := x, x + " " + (if (x == 1) "stack" else "stacks"))): _*),
+        span(child <-- stackCount.map(_ * s.stack + s.first).map(x => f"Ratio: ${x / 100.0}%.2fx")),
+      ))
+    } ++
+      stats.fold(List.empty[VNode]) { s =>
+        List(div(
+          children <-- stackCount.map(c => stacking.map(_.asDamage(c)).map(a => calcDamage(canDW, s, a)))
+        ))
+      } ++
+      stats.fold(List.empty[VNode])(s => attacks.map(a => calcDamage(canDW, s, a)))
+  }
+
+  def calcDamage(canDW: Boolean, s: BattleStats, a: Damage) = {
+    a.calculateDamage(
+      s.copy(unit = s.unit.copy(atk = if (canDW) s.unit.atk else s.unit.atk - s.unit.l, l = if (canDW) s.unit.l else 0))) match {
+      case m@MultiDamage(xs) => div(xs.zipWithIndex.map { case (d,x) =>
+        div(s"Attack ${x + 1} damage: ${d.total}")
+      } ++ List(div("Total damage: " + m.total)):_*)
+      case SingleDamage(p, m) => div("Damage: " + (p + m))
+    }
   }
 }

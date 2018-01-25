@@ -191,7 +191,17 @@ object SingleDamage {
   def apply(physical: DamageRange, magical: Int): SingleDamage =
     SingleDamage(physical, DamageRange(magical))
 }
+sealed trait Stacking {
+  def stack: Int
+  def first: Int
+  def max: Int
+  def asDamage(stacks: Int): Damage
+}
+
 sealed trait Damage { self: HasActiveData =>
+  def stacks = 0
+  def stack = 0
+  def maxstacks = 0
   def ratio: Int
   def isMagic: Boolean = self.data.tpe == "Magic"
   def canDW: Boolean = self.data.atktpe == "Physical" || self.data.atktpe == "Hybrid"
@@ -280,13 +290,14 @@ sealed trait Damage { self: HasActiveData =>
 
   def calculateMagical(stats: BattleStats) = {
     val count = if (canDW && stats.unit.dw) 2 else 1
-    val x = magical(
-      stats.unit.mag, ratio / 100.0,
+    def dmg(s: Int) = magical(
+      stats.unit.mag, (ratio + s*stack)/ 100.0,
       calcKillers(stats, _._2), calcElements(stats, false),
       stats.target.spr, 0, stats.unit.level)
-    val single = SingleDamage(0, x)
-    if (count == 1) single
-    else MultiDamage((0 until count).map(_ => single).toList)
+    if (count == 1) SingleDamage(0, dmg(0))
+    else MultiDamage(
+      (0 until count).scanLeft(0){ (ac,_) => if (ac + stacks >= maxstacks) ac else ac + 1 }.dropRight(1).map(bonus => SingleDamage(0, dmg(bonus))).toList
+    )
   }
   def calculatePhysical(stats: BattleStats): DamageResult = {
     val count = if (canDW && stats.unit.dw) 2 else 1
@@ -296,7 +307,8 @@ sealed trait Damage { self: HasActiveData =>
       stats.target.defs, dw = false,
       level = stats.unit.level) * stats.unit.variance, 0)
     val l = SingleDamage(physical(
-      stats.unit.atk - stats.unit.r, ratio / 100.0,
+      stats.unit.atk - stats.unit.r,
+      (ratio + (if (stacks < maxstacks) stack else 0)) / 100.0,
       calcKillers(stats, _._1), calcElements(stats, true),
       stats.target.defs, dw = false,
       level = stats.unit.level) * stats.unit.variance, 0)
@@ -489,8 +501,16 @@ case class StatusAilmentEffect(poison: Int, blind: Int, sleep: Int, silence: Int
 }
 case class RandomAilmentEffect(poison: Int, blind: Int, sleep: Int, silence: Int, paralyze: Int, confusion: Int, disease: Int, petrify: Int, count: Int, target: SkillTarget) extends ActiveEffect
 case class AilmentResistEffect(poison: Int, blind: Int, sleep: Int, silence: Int, paralyze: Int, confusion: Int, disease: Int, petrify: Int, turns: Int, target: SkillTarget) extends ActiveEffect
-case class StackingPhysicalEffect(first: Int, stack: Int, max: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
-case class StackingMagicalEffect(first: Int, stack: Int, max: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
+case class StackingPhysicalDamage(ratio: Int, data: ActiveData, override val stacks: Int, override val maxstacks: Int, override val stack: Int) extends HasActiveData with PhysicalDamage
+case class StackingMagicalDamage(ratio: Int, data: ActiveData, override val stacks: Int, override val maxstacks: Int, override val stack: Int) extends HasActiveData with MagicalDamage
+case class StackingPhysicalEffect(first: Int, stack: Int, max: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with Stacking {
+  def asDamage(stacks: Int) =
+    StackingPhysicalDamage(first + math.min(stacks, max) * stack, data, stacks, max, stack)
+}
+case class StackingMagicalEffect(first: Int, stack: Int, max: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with Stacking {
+  def asDamage(stacks: Int) =
+    StackingMagicalDamage(first + math.min(stacks, max) * stack, data, stacks, max, stack)
+}
 case class MagicalEffect(_ratio: Int, its: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with MagicalDamage {
   def s = if (data.atktpe == "None") "*" else ""
   def ratio = (_ratio / (1 + its/100.0)).toInt

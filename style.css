@@ -206,6 +206,10 @@ th { padding: 8px; }
 .sort-options label { margin-left: 16px }
 .sort-options input { margin-right: 8px }
 
+.active-view select {
+  margin: 8px 8px 8px 0;
+  width: 50%;
+}
 div.active-view-open, div.active-view-close { cursor: pointer }
 div.active-view-open::before {
   content: "\25bc"
