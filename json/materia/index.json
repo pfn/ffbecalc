@@ -197,6 +197,52 @@
     "id": "504217610", 
     "icon": "ability_22.png"
   }, 
+  "Attack - Castle Warfare": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Attack - Castle Warfare", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "223710", 
+        "effects": [
+          [
+            1, 
+            3, 
+            11, 
+            [
+              5, 
+              20, 
+              0
+            ]
+          ], 
+          [
+            1, 
+            3, 
+            1, 
+            [
+              10, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase physical damage against Humans by 20%", 
+          "Increase ATK by 10%"
+        ]
+      }
+    ], 
+    "rarity": 5, 
+    "unique": false, 
+    "id": "504221700", 
+    "icon": "ability_77.png"
+  }, 
   "Rhythmic Flair": {
     "effects_raw": [
       {
@@ -455,40 +501,51 @@
     "id": "504208100", 
     "icon": "ability_77.png"
   }, 
-  "Adventurer": {
+  "World Destroyer": {
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "Adventurer", 
-        "icon": "global_ability_10011.png", 
-        "active": false, 
+        "name": "World Destroyer", 
+        "icon": "ability_10.png", 
+        "active": true, 
         "unique": false, 
-        "id": "910230", 
+        "id": "211350", 
         "effects": [
           [
+            2, 
             1, 
-            3, 
-            1, 
+            21, 
             [
-              10, 
-              10, 
-              10, 
-              10, 
               0, 
               0, 
-              0
+              200, 
+              -50
+            ]
+          ], 
+          [
+            2, 
+            1, 
+            24, 
+            [
+              -35, 
+              -35, 
+              -35, 
+              -35, 
+              3, 
+              1
             ]
           ]
         ], 
         "desc": [
-          "Increase ATK, DEF, MAG and SPR by 10%"
+          "Physical damage (4x, ATK) to all enemies (ignore cover)", 
+          "Reduce ATK, DEF, MAG and SPR by 35% for 3 turns to all enemies"
         ]
       }
     ], 
-    "rarity": 4, 
-    "unique": true, 
-    "id": "1500000013", 
-    "icon": "global_ability_10011.png"
+    "rarity": 8, 
+    "unique": false, 
+    "id": "504211350", 
+    "icon": "ability_10.png"
   }, 
   "Refresh": {
     "rarity": 5, 
@@ -776,37 +833,40 @@
     "id": "504101020", 
     "icon": "ability_79.png"
   }, 
-  "Raging Fist": {
+  "Intrique": {
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "Raging Fist", 
-        "icon": "ability_51.png", 
-        "active": true, 
+        "name": "Intrique", 
+        "icon": "ability_77.png", 
+        "active": false, 
         "unique": false, 
-        "id": "200230", 
+        "id": "220630", 
         "effects": [
           [
+            0, 
+            3, 
             1, 
-            1, 
-            21, 
             [
               0, 
               0, 
-              120, 
-              -25
+              10, 
+              0, 
+              5, 
+              5, 
+              0
             ]
           ]
         ], 
         "desc": [
-          "Physical damage (1.6x, ATK) to one enemy (ignore cover)"
+          "Increase MAG by 10% and HP and MP by 5%"
         ]
       }
     ], 
-    "rarity": 2, 
+    "rarity": 5, 
     "unique": false, 
-    "id": "504200230", 
-    "icon": "ability_51.png"
+    "id": "504220630", 
+    "icon": "ability_77.png"
   }, 
   "Guard of the Future": {
     "effects_raw": [
@@ -932,6 +992,37 @@
     "unique": false, 
     "id": "504213200", 
     "icon": "ability_19.png"
+  }, 
+  "Dual White Magic": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Dual White Magic", 
+        "icon": "ability_5.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "213980", 
+        "effects": [
+          [
+            0, 
+            3, 
+            52, 
+            [
+              2, 
+              2, 
+              502090
+            ]
+          ]
+        ], 
+        "desc": [
+          "Enable unit to cast 2 white magic spells"
+        ]
+      }
+    ], 
+    "rarity": 7, 
+    "unique": false, 
+    "id": "504213980", 
+    "icon": "ability_5.png"
   }, 
   "Stone": {
     "rarity": 2, 
@@ -1592,36 +1683,51 @@
     "id": "504201280", 
     "icon": "ability_22.png"
   }, 
-  "Manufacted Nethicite": {
+  "Sworn Six's Pride - Earth": {
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "Manufacted Nethicite", 
-        "icon": "ability_6.png", 
-        "active": true, 
-        "unique": true, 
-        "id": "209500", 
+        "name": "Sworn Six's Pride - Earth", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "210890", 
         "effects": [
           [
             1, 
             3, 
-            84, 
+            6, 
             [
-              1, 
+              31, 
               0, 
-              1
+              40, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            1, 
+            3, 
+            6, 
+            [
+              52, 
+              40, 
+              0, 
+              0, 
+              0
             ]
           ]
         ], 
         "desc": [
-          "Nullify next spell for one turn"
+          "Increase DEF by 40% when equipped with a Heavy Shield", 
+          "Increase ATK by 40% when equipped with a Heavy Armor"
         ]
       }
     ], 
-    "rarity": 7, 
-    "unique": false, 
-    "id": "504209500", 
-    "icon": "ability_6.png"
+    "rarity": 8, 
+    "unique": true, 
+    "id": "504210890", 
+    "icon": "ability_77.png"
   }, 
   "Adventurer II": {
     "effects_raw": [
@@ -1709,37 +1815,41 @@
     "id": "504207510", 
     "icon": "ability_54.png"
   }, 
-  "Sunbeam": {
+  "Sleep Blade": {
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "Sunbeam", 
-        "icon": "ability_52.png", 
+        "name": "Sleep Blade", 
+        "icon": "ability_14.png", 
         "active": true, 
         "unique": false, 
-        "id": "201430", 
+        "id": "200540", 
         "effects": [
           [
-            2, 
             1, 
-            15, 
+            1, 
+            40, 
             [
               0, 
               0, 
               0, 
               0, 
               0, 
-              120
+              0, 
+              0, 
+              0, 
+              180, 
+              180
             ]
           ], 
           [
-            2, 
+            1, 
             1, 
             6, 
             [
               0, 
-              30, 
               0, 
+              30, 
               0, 
               0, 
               0, 
@@ -1750,15 +1860,15 @@
           ]
         ], 
         "desc": [
-          "Magic* damage (1.2x, MAG) to all enemies", 
-          "Inflict Blind (30%) on all enemies"
+          "Hybrid damage (1.8x, ATK & MAG) to one enemy", 
+          "Inflict Sleep (30%) on one enemy"
         ]
       }
     ], 
-    "rarity": 4, 
+    "rarity": 1, 
     "unique": false, 
-    "id": "504201430", 
-    "icon": "ability_52.png"
+    "id": "504200540", 
+    "icon": "ability_14.png"
   }, 
   "Seething Cauldron": {
     "effects_raw": [
@@ -1795,39 +1905,80 @@
     "id": "504205460", 
     "icon": "ability_77.png"
   }, 
-  "Scorch": {
+  "Necropolis": {
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "Scorch", 
-        "icon": "ability_21.png", 
-        "active": true, 
+        "name": "Necropolis", 
+        "icon": "ability_79.png", 
+        "active": false, 
         "unique": false, 
-        "id": "205980", 
+        "id": "225930", 
         "effects": [
           [
-            2, 
-            1, 
-            15, 
+            0, 
+            3, 
+            11, 
             [
-              0, 
-              0, 
-              0, 
-              0, 
-              0, 
-              280
+              1, 
+              30, 
+              30
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            11, 
+            [
+              2, 
+              30, 
+              30
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            11, 
+            [
+              5, 
+              30, 
+              30
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            11, 
+            [
+              9, 
+              30, 
+              30
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            11, 
+            [
+              11, 
+              30, 
+              30
             ]
           ]
         ], 
         "desc": [
-          "Magic fire damage (2.8x, MAG) to all enemies"
+          "Increase physical and magic damage against Beasts by 30%", 
+          "Increase physical and magic damage against Avians by 30%", 
+          "Increase physical and magic damage against Humans by 30%", 
+          "Increase physical and magic damage against Insects by 30%", 
+          "Increase physical and magic damage against Plantoids by 30%"
         ]
       }
     ], 
-    "rarity": 8, 
+    "rarity": 6, 
     "unique": false, 
-    "id": "504205980", 
-    "icon": "ability_21.png"
+    "id": "504225930", 
+    "icon": "ability_79.png"
   }, 
   "Azure Armor": {
     "effects_raw": [
@@ -1862,6 +2013,35 @@
     "rarity": 5, 
     "unique": false, 
     "id": "504206850", 
+    "icon": "ability_77.png"
+  }, 
+  "EVO MAG +15%": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "EVO MAG +15%", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "223810", 
+        "effects": [
+          [
+            1, 
+            3, 
+            21, 
+            [
+              15
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase Esper summon damage by 15%"
+        ]
+      }
+    ], 
+    "rarity": 2, 
+    "unique": false, 
+    "id": "504223810", 
     "icon": "ability_77.png"
   }, 
   "Beast Killer": {
@@ -2002,6 +2182,58 @@
     "unique": false, 
     "id": "1500000010", 
     "icon": "ability_77.png"
+  }, 
+  "Bomb Arms": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Bomb Arms", 
+        "icon": "ability_21.png", 
+        "active": true, 
+        "unique": false, 
+        "id": "224910", 
+        "effects": [
+          [
+            0, 
+            3, 
+            3, 
+            [
+              120, 
+              0, 
+              0, 
+              0, 
+              3, 
+              1
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            95, 
+            [
+              100, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              3, 
+              1
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase ATK by 120% for 3 turns to caster", 
+          "Add Fire element to physical attacks for 3 turn(s) to caster"
+        ]
+      }
+    ], 
+    "rarity": 8, 
+    "unique": false, 
+    "id": "504224910", 
+    "icon": "ability_21.png"
   }, 
   "Equip Axe": {
     "effects_raw": [
@@ -2288,6 +2520,57 @@
     "id": "504211680", 
     "icon": "ability_11.png"
   }, 
+  "Mental Clarity": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Mental Clarity", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "223730", 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              20, 
+              0, 
+              0, 
+              20, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            2, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              100, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase ATK and SPR by 20%", 
+          "Increase resistance to Confusion by 100%"
+        ]
+      }
+    ], 
+    "rarity": 7, 
+    "unique": false, 
+    "id": "504221720", 
+    "icon": "ability_77.png"
+  }, 
   "Blind Resistance": {
     "effects_raw": [
       {
@@ -2323,6 +2606,39 @@
     "unique": false, 
     "id": "504215440", 
     "icon": "ability_19.png"
+  }, 
+  "Monk's Enlightenment": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Monk's Enlightenment", 
+        "icon": "ability_95.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "223680", 
+        "effects": [
+          [
+            0, 
+            3, 
+            6, 
+            [
+              16, 
+              40, 
+              20, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase ATK by 40% and DEF by 20% when equipped with a Fist"
+        ]
+      }
+    ], 
+    "rarity": 7, 
+    "unique": false, 
+    "id": "504221690", 
+    "icon": "ability_95.png"
   }, 
   "Hydaelyn Guard": {
     "effects_raw": [
@@ -2395,6 +2711,35 @@
     "unique": false, 
     "id": "504216040", 
     "icon": "ability_99.png"
+  }, 
+  "Auto-Bravery": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Auto-Bravery", 
+        "icon": "ability_91.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "202510", 
+        "effects": [
+          [
+            1, 
+            3, 
+            35, 
+            [
+              30211
+            ]
+          ]
+        ], 
+        "desc": [
+          "Gain Brave (Auto) (30211) at the start of a battle"
+        ]
+      }
+    ], 
+    "rarity": 4, 
+    "unique": false, 
+    "id": "504221620", 
+    "icon": "ability_91.png"
   }, 
   "Mentality": {
     "effects_raw": [
@@ -2481,6 +2826,51 @@
     "unique": false, 
     "id": "504202360", 
     "icon": "ability_54.png"
+  }, 
+  "Bomb Spirit": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Bomb Spirit", 
+        "icon": "ability_11.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "224900", 
+        "effects": [
+          [
+            0, 
+            3, 
+            33, 
+            [
+              200
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            3, 
+            [
+              30, 
+              -50, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase LB gauge by 2 per turn", 
+          "Increase resistance to Fire by 30% and Ice by -50%"
+        ]
+      }
+    ], 
+    "rarity": 7, 
+    "unique": false, 
+    "id": "504224900", 
+    "icon": "ability_11.png"
   }, 
   "Hammersmith": {
     "effects_raw": [
@@ -3057,6 +3447,41 @@
     "rarity": 8, 
     "unique": true, 
     "id": "504210110", 
+    "icon": "ability_77.png"
+  }, 
+  "Knight's Hope": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Knight's Hope", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "226040", 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              10, 
+              10, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase ATK and DEF by 10%"
+        ]
+      }
+    ], 
+    "rarity": 5, 
+    "unique": false, 
+    "id": "504226041", 
     "icon": "ability_77.png"
   }, 
   "Doublehand": {
@@ -3648,51 +4073,40 @@
     "magic_type": "Black", 
     "icon": "ability_22.png"
   }, 
-  "World Destroyer": {
+  "Adventurer": {
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "World Destroyer", 
-        "icon": "ability_10.png", 
-        "active": true, 
+        "name": "Adventurer", 
+        "icon": "global_ability_10011.png", 
+        "active": false, 
         "unique": false, 
-        "id": "211350", 
+        "id": "910230", 
         "effects": [
           [
-            2, 
             1, 
-            21, 
+            3, 
+            1, 
             [
+              10, 
+              10, 
+              10, 
+              10, 
               0, 
               0, 
-              200, 
-              -50
-            ]
-          ], 
-          [
-            2, 
-            1, 
-            24, 
-            [
-              -35, 
-              -35, 
-              -35, 
-              -35, 
-              3, 
-              1
+              0
             ]
           ]
         ], 
         "desc": [
-          "Physical damage (4x, ATK) to all enemies (ignore cover)", 
-          "Reduce ATK, DEF, MAG and SPR by 35% for 3 turns to all enemies"
+          "Increase ATK, DEF, MAG and SPR by 10%"
         ]
       }
     ], 
-    "rarity": 8, 
-    "unique": false, 
-    "id": "504211350", 
-    "icon": "ability_10.png"
+    "rarity": 4, 
+    "unique": true, 
+    "id": "1500000013", 
+    "icon": "global_ability_10011.png"
   }, 
   "White Knight's Soul": {
     "effects_raw": [
@@ -4270,6 +4684,42 @@
     "id": "504221550", 
     "icon": "ability_77.png"
   }, 
+  "Axe Professional": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Axe Professional", 
+        "icon": "ability_95.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "224170", 
+        "effects": [
+          [
+            0, 
+            3, 
+            6, 
+            [
+              8, 
+              30, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase ATK by 30% when equipped with a Axe"
+        ]
+      }
+    ], 
+    "rarity": 5, 
+    "unique": false, 
+    "id": "504224170", 
+    "icon": "ability_95.png"
+  }, 
   "Drink": {
     "effects_raw": [
       {
@@ -4298,6 +4748,36 @@
     "unique": false, 
     "id": "504200090", 
     "icon": "ability_58.png"
+  }, 
+  "Raise": {
+    "rarity": 4, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Raise", 
+        "icon": "ability_1.png", 
+        "active": true, 
+        "unique": false, 
+        "id": "10100", 
+        "effects": [
+          [
+            1, 
+            6, 
+            4, 
+            [
+              30
+            ]
+          ]
+        ], 
+        "desc": [
+          "Revive target from KO (30% HP) / Insta-kill Reaper monster"
+        ]
+      }
+    ], 
+    "unique": false, 
+    "id": "504010100", 
+    "magic_type": "White", 
+    "icon": "ability_1.png"
   }, 
   "Equip L Sword": {
     "effects_raw": [
@@ -4671,6 +5151,35 @@
     "id": "504206680", 
     "icon": "ability_91.png"
   }, 
+  "Auto-Faith": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Auto-Faith", 
+        "icon": "ability_91.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "217620", 
+        "effects": [
+          [
+            1, 
+            3, 
+            35, 
+            [
+              30221
+            ]
+          ]
+        ], 
+        "desc": [
+          "Gain Faith (Auto) (30221) at the start of a battle"
+        ]
+      }
+    ], 
+    "rarity": 4, 
+    "unique": false, 
+    "id": "504221630", 
+    "icon": "ability_91.png"
+  }, 
   "Dual Wield": {
     "effects_raw": [
       {
@@ -4732,6 +5241,61 @@
     "unique": false, 
     "id": "504213730", 
     "icon": "ability_90.png"
+  }, 
+  "Quintessence": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Quintessence", 
+        "icon": "ability_72.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "224490", 
+        "effects": [
+          [
+            1, 
+            3, 
+            14, 
+            [
+              "none"
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            6, 
+            [
+              6, 
+              0, 
+              0, 
+              15, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            6, 
+            [
+              53, 
+              0, 
+              0, 
+              15, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Enable unit to equip two one-handed weapons", 
+          "Increase MAG by 15% when equipped with a Rod", 
+          "Increase MAG by 15% when equipped with a Robe"
+        ]
+      }
+    ], 
+    "rarity": 8, 
+    "unique": false, 
+    "id": "504224490", 
+    "icon": "ability_72.png"
   }, 
   "Thunder Resistance +15%": {
     "effects_raw": [
@@ -4842,6 +5406,58 @@
     "id": "504208900", 
     "icon": "ability_99.png"
   }, 
+  "Calamity Border": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Calamity Border", 
+        "icon": "ability_9.png", 
+        "active": true, 
+        "unique": false, 
+        "id": "221570", 
+        "effects": [
+          [
+            2, 
+            2, 
+            3, 
+            [
+              0, 
+              80, 
+              0, 
+              80, 
+              2, 
+              1
+            ]
+          ], 
+          [
+            2, 
+            2, 
+            33, 
+            [
+              40, 
+              40, 
+              40, 
+              40, 
+              40, 
+              40, 
+              40, 
+              40, 
+              1, 
+              2
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase DEF and SPR by 80% for 2 turns to all allies", 
+          "Increase resistance to all elements by 40% for 2 turns to all allies"
+        ]
+      }
+    ], 
+    "rarity": 8, 
+    "unique": false, 
+    "id": "504221570", 
+    "icon": "ability_9.png"
+  }, 
   "Heaven's Guidance": {
     "effects_raw": [
       {
@@ -4864,7 +5480,7 @@
           ]
         ], 
         "desc": [
-          "Reduce damage received by 40% to one ally for 2 turns"
+          "Reduce damage taken by 40% to one ally for 2 turns"
         ]
       }
     ], 
@@ -4951,40 +5567,75 @@
     "magic_type": "Green", 
     "icon": "ability_15.png"
   }, 
-  "Intrique": {
+  "Silence": {
+    "rarity": 2, 
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "Intrique", 
-        "icon": "ability_77.png", 
-        "active": false, 
+        "name": "Silence", 
+        "icon": "ability_14.png", 
+        "active": true, 
         "unique": false, 
-        "id": "220630", 
+        "id": "30100", 
         "effects": [
           [
-            0, 
-            3, 
             1, 
+            1, 
+            6, 
             [
               0, 
               0, 
-              10, 
               0, 
-              5, 
-              5, 
-              0
+              40, 
+              0, 
+              0, 
+              0, 
+              0, 
+              1
             ]
           ]
         ], 
         "desc": [
-          "Increase MAG by 10% and HP and MP by 5%"
+          "Inflict Silence (40%) on one enemy"
         ]
       }
     ], 
-    "rarity": 5, 
     "unique": false, 
-    "id": "504220630", 
-    "icon": "ability_77.png"
+    "id": "504030100", 
+    "magic_type": "Green", 
+    "icon": "ability_14.png"
+  }, 
+  "Raging Fist": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Raging Fist", 
+        "icon": "ability_51.png", 
+        "active": true, 
+        "unique": false, 
+        "id": "200230", 
+        "effects": [
+          [
+            1, 
+            1, 
+            21, 
+            [
+              0, 
+              0, 
+              120, 
+              -25
+            ]
+          ]
+        ], 
+        "desc": [
+          "Physical damage (1.6x, ATK) to one enemy (ignore cover)"
+        ]
+      }
+    ], 
+    "rarity": 2, 
+    "unique": false, 
+    "id": "504200230", 
+    "icon": "ability_51.png"
   }, 
   "Holy": {
     "rarity": 7, 
@@ -5050,6 +5701,74 @@
     "id": "504020440", 
     "magic_type": "Black", 
     "icon": "ability_37.png"
+  }, 
+  "Chosen One": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Chosen One", 
+        "icon": "ability_95.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "222860", 
+        "effects": [
+          [
+            0, 
+            3, 
+            3, 
+            [
+              20, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            6, 
+            [
+              2, 
+              35, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            6, 
+            [
+              51, 
+              15, 
+              0, 
+              0, 
+              0, 
+              10, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase resistance to Fire by 20%", 
+          "Increase ATK by 35% when equipped with a Sword", 
+          "Increase ATK by 15% and HP by 10% when equipped with a Light Armor"
+        ]
+      }
+    ], 
+    "rarity": 8, 
+    "unique": false, 
+    "id": "504222860", 
+    "icon": "ability_95.png"
   }, 
   "Heretic Abyss": {
     "effects_raw": [
@@ -5281,6 +6000,42 @@
     "unique": false, 
     "id": "504207710", 
     "icon": "ability_77.png"
+  }, 
+  "Fire Resistance +20%": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Fire Resistance +20%", 
+        "icon": "ability_11.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "213160", 
+        "effects": [
+          [
+            0, 
+            3, 
+            3, 
+            [
+              20, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase resistance to Fire by 20%"
+        ]
+      }
+    ], 
+    "rarity": 3, 
+    "unique": false, 
+    "id": "504213160", 
+    "icon": "ability_11.png"
   }, 
   "Cover": {
     "effects_raw": [
@@ -5754,6 +6509,108 @@
     "id": "504100020", 
     "icon": "ability_77.png"
   }, 
+  "Defeat of Destruction": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Defeat of Destruction", 
+        "icon": "ability_98.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "224870", 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              5, 
+              5, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            3, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              5
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase HP and MP by 5%", 
+          "Increase resistance to Dark by 5%"
+        ]
+      }
+    ], 
+    "rarity": 5, 
+    "unique": false, 
+    "id": "504224870", 
+    "icon": "ability_98.png"
+  }, 
+  "Barrier Mage's Oath": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Barrier Mage's Oath", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "224840", 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              25, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            6, 
+            [
+              5, 
+              0, 
+              0, 
+              0, 
+              25, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase SPR by 25%", 
+          "Increase SPR by 25% when equipped with a Staff"
+        ]
+      }
+    ], 
+    "rarity": 7, 
+    "unique": false, 
+    "id": "504224840", 
+    "icon": "ability_77.png"
+  }, 
   "Reactive Defense": {
     "effects_raw": [
       {
@@ -6137,6 +6994,57 @@
     "magic_type": "White", 
     "icon": "ability_3.png"
   }, 
+  "Fragment of Thought": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Fragment of Thought", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "222780", 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              25, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            3, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              15, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase MAG by 25%", 
+          "Increase resistance to Wind by 15%"
+        ]
+      }
+    ], 
+    "rarity": 7, 
+    "unique": false, 
+    "id": "504221660", 
+    "icon": "ability_77.png"
+  }, 
   "Paean": {
     "effects_raw": [
       {
@@ -6452,6 +7360,53 @@
     "unique": false, 
     "id": "504206630", 
     "icon": "ability_77.png"
+  }, 
+  "Lion's Awakening": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Lion's Awakening", 
+        "icon": "ability_68.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "223740", 
+        "effects": [
+          [
+            0, 
+            3, 
+            49, 
+            [
+              10, 
+              3, 
+              506550, 
+              1
+            ]
+          ], 
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              30, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "10% chance to counter physical attacks with Meteor (506550) to caster (max 1 / turn)", 
+          "Increase MAG by 30%"
+        ]
+      }
+    ], 
+    "rarity": 7, 
+    "unique": false, 
+    "id": "504221730", 
+    "icon": "ability_68.png"
   }, 
   "Instinctual Guard": {
     "effects_raw": [
@@ -7968,6 +8923,41 @@
     "magic_type": "Black", 
     "icon": "ability_28.png"
   }, 
+  "Mage's Hope": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Mage's Hope", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "226050", 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              10, 
+              10, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase MAG and SPR by 10%"
+        ]
+      }
+    ], 
+    "rarity": 5, 
+    "unique": false, 
+    "id": "504226050", 
+    "icon": "ability_77.png"
+  }, 
   "Bio": {
     "rarity": 2, 
     "effects_raw": [
@@ -8019,6 +9009,42 @@
     "id": "504020070", 
     "magic_type": "Black", 
     "icon": "ability_24.png"
+  }, 
+  "Water Resistance +20%": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Water Resistance +20%", 
+        "icon": "ability_18.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "213170", 
+        "effects": [
+          [
+            0, 
+            3, 
+            3, 
+            [
+              0, 
+              0, 
+              0, 
+              20, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase resistance to Water by 20%"
+        ]
+      }
+    ], 
+    "rarity": 3, 
+    "unique": false, 
+    "id": "504213170", 
+    "icon": "ability_18.png"
   }, 
   "Malboro's Whisper": {
     "effects_raw": [
@@ -8355,6 +9381,57 @@
     "unique": false, 
     "id": "504216900", 
     "icon": "ability_19.png"
+  }, 
+  "Fortune Baby": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Fortune Baby", 
+        "icon": "ability_97.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "225720", 
+        "effects": [
+          [
+            0, 
+            3, 
+            2, 
+            [
+              50, 
+              50, 
+              50, 
+              50, 
+              50, 
+              50, 
+              50, 
+              50
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              10, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase resistance to all status effects by 50%", 
+          "Increase HP by 10%"
+        ]
+      }
+    ], 
+    "rarity": 6, 
+    "unique": false, 
+    "id": "504225720", 
+    "icon": "ability_97.png"
   }, 
   "MAG +30%": {
     "effects_raw": [
@@ -8754,6 +9831,41 @@
     "unique": false, 
     "id": "504215190", 
     "icon": "ability_77.png"
+  }, 
+  "H Armor Arts": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "H Armor Arts", 
+        "icon": "ability_95.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "221560", 
+        "effects": [
+          [
+            0, 
+            3, 
+            6, 
+            [
+              52, 
+              0, 
+              30, 
+              0, 
+              0, 
+              30, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase DEF and HP by 30% when equipped with a Heavy Armor"
+        ]
+      }
+    ], 
+    "rarity": 6, 
+    "unique": false, 
+    "id": "504221560", 
+    "icon": "ability_95.png"
   }, 
   "Aerora Blade": {
     "effects_raw": [
@@ -9315,6 +10427,42 @@
     "id": "504206840", 
     "icon": "ability_77.png"
   }, 
+  "Earth Resistance +20%": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Earth Resistance +20%", 
+        "icon": "ability_17.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "222220", 
+        "effects": [
+          [
+            0, 
+            3, 
+            3, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              20, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase resistance to Earth by 20%"
+        ]
+      }
+    ], 
+    "rarity": 3, 
+    "unique": false, 
+    "id": "504221640", 
+    "icon": "ability_17.png"
+  }, 
   "Equip Spear": {
     "effects_raw": [
       {
@@ -9551,6 +10699,57 @@
     "unique": false, 
     "id": "504100130", 
     "icon": "ability_77.png"
+  }, 
+  "Thunderous Avoidance": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Thunderous Avoidance", 
+        "icon": "ability_13.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "224860", 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              5, 
+              5, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            3, 
+            [
+              0, 
+              0, 
+              5, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase HP and MP by 5%", 
+          "Increase resistance to Lightning by 5%"
+        ]
+      }
+    ], 
+    "rarity": 5, 
+    "unique": false, 
+    "id": "504224860", 
+    "icon": "ability_13.png"
   }, 
   "Uncollapsing Will": {
     "effects_raw": [
@@ -9869,6 +11068,35 @@
     "id": "504200250", 
     "icon": "ability_57.png"
   }, 
+  "Equip Sword": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Equip Sword", 
+        "icon": "ability_96.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "224920", 
+        "effects": [
+          [
+            0, 
+            3, 
+            5, 
+            [
+              2
+            ]
+          ]
+        ], 
+        "desc": [
+          "Enable unit to equip Swords"
+        ]
+      }
+    ], 
+    "rarity": 7, 
+    "unique": false, 
+    "id": "504224920", 
+    "icon": "ability_96.png"
+  }, 
   "Crazy Day": {
     "effects_raw": [
       {
@@ -10172,41 +11400,37 @@
     "id": "504213210", 
     "icon": "ability_91.png"
   }, 
-  "Sleep Blade": {
+  "Sunbeam": {
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "Sleep Blade", 
-        "icon": "ability_14.png", 
+        "name": "Sunbeam", 
+        "icon": "ability_52.png", 
         "active": true, 
         "unique": false, 
-        "id": "200540", 
+        "id": "201430", 
         "effects": [
           [
+            2, 
             1, 
-            1, 
-            40, 
+            15, 
             [
               0, 
               0, 
               0, 
               0, 
               0, 
-              0, 
-              0, 
-              0, 
-              180, 
-              180
+              120
             ]
           ], 
           [
-            1, 
+            2, 
             1, 
             6, 
             [
               0, 
-              0, 
               30, 
+              0, 
               0, 
               0, 
               0, 
@@ -10217,15 +11441,15 @@
           ]
         ], 
         "desc": [
-          "Hybrid damage (1.8x, ATK & MAG) to one enemy", 
-          "Inflict Sleep (30%) on one enemy"
+          "Magic* damage (1.2x, MAG) to all enemies", 
+          "Inflict Blind (30%) on all enemies"
         ]
       }
     ], 
-    "rarity": 1, 
+    "rarity": 4, 
     "unique": false, 
-    "id": "504200540", 
-    "icon": "ability_14.png"
+    "id": "504201430", 
+    "icon": "ability_52.png"
   }, 
   "Firewall: Power\u2191": {
     "effects_raw": [
@@ -10428,43 +11652,39 @@
     "id": "504213220", 
     "icon": "ability_97.png"
   }, 
-  "Silence": {
-    "rarity": 2, 
+  "Scorch": {
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "Silence", 
-        "icon": "ability_14.png", 
+        "name": "Scorch", 
+        "icon": "ability_21.png", 
         "active": true, 
         "unique": false, 
-        "id": "30100", 
+        "id": "205980", 
         "effects": [
           [
+            2, 
             1, 
-            1, 
-            6, 
+            15, 
             [
               0, 
               0, 
               0, 
-              40, 
               0, 
               0, 
-              0, 
-              0, 
-              1
+              280
             ]
           ]
         ], 
         "desc": [
-          "Inflict Silence (40%) on one enemy"
+          "Magic fire damage (2.8x, MAG) to all enemies"
         ]
       }
     ], 
+    "rarity": 8, 
     "unique": false, 
-    "id": "504030100", 
-    "magic_type": "Green", 
-    "icon": "ability_14.png"
+    "id": "504205980", 
+    "icon": "ability_21.png"
   }, 
   "Beast's Heart": {
     "effects_raw": [
@@ -10734,6 +11954,70 @@
     "id": "504010150", 
     "magic_type": "White", 
     "icon": "ability_4.png"
+  }, 
+  "Hungry Wolf": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Hungry Wolf", 
+        "icon": "ability_19.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "224190", 
+        "effects": [
+          [
+            0, 
+            3, 
+            2, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              100, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            4, 
+            [
+              20, 
+              800, 
+              9000, 
+              50, 
+              0, 
+              3
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            4, 
+            [
+              22, 
+              20, 
+              9000, 
+              50, 
+              0, 
+              3
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase resistance to Disease by 100%", 
+          "Regenerate 800 HP per turn for 3 turns when HP drops below 50% (max 9000x)", 
+          "Regenerate 20 MP per turn for 3 turns when HP drops below 50% (max 9000x)"
+        ]
+      }
+    ], 
+    "rarity": 8, 
+    "unique": false, 
+    "id": "504224190", 
+    "icon": "ability_19.png"
   }, 
   "Action": {
     "effects_raw": [
@@ -11023,47 +12307,80 @@
     "magic_type": "White", 
     "icon": "ability_3.png"
   }, 
-  "Defender": {
+  "Pure-bred Summoner": {
     "effects_raw": [
       {
-        "unit_restriction": [
-          213000105, 
-          213000204, 
-          213000304, 
-          213000403, 
-          213000504, 
-          213000603
-        ], 
-        "name": "Defender", 
+        "unit_restriction": null, 
+        "name": "Pure-bred Summoner", 
         "icon": "ability_77.png", 
         "active": false, 
         "unique": false, 
-        "id": "202500", 
+        "id": "223670", 
         "effects": [
           [
-            0, 
+            1, 
             3, 
             1, 
             [
               0, 
-              10, 
               0, 
-              10, 
+              40, 
+              20, 
               0, 
               0, 
               0
             ]
+          ], 
+          [
+            1, 
+            3, 
+            21, 
+            [
+              10
+            ]
           ]
         ], 
         "desc": [
-          "Increase DEF and SPR by 10%"
+          "Increase MAG by 40% and SPR by 20%", 
+          "Increase Esper summon damage by 10%"
         ]
       }
     ], 
-    "rarity": 5, 
+    "rarity": 8, 
     "unique": false, 
-    "id": "504202500", 
+    "id": "504221680", 
     "icon": "ability_77.png"
+  }, 
+  "Manufacted Nethicite": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Manufacted Nethicite", 
+        "icon": "ability_6.png", 
+        "active": true, 
+        "unique": true, 
+        "id": "209500", 
+        "effects": [
+          [
+            1, 
+            3, 
+            84, 
+            [
+              1, 
+              0, 
+              1
+            ]
+          ]
+        ], 
+        "desc": [
+          "Nullify next spell for one turn"
+        ]
+      }
+    ], 
+    "rarity": 7, 
+    "unique": false, 
+    "id": "504209500", 
+    "icon": "ability_6.png"
   }, 
   "Here We Go": {
     "effects_raw": [
@@ -11734,6 +13051,42 @@
     "id": "504030220", 
     "magic_type": "Green", 
     "icon": "ability_77.png"
+  }, 
+  "Dark Resistance +20%": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Dark Resistance +20%", 
+        "icon": "ability_98.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "223800", 
+        "effects": [
+          [
+            0, 
+            3, 
+            3, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              20
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase resistance to Dark by 20%"
+        ]
+      }
+    ], 
+    "rarity": 3, 
+    "unique": false, 
+    "id": "504223800", 
+    "icon": "ability_98.png"
   }, 
   "Mental Break": {
     "effects_raw": [
@@ -12629,6 +13982,87 @@
     "id": "504221590", 
     "icon": "ability_77.png"
   }, 
+  "Hero's Vow - Darkness": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Hero's Vow - Darkness", 
+        "icon": "ability_78.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "226380", 
+        "effects": [
+          [
+            0, 
+            3, 
+            31, 
+            [
+              50
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            6, 
+            [
+              1, 
+              30, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            6, 
+            [
+              2, 
+              30, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            6, 
+            [
+              3, 
+              30, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            6, 
+            [
+              4, 
+              30, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase the limit burst gauge fill rate by 50%", 
+          "Increase ATK by 30% when equipped with a Dagger", 
+          "Increase ATK by 30% when equipped with a Sword", 
+          "Increase ATK by 30% when equipped with a Great Sword", 
+          "Increase ATK by 30% when equipped with a Katana"
+        ]
+      }
+    ], 
+    "rarity": 8, 
+    "unique": false, 
+    "id": "504226380", 
+    "icon": "ability_78.png"
+  }, 
   "Yohtoh Lore": {
     "effects_raw": [
       {
@@ -12963,7 +14397,7 @@
         ], 
         "desc": [
           "Increase DEF and SPR by 100% for 2 turns to all allies", 
-          "Reduce damage received by 10% to all allies for 2 turns"
+          "Reduce damage taken by 10% to all allies for 2 turns"
         ]
       }
     ], 
@@ -13456,6 +14890,42 @@
     "id": "504211290", 
     "icon": "ability_78.png"
   }, 
+  "Modish Witch": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Modish Witch", 
+        "icon": "ability_95.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "224930", 
+        "effects": [
+          [
+            1, 
+            3, 
+            6, 
+            [
+              6, 
+              0, 
+              0, 
+              40, 
+              20, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase MAG by 40% and SPR by 20% when equipped with a Rod"
+        ]
+      }
+    ], 
+    "rarity": 7, 
+    "unique": false, 
+    "id": "504224930", 
+    "icon": "ability_95.png"
+  }, 
   "Silence Blade": {
     "effects_raw": [
       {
@@ -13702,6 +15172,50 @@
     "unique": true, 
     "id": "504208510", 
     "icon": "ability_95.png"
+  }, 
+  "Ruling Fiend": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Ruling Fiend", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "226030", 
+        "effects": [
+          [
+            0, 
+            3, 
+            35, 
+            [
+              10122
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              40, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Gain Regen (Champion) (10122) at the start of a battle", 
+          "Increase DEF by 40%"
+        ]
+      }
+    ], 
+    "rarity": 7, 
+    "unique": false, 
+    "id": "504226031", 
+    "icon": "ability_77.png"
   }, 
   "Fire": {
     "rarity": 1, 
@@ -13957,6 +15471,48 @@
     "id": "504211340", 
     "icon": "ability_95.png"
   }, 
+  "Defender": {
+    "effects_raw": [
+      {
+        "unit_restriction": [
+          213000105, 
+          213000204, 
+          213000304, 
+          213000403, 
+          213000504, 
+          213000603
+        ], 
+        "name": "Defender", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "202500", 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              10, 
+              0, 
+              10, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase DEF and SPR by 10%"
+        ]
+      }
+    ], 
+    "rarity": 5, 
+    "unique": false, 
+    "id": "504202500", 
+    "icon": "ability_77.png"
+  }, 
   "MAG +20%": {
     "effects_raw": [
       {
@@ -14037,6 +15593,56 @@
     "unique": false, 
     "id": "504219220", 
     "icon": "ability_77.png"
+  }, 
+  "Agn\u00e8s' Crystalguard Captain": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Agn\u00e8s' Crystalguard Captain", 
+        "icon": "ability_95.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "222760", 
+        "effects": [
+          [
+            0, 
+            3, 
+            6, 
+            [
+              2, 
+              40, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              20, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase ATK by 40% when equipped with a Sword", 
+          "Increase HP by 20%"
+        ]
+      }
+    ], 
+    "rarity": 7, 
+    "unique": false, 
+    "id": "504221650", 
+    "icon": "ability_95.png"
   }, 
   "Bioga Blade": {
     "effects_raw": [
@@ -14739,6 +16345,52 @@
     "magic_type": "White", 
     "icon": "ability_3.png"
   }, 
+  "Magic - Castle Warfare": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Magic - Castle Warfare", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "223720", 
+        "effects": [
+          [
+            1, 
+            3, 
+            11, 
+            [
+              5, 
+              0, 
+              20
+            ]
+          ], 
+          [
+            1, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              10, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase magic damage against Humans by 20%", 
+          "Increase MAG by 10%"
+        ]
+      }
+    ], 
+    "rarity": 5, 
+    "unique": false, 
+    "id": "504221710", 
+    "icon": "ability_77.png"
+  }, 
   "Imperil": {
     "rarity": 4, 
     "effects_raw": [
@@ -15207,44 +16859,43 @@
     "id": "504200510", 
     "icon": "ability_21.png"
   }, 
-  "Baraero": {
-    "rarity": 2, 
+  "Elemental Damage Down": {
     "effects_raw": [
       {
-        "unit_restriction": null, 
-        "name": "Baraero", 
-        "icon": "ability_12.png", 
-        "active": true, 
+        "unit_restriction": [
+          306000204
+        ], 
+        "name": "Elemental Damage Down", 
+        "icon": "ability_9.png", 
+        "active": false, 
         "unique": false, 
-        "id": "30070", 
+        "id": "206080", 
         "effects": [
           [
             1, 
-            2, 
-            33, 
+            3, 
+            3, 
             [
-              0, 
-              0, 
-              0, 
-              0, 
               30, 
-              0, 
-              0, 
-              0, 
-              1, 
-              3
+              30, 
+              30, 
+              30, 
+              30, 
+              30, 
+              30, 
+              30
             ]
           ]
         ], 
         "desc": [
-          "Increase resistance to Wind by 30% for 3 turns to one ally"
+          "Increase resistance to all elements by 30%"
         ]
       }
     ], 
+    "rarity": 6, 
     "unique": false, 
-    "id": "504030070", 
-    "magic_type": "Green", 
-    "icon": "ability_12.png"
+    "id": "504206080", 
+    "icon": "ability_9.png"
   }, 
   "MAG +10%": {
     "effects_raw": [
@@ -15315,6 +16966,83 @@
     "unique": false, 
     "id": "504207700", 
     "icon": "ability_77.png"
+  }, 
+  "Shadow Bearer": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Shadow Bearer", 
+        "icon": "ability_95.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "222870", 
+        "effects": [
+          [
+            0, 
+            3, 
+            6, 
+            [
+              1, 
+              40, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            0, 
+            3, 
+            25, 
+            [
+              25
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase ATK by 40% when equipped with a Dagger", 
+          "Reduce chance of being targeted by 25%"
+        ]
+      }
+    ], 
+    "rarity": 7, 
+    "unique": false, 
+    "id": "504222870", 
+    "icon": "ability_95.png"
+  }, 
+  "Graviga": {
+    "rarity": 6, 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Graviga", 
+        "icon": "ability_26.png", 
+        "active": true, 
+        "unique": false, 
+        "id": "20270", 
+        "effects": [
+          [
+            2, 
+            1, 
+            9, 
+            [
+              75, 
+              75, 
+              100
+            ]
+          ]
+        ], 
+        "desc": [
+          "75% HP damage to all enemies"
+        ]
+      }
+    ], 
+    "unique": false, 
+    "id": "504020270", 
+    "magic_type": "Black", 
+    "icon": "ability_26.png"
   }, 
   "Bio Blaster": {
     "effects_raw": [
@@ -15494,6 +17222,62 @@
     "id": "504010080", 
     "magic_type": "White", 
     "icon": "ability_3.png"
+  }, 
+  "Kappower": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Kappower", 
+        "icon": "ability_18.png", 
+        "active": true, 
+        "unique": false, 
+        "id": "223820", 
+        "effects": [
+          [
+            1, 
+            2, 
+            33, 
+            [
+              0, 
+              0, 
+              0, 
+              70, 
+              0, 
+              0, 
+              0, 
+              0, 
+              1, 
+              3
+            ]
+          ], 
+          [
+            1, 
+            2, 
+            33, 
+            [
+              0, 
+              0, 
+              -50, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              1, 
+              3
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase resistance to Water by 70% for 3 turns to one ally", 
+          "Reduce resistance to Lightning by 50% for 3 turns to one ally"
+        ]
+      }
+    ], 
+    "rarity": 4, 
+    "unique": false, 
+    "id": "504223820", 
+    "icon": "ability_18.png"
   }, 
   "Vox": {
     "rarity": 2, 
@@ -15931,7 +17715,7 @@
           ]
         ], 
         "desc": [
-          "Reduce physical damage taken by 30% for 3 turns"
+          "Reduce damage taken from physical attacks taken by 30% to all allies for 3 turns"
         ]
       }
     ], 
@@ -16162,6 +17946,50 @@
     "id": "1500000029", 
     "icon": "ability_77.png"
   }, 
+  "Vigorous Build": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Vigorous Build", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "225890", 
+        "effects": [
+          [
+            1, 
+            3, 
+            1, 
+            [
+              40, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0, 
+              0
+            ]
+          ], 
+          [
+            1, 
+            3, 
+            35, 
+            [
+              30091
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase ATK by 40%", 
+          "Gain Protect (Auto) (30091) at the start of a battle"
+        ]
+      }
+    ], 
+    "rarity": 7, 
+    "unique": false, 
+    "id": "504225890", 
+    "icon": "ability_77.png"
+  }, 
   "Regenerator": {
     "effects_raw": [
       {
@@ -16228,43 +18056,44 @@
     "id": "1500000012", 
     "icon": "global_materia_1500000012.png"
   }, 
-  "Elemental Damage Down": {
+  "Baraero": {
+    "rarity": 2, 
     "effects_raw": [
       {
-        "unit_restriction": [
-          306000204
-        ], 
-        "name": "Elemental Damage Down", 
-        "icon": "ability_9.png", 
-        "active": false, 
+        "unit_restriction": null, 
+        "name": "Baraero", 
+        "icon": "ability_12.png", 
+        "active": true, 
         "unique": false, 
-        "id": "206080", 
+        "id": "30070", 
         "effects": [
           [
             1, 
-            3, 
-            3, 
+            2, 
+            33, 
             [
+              0, 
+              0, 
+              0, 
+              0, 
               30, 
-              30, 
-              30, 
-              30, 
-              30, 
-              30, 
-              30, 
-              30
+              0, 
+              0, 
+              0, 
+              1, 
+              3
             ]
           ]
         ], 
         "desc": [
-          "Increase resistance to all elements by 30%"
+          "Increase resistance to Wind by 30% for 3 turns to one ally"
         ]
       }
     ], 
-    "rarity": 6, 
     "unique": false, 
-    "id": "504206080", 
-    "icon": "ability_9.png"
+    "id": "504030070", 
+    "magic_type": "Green", 
+    "icon": "ability_12.png"
   }, 
   "Fira Blade": {
     "effects_raw": [
@@ -16303,6 +18132,35 @@
     "unique": false, 
     "id": "504200610", 
     "icon": "ability_21.png"
+  }, 
+  "Equip Helm": {
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Equip Helm", 
+        "icon": "ability_96.png", 
+        "active": false, 
+        "unique": false, 
+        "id": "223360", 
+        "effects": [
+          [
+            1, 
+            3, 
+            5, 
+            [
+              41
+            ]
+          ]
+        ], 
+        "desc": [
+          "Enable unit to equip Helms"
+        ]
+      }
+    ], 
+    "rarity": 7, 
+    "unique": false, 
+    "id": "504221670", 
+    "icon": "ability_96.png"
   }, 
   "Sleep": {
     "rarity": 1, 
@@ -16460,51 +18318,5 @@
     "unique": false, 
     "id": "504206740", 
     "icon": "ability_40.png"
-  }, 
-  "Sworn Six's Pride - Earth": {
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "name": "Sworn Six's Pride - Earth", 
-        "icon": "ability_77.png", 
-        "active": false, 
-        "unique": false, 
-        "id": "210890", 
-        "effects": [
-          [
-            1, 
-            3, 
-            6, 
-            [
-              31, 
-              0, 
-              40, 
-              0, 
-              0
-            ]
-          ], 
-          [
-            1, 
-            3, 
-            6, 
-            [
-              52, 
-              40, 
-              0, 
-              0, 
-              0
-            ]
-          ]
-        ], 
-        "desc": [
-          "Increase DEF by 40% when equipped with a Heavy Shield", 
-          "Increase ATK by 40% when equipped with a Heavy Armor"
-        ]
-      }
-    ], 
-    "rarity": 8, 
-    "unique": true, 
-    "id": "504210890", 
-    "icon": "ability_77.png"
   }
 }
