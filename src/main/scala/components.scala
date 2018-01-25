@@ -494,24 +494,17 @@ object components {
             ac + equip.stats
           }
           val eqaccy = alleq.map(_.accuracy).sum
-          val dh = if (!is2h && isSW) pasv.dh.asSingleHand
+          val dh = if (!is2h && isSW) pasv.dhGE + pasv.dh.asSingleHand
           else PassiveSinglehandEffect.zero
 
-          val dhGE = if (!is2h && isSW) pasv.dhGE
+          val tdh = if (is2h || isSW) pasv.tdh.asSingleHand + pasv.tdhGE.asSingleHand
           else PassiveSinglehandEffect.zero
 
-          val tdh = if (is2h || isSW) pasv.tdh.asSingleHand
-          else PassiveSinglehandEffect.zero
-
-          val tdhGE = if (is2h || isSW) pasv.tdhGE.asSingleHand
-          else PassiveSinglehandEffect.zero
-
-          val alldhGE = dhGE + tdhGE
           val alldh = dh + tdh
 
           val accuracy = (if (isSW) eqaccy else 0) + (if (is2h || isSW) pasv.tdh.accuracy else 0) + (if (!is2h && isSW) pasv.accuracy1h else 0)
 
-          Effective(st, st.asStats * passives + e + eqstats + (eqstats * alldh) + (eqstats * alldhGE) ++ ee, passives, pasv.dh, pasv.dhGE, pasv.tdh, pasv.tdhGE, accuracy, !is2h && isSW, isSW || is2h, ed, e, ee, variance, l, r, pasv.killers, eles, pasv.evomag)
+          Effective(st, st.asStats * passives + e + eqstats + (eqstats * alldh) ++ ee, passives, pasv.dh, pasv.dhGE, pasv.tdh, pasv.tdhGE, accuracy, !is2h && isSW, isSW || is2h, ed, e, ee, variance, l, r, pasv.killers, eles, pasv.evomag)
         }
     }
 
@@ -565,13 +558,13 @@ object components {
             renderStat(statOf(eff, _.defs), "+DEF") ++
             renderStat(statOf(eff, _.mag), "+MAG") ++
             renderStat(statOf(eff, _.spr), "+SPR") ++
-            renderStat(dhOf(eff) + tdhOf(eff), "+Equip ATK") ++
-            renderStat(dhGEOf(eff, _.hp) + tdhGEOf(eff, _.hp), "+GE Equip HP") ++
-            renderStat(dhGEOf(eff, _.mp) + tdhGEOf(eff, _.mp), "+GE Equip MP") ++
-            renderStat(dhGEOf(eff, _.atk) + tdhGEOf(eff, _.atk), "+GE Equip ATK") ++
+            renderStat(dhOf(eff) + tdhOf(eff) +
+              dhGEOf(eff, _.atk) + tdhGEOf(eff, _.atk), "+Equip ATK") ++
+            renderStat(dhGEOf(eff, _.hp)   + tdhGEOf(eff, _.hp), "+GE Equip HP") ++
+            renderStat(dhGEOf(eff, _.mp)   + tdhGEOf(eff, _.mp), "+GE Equip MP") ++
             renderStat(dhGEOf(eff, _.defs) + tdhGEOf(eff, _.defs), "+GE Equip DEF") ++
-            renderStat(dhGEOf(eff, _.mag) + tdhGEOf(eff, _.mag), "+GE Equip MAG") ++
-            renderStat(dhGEOf(eff, _.spr) + tdhGEOf(eff, _.spr), "+GE Equip SPR") ++
+            renderStat(dhGEOf(eff, _.mag)  + tdhGEOf(eff, _.mag), "+GE Equip MAG") ++
+            renderStat(dhGEOf(eff, _.spr)  + tdhGEOf(eff, _.spr), "+GE Equip SPR") ++
             renderStat(eff.fold(0)(_.accuracy), "Accuracy", max = 100) ++
             renderStat(statOf(eff, _.crit) + 10, "Crit chance", max = 100) ++
             renderDodge(pasv.dodge) ++
