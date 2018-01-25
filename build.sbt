@@ -20,10 +20,13 @@ lazy val root = project.in(file(".")).dependsOn(sharedJS)
 val versionCode = taskKey[String]("generate version code")
 val versionFile = taskKey[File]("generate version file from version code")
 val verifyVersion = taskKey[Unit]("verify versionFile+buildInfo")
+val timestamp = taskKey[Long]("generate current time")
+
+timestamp := System.currentTimeMillis
 
 versionCode := {
   val sdf = new java.text.SimpleDateFormat("yyyyMMddHHmm")
-  sdf.format(System.currentTimeMillis)
+  sdf.format(timestamp.value)
 }
 
 enablePlugins(ScalaJSPlugin)
@@ -33,7 +36,7 @@ enablePlugins(BuildInfoPlugin)
 
 name := "ffbecalc"
 
-buildInfoKeys := Seq[BuildInfoKey](versionCode)
+buildInfoKeys := Seq[BuildInfoKey](versionCode, timestamp)
 buildInfoPackage := "com.ffbecalc"
 
 scalaVersion in Global := "2.12.3"

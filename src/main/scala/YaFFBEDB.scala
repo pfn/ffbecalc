@@ -880,5 +880,8 @@ object YaFFBEDB {
         ),
       )
     )
+    val date = new scalajs.js.Date(BuildInfo.timestamp)
+
+    OutWatch.render("#footer", span("Updated " + date.toLocaleDateString +  " " + date.toLocaleTimeString))
   }
 }
