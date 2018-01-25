@@ -606,6 +606,13 @@ object ActiveDecoders {
         LBFillEffect(xs(0), xs(1), t)
       }
     },
+    126 -> {
+      (t, a, c) => {
+        val xs = listInt(c)
+        StackingPhysicalEffect(xs(3), xs(4), xs(6), t, a)
+      }
+    },
+    133 -> { (t, a, c) => JPAllyTwistOfFateEffect },
     1002 -> { (t, a, c) => SurvivorFlaskEffect },
     1003 -> {
       (t, a, c) => {

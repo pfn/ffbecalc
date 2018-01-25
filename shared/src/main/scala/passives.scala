@@ -328,6 +328,8 @@ object PassiveElementResist {
   def decode(restrict: Set[Int], xs: List[Int]): SkillEffect = xs match {
     case List(a, b, c, d, e, f, g, h) =>
       PassiveElementResist(restrict, a, b, c, d, e, f, g, h)
+    case List(a, b, c, d, e, f, g) => // knightly bonds, 7 elements??
+      PassiveElementResist(restrict, a, b, c, d, e, f, g, 0)
     case List(_, _, _, _, _, _) =>
       // this seems to be a mistake from skill 501890
       // counter skill that's listed as !active but has active effects_raw
@@ -547,6 +549,9 @@ object PassiveKillerEffect {
   def decode(xs: List[Int]): SkillEffect = xs match {
     case List(a, b, c) =>
       PassiveKillerEffect(a, b, c)
+    case Nil =>  // TODO rewrite passive parser to handle this, possible args
+      // [tribes],[physical],[magical]
+      UnknownSkillEffect
   }
 }
 case class PassiveKillerEffect(tribe: Int, phys: Int, mag: Int)
@@ -592,6 +597,7 @@ case class PassiveAttractEffect(mod: Int) extends SkillEffect with NoRestriction
 object PassiveLimitBurstRateEffect {
   def decode(xs: List[Int]): SkillEffect = xs match {
     case List(a) => PassiveLimitBurstRateEffect(a)
+    case x :: xs => PassiveLimitBurstRateEffect(x)
   }
 }
 object PassiveLimitBurstFillEffect {

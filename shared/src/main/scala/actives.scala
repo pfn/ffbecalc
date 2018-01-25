@@ -582,6 +582,7 @@ case class DeathImmunityEffect(turns: Int, target: SkillTarget) extends ActiveEf
 case class EvokeDamageEffect(magRatio: Int, sprRatio: Int, splits: List[Int], target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case object SurvivorFlaskEffect extends ActiveEffect with NoTarget
 case object TwistOfFateEffect extends ActiveEffect with NoTarget
+case object JPAllyTwistOfFateEffect extends ActiveEffect with NoTarget
 case object LoseHPEffect extends ActiveEffect with NoTarget
 case object AddGlowEffect extends ActiveEffect with NoTarget
 
