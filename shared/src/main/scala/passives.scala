@@ -475,7 +475,6 @@ object PassiveDoublehandEffect {
   def zero = PassiveDoublehandEffect(0, 0)
   def decode(xs: List[Int]): SkillEffect = xs match {
     case List(a) => PassiveDoublehandEffect(a, 0)
-    // TODO handle b and c: accuracy, c == 2 => 2h
     case List(a, b, c) =>
       if (c == 2) Passive2HEffect(a, b)
       else PassiveDoublehandEffect(a, b)

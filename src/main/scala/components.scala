@@ -802,11 +802,8 @@ object components {
     case ys => ys.head :: ys.zip(ys.tail).map(x => x._2 - x._1)
   }
 
-  def renderHealing(skill: Either[List[ActiveEffect],SkillInfo], enhs: Map[Int,SkillInfo], enhm: Map[Int,Int], stats: Option[BattleStats]): List[VNode] = {
-    val healing = skill.fold(identity, sk =>
-      enhancedInfo(sk, enhm.get(sk.id), enhs, identity).actives).collect {
-        case x: Healing => x
-      }
+  def renderHealing(effects: List[ActiveEffect], stats: Option[BattleStats]): List[VNode] = {
+    val healing = effects.collect { case h: Healing => h }
     stats.fold(List.empty[VNode])(s => healing.map { h =>
       val (min,max) = h.turnHeal(s.unit)
       val (minT, maxT) = h.totalHeal(s.unit)
@@ -818,24 +815,15 @@ object components {
     }.toList)
   }
 
-  def renderActiveAttack(skill: Either[List[ActiveEffect],SkillInfo], enhs: Map[Int,SkillInfo], enhm: Map[Int,Int], stats: Option[BattleStats], canDW: Boolean): List[VNode] = {
-    val effects = skill.fold(identity, _.actives)
+  def renderActiveAttack(effects: List[ActiveEffect], stats: Option[BattleStats], canDW: Boolean): List[VNode] = {
     val actives = effects.zipWithIndex.collect {
       case (x,y) if x.isInstanceOf[HasActiveData] => y
     }
-    def extractPF[A](pf: PartialFunction[ActiveEffect,A]): List[A] = {
-      skill.fold(x => x.collect(pf), sk => {
-        val s = enhancedInfo(sk, enhm.get(sk.id), enhs, identity)
-        s.actives.collect(pf)
-      })
-    }
-    val data = skill.fold(x => x.collectFirst { case a: HasActiveData => a.data}.getOrElse(ActiveData.empty), sk => {
-      val s = enhancedInfo(sk, enhm.get(sk.id), enhs, identity)
-      s.actives.collectFirst { case a: HasActiveData => a.data }.getOrElse(ActiveData.empty)
-    })
-    val attacks = extractPF { case a: Damage => a }
-    val stacking = extractPF { case a: Stacking => a }
+    val data = effects.collectFirst { case a: HasActiveData => a.data }.getOrElse(ActiveData.empty)
+    val attacks = effects.collect { case a: Damage => a }
+    val stacking = effects.collect { case a: Stacking => a }
     val stackCount = createIntHandler(1)
+    (if (attacks.nonEmpty || stacking.nonEmpty) {
     List(div("Hits: " + (extractIs(actives, data.atks, data.atks.headOption.getOrElse(0)) match {
       case 0 :: Nil => "Normal Attack"
       case x :: Nil => x.toString
@@ -852,7 +840,7 @@ object components {
       case 2 => "Walk"
       case 1 => "Normal Attack"
       case 0 => "Cast"
-    }))) ++ stacking.flatMap { s =>
+    }))) } else Nil) ++ stacking.flatMap { s =>
 
       List(div(
         select((inputString(_.toInt) --> stackCount) :: (1 to s.max).toList.map(x => option(value := x, x + " " + (if (x == 1) "stack" else "stacks"))): _*),
@@ -861,13 +849,13 @@ object components {
     } ++
       stats.fold(List.empty[VNode]) { s =>
         List(div(
-          children <-- stackCount.map(c => stacking.map(_.asDamage(c)).map(a => calcDamage(canDW, s, a)))
+          children <-- stackCount.map(c => stacking.map(_.asDamage(c)).map(a => renderAttackDamage(canDW, s, a)))
         ))
       } ++
-      stats.fold(List.empty[VNode])(s => attacks.map(a => calcDamage(canDW, s, a)))
+      stats.fold(List.empty[VNode])(s => attacks.map(a => renderAttackDamage(canDW, s, a)))
   }
 
-  def calcDamage(canDW: Boolean, s: BattleStats, a: Damage) = {
+  def renderAttackDamage(canDW: Boolean, s: BattleStats, a: Damage) = {
     a.calculateDamage(
       s.copy(unit = s.unit.copy(atk = if (canDW) s.unit.atk else s.unit.atk - s.unit.l, l = if (canDW) s.unit.l else 0))) match {
       case m@MultiDamage(xs) => div(xs.zipWithIndex.map { case (d,x) =>

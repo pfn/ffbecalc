@@ -440,50 +440,64 @@ object YaFFBEDB {
     }
 
     def describeActive(rowid: Int, skill: Either[List[ActiveEffect],SkillInfo], content: List[VNode], enhs: Map[Int,SkillInfo] = Map.empty, cols: Int = 5, idn: String = "active", canDW: Boolean = true): VNode = {
-      // TODO need to query enhs, e.g. doesn't work for hero's rime+2
-      val effects = skill.fold(identity, _.actives)
-      val hasActiveData = effects.exists(_.isInstanceOf[HasActiveData])
-      val hasHealing = effects.exists(_.isInstanceOf[Healing])
-      val isExpandable = hasActiveData || hasHealing
-      val clickSink = createHandler[Unit]()
-      val scanned = clickSink.scan(false) { (b, _) => !b && isExpandable }
-      scanned.combineLatest(enhMap, cacheBattleStats) { case (b,enhm,stats) =>
-        if (b) {
-          val newid = idn + rowid + "-view"
-          val exists = document.getElementById(newid)
-          if (exists != null)
-            exists.parentNode.removeChild(exists)
-
-          val node = document.getElementById(idn + rowid)
-          if (node.parentNode != null && node.parentNode.parentNode != null) {
-            val newdiv = document.createElement("tr")
-            newdiv.id = newid
-            newdiv.setAttribute("class", "active-view")
-            val next = node.parentNode.parentNode.nextSibling
-            if (next == null) {
-              node.parentNode.parentNode.parentNode.appendChild(newdiv)
-            } else {
-              node.parentNode.parentNode.parentNode.insertBefore(newdiv, next)
-            }
-          }
-          val nodes = if (hasActiveData)
-            components.renderActiveAttack(skill, enhs, enhm, stats, canDW)
-          else if (hasHealing)
-            components.renderHealing(skill, enhs, enhm, stats)
-          else
-            Nil
-          OutWatch.render("#" + idn + rowid + "-view",
-            td((colspan := cols) :: nodes: _*)
-          )
-        } else {
-          val node = document.getElementById(idn + rowid + "-view")
-          if (node != null) node.parentNode.removeChild(node)
+      var subscription = Option.empty[rxscalajs.subscription.AnonymousSubscription]
+      val childcontent = enhMap.map { enhm =>
+        def extractPF[A](pf: PartialFunction[ActiveEffect,A]): List[A] = {
+          skill.fold(x => x.collect(pf), sk => {
+            val s = enhancedInfo(sk, enhm.get(sk.id), enhs, identity)
+            s.actives.collect(pf)
+          })
         }
+        val activeEffects = extractPF { case a => a }
+        val hasAttack = activeEffects.exists(a => a.isInstanceOf[Damage] || a.isInstanceOf[Stacking])
+        val hasHealing = activeEffects.exists(_.isInstanceOf[Healing])
+        val isExpandable = hasAttack || hasHealing
+        val clickSink = createHandler[Unit]()
+        val scanned = clickSink.scan(false) { (b, _) => !b && isExpandable }
+        val newid = idn + rowid + "-view"
+
+        val existing = document.getElementById(newid)
+        if (existing != null) existing.parentNode.removeChild(existing)
+        subscription.foreach(_.unsubscribe())
+        subscription = Some(scanned.combineLatest(enhMap, cacheBattleStats) { case (b,enhm,stats) =>
+          if (b) {
+            val exists = document.getElementById(newid)
+            if (exists != null)
+              exists.parentNode.removeChild(exists)
+
+            val node = document.getElementById(idn + rowid)
+            if (node.parentNode != null && node.parentNode.parentNode.parentNode != null) {
+              val newdiv = document.createElement("tr")
+              newdiv.id = newid
+              newdiv.setAttribute("class", "active-view")
+              val next = node.parentNode.parentNode.parentNode.nextSibling
+              if (next == null) {
+                node.parentNode.parentNode.parentNode.parentNode.appendChild(newdiv)
+              } else {
+                node.parentNode.parentNode.parentNode.parentNode.insertBefore(newdiv, next)
+              }
+            }
+            val nodes = (if (hasHealing)
+              components.renderHealing(activeEffects, stats) else Nil) ++
+            (if (hasAttack)
+              components.renderActiveAttack(activeEffects, stats, canDW)
+            else
+              Nil)
+            OutWatch.render("#" + newid,
+              td((colspan := cols) :: nodes: _*)
+            )
+          } else {
+            val node = document.getElementById(newid)
+            if (node != null) node.parentNode.removeChild(node)
+          }
+        })
+        if (isExpandable)
+          div((cls <-- scanned.startWith(false).map(b => if (b) "active-view-open" else "active-view-close")) :: (id := idn + rowid) :: (click(()) --> clickSink) :: content:_*)
+        else
+          div(content:_*)
+
       }
-      if (isExpandable)
-        div((cls <-- scanned.startWith(false).map(b => if (b) "active-view-open" else "active-view-close")) :: (id := idn + rowid) :: (click(()) --> clickSink) :: content:_*)
-      else
-        div(content:_*)
+      div(child <-- childcontent)
     }
     val activesTable = {
       unitActives.combineLatest(relatedActives).map { case (ss, rs) =>
