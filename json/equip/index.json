@@ -33668,7 +33668,9 @@
       "element_resist": null, 
       "HP": 0, 
       "ATK": 90, 
-      "element_inflict": null, 
+      "element_inflict": [
+        "Fire"
+      ], 
       "MP": 0, 
       "MAG": 0, 
       "SPR": 0, 
@@ -44337,7 +44339,7 @@
         "60% chance to counter a physical attack"
       ], 
       "Life Taker": [
-        "Cast Death (50%) or deal physical damage (3.6x, ATK) (ignore cover)to one enemy", 
+        "Cast Death (50%) or deal physical damage (3.6x, ATK) (ignore cover) to one enemy", 
         "Inflict Poison and Disease (100%) on one enemy"
       ]
     }, 
@@ -44407,7 +44409,7 @@
           ]
         ], 
         "desc": [
-          "Cast Death (50%) or deal physical damage (3.6x, ATK) (ignore cover)to one enemy", 
+          "Cast Death (50%) or deal physical damage (3.6x, ATK) (ignore cover) to one enemy", 
           "Inflict Poison and Disease (100%) on one enemy"
         ]
       }, 
