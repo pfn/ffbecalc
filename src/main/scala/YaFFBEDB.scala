@@ -549,7 +549,10 @@ object YaFFBEDB {
           List("unit-skill-rarity", "unit-skill-name",
             "unit-skill-desc", "unit-skill-cost"))(
           List(
-            a => div(img(src := s"https://exviusdb.com/static/img/assets/ability/${a.icon}")),
+            a => {
+              val c = List(img(src := s"https://exviusdb.com/static/img/assets/ability/${a.icon}"))
+              describeActive(a.id, Right(a), c, cols = 4, idn = "related-")
+            },
             a => div(s"${a.name} (${a.id})"),
             a =>
               div(children <-- enhMap.map { e =>
