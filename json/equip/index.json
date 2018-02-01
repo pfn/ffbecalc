@@ -1294,7 +1294,7 @@
     "dmg_variance": null, 
     "skill_effects": {
       "Counter": [
-        "30% chance to counter a physical attack"
+        "30% chance to counter a physical attack with an attack (1x, ATK)"
       ]
     }, 
     "skill_restriction": [], 
@@ -1336,7 +1336,7 @@
           ]
         ], 
         "desc": [
-          "30% chance to counter a physical attack"
+          "30% chance to counter a physical attack with an attack (1x, ATK)"
         ]
       }
     ], 
@@ -10432,7 +10432,7 @@
     "reqs": null, 
     "dmg_variance": null, 
     "skill_effects": {
-      "Swordbreaker": [
+      "Crisis Evasion": [
         "5% chance of evading physical attacks"
       ]
     }, 
@@ -10457,7 +10457,7 @@
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "Swordbreaker", 
+        "name": "Crisis Evasion", 
         "icon": "ability_97.png", 
         "active": false, 
         "unique": true, 
@@ -14847,7 +14847,7 @@
     "dmg_variance": null, 
     "skill_effects": {
       "Soul Charge": [
-        "Magic damage (5x, MP as MAG x1.5, max 500) to one enemy"
+        "Magic damage (7.5x, MP - max 500) to one enemy"
       ]
     }, 
     "skill_restriction": [], 
@@ -14889,7 +14889,7 @@
           ]
         ], 
         "desc": [
-          "Magic damage (5x, MP as MAG x1.5, max 500) to one enemy"
+          "Magic damage (7.5x, MP - max 500) to one enemy"
         ]
       }
     ], 
@@ -21249,6 +21249,63 @@
     "slot_id": 2, 
     "accuracy": 0
   }, 
+  "Death Scythe": {
+    "type_id": 10, 
+    "compid": 90021, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "dmg_variance": null, 
+    "skill_effects": {
+      "Reap Blood": [
+        "Physical damage (0.8x) as HP drain (30%) to all enemies"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "1100000021", 
+    "icon": "global_item_10040.png", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 70, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 0
+    }, 
+    "skills": [
+      900014
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": null, 
+        "name": "Reap Blood", 
+        "icon": "ability_6.png", 
+        "active": true, 
+        "unique": false, 
+        "id": 900014, 
+        "effects": [
+          [
+            2, 
+            1, 
+            25, 
+            [
+              30, 
+              80, 
+              100
+            ]
+          ]
+        ], 
+        "desc": [
+          "Physical damage (0.8x) as HP drain (30%) to all enemies"
+        ]
+      }
+    ], 
+    "slot_id": 1, 
+    "accuracy": 0
+  }, 
   "Barbarian Axe": {
     "type_id": 8, 
     "compid": 90064, 
@@ -23314,33 +23371,6 @@
       }
     ], 
     "slot_id": 1, 
-    "accuracy": 0
-  }, 
-  "Knight of Pluto's Uniform": {
-    "type_id": 51, 
-    "compid": 690, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "dmg_variance": null, 
-    "skill_effects": {}, 
-    "skill_restriction": [], 
-    "id": "406002800", 
-    "icon": "item_20136.png", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 5, 
-      "DEF": 32
-    }, 
-    "skills": null, 
-    "effects_raw": [], 
-    "slot_id": 4, 
     "accuracy": 0
   }, 
   "Fixed Dice": {
@@ -27093,7 +27123,7 @@
     "dmg_variance": null, 
     "skill_effects": {
       "Magic Counter": [
-        "30% chance to counter a magic attack"
+        "30% chance to counter a magic attack with an attack (1x, ATK)"
       ]
     }, 
     "skill_restriction": [], 
@@ -27135,7 +27165,7 @@
           ]
         ], 
         "desc": [
-          "30% chance to counter a magic attack"
+          "30% chance to counter a magic attack with an attack (1x, ATK)"
         ]
       }
     ], 
@@ -35088,7 +35118,7 @@
     "reqs": null, 
     "dmg_variance": null, 
     "skill_effects": {
-      "100 Man Killer": [
+      "100-Knight Slayer": [
         "Increase the limit burst gauge fill rate by 25%"
       ]
     }, 
@@ -35115,7 +35145,7 @@
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "100 Man Killer", 
+        "name": "100-Knight Slayer", 
         "icon": "ability_78.png", 
         "active": false, 
         "unique": false, 
@@ -35872,11 +35902,11 @@
     "reqs": null, 
     "dmg_variance": null, 
     "skill_effects": {
-      "Counter": [
-        "30% chance to counter a physical attack"
-      ], 
-      "Swordbreaker": [
+      "Crisis Evasion": [
         "5% chance of evading physical attacks"
+      ], 
+      "Counter": [
+        "30% chance to counter a physical attack with an attack (1x, ATK)"
       ]
     }, 
     "skill_restriction": [], 
@@ -35901,7 +35931,7 @@
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "Swordbreaker", 
+        "name": "Crisis Evasion", 
         "icon": "ability_97.png", 
         "active": false, 
         "unique": true, 
@@ -35940,7 +35970,7 @@
           ]
         ], 
         "desc": [
-          "30% chance to counter a physical attack"
+          "30% chance to counter a physical attack with an attack (1x, ATK)"
         ]
       }
     ], 
@@ -37471,7 +37501,7 @@
     "reqs": null, 
     "dmg_variance": null, 
     "skill_effects": {
-      "Swordbreaker": [
+      "Crisis Evasion": [
         "5% chance of evading physical attacks"
       ]
     }, 
@@ -37498,7 +37528,7 @@
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "Swordbreaker", 
+        "name": "Crisis Evasion", 
         "icon": "ability_97.png", 
         "active": false, 
         "unique": true, 
@@ -40415,61 +40445,31 @@
     "slot_id": 1, 
     "accuracy": 0
   }, 
-  "Death Scythe": {
-    "type_id": 10, 
-    "compid": 90021, 
+  "Knights of Pluto Uniform": {
+    "type_id": 51, 
+    "compid": 690, 
     "is_twohanded": false, 
     "reqs": null, 
     "dmg_variance": null, 
-    "skill_effects": {
-      "Reap Blood": [
-        "Physical damage (0.8x) as HP drain (30%) to all enemies"
-      ]
-    }, 
+    "skill_effects": {}, 
     "skill_restriction": [], 
-    "id": "1100000021", 
-    "icon": "global_item_10040.png", 
+    "id": "406002800", 
+    "icon": "item_20136.png", 
     "stats": {
       "status_inflict": null, 
       "status_resist": null, 
       "element_resist": null, 
       "HP": 0, 
-      "ATK": 70, 
+      "ATK": 0, 
       "element_inflict": null, 
       "MP": 0, 
       "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 0
+      "SPR": 5, 
+      "DEF": 32
     }, 
-    "skills": [
-      900014
-    ], 
-    "effects_raw": [
-      {
-        "unit_restriction": null, 
-        "name": "Reap Blood", 
-        "icon": "ability_6.png", 
-        "active": true, 
-        "unique": false, 
-        "id": 900014, 
-        "effects": [
-          [
-            2, 
-            1, 
-            25, 
-            [
-              30, 
-              80, 
-              100
-            ]
-          ]
-        ], 
-        "desc": [
-          "Physical damage (0.8x) as HP drain (30%) to all enemies"
-        ]
-      }
-    ], 
-    "slot_id": 1, 
+    "skills": null, 
+    "effects_raw": [], 
+    "slot_id": 4, 
     "accuracy": 0
   }, 
   "Portal Charm": {
@@ -41290,7 +41290,7 @@
   }, 
   "Vega+": {
     "type_id": 14, 
-    "compid": 744, 
+    "compid": 90135, 
     "is_twohanded": false, 
     "reqs": null, 
     "dmg_variance": null, 
@@ -42669,69 +42669,6 @@
     "slot_id": 1, 
     "accuracy": 0
   }, 
-  "Tin Plate Helm": {
-    "type_id": 41, 
-    "compid": 688, 
-    "is_twohanded": false, 
-    "reqs": null, 
-    "dmg_variance": null, 
-    "skill_effects": {
-      "Tin Plate Helm": [
-        "Increase HP by 10%"
-      ]
-    }, 
-    "skill_restriction": [], 
-    "id": "404002300", 
-    "icon": "item_30223.png", 
-    "stats": {
-      "status_inflict": null, 
-      "status_resist": null, 
-      "element_resist": null, 
-      "HP": 0, 
-      "ATK": 0, 
-      "element_inflict": null, 
-      "MP": 0, 
-      "MAG": 0, 
-      "SPR": 0, 
-      "DEF": 32
-    }, 
-    "skills": [
-      217290
-    ], 
-    "effects_raw": [
-      {
-        "unit_restriction": [
-          209000404
-        ], 
-        "name": "Tin Plate Helm", 
-        "icon": "ability_77.png", 
-        "active": false, 
-        "unique": false, 
-        "id": 217290, 
-        "effects": [
-          [
-            0, 
-            3, 
-            1, 
-            [
-              0, 
-              0, 
-              0, 
-              0, 
-              10, 
-              0, 
-              0
-            ]
-          ]
-        ], 
-        "desc": [
-          "Increase HP by 10%"
-        ]
-      }
-    ], 
-    "slot_id": 3, 
-    "accuracy": 0
-  }, 
   "Thunder Shield": {
     "type_id": 31, 
     "compid": 121, 
@@ -43292,7 +43229,7 @@
     "reqs": null, 
     "dmg_variance": null, 
     "skill_effects": {
-      "Swordbreaker": [
+      "Crisis Evasion": [
         "5% chance of evading physical attacks"
       ]
     }, 
@@ -43319,7 +43256,7 @@
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "Swordbreaker", 
+        "name": "Crisis Evasion", 
         "icon": "ability_97.png", 
         "active": false, 
         "unique": true, 
@@ -43514,6 +43451,69 @@
       }
     ], 
     "slot_id": 1, 
+    "accuracy": 0
+  }, 
+  "Tin Helm": {
+    "type_id": 41, 
+    "compid": 688, 
+    "is_twohanded": false, 
+    "reqs": null, 
+    "dmg_variance": null, 
+    "skill_effects": {
+      "Tin Plate Helm": [
+        "Increase HP by 10%"
+      ]
+    }, 
+    "skill_restriction": [], 
+    "id": "404002300", 
+    "icon": "item_30223.png", 
+    "stats": {
+      "status_inflict": null, 
+      "status_resist": null, 
+      "element_resist": null, 
+      "HP": 0, 
+      "ATK": 0, 
+      "element_inflict": null, 
+      "MP": 0, 
+      "MAG": 0, 
+      "SPR": 0, 
+      "DEF": 32
+    }, 
+    "skills": [
+      217290
+    ], 
+    "effects_raw": [
+      {
+        "unit_restriction": [
+          209000404
+        ], 
+        "name": "Tin Plate Helm", 
+        "icon": "ability_77.png", 
+        "active": false, 
+        "unique": false, 
+        "id": 217290, 
+        "effects": [
+          [
+            0, 
+            3, 
+            1, 
+            [
+              0, 
+              0, 
+              0, 
+              0, 
+              10, 
+              0, 
+              0
+            ]
+          ]
+        ], 
+        "desc": [
+          "Increase HP by 10%"
+        ]
+      }
+    ], 
+    "slot_id": 3, 
     "accuracy": 0
   }, 
   "Ice Headband": {
@@ -44336,7 +44336,7 @@
     "dmg_variance": null, 
     "skill_effects": {
       "Toll Taker": [
-        "60% chance to counter a physical attack"
+        "60% chance to counter a physical attack with an attack (1x, ATK) (max 3 / turn)"
       ], 
       "Life Taker": [
         "Cast Death (50%) or deal physical damage (3.6x, ATK) (ignore cover) to one enemy", 
@@ -44433,7 +44433,7 @@
           ]
         ], 
         "desc": [
-          "60% chance to counter a physical attack"
+          "60% chance to counter a physical attack with an attack (1x, ATK) (max 3 / turn)"
         ]
       }
     ], 
