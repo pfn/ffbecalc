@@ -286,6 +286,12 @@ object SkillEffect {
         val eff = a.equipStats.getOrElse(e.cond, PassiveStatEffect.zero)
         a.copy(equipStats = a.equipStats +
           ((e.cond, eff + e.asPassiveStatEffect)))
+      case PassiveKillersEffect(killers) =>
+        val ks = killers.toList.foldLeft(a.killers) { case (ac,(t,(p,m))) =>
+          val (p1, m1) = ac.getOrElse(t,(0,0))
+          ac + ((t,(p + p1, m + m1)))
+        }
+        a.copy(killers = ks)
       case PassiveKillerEffect(tribe, phys, mag) =>
         val (p,m) = a.killers.getOrElse(tribe, (0,0))
         a.copy(killers = a.killers + ((tribe, (p + phys, m + mag))))
@@ -551,6 +557,11 @@ object PassiveKillerEffect {
     case Nil =>  // TODO rewrite passive parser to handle this, possible args
       // [tribes],[physical],[magical]
       UnknownSkillEffect
+  }
+}
+case class PassiveKillersEffect(killers: Map[Int,(Int,Int)]) extends SkillEffect with NoRestrictions {
+  def asKillerEffects = killers.toList.map { case (k,(p,m)) =>
+    PassiveKillerEffect(k, p, m)
   }
 }
 case class PassiveKillerEffect(tribe: Int, phys: Int, mag: Int)

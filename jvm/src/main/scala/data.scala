@@ -47,8 +47,7 @@ object DataDecoders {
         y <- a.values
         z <- y.headOption
       } yield z.isString).getOrElse(false)
-      SkillEffect(restrict, x, y, z,
-        if (isString) Nil else a.as[List[Int]].fold(_ => Nil, identity))
+      PassiveDecoders(restrict, x, y, z, a.focus)
     }
   }
   def decodePassiveEffectList(c: ACursor): List[SkillEffect] = {
