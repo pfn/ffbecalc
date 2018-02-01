@@ -304,13 +304,13 @@ sealed trait Damage { self: HasActiveData =>
     val r = SingleDamage(physical(
       stats.unit.atk - stats.unit.l, ratio / 100.0,
       calcKillers(stats, _._1), calcElements(stats, true),
-      stats.target.defs, dw = false,
+      defs = stats.target.defs, dw = false,
       level = stats.unit.level) * stats.unit.variance, 0)
     val l = SingleDamage(physical(
       stats.unit.atk - stats.unit.r,
       (ratio + (if (stacks < maxstacks) stack else 0)) / 100.0,
       calcKillers(stats, _._1), calcElements(stats, true),
-      stats.target.defs, dw = false,
+      defs = stats.target.defs, dw = false,
       level = stats.unit.level) * stats.unit.variance, 0)
     if (count == 1) r
     else MultiDamage(r :: l :: Nil)
