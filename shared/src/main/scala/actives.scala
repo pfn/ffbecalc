@@ -32,7 +32,7 @@ case class TargetStats(defs: Int, spr: Int, defBreak: Int, sprBreak: Int, tribes
 case class BattleStats(unit: UnitStats, target: TargetStats)
 
 case class ActiveData(element: List[String], tpe: String, frames: List[List[Int]], eframes: List[List[Int]], dmgsplit: List[List[Int]], atks: List[Int], atktpe: String, movetpe: Int, motiontpe: Int)
-sealed trait RelatedSkill {
+trait RelatedSkill {
   def related: List[Int]
 }
 object ActiveData {

@@ -97,23 +97,67 @@ object SkillEffect {
       case (0 | 1, 3, 2)     => PassiveStatusResist.decode(restrict.toSet, xs)
       case (0 | 1, 3, 3)     => PassiveElementResist.decode(restrict.toSet, xs)
       case (0 | 1, 3, 5)     => PassiveEquipEffect.decode(xs)
-      case (0 | 1, 3, 24)    => PassiveAttractEffect.decode(xs)
-      case (0 | 1, 3, 10004) => PassiveWeapEleStatEffect.decode(xs)
-      case (0 | 1, 3, 10003) => PassiveSinglehandEffect.decode(xs)
       case (0 | 1, 3, 6)     => PassiveEquipStatEffect.decode(xs)
       case (0 | 1, 1 | 3, 11) => PassiveKillerEffect.decode(xs)
+      case (0 | 1, 3, 13)    => PassiveDoublehandEffect.decode(xs)
+      case (0 | 1, 3, 14)    => PassiveDualWieldEffect.decode(xs)
+      case (0 | 1, 3, 17)    => PassiveJumpEffect.decode(xs)
       case (0 | 1, 3, 19)    => PassiveUnarmedEffect.decode(xs)
       case (0 | 1, 3, 21)    => PassiveEvoMagEffect.decode(xs)
       case (0 | 1, 3, 22)    => PassiveDodgeEffect.decode(xs)
-      case (0 | 1, 3, 54)    => PassiveDodgeEffect.decode(xs)
-      case (0 | 1, 3, 17)    => PassiveJumpEffect.decode(xs)
-      case (0 | 1, 3, 14)    => PassiveDualWieldEffect.decode(xs)
-      case (0 | 1, 3, 13)    => PassiveDoublehandEffect.decode(xs)
+      case (0 | 1, 3, 24)    => PassiveAttractEffect.decode(xs)
       case (0 | 1, 3, 25)    => PassiveCamouflageEffect.decode(restrict.toSet, xs)
-      case (0 | 1, 3, 32)    => PassiveRefreshEffect.decode(restrict.toSet, xs)
       case (0 | 1, 3, 31)    => PassiveLimitBurstRateEffect.decode(xs)
+      case (0 | 1, 3, 32)    => PassiveRefreshEffect.decode(restrict.toSet, xs)
       case (0 | 1, 3, 33)    => PassiveLimitBurstFillEffect.decode(xs)
-      case _ => UnknownSkillEffect
+      case (0 | 1 | 2, 1 | 3, 35)     => StartBattleSkillEffect.decode(xs)
+      case (0 | 1 | 2, 1 | 2 | 3, 49) => PassivePhysicalCounterEffect.decode(xs)
+      case (0 | 1, 3, 50)    => PassiveMagicCounterEffect.decode(xs)
+      case (0 | 1, 3, 54)    => PassiveDodgeEffect.decode(xs)
+      case (0, 3, 56)        => StartBattleSkillEffect.decode(xs)
+      case (0 | 1, 3, 10004) => PassiveWeapEleStatEffect.decode(xs)
+      case (0 | 1, 3, 10003) => PassiveSinglehandEffect.decode(xs)
+
+      // TODO
+      case (0, 3, 64) => UnknownSkillEffect // summon damage up arg0% arg1-esperID
+      case (0, 3, 63) => UnknownSkillEffect // increase esper stat bonus (hp, mp, atk, def, mag, spr %)
+      case (0, 3, 68) => UnknownSkillEffect // increase lb damage arg0%
+
+      // not handling for now, or ever
+      case (0 | 1, 3, 4)      => UnknownSkillEffect // threshold self-buff
+      case (1, 3, 7)          => UnknownSkillEffect // in-battle arg0-tribe arg1-arg4 stat% buff
+      case (0, 3, 8)          => UnknownSkillEffect // regenerate? wut
+      case (1, 2, 8)          => UnknownSkillEffect // cover arg0-gender, arg1-100? arg2-arg3% -damage arg4%chance
+      case (0 | 1, 3, 9)      => UnknownSkillEffect // boost healing item arg0%
+      case (0, 3, 10)         => UnknownSkillEffect // auto-item arg0-item arg1-limit? arg2-limit? arg3-0?
+      case (0 | 1, 3, 12)     => UnknownSkillEffect // phys counter chance% mod%
+      case (1, 3, 16)         => UnknownSkillEffect // increase steal chance arg0%
+      case (0 | 1, 3, 18)     => UnknownSkillEffect // cure ailments after battle arg0-7 0/1
+      case (0 | 1, 3, 20)     => UnknownSkillEffect // increase counter rate arg0%
+      case (1, 3, 23)         => UnknownSkillEffect // prevent ambush arg0-100? arg1-1?
+      case (1, 1, 24)         => UnknownSkillEffect // arg0-arg3% buff, arg4-turns, arg5-target -- is wrong counter
+      case (0, 3, 26)         => UnknownSkillEffect // berserk +arg0% ATK arg1 turns(99999)
+      case (1, 3, 28)         => UnknownSkillEffect // regen while guard arg0% arg1-base
+      case (0 | 1, 3, 29)     => UnknownSkillEffect // explo regen arg0-arg1 hp, arg2-arg3 mp, every arg4 steps
+      case (0 | 1, 3, 30)     => UnknownSkillEffect // drain %arg0-mp used by enemy
+      case (0 | 1, 1, 33)     => UnknownSkillEffect // like active33
+      case (0, 3, 36)         => UnknownSkillEffect // auto-cure ailments with items
+      case (1, 3, 37)         => UnknownSkillEffect // gil drop +arg0%
+      case (0 | 1, 3, 41)     => UnknownSkillEffect // magic counter chance% mod%
+      case (0, 3, 42)         => UnknownSkillEffect // absorb element damage arg0-arg7 0/1
+      case (0, 3, 43)         => UnknownSkillEffect // decrease encounters -arg0-chance
+      case (0, 3, 44)         => UnknownSkillEffect // normal attack arg0:N times
+      case (0 | 2, 2 | 3, 45) => UnknownSkillEffect // arg0% EXP boost
+      case (1, 3, 46)         => UnknownSkillEffect // gil arg0-arg1% while stealing
+      case (0 | 1, 3, 47)     => UnknownSkillEffect // drop boost arg0-normal arg1-rare
+      case (0 | 1, 3, 48)     => UnknownSkillEffect // reduce mp of song by arg0%
+      case (0 | 1, 3, 51)     => UnknownSkillEffect // ignore fatal arg0%HP-thresh arg1%chance arg3-times
+      case (0, 3, 52 | 53)    => UnknownSkillEffect // weird multi-cast passive placeholder
+      case (1, 2, 59)         => UnknownSkillEffect // magic cover arg0-sex? arg1-100 arg2-arg3%range arg4%
+      case (0, 3, 61)         => UnknownSkillEffect // summon any esper passive
+      case (0, 3, 101)        => UnknownSkillEffect // weird reduce damage passive, like active101 is counter?
+
+      case (x,y,z) => println(s"Unknown effect $x, $y, $z"); UnknownSkillEffect
     }
   }
 
@@ -623,3 +667,25 @@ object PassiveDualWieldEffect {
     else PassiveDualWieldEffect(xs.toSet, false)
 }
 case class PassiveDualWieldEffect(weapons: Set[Int], all: Boolean) extends SkillEffect with NoRestrictions
+object PassivePhysicalCounterEffect {
+  def decode(xs: List[Int]): SkillEffect =
+    PassivePhysicalCounterEffect(xs(0), xs(1), xs(2), xs.applyOrElse(3, (_: Int) => 99))
+}
+case class PassivePhysicalCounterEffect(chance: Int, mod: Int, skill: Int, max: Int) extends SkillEffect with NoRestrictions with RelatedSkill {
+  def related = List(skill)
+}
+case class PassiveMagicCounterEffect(chance: Int, mod: Int, skill: Int, max: Int) extends SkillEffect with NoRestrictions with RelatedSkill {
+  def related = List(skill)
+}
+object PassiveMagicCounterEffect {
+  def decode(xs: List[Int]): SkillEffect =
+    PassiveMagicCounterEffect(xs(0), xs(1), xs(2), xs.applyOrElse(3, (_: Int) => 99))
+}
+
+
+object StartBattleSkillEffect {
+  def decode(xs: List[Int]): SkillEffect = StartBattleSkillEffect(xs(0))
+}
+case class StartBattleSkillEffect(skill: Int) extends SkillEffect with NoRestrictions with RelatedSkill {
+  def related = List(skill)
+}
