@@ -99,7 +99,8 @@ object YaFFBEDB {
   def main(args: Array[String]): Unit = {
     val unitIdSubject = BehaviorSubject[Option[String]](None)
     val unitIdSink = createIdHandler(None)
-    val unitId = unitIdSubject.merge(unitIdSink).distinctUntilChanged
+    unitIdSink(unitIdSubject.next)
+    val unitId = unitIdSubject.distinctUntilChanged
 
     val unitIndex = Data.get[List[UnitIndex]]("pickle/unit/index.pickle").combineLatest(unitId.startWith(None)).map { case (us, id) =>
       List(option(value := EMPTY, "-- Select a unit --")) ++
@@ -119,7 +120,7 @@ object YaFFBEDB {
         Data.get[UnitData](s"pickle/unit/$id_.pickle").map { u =>
           Some(u)
         }
-      }).publishReplay(1).refCount
+      })
     val enhancements: Observable[Map[String,Enhancement]] = unitId.flatMap(id =>
       id.fold(Observable.just(Map.empty[String,Enhancement])) { id_ =>
         Data.get[Map[String,Enhancement]](s"pickle/enhance/$id_.pickle").catchError(_ => Observable.just(Map.empty))
