@@ -115,8 +115,9 @@ object SkillEffect {
       case (0 | 1, 3, 50)    => PassiveMagicCounterEffect.decode(xs)
       case (0 | 1, 3, 54)    => PassiveDodgeEffect.decode(xs)
       case (0, 3, 56)        => StartBattleSkillEffect.decode(xs)
-      case (0 | 1, 3, 10004) => PassiveWeapEleStatEffect.decode(xs)
+      case (0 | 1, 3, 10002) => PassiveTeammateAliveEffect.decode(xs)
       case (0 | 1, 3, 10003) => PassiveSinglehandEffect.decode(xs)
+      case (0 | 1, 3, 10004) => PassiveWeapEleStatEffect.decode(xs)
 
       // TODO
       case (0, 3, 64) => UnknownSkillEffect // summon damage up arg0% arg1-esperID
@@ -125,6 +126,7 @@ object SkillEffect {
 
       // not handling for now, or ever
       case (0 | 1, 3, 4)      => UnknownSkillEffect // threshold self-buff
+      case (2, 2, 5)          => UnknownSkillEffect // counter effect incorrectly marked passive
       case (1, 3, 7)          => UnknownSkillEffect // in-battle arg0-tribe arg1-arg4 stat% buff
       case (0, 3, 8)          => UnknownSkillEffect // regenerate? wut
       case (1, 2, 8)          => UnknownSkillEffect // cover arg0-gender, arg1-100? arg2-arg3% -damage arg4%chance
@@ -155,7 +157,8 @@ object SkillEffect {
       case (0, 3, 52 | 53)    => UnknownSkillEffect // weird multi-cast passive placeholder
       case (1, 2, 59)         => UnknownSkillEffect // magic cover arg0-sex? arg1-100 arg2-arg3%range arg4%
       case (0, 3, 61)         => UnknownSkillEffect // summon any esper passive
-      case (0, 3, 101)        => UnknownSkillEffect // weird reduce damage passive, like active101 is counter?
+      case (0, 3, 101)        => UnknownSkillEffect // counter effect incorrectly passive, active101
+      case (0, 3, 111)        => UnknownSkillEffect // counter effect incorrectly passive, active111
 
       case (x,y,z) => println(s"Unknown effect $x, $y, $z"); UnknownSkillEffect
     }
@@ -381,8 +384,7 @@ object PassiveElementResist {
     case List(a, b, c, d, e, f, g) => // knightly bonds, 7 elements??
       PassiveElementResist(restrict, a, b, c, d, e, f, g, 0)
     case List(_, _, _, _, _, _) =>
-      // this seems to be a mistake from skill 501890
-      // counter skill that's listed as !active but has active effects_raw
+      // active3 counter, the game marks these as passives, grr
       //PassiveElementResist(restrict, a, b, c, d, e, f, 0, 0)
       UnknownSkillEffect
   }
@@ -554,6 +556,8 @@ object PassiveStatEffect {
       PassiveStatEffect(restrict, e, f, a, b, c, d, g)
     case List(a, b, c, d, e, f) =>
       PassiveStatEffect(restrict, e, f, a, b, c, d, 0)
+    case List(a, b, c, d, e) =>
+      PassiveStatEffect(restrict, e, 0, a, b, c, d, 0)
   }
 
   def zero = PassiveStatEffect(Set.empty, 0, 0, 0, 0, 0, 0, 0)
@@ -680,6 +684,14 @@ case class PassiveMagicCounterEffect(chance: Int, mod: Int, skill: Int, max: Int
 object PassiveMagicCounterEffect {
   def decode(xs: List[Int]): SkillEffect =
     PassiveMagicCounterEffect(xs(0), xs(1), xs(2), xs.applyOrElse(3, (_: Int) => 99))
+}
+
+case class PassiveTeammateAliveEffect(unitId: Int, skill: Int) extends SkillEffect with NoRestrictions with RelatedSkill {
+  def related = List(skill)
+}
+object PassiveTeammateAliveEffect {
+  def decode(xs: List[Int]): SkillEffect =
+    PassiveTeammateAliveEffect(xs(0), xs(2))
 }
 
 

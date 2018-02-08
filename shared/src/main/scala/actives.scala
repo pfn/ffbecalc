@@ -394,6 +394,17 @@ trait MPHealing extends Healing {
   def stat = "MP"
 }
 
+trait CanRange[A] { self: A =>
+  def asList: List[Int]
+  def fromList(xs: List[Int]): A
+  def inRange(maxValue: CanRange[A], index: Int, max: Int): A = {
+    def min = asList
+    val steps = min.zip(maxValue.asList).map(x =>
+      x._2 - x._1).map(_.toDouble / max)
+    fromList(min.zip(steps).map(x => x._1 + x._2 * index).map(_.toInt))
+  }
+}
+
 case class HexDebuffAttackEffect(target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class InvokeSkillEffect(skill: Int) extends ActiveEffect with NoTarget
 case class EntrustEffect(target: SkillTarget) extends ActiveEffect
@@ -475,11 +486,14 @@ case class SprDamageEffect(ratio: Int, max: Int, scaling: Int, target: SkillTarg
       mag = math.min(500, (stats.unit.spr * scaling/100.0).toInt))))
 }
 case class DefDamageEffect(ratio: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with DefenseDamage
-case class PhysicalEffect(_ratio: Int, itd: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with PhysicalDamage {
+case class PhysicalEffect(_ratio: Int, itd: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData with PhysicalDamage with CanRange[PhysicalEffect] {
   def s = if (data.atktpe == "None") "*" else ""
   def ratio = (_ratio / (1 + itd/100.0)).toInt
 
   override lazy val toString = f"""Physical$s ${data.element.mkString("/")} damage (${ratio/100.0}%.2fx ATK) to $target"""
+
+  def asList = List(_ratio, itd)
+  def fromList(xs: List[Int]) = copy(_ratio = xs(0), itd = xs(1))
 }
 case class PhysicalKillerEffect(ratio: Int, tribe: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
 case class MagicalKillerEffect(ratio: Int, tribe: Int, target: SkillTarget, data: ActiveData) extends ActiveEffect with HasActiveData
@@ -585,4 +599,5 @@ case object TwistOfFateEffect extends ActiveEffect with NoTarget
 case object JPAllyTwistOfFateEffect extends ActiveEffect with NoTarget
 case object LoseHPEffect extends ActiveEffect with NoTarget
 case object AddGlowEffect extends ActiveEffect with NoTarget
+case object PickTargetsEffect extends ActiveEffect with NoTarget // args0:count arg1=1?
 

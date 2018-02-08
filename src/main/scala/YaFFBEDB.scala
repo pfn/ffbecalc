@@ -337,6 +337,20 @@ object YaFFBEDB {
     def enhChain(id: Int, enhs: Map[Int,SkillInfo]): List[Int] = {
       id :: enhs.get(id).fold(List.empty[Int])(x => enhChain(x.id, enhs))
     }
+    def relationsOfPassives(as: List[SkillEffect], seed: Map[Int,SkillInfo], seen: Set[Int]): Observable[Seq[SkillInfo]] = {
+      val relations = as.flatMap {
+        case r: RelatedSkill => r.related
+        case _ => Nil
+      }
+
+      Observable.combineLatest(relations.map(rid =>
+        skillInfo(rid).flatMap { os =>
+          if (seen(os.id)) Observable.just(Nil) else
+            relationsOfActives(os.actives, Map.empty, seen + os.id).flatMap { rs =>
+              Observable.just(List(os) ++ rs ++ seed.values)
+            }
+        })).scan(Seq.empty[SkillInfo])((xs, x) => x.flatten ++ xs)
+    }
     def relationsOfActives(as: List[ActiveEffect], seed: Map[Int,SkillInfo], seen: Set[Int]): Observable[Seq[SkillInfo]] = {
       val relations = as.flatMap {
         case r: RelatedSkill => r.related
@@ -369,10 +383,11 @@ object YaFFBEDB {
         }.distinct
       }
     val relatedActives: Observable[Map[Int,SkillInfo]] =
-      unitInfo.combineLatest(unitActives, enhMap, limitBurst).flatMap { case (u, as, enhm, lb) =>
+      unitInfo.combineLatest(unitActives.combineLatest(unitPassives), enhMap, limitBurst).flatMap { case (u, (as, ps), enhm, lb) =>
         if (u == as.map(_.unit)) {
           val seed = as.toList.flatMap(_.actives).map(x => x.info.id -> x.info).toMap
           Observable.combineLatest(lb.toList.map(l => relationsOfActives(l.min.actives, seed, Set.empty)) ++
+            List(relationsOfPassives(ps, seed, Set.empty)) ++
             as.toList.flatMap(_.actives).map { case UnitActive(_, skill, enhs) =>
               val s = enhancedInfo(skill, enhm.get(skill.id), enhs, identity)
 

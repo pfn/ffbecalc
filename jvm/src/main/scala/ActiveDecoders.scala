@@ -638,5 +638,6 @@ object ActiveDecoders {
     1010 -> { (t, a, c) => LoseHPEffect },
     1011 -> { (t, a, c) => SkipTurnsEffect(listInt(c)(0), t) },
     1012 -> { (t, a, c) => HexDebuffAttackEffect(t, a) },
+    1013 -> { (t, a, c) => PickTargetsEffect },
   )
 }
