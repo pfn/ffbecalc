@@ -355,7 +355,7 @@ object components {
       ),
       h5("Damage Score"),
       div(
-        numberPicker("Ratio", outputRatio, init = 100, min = 1, max = 3000, steps = (10, 100, 500), n = r => f"${r / 100.0}%.1f", from = x => (x * 100).toInt),
+        numberPicker("Ratio", outputRatio, init = 100, min = 0, max = 3000, steps = (10, 100, 500), n = r => f"${r / 100.0}%.1f", from = x => (x * 100).toInt),
         div(children <-- dmgScore.map { ds =>
           val dw = if (ds.dwT != DamageRange(0)) {
             List(
