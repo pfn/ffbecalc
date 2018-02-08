@@ -70,7 +70,7 @@
           ]
         ], 
         "desc": [
-          "Enable unit to equip Staffs"
+          "Enable unit to equip Staves"
         ]
       }
     ], 
@@ -83,7 +83,7 @@
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "Shin-Shard of Genius", 
+        "name": "True Shard of Genius", 
         "icon": "ability_77.png", 
         "active": false, 
         "unique": false, 
@@ -1484,7 +1484,7 @@
           ]
         ], 
         "desc": [
-          "Enable unit to equip Cloths"
+          "Enable unit to equip Clothes"
         ]
       }
     ], 
@@ -4908,7 +4908,7 @@
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "Shin-Follower's Oath", 
+        "name": "True Follower's Oath", 
         "icon": "ability_77.png", 
         "active": false, 
         "unique": false, 
@@ -11806,7 +11806,7 @@
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "Shin-Sage's Prajna", 
+        "name": "True Sage's Prajna", 
         "icon": "ability_77.png", 
         "active": false, 
         "unique": false, 
@@ -12655,7 +12655,7 @@
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "Shin-Hydaelyn Guard", 
+        "name": "True Hydaelyn Guard", 
         "icon": "ability_9.png", 
         "active": false, 
         "unique": false, 
@@ -15739,7 +15739,7 @@
     "effects_raw": [
       {
         "unit_restriction": null, 
-        "name": "Shin-Spirit of Freedom", 
+        "name": "True Spirit of Freedom", 
         "icon": "ability_77.png", 
         "active": false, 
         "unique": true, 
