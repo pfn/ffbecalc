@@ -1015,7 +1015,7 @@
           ]
         ], 
         "desc": [
-          "Enable unit to cast 2 white magic spells"
+          "Gain Dual-cast White magic"
         ]
       }
     ], 
@@ -2863,7 +2863,7 @@
         ], 
         "desc": [
           "Increase LB gauge by 2 per turn", 
-          "Increase resistance to Fire by 30% and Ice by -50%"
+          "Increase resistance to Fire by 30% and  and reduce resistance to Ice by 50%"
         ]
       }
     ], 
@@ -4675,7 +4675,7 @@
         ], 
         "desc": [
           "Increase HP by 30%", 
-          "Use Mood Maker (505100) at the start of a battle"
+          "Use Mood Maker (505100) at the start of a battle or when revived"
         ]
       }
     ], 
@@ -9200,7 +9200,7 @@
           ]
         ], 
         "desc": [
-          "Increase ATK by 40% and Reduce DEF by 10%"
+          "Increase ATK by 40% and  and reduce DEF by 10%"
         ]
       }
     ], 

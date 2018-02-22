@@ -15904,7 +15904,7 @@
     "dmg_variance": null, 
     "skill_effects": {
       "Exorcise Jade": [
-        "Increase resistance to Poison, Blind, Sleep, Silence, Paralyze, Confusion and Disease by 100% for all allies for 2 turns"
+        "Increase resistance to all status effects by 100% for all allies for 2 turns"
       ]
     }, 
     "skill_restriction": [], 
@@ -15946,14 +15946,14 @@
               100, 
               100, 
               100, 
-              0, 
+              100, 
               1, 
               2
             ]
           ]
         ], 
         "desc": [
-          "Increase resistance to Poison, Blind, Sleep, Silence, Paralyze, Confusion and Disease by 100% for all allies for 2 turns"
+          "Increase resistance to all status effects by 100% for all allies for 2 turns"
         ]
       }
     ], 
@@ -18761,7 +18761,7 @@
     "dmg_variance": null, 
     "skill_effects": {
       "Dual White Magic": [
-        "Enable unit to cast 2 white magic spells"
+        "Gain Dual-cast White magic"
       ], 
       "Holy": [
         "Magic light damage (2.3x, SPR) to one enemy"
@@ -18832,7 +18832,7 @@
           ]
         ], 
         "desc": [
-          "Enable unit to cast 2 white magic spells"
+          "Gain Dual-cast White magic"
         ]
       }
     ], 
@@ -25988,7 +25988,7 @@
     "reqs": null, 
     "dmg_variance": null, 
     "skill_effects": {
-      "Moogle Ribbon": [
+      "Mog's Ribbon": [
         "Increase DEF by 10%", 
         "Increase resistance to all status effects by 30%"
       ], 
@@ -26072,7 +26072,7 @@
         "unit_restriction": [
           209000705
         ], 
-        "name": "Moogle Ribbon", 
+        "name": "Mog's Ribbon", 
         "icon": "ability_77.png", 
         "active": false, 
         "unique": false, 

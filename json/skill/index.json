@@ -347,8 +347,8 @@
   "Swift Legs": {
     "id": "212820"
   }, 
-  "Rupture shot": {
-    "id": "910115"
+  "Devastate+2": {
+    "id": "702670"
   }, 
   "Bomb Arms": {
     "id": "224910"
@@ -776,8 +776,8 @@
   "Frozen Guard": {
     "id": "207940"
   }, 
-  "W Machinery": {
-    "id": "221490"
+  "Tailwind": {
+    "id": "203850"
   }, 
   "Dwarven Force+2": {
     "id": "704930"
@@ -811,9 +811,6 @@
   }, 
   "Synthesis": {
     "id": "705100"
-  }, 
-  "Slowing Fall": {
-    "id": "505840"
   }, 
   "I'll never die!": {
     "id": "204960"
@@ -3098,6 +3095,9 @@
   "Focus Attention": {
     "id": "910549"
   }, 
+  "Rupture Shot": {
+    "id": "910115"
+  }, 
   "Iron Needle": {
     "id": "208530"
   }, 
@@ -3262,6 +3262,9 @@
   }, 
   "Aquan Eater": {
     "id": "910390"
+  }, 
+  "Throwing Fall": {
+    "id": "505840"
   }, 
   "Drainer": {
     "id": "900005"
@@ -3436,6 +3439,9 @@
   }, 
   "Guardian of Zot": {
     "id": "910433"
+  }, 
+  "\u30d5\u30eb\u30ea\u30ab\u30d0\u30fc": {
+    "id": "910736"
   }, 
   "MP Super Charge": {
     "id": "501470"
@@ -4784,8 +4790,8 @@
   "Lightspeed Jab": {
     "id": "910133"
   }, 
-  "Tailwind": {
-    "id": "203850"
+  "W Machinery": {
+    "id": "221490"
   }, 
   "Leadership": {
     "id": "204550"
@@ -5164,6 +5170,9 @@
   }, 
   "Beauty": {
     "id": "910077"
+  }, 
+  "Double Ability - Iris": {
+    "id": "505090"
   }, 
   "Strike - Freeze": {
     "id": "213000"
@@ -5569,6 +5578,9 @@
   }, 
   "Blazing Evocation": {
     "id": "600360"
+  }, 
+  "Unbreakable Physique": {
+    "id": "910823"
   }, 
   "Dream Entrust": {
     "id": "215910"
@@ -6806,9 +6818,6 @@
   "Mercury Crest": {
     "id": "209200"
   }, 
-  "Well-dressed - Clothes": {
-    "id": "225950"
-  }, 
   "Drop Rate Up +8": {
     "id": "910296"
   }, 
@@ -7580,6 +7589,9 @@
   "Ace Adventurer+2": {
     "id": "704610"
   }, 
+  "Sworn Six's Pride - Dark": {
+    "id": "210720"
+  }, 
   "Vows of War": {
     "id": "207480"
   }, 
@@ -7976,8 +7988,8 @@
   "Guard Order": {
     "id": "208060"
   }, 
-  "Grim - Siphon": {
-    "id": "910522"
+  "Prayer to the Aeons": {
+    "id": "219130"
   }, 
   "Froststrike": {
     "id": "202050"
@@ -9482,8 +9494,8 @@
   "Amaterasu": {
     "id": "222720"
   }, 
-  "Esper's Prayer": {
-    "id": "219130"
+  "Well-dressed - Clothes": {
+    "id": "225950"
   }, 
   "HP Enhancer": {
     "id": "501060"
@@ -9538,6 +9550,9 @@
   }, 
   "Inherited Power+2": {
     "id": "704450"
+  }, 
+  "It's time!": {
+    "id": "216310"
   }, 
   "Royal Bodyguard": {
     "id": "210440"
@@ -9596,8 +9611,8 @@
   "Arrow Storm": {
     "id": "215410"
   }, 
-  "Sworn Six's Pride - Dark": {
-    "id": "210720"
+  "Doomsday": {
+    "id": "20530"
   }, 
   "Knightly Memories": {
     "id": "206520"
@@ -9623,8 +9638,8 @@
   "Grit": {
     "id": "212250"
   }, 
-  "Unbreakable Physique": {
-    "id": "910823"
+  "Stone Break Smith": {
+    "id": "504250"
   }, 
   "Mind Break": {
     "id": "202170"
@@ -9781,9 +9796,6 @@
   }, 
   "Shining Guard": {
     "id": "207990"
-  }, 
-  "Moogle Ribbon": {
-    "id": "217180"
   }, 
   "Gun Master": {
     "id": "910029"
@@ -10001,8 +10013,8 @@
   "Cold Gem": {
     "id": "214130"
   }, 
-  "Don't Give Up": {
-    "id": "216310"
+  "Flashbang": {
+    "id": "207220"
   }, 
   "Heavy Hitter": {
     "id": "207320"
@@ -10073,8 +10085,8 @@
   "Disguised": {
     "id": "910608"
   }, 
-  "Flashbang": {
-    "id": "207220"
+  "Transshape": {
+    "id": "220570"
   }, 
   "Afterimage Technique": {
     "id": "220910"
@@ -10271,8 +10283,8 @@
   "\u30b7\u30e3\u30c9\u30a6\u30b5\u30fc\u30d0\u30f3\u30c8": {
     "id": "214450"
   }, 
-  "Stone Break Smith": {
-    "id": "504250"
+  "Grim - Siphon": {
+    "id": "910522"
   }, 
   "Fists of Wind": {
     "id": "216950"
@@ -10309,9 +10321,6 @@
   }, 
   "Recipe for Exhaustion": {
     "id": "218050"
-  }, 
-  "W Ability - Iris": {
-    "id": "505090"
   }, 
   "Crush Accessory": {
     "id": "204870"
@@ -10424,9 +10433,6 @@
   "Decoy Pose": {
     "id": "221640"
   }, 
-  "Transshape": {
-    "id": "220570"
-  }, 
   "\u5bbf\u661f:\u6b73\u661f": {
     "id": "214390"
   }, 
@@ -10438,6 +10444,9 @@
   }, 
   "Thunder Beam": {
     "id": "201270"
+  }, 
+  "Double Machinery": {
+    "id": "505080"
   }, 
   "Outlaw": {
     "id": "910632"
@@ -11912,6 +11921,9 @@
   "Multi-Shooter": {
     "id": "205230"
   }, 
+  "Mog's Ribbon": {
+    "id": "217180"
+  }, 
   "Regen (Auto)": {
     "id": "10121"
   }, 
@@ -12032,9 +12044,6 @@
   "Freed Anger": {
     "id": "224470"
   }, 
-  "Devastate+2": {
-    "id": "702670"
-  }, 
   "Ramsey's Pillow": {
     "id": "300590"
   }, 
@@ -12154,9 +12163,6 @@
   }, 
   "Tunneller": {
     "id": "219870"
-  }, 
-  "Crusader": {
-    "id": "20530"
   }, 
   "Snow's Protection": {
     "id": "221190"
